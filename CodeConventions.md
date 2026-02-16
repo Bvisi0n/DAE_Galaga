@@ -13,6 +13,40 @@
 
 
 # Style & Formatting
+
+## General
+- **Braces**: Allman Style
+```
+if (condition)
+{
+    // code
+}
+else
+{
+    // code
+}
+```
+- **Variable initialization**: Uniform Initialization
+```
+int x{ 0 };
+```
+- **Class layout**: Public > Protected > Private
+```
+class MyClass
+{
+public:
+    // public members
+    // public functions
+protected:
+    // protected members
+    // protected functions
+private:
+    // private members
+    // private functions
+};
+```
+
+## Preprocessor
 - **header guards**: Handmade & ALL_CAPS_H
 ```
 #ifndef FILE_NAME_H
@@ -31,19 +65,4 @@ void LogSDLVersion(const std::string& message, int major, int minor, int patch)
         std::cout << message << major << "." << minor << "." << patch << "\n";
     #endif
 }
-```
-- **Braces**: Allman Style
-```
-if (condition)
-{
-    // code
-}
-else
-{
-    // code
-}
-```
-- **Variable initialization**: Uniform Initialization
-```
-int x{ 0 };
 ```
