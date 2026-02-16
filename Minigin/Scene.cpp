@@ -1,7 +1,32 @@
 #include <algorithm>
+
 #include "Scene.h"
 
 using namespace dae;
+
+void Scene::FixedUpdate(const float deltaTime)
+{
+	for(auto& object : m_objects)
+	{
+		object->FixedUpdate(deltaTime);
+	}
+}
+
+void Scene::Update(const float deltaTime)
+{
+	for(auto& object : m_objects)
+	{
+		object->Update(deltaTime);
+	}
+}
+
+void Scene::Render() const
+{
+	for (const auto& object : m_objects)
+	{
+		object->Render();
+	}
+}
 
 void Scene::Add(std::unique_ptr<GameObject> object)
 {
@@ -25,20 +50,3 @@ void Scene::RemoveAll()
 {
 	m_objects.clear();
 }
-
-void Scene::Update()
-{
-	for(auto& object : m_objects)
-	{
-		object->Update();
-	}
-}
-
-void Scene::Render() const
-{
-	for (const auto& object : m_objects)
-	{
-		object->Render();
-	}
-}
-

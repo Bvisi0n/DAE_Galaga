@@ -1,16 +1,16 @@
 ﻿#include <stdexcept>
 #include <sstream>
 #include <iostream>
-#include <chrono>
 
 #if WIN32
-#define WIN32_LEAN_AND_MEAN 
-#include <windows.h>
+	#define WIN32_LEAN_AND_MEAN 
+	#include <windows.h>
 #endif
 
 #include <SDL3/SDL.h>
 //#include <SDL3_image/SDL_image.h>
 #include <SDL3_ttf/SDL_ttf.h>
+
 #include "Minigin.h"
 #include "InputManager.h"
 #include "SceneManager.h"
@@ -21,22 +21,22 @@ SDL_Window* g_window{};
 
 void LogSDLVersion(const std::string& message, int major, int minor, int patch)
 {
-#if WIN32
-	std::stringstream ss;
-	ss << message << major << "." << minor << "." << patch << "\n";
-	OutputDebugString(ss.str().c_str());
-#else
-	std::cout << message << major << "." << minor << "." << patch << "\n";
-#endif
+	#if WIN32
+		std::stringstream ss;
+		ss << message << major << "." << minor << "." << patch << "\n";
+		OutputDebugString(ss.str().c_str());
+	#else
+		std::cout << message << major << "." << minor << "." << patch << "\n";
+	#endif
 }
 
 #ifdef __EMSCRIPTEN__
-#include "emscripten.h"
+	#include "emscripten.h"
 
-void LoopCallback(void* arg)
-{
-	static_cast<dae::Minigin*>(arg)->RunOneFrame();
-}
+	void LoopCallback(void* arg)
+	{
+		static_cast<dae::Minigin*>(arg)->RunOneFrame();
+	}
 #endif
 
 // Why bother with this? Because sometimes students have a different SDL version installed on their pc.
@@ -91,30 +91,46 @@ dae::Minigin::~Minigin()
 void dae::Minigin::Run(const std::function<void()>& load)
 {
 	load();
-#ifndef __EMSCRIPTEN__
-	while (!m_quit)
-		RunOneFrame();
-#else
-	emscripten_set_main_loop_arg(&LoopCallback, this, 0, true);
-#endif
+
+	m_lastTime = std::chrono::steady_clock::now();
+	m_lag = 0.f;
+	m_quit = false;
+
+	#ifndef __EMSCRIPTEN__
+		while (!m_quit)
+		{
+			RunOneFrame();
+		}
+	#else
+		emscripten_set_main_loop_arg(&LoopCallback, this, 0, true);
+	#endif
 }
 
 void dae::Minigin::RunOneFrame()
 {
 	using clock = std::chrono::steady_clock;
-	const auto start_time{ clock::now() };
+	const auto frame_start_time{ clock::now() };
+	const float delta_time{ std::chrono::duration<float>(frame_start_time - m_lastTime).count() };
+	m_lastTime = frame_start_time;
+	m_lag += delta_time;
 
 	m_quit = !InputManager::GetInstance().ProcessInput();
-	SceneManager::GetInstance().Update();
+
+	while (m_lag >= m_fixedTimeStep)
+	{
+		SceneManager::GetInstance().FixedUpdate(m_fixedTimeStep);
+		m_lag -= m_fixedTimeStep;
+	}
+
+	SceneManager::GetInstance().Update(delta_time);
 	Renderer::GetInstance().Render();
 
-	const int desired_fps{ 60 };
-	const auto ns_per_frame{ std::chrono::nanoseconds(1'000'000'000 / desired_fps) };
-	const auto elapsed_time = clock::now() - start_time;
+	const auto frame_end_time{ clock::now() };
+	const auto execution_time{ frame_end_time - frame_start_time };
 
-	if (elapsed_time < ns_per_frame)
+	if (execution_time < m_nsPerFrame)
 	{
-		const auto wait_duration = ns_per_frame - elapsed_time;
+		const auto wait_duration = m_nsPerFrame - execution_time;
 		SDL_DelayPrecise(static_cast<Uint64>(wait_duration.count()));
 	}
 }

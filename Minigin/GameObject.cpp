@@ -1,11 +1,14 @@
 #include <string>
+
 #include "GameObject.h"
 #include "ResourceManager.h"
 #include "Renderer.h"
 
 dae::GameObject::~GameObject() = default;
 
-void dae::GameObject::Update(){}
+void dae::GameObject::FixedUpdate([[maybe_unused]] const float deltaTime){}
+
+void dae::GameObject::Update([[maybe_unused]] const float deltaTime){}
 
 void dae::GameObject::Render() const
 {
