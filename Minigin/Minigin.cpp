@@ -1,6 +1,7 @@
 ﻿#include <stdexcept>
 #include <sstream>
 #include <iostream>
+#include <chrono>
 
 #if WIN32
 #define WIN32_LEAN_AND_MEAN 
@@ -100,7 +101,20 @@ void dae::Minigin::Run(const std::function<void()>& load)
 
 void dae::Minigin::RunOneFrame()
 {
+	using clock = std::chrono::steady_clock;
+	const auto start_time{ clock::now() };
+
 	m_quit = !InputManager::GetInstance().ProcessInput();
 	SceneManager::GetInstance().Update();
 	Renderer::GetInstance().Render();
+
+	const int desired_fps{ 60 };
+	const auto ns_per_frame{ std::chrono::nanoseconds(1'000'000'000 / desired_fps) };
+	const auto elapsed_time = clock::now() - start_time;
+
+	if (elapsed_time < ns_per_frame)
+	{
+		const auto wait_duration = ns_per_frame - elapsed_time;
+		SDL_DelayPrecise(static_cast<Uint64>(wait_duration.count()));
+	}
 }
