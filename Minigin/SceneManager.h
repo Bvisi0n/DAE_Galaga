@@ -8,11 +8,11 @@
 #include "Scene.h"
 #include "Singleton.h"
 
-// Forward declarations
-class Scene;
-
 namespace dae
 {
+	// Forward declarations
+	class Scene;
+
 	class SceneManager final : public Singleton<SceneManager>
 	{
 	public:

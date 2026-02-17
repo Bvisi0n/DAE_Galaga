@@ -7,12 +7,12 @@
 #include "Components/Transform.h"
 #include "GameObject.h"
 
-// Forward declarations
-class Font;
-class Texture2D;
-
 namespace dae
 {
+	// Forward declarations
+	class Font;
+	class Texture2D;
+
 	class TextObject final : public GameObject
 	{
 	public:

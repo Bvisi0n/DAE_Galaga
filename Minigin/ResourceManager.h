@@ -8,12 +8,12 @@
 
 #include "Singleton.h"
 
-// Forward declarations
-class Texture2D;
-class Font;
-
 namespace dae
 {
+	// Forward declarations
+	class Font;
+	class Texture2D;
+
 	class ResourceManager final : public Singleton<ResourceManager>
 	{
 	public:

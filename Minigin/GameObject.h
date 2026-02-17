@@ -6,11 +6,11 @@
 
 #include "Components/Transform.h"
 
-// Forward declarations
-class Texture2D;
-
 namespace dae
 {
+	// Forward declarations
+	class Texture2D;
+
 	class GameObject 
 	{
 	public:
