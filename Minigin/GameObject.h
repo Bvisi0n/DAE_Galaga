@@ -30,7 +30,7 @@ namespace dae
 		void SetPosition(float x, float y);
 
 	private:
-		Transform m_transform{};
+		components::Transform m_transform{};
 		std::shared_ptr<Texture2D> m_texture{};
 	};
 }

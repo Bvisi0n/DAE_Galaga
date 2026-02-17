@@ -3,7 +3,7 @@
 
 #include <glm/glm.hpp>
 
-namespace dae
+namespace dae::components
 {
 	class Transform final
 	{

@@ -19,20 +19,20 @@ static void load()
 {
 	auto& scene = dae::SceneManager::GetInstance().CreateScene();
 
-	auto go = std::make_unique<dae::GameObject>();
-	go->SetTexture("background.png");
-	scene.Add(std::move(go));
+	auto game_object = std::make_unique<dae::GameObject>();
+	game_object->SetTexture("background.png");
+	scene.Add(std::move(game_object));
 
-	go = std::make_unique<dae::GameObject>();
-	go->SetTexture("logo.png");
-	go->SetPosition(358, 180);
-	scene.Add(std::move(go));
+	game_object = std::make_unique<dae::GameObject>();
+	game_object->SetTexture("logo.png");
+	game_object->SetPosition(358, 180);
+	scene.Add(std::move(game_object));
 
 	auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
-	auto to = std::make_unique<dae::TextObject>("Programming 4 Assignment", font);
-	to->SetColor({ 255, 255, 0, 255 });
-	to->SetPosition(292, 20);
-	scene.Add(std::move(to));
+	auto text_object = std::make_unique<dae::TextObject>("Programming 4 Assignment", font);
+	text_object->SetColor({ 255, 255, 0, 255 });
+	text_object->SetPosition(292, 20);
+	scene.Add(std::move(text_object));
 }
 
 int main(int, char*[]) {
