@@ -7,11 +7,12 @@
 
 #include "Minigin.h"
 #include "SceneManager.h"
+#include <filesystem>
+
 #include "ResourceManager.h"
 #include "TextObject.h"
 #include "Scene.h"
 
-#include <filesystem>
 namespace fs = std::filesystem;
 
 static void load()

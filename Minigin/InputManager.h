@@ -1,4 +1,6 @@
-#pragma once
+#ifndef INPUTMANAGER_H
+#define INPUTMANAGER_H
+
 #include "Singleton.h"
 
 namespace dae
@@ -8,5 +10,5 @@ namespace dae
 	public:
 		bool ProcessInput();
 	};
-
 }
+#endif

@@ -1,26 +1,16 @@
-#include <SDL3/SDL.h>
-#include "Texture2D.h"
-#include "Renderer.h"
 #include <stdexcept>
 
-dae::Texture2D::~Texture2D()
+#include <SDL3/SDL.h>
+
+#include "Renderer.h"
+#include "Texture2D.h"
+
+dae::Texture2D::Texture2D(SDL_Texture* texture) : m_texture{ texture }
 {
-	SDL_DestroyTexture(m_texture);
+    assert(m_texture != nullptr);
 }
 
-glm::vec2 dae::Texture2D::GetSize() const
-{
-    float w{}, h{};
-    SDL_GetTextureSize(m_texture, &w, &h);
-    return { w, h };
-}
-
-SDL_Texture* dae::Texture2D::GetSDLTexture() const
-{
-	return m_texture;
-}
-
-dae::Texture2D::Texture2D(const std::string &fullPath)
+dae::Texture2D::Texture2D(const std::string& fullPath)
 {
     SDL_Surface* surface = SDL_LoadPNG(fullPath.c_str());
     if (!surface)
@@ -45,8 +35,19 @@ dae::Texture2D::Texture2D(const std::string &fullPath)
     }
 }
 
-dae::Texture2D::Texture2D(SDL_Texture* texture)	: m_texture{ texture } 
+dae::Texture2D::~Texture2D()
 {
-	assert(m_texture != nullptr);
+	SDL_DestroyTexture(m_texture);
 }
 
+SDL_Texture* dae::Texture2D::GetSDLTexture() const
+{
+    return m_texture;
+}
+
+glm::vec2 dae::Texture2D::GetSize() const
+{
+    float w{}, h{};
+    SDL_GetTextureSize(m_texture, &w, &h);
+    return { w, h };
+}

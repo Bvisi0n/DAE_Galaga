@@ -4,11 +4,13 @@
 #include <memory>
 #include <string>
 
-#include "Transform.h"
+#include "Components/Transform.h"
+
+// Forward declarations
+class Texture2D;
 
 namespace dae
 {
-	class Texture2D;
 	class GameObject 
 	{
 	public:

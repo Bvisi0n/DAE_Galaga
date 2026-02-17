@@ -1,8 +1,10 @@
 ﻿#include <stdexcept>
+
 #include <SDL3_ttf/SDL_ttf.h>
-#include "TextObject.h"
-#include "Renderer.h"
+
 #include "Font.h"
+#include "Renderer.h"
+#include "TextObject.h"
 #include "Texture2D.h"
 
 dae::TextObject::TextObject(const std::string& text, std::shared_ptr<Font> font, const SDL_Color& color)
@@ -54,5 +56,3 @@ void dae::TextObject::SetColor(const SDL_Color& color)
 	m_color = color; 
 	m_needsUpdate = true; 
 }
-
-

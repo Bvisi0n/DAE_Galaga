@@ -41,6 +41,7 @@ protected:
     // protected members
     // protected functions
 private:
+    // friends
     // private members
     // private functions
 };

@@ -1,4 +1,5 @@
 #include <SDL3/SDL.h>
+
 #include "InputManager.h"
 
 bool dae::InputManager::ProcessInput()

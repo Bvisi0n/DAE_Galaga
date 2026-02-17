@@ -1,10 +1,8 @@
 #include <stdexcept>
-#include <SDL3_ttf/SDL_ttf.h>
-#include "Font.h"
 
-TTF_Font* dae::Font::GetFont() const {
-	return m_font;
-}
+#include <SDL3_ttf/SDL_ttf.h>
+
+#include "Font.h"
 
 dae::Font::Font(const std::string& fullPath, float size) : m_font(nullptr)
 {
@@ -18,4 +16,8 @@ dae::Font::Font(const std::string& fullPath, float size) : m_font(nullptr)
 dae::Font::~Font()
 {
 	TTF_CloseFont(m_font);
+}
+
+TTF_Font* dae::Font::GetFont() const {
+	return m_font;
 }
