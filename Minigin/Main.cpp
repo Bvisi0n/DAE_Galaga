@@ -32,11 +32,15 @@ static void load()
 	//scene.Add(std::move(logo));
 
 	auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
-	auto ui_object = std::make_unique<dae::GameObject>();
-	ui_object->SetPosition(20, 20);
-	ui_object->AddComponent<dae::TextComponent>("Programming 4 Assignment", font)->SetColor({ 255, 255, 0, 255 });
-	ui_object->AddComponent<dae::FPSComponent>(font);
-	scene.Add(std::move(ui_object));
+	auto title = std::make_unique<dae::GameObject>();
+	title->SetPosition(292, 20);
+	title->AddComponent<dae::TextComponent>("Programming 4 Assignment", font)->SetColor({ 255, 255, 0, 255 });
+	scene.Add(std::move(title));
+	
+	auto fps = std::make_unique<dae::GameObject>();
+	fps->SetPosition(20, 20);
+	fps->AddComponent<dae::FPSComponent>(font);
+	scene.Add(std::move(fps));
 }
 
 int main(int, char*[]) {
