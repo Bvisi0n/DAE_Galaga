@@ -108,6 +108,7 @@ void dae::Minigin::Run(const std::function<void()>& load)
 
 void dae::Minigin::RunOneFrame()
 {
+	// Commented out fixed timestep logic for now, might never use it.
 	using clock = std::chrono::steady_clock;
 	const auto frame_start_time{ clock::now() };
 	const float delta_time{ std::chrono::duration<float>(frame_start_time - m_lastTime).count() };
@@ -131,6 +132,8 @@ void dae::Minigin::RunOneFrame()
 	if (execution_time < m_nsPerFrame)
 	{
 		const auto wait_duration = m_nsPerFrame - execution_time;
+		// Appearantly Windows had a sleep resolution of ~15ms on older versions and is just unreliable in general, even on newer versions.
+		// So I opted for SDL_DelayPrecise, the last function in this file (line 664): https://github.com/libsdl-org/SDL/blob/main/src/timer/SDL_timer.c
 		SDL_DelayPrecise(static_cast<Uint64>(wait_duration.count()));
 	}
 }

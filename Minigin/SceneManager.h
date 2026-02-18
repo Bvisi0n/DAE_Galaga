@@ -10,7 +10,6 @@
 
 namespace dae
 {
-	// Forward declarations
 	class Scene;
 
 	class SceneManager final : public Singleton<SceneManager>

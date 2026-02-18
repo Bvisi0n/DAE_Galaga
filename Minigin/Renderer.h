@@ -7,7 +7,6 @@
 
 namespace dae
 {
-	// Forward declarations
 	class Texture2D;
 
 	// Simple RAII wrapper for the SDL renderer

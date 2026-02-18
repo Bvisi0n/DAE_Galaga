@@ -9,7 +9,6 @@
 
 namespace dae
 {
-	// Forward declarations
 	class Texture2D;
 
 	class GameObject 

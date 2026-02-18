@@ -1,3 +1,5 @@
+#include <iomanip>
+#include <sstream>
 #include <string>
 #include <utility>
 
@@ -14,7 +16,11 @@ dae::FPSComponent::FPSComponent(GameObject* pOwner, std::shared_ptr<Font> pFont)
 
 void dae::FPSComponent::Update([[maybe_unused]] const float deltaTime)
 {
-	std::string frameString{ std::to_string(1 / deltaTime) };
+	const float fps{ (deltaTime > 0.f) ? (1.f / deltaTime) : 0.f };
+
+	std::ostringstream oss;
+	oss << std::fixed << std::setprecision(1) << fps << " FPS";
+	std::string frameString{ oss.str() };
 
 	m_pText->SetText(frameString);
 

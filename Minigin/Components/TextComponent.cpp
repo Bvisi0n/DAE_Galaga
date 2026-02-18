@@ -10,7 +10,7 @@
 
 dae::TextComponent::TextComponent(GameObject* pOwner, const std::string& text, std::shared_ptr<Font> pFont, const SDL_Color& color)
 	: BaseComponent(pOwner)
-	, m_needsUpdate(true), m_text(text), m_color(color), m_font(std::move(pFont)), m_textTexture(nullptr)
+	, m_text(text), m_font(std::move(pFont)), m_textTexture(nullptr), m_color(color), m_needsUpdate(true)
 {}
 
 void dae::TextComponent::Update([[maybe_unused]] const float deltaTime)

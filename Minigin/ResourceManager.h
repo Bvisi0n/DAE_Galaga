@@ -10,7 +10,6 @@
 
 namespace dae
 {
-	// Forward declarations
 	class Font;
 	class Texture2D;
 

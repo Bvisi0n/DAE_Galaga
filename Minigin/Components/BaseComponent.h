@@ -3,7 +3,6 @@
 
 namespace dae
 {
-	// Forward declarations
     class GameObject;
 
     class BaseComponent

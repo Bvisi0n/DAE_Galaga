@@ -11,7 +11,6 @@
 
 namespace dae
 {
-	// Forward declarations
 	class Font;
 	class GameObject;
 	class Texture2D;

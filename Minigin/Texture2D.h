@@ -5,7 +5,6 @@
 
 #include <glm/vec2.hpp>
 
-// Forward declarations
 struct SDL_Texture;
 
 namespace dae

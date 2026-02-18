@@ -3,7 +3,6 @@
 
 #include <string>
 
-// Forward declarations
 struct TTF_Font;
 
 namespace dae

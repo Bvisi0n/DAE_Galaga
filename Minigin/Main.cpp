@@ -18,18 +18,25 @@
 
 namespace fs = std::filesystem;
 
+// 0 Fix, 1 Implement, 2 Refactor, 3 Optimize, 4 Tweak
+// TODO 2 Refactor: Decouple/abstract out render logic from Components.
+// TODO 2 Refactor: Split engine and game into engine & game.
+// TODO 2 Refactor: Improve folder structure.
+// TODO 3 Optimize: Use string_view where possible to avoid unnecessary string copying.
+// TODO 4 Tweak: Reduce font size of FPS.
+
 static void load()
 {
 	auto& scene = dae::SceneManager::GetInstance().CreateScene();
 
-	//auto background = std::make_unique<dae::GameObject>();
-	//background->AddComponent<dae::RenderComponent>()->SetTexture("background.png");
-	//scene.Add(std::move(background));
+	auto background = std::make_unique<dae::GameObject>();
+	background->AddComponent<dae::TextureComponent>()->SetTexture("background.png");
+	scene.Add(std::move(background));
 
-	//auto logo = std::make_unique<dae::GameObject>();
-	//logo->SetPosition(358, 180);
-	//logo->AddComponent<dae::RenderComponent>()->SetTexture("logo.png");
-	//scene.Add(std::move(logo));
+	auto logo = std::make_unique<dae::GameObject>();
+	logo->SetPosition(358, 180);
+	logo->AddComponent<dae::TextureComponent>()->SetTexture("logo.png");
+	scene.Add(std::move(logo));
 
 	auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
 	auto title = std::make_unique<dae::GameObject>();
