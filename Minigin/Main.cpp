@@ -13,7 +13,6 @@
 #include "Components/TextureComponent.h"
 #include "Components/TextComponent.h"
 #include "ResourceManager.h"
-#include "TextObject.h"
 #include "Scene.h"
 
 namespace fs = std::filesystem;
