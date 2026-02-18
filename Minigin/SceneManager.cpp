@@ -7,14 +7,6 @@ dae::Scene& dae::SceneManager::CreateScene()
 	return *m_scenes.back();
 }
 
-void dae::SceneManager::FixedUpdate(const float deltaTime)
-{
-	for(auto& scene : m_scenes)
-	{
-		scene->FixedUpdate(deltaTime);
-	}
-}
-
 void dae::SceneManager::Update(const float deltaTime)
 {
 	for(auto& scene : m_scenes)

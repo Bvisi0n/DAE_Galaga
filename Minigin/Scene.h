@@ -19,7 +19,6 @@ namespace dae
 		Scene& operator=(const Scene& other) = delete;
 		Scene& operator=(Scene&& other)		 = delete;
 
-		void FixedUpdate(const float deltaTime);
 		void Update(const float deltaTime);
 		void Render() const;
 

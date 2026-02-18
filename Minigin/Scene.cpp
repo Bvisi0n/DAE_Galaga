@@ -4,14 +4,6 @@
 
 using namespace dae;
 
-void Scene::FixedUpdate(const float deltaTime)
-{
-	for(auto& object : m_objects)
-	{
-		object->FixedUpdate(deltaTime);
-	}
-}
-
 void Scene::Update(const float deltaTime)
 {
 	for(auto& object : m_objects)

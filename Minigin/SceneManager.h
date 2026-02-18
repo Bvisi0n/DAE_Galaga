@@ -18,7 +18,6 @@ namespace dae
 	public:
 		Scene& CreateScene();
 
-		void FixedUpdate(const float deltaTime);
 		void Update(const float deltaTime);
 		void Render();
 

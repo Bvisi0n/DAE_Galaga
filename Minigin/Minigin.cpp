@@ -93,7 +93,7 @@ void dae::Minigin::Run(const std::function<void()>& load)
 	load();
 
 	m_lastTime = std::chrono::steady_clock::now();
-	m_lag = 0.f;
+	//m_lag = 0.f;
 	m_quit = false;
 
 	#ifndef __EMSCRIPTEN__
@@ -112,15 +112,15 @@ void dae::Minigin::RunOneFrame()
 	const auto frame_start_time{ clock::now() };
 	const float delta_time{ std::chrono::duration<float>(frame_start_time - m_lastTime).count() };
 	m_lastTime = frame_start_time;
-	m_lag += delta_time;
+	//m_lag += delta_time;
 
 	m_quit = !InputManager::GetInstance().ProcessInput();
 
-	while (m_lag >= m_fixedTimeStep)
-	{
-		SceneManager::GetInstance().FixedUpdate(m_fixedTimeStep);
-		m_lag -= m_fixedTimeStep;
-	}
+	//while (m_lag >= m_fixedTimeStep)
+	//{
+	//	SceneManager::GetInstance().FixedUpdate(m_fixedTimeStep);
+	//	m_lag -= m_fixedTimeStep;
+	//}
 
 	SceneManager::GetInstance().Update(delta_time);
 	Renderer::GetInstance().Render();
