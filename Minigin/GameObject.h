@@ -11,7 +11,7 @@ namespace dae
 {
 	class Texture2D;
 
-	class GameObject 
+	class GameObject final
 	{
 	public:
 		GameObject() = default;
