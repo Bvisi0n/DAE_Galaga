@@ -15,15 +15,50 @@
 #include "ResourceManager.h"
 #include "Scene.h"
 
-namespace fs = std::filesystem;
+// Priority:	0 Breaks compilation
+//				1 New manditory feature
+//				2 Based on feedback
+//				3 Optimize
+//				4 Tweak
+//				5 Question
 
-// 0 Fix, 1 Implement, 2 Refactor, 3 Optimize, 4 Tweak
-// TODO 2 Refactor: Decouple/abstract out render logic from Components.
-//	                - RenderComponent holds a reference to the texture and renders it.
-//                  - Text & Texture components should not have to know about RenderComponent.
-// TODO 2 Refactor: Split engine and game into engine & game.
-// TODO 2 Refactor: Improve folder structure.
-// TODO 3 Optimize: Use string_view where possible to avoid unnecessary string copying.
+// TODO 1: Add code to your GameObject class enabling users to create a hierarchical scenegraph.
+//          It must be possible to attach a child to a parent.
+//          It must be possible to detach a child from a parent.
+//          It must be possible to iterate over the children of a parent.
+// TODO 1: Apply the dirty flag pattern when the position of a gameobject is changed.
+// TODO 1: Prove that your implementation works.
+//          Have a character from your game move in a circle on screen.
+//          Have another character from your game rotate around the first one.
+//          If implemented correctly, all you need is one extra component that is in charge of this rotation.
+
+// TODO 2: Check all [[maybe_unused]] tags and use them properly
+// TODO 2: Check all shared pointers, should they really share ownership?
+// TODO 2: In FPSComponent SetText() & Update() are heavy on hot path.
+// TODO 2: In TextComponent SetText() should do nothing if the text is the same as before.
+// TODO 2: When removing a GameObject from the scene, use a flag to mark it for deletion.
+// TODO 2: BaseComponent should be pure virtual.
+// TODO 2: FPSComponent should own a reference to a TextComponent instead of owning one.
+// TODO 2: TextComponent should own a reference to a TextureComponent instead of owning one.
+// TODO 2: Create RenderComponent and move all rendering logic there.
+// TODO 2: Create a TransformComponent.
+// TODO 2: Review the component management flow.
+//			Add a component to a game object.
+//			Remove a component from a game object in a safe manner.
+//			Get a component from a game object.
+//			Check whether a component has been added.
+// TODO 2: Review the entire update flow.
+// TODO 2: Review game loop, what happens when frames start to take to long? Should we cap the max delta time?
+
+// TODO 3: Split engine and game into dll & exe.
+// TODO 3: Improve folder structure.
+
+// TODO 4: Confirm that VLD works.
+
+// TODO 5: Is there a place for string_view when passing all these strings around?
+// TODO 5: Should Texture2D exist outside of TextureComponent?
+// TODO 5: Should Transform exist outside of TransformComponent?
+// TODO 5: Should a GameObject be able to have the same component multiple times?
 
 static void load()
 {
@@ -53,10 +88,10 @@ static void load()
 
 int main(int, char*[]) {
 #if __EMSCRIPTEN__
-	fs::path data_location = "";
+	std::filesystem::path data_location = "";
 #else
-	fs::path data_location = "./Data/";
-	if(!fs::exists(data_location))
+	std::filesystem::path data_location = "./Data/";
+	if(!std::filesystem::exists(data_location))
 		data_location = "../Data/";
 #endif
 	dae::Minigin engine(data_location);

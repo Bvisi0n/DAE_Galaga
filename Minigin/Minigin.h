@@ -29,7 +29,6 @@ namespace dae
 		static constexpr std::chrono::nanoseconds m_nsPerFrame{ 1000000000 / m_desiredRenderFPS };
 
 		std::chrono::steady_clock::time_point m_lastTime{};
-		//float m_lag{};
 		bool  m_quit{};
 	};
 }

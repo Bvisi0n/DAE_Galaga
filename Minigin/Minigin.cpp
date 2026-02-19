@@ -93,7 +93,6 @@ void dae::Minigin::Run(const std::function<void()>& load)
 	load();
 
 	m_lastTime = std::chrono::steady_clock::now();
-	//m_lag = 0.f;
 	m_quit = false;
 
 	#ifndef __EMSCRIPTEN__
@@ -108,20 +107,12 @@ void dae::Minigin::Run(const std::function<void()>& load)
 
 void dae::Minigin::RunOneFrame()
 {
-	// Commented out fixed timestep logic for now, might never use it.
-	using clock = std::chrono::steady_clock;
+	using clock = std::chrono::steady_clock; // Steady clock is guaranteed to be monotonic
 	const auto frame_start_time{ clock::now() };
 	const float delta_time{ std::chrono::duration<float>(frame_start_time - m_lastTime).count() };
 	m_lastTime = frame_start_time;
-	//m_lag += delta_time;
 
 	m_quit = !InputManager::GetInstance().ProcessInput();
-
-	//while (m_lag >= m_fixedTimeStep)
-	//{
-	//	SceneManager::GetInstance().FixedUpdate(m_fixedTimeStep);
-	//	m_lag -= m_fixedTimeStep;
-	//}
 
 	SceneManager::GetInstance().Update(delta_time);
 	Renderer::GetInstance().Render();
@@ -133,7 +124,7 @@ void dae::Minigin::RunOneFrame()
 	{
 		const auto wait_duration = m_nsPerFrame - execution_time;
 		// Appearantly Windows had a sleep resolution of ~15ms on older versions and is just unreliable in general, even on newer versions.
-		// So I opted for SDL_DelayPrecise, the last function in this file (line 664): https://github.com/libsdl-org/SDL/blob/main/src/timer/SDL_timer.c
+		// Likely overkill here but I opted for SDL_DelayPrecise, the last function in this file (line 664): https://github.com/libsdl-org/SDL/blob/main/src/timer/SDL_timer.c
 		SDL_DelayPrecise(static_cast<Uint64>(wait_duration.count()));
 	}
 }
