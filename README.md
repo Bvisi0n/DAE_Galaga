@@ -10,9 +10,9 @@ The Emscripten workflow generates a web version of the project and publishes it 
 
 ## Minigin
 
-[Minigin](https://github.com/avadae/minigin) is a very small project using [SDL3](https://www.libsdl.org/) and [glm](https://github.com/g-truc/glm) for 2D C++ game projects. It is in no way a game engine, only a barebone start project where everything SDL related has been set up. It contains glm for vector math, to aleviate the need to write custom vector and matrix classes.
+The students are provided with [Minigin](https://github.com/avadae/minigin), a very small project using [SDL3](https://www.libsdl.org/) and [glm](https://github.com/g-truc/glm) for 2D C++ game projects. It is in no way a game engine, only a barebone start project where everything SDL related has been set up. It contains glm for vector math, to aleviate the need to write custom vector and matrix classes.
 
-## Windows version
+### Windows version
 
 Either
 - Open the root folder in Visual Studio 2026; this will be recognized as a cmake project.
@@ -25,9 +25,9 @@ Or
 Or
 - Use whatever editor you like :)
 
-## Emscripten (web) version
+### Emscripten (web) version
 
-### On windows
+#### On windows
 
 For installing all of the needed tools on Windows I recommend using [Chocolatey](https://chocolatey.org/). You can then run the following in a terminal to install what is needed:
 
@@ -49,7 +49,7 @@ To be able to see the webpage you can start a python webserver in the build_web 
 
 Then browse to http://localhost:8000 and you're good to go.
 
-### On OSX
+#### On OSX
 
 On Mac you can use homebrew
 
@@ -70,7 +70,7 @@ To be able to see the webpage you can start a python webserver in the build_web 
 
 Then browse to http://localhost:8000 and you're good to go.
 
-## Github Actions
+### Github Actions
 
 This project is build with github actions.
 - The CMake workflow builds the project in Debug and Release for Windows and serves as a check that the project builds on that platform.
