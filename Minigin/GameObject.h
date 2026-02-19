@@ -15,15 +15,15 @@ namespace dae
 	{
 	public:
 		GameObject() = default;
-		virtual ~GameObject();
+		~GameObject();
 
 		GameObject(const GameObject& other)			   = delete;
 		GameObject(GameObject&& other)				   = delete;
 		GameObject& operator=(const GameObject& other) = delete;
 		GameObject& operator=(GameObject&& other)	   = delete;
 
-		virtual void Update([[maybe_unused]] const float deltaTime);
-		virtual void Render() const;
+		void Update([[maybe_unused]] const float deltaTime);
+		void Render() const;
 
 		template <typename T, typename... Args>
 		T* AddComponent(Args&&... args) {
