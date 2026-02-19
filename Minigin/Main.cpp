@@ -19,10 +19,11 @@ namespace fs = std::filesystem;
 
 // 0 Fix, 1 Implement, 2 Refactor, 3 Optimize, 4 Tweak
 // TODO 2 Refactor: Decouple/abstract out render logic from Components.
+//	                - RenderComponent holds a reference to the texture and renders it.
+//                  - Text & Texture components should not have to know about RenderComponent.
 // TODO 2 Refactor: Split engine and game into engine & game.
 // TODO 2 Refactor: Improve folder structure.
 // TODO 3 Optimize: Use string_view where possible to avoid unnecessary string copying.
-// TODO 4 Tweak: Reduce font size of FPS.
 
 static void load()
 {
@@ -43,6 +44,7 @@ static void load()
 	title->AddComponent<dae::TextComponent>("Programming 4 Assignment", font)->SetColor({ 255, 255, 0, 255 });
 	scene.Add(std::move(title));
 	
+	font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 24);
 	auto fps = std::make_unique<dae::GameObject>();
 	fps->SetPosition(20, 20);
 	fps->AddComponent<dae::FPSComponent>(font);
