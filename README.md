@@ -1,22 +1,16 @@
-﻿# Minigin
+# DAE_Galaga
 
-Minigin is a very small project using [SDL3](https://www.libsdl.org/) and [glm](https://github.com/g-truc/glm) for 2D c++ game projects. It is in no way a game engine, only a barebone start project where everything sdl related has been set up. It contains glm for vector math, to aleviate the need to write custom vector and matrix classes.
+A learning project that spans the entire 4th semester of the course [Programming 4](https://youtu.be/j96Oh6vzhmg) in the [Game Development](https://digitalartsandentertainment.be/page/31/Game+Development) major at [Digital Arts & Entertainment](https://digitalartsandentertainment.be/). Every lesson new patterns and techniques are introduced inspired by the book [Game Programming Patterns](https://gameprogrammingpatterns.com/) by [Robert Nystrom](https://github.com/munificent) which have to be implimented as weekly assignments. Students are randomly assigned 1 of 10 retro games to recreate by the end of the semester at which points they must present and defend their project.
 
-[![Build Status](https://github.com/avadae/minigin/actions/workflows/cmake.yml/badge.svg)](https://github.com/avadae/cmake/actions)
-[![Build Status](https://github.com/avadae/minigin/actions/workflows/emscripten.yml/badge.svg)](https://github.com/avadae/emscripten/actions)
-[![GitHub Release](https://img.shields.io/github/v/release/avadae/minigin?logo=github&sort=semver)](https://github.com/avadae/minigin/releases/latest)
+[![Build Status](https://github.com/Bvisi0n/DAE_Galaga/actions/workflows/cmake.yml/badge.svg)](https://github.com/Bvisi0n/cmake/actions)
+[![Build Status](https://github.com/Bvisi0n/DAE_Galaga/actions/workflows/emscripten.yml/badge.svg)](https://github.com/Bvisi0n/emscripten/actions)
+[![GitHub Release](https://img.shields.io/github/v/release/Bvisi0n/DAE_Galaga?logo=github&sort=semver)](https://github.com/Bvisi0n/DAE_Galaga/releases/latest)
 
-# Goal
+The Emscripten workflow generates a web version of the project and publishes it [here](https://bvisi0n.github.io/DAE_Galaga/) as a github page.
 
-Minigin can/may be used as a start project for the exam assignment in the course [Programming 4](https://youtu.be/j96Oh6vzhmg) at DAE. In that assignment students need to recreate a popular 80's arcade game with a game engine they need to program themselves. During the course we discuss several game programming patterns, using the book '[Game Programming Patterns](https://gameprogrammingpatterns.com/)' by [Robert Nystrom](https://github.com/munificent) as reading material. 
+## Minigin
 
-# Disclaimer
-
-Minigin is, despite perhaps the suggestion in its name, **not** a game engine. It is just a very simple SDL3 ready project with some of the scaffolding in place to get started. None of the patterns discussed in the course are used yet (except singleton which use we challenge during the course). It is up to the students to implement their own vision for their engine, apply patterns as they see fit, create their game as efficient as possible.
-
-# Use
-
-Get the source from this project, or since students need to have their work on github too, they can use this repository as a template. Hit the "Use this template" button on the top right corner of the github page of this project.
+[Minigin](https://github.com/avadae/minigin) is a very small project using [SDL3](https://www.libsdl.org/) and [glm](https://github.com/g-truc/glm) for 2D C++ game projects. It is in no way a game engine, only a barebone start project where everything SDL related has been set up. It contains glm for vector math, to aleviate the need to write custom vector and matrix classes.
 
 ## Windows version
 
@@ -24,7 +18,7 @@ Either
 - Open the root folder in Visual Studio 2026; this will be recognized as a cmake project.
   
 Or
-- Install CMake 
+- Install CMake
 - Install CMake and CMake Tools extensions in Visual Code
 - Open the root folder in Visual Code,  this will be recognized as a cmake project.
 
@@ -42,7 +36,7 @@ For installing all of the needed tools on Windows I recommend using [Chocolatey]
     choco install -y ninja
     choco install -y python
 
-In a terminal, navigate to the root folder. Run this: 
+In a terminal, navigate to the root folder. Run this:
 
     mkdir build_web
     cd build_web
@@ -63,7 +57,7 @@ On Mac you can use homebrew
     brew install emscripten
     brew install python
 
-In a terminal on OSX, navigate to the root folder. Run this: 
+In a terminal on OSX, navigate to the root folder. Run this:
 
     mkdir build_web
     cd build_web
@@ -80,10 +74,8 @@ Then browse to http://localhost:8000 and you're good to go.
 
 This project is build with github actions.
 - The CMake workflow builds the project in Debug and Release for Windows and serves as a check that the project builds on that platform.
-- The Emscripten workflow generates a web version of the project and publishes it as a [github page](https://avadae.github.io/minigin/). 
+- The Emscripten workflow generates a web version of the project and publishes it as a [github page](https://bvisi0n.github.io/DAE_Galaga/).
   - The url of that page will be `https://<username>.github.io/<repository>/`
-- You can embed this page with 
+- You can embed this page with
 
 ```<iframe style="position: absolute; top: 0px; left: 0px; width: 1024px; height: 576px;" src="https://<username>.github.io/<repository>/" loading="lazy"></iframe>```
-
-<iframe style="position: absolute; top: 0px; left: 0px; width: 1024px; height: 576px;" src="https://bvisi0n.github.io/DAE_Galaga/" loading="lazy"></iframe>
