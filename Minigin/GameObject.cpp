@@ -6,7 +6,7 @@
 
 dae::GameObject::~GameObject() = default;
 
-void dae::GameObject::Update([[maybe_unused]] const float deltaTime)
+void dae::GameObject::Update(const float deltaTime)
 {
 	for (auto& comp : m_components) comp->Update(deltaTime);
 }

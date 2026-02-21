@@ -13,7 +13,7 @@ dae::TextComponent::TextComponent(GameObject* pOwner, const std::string& text, s
 	, m_text(text), m_font(std::move(pFont)), m_textTexture(nullptr), m_color(color), m_needsUpdate(true)
 {}
 
-void dae::TextComponent::Update([[maybe_unused]] const float deltaTime)
+void dae::TextComponent::Update(const float)
 {
 	if (m_needsUpdate)
 	{

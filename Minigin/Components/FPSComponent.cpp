@@ -14,7 +14,7 @@ dae::FPSComponent::FPSComponent(GameObject* pOwner, std::shared_ptr<Font> pFont)
 	m_pText = std::make_unique<TextComponent>(GetOwner(), "", std::move(pFont));
 }
 
-void dae::FPSComponent::Update([[maybe_unused]] const float deltaTime)
+void dae::FPSComponent::Update(const float deltaTime)
 {
 	const float fps{ (deltaTime > 0.f) ? (1.f / deltaTime) : 0.f };
 

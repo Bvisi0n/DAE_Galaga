@@ -32,12 +32,10 @@
 //          Have another character from your game rotate around the first one.
 //          If implemented correctly, all you need is one extra component that is in charge of this rotation.
 
-// TODO 2: Check all [[maybe_unused]] tags and use them properly
 // TODO 2: Check all shared pointers, should they really share ownership?
 // TODO 2: In FPSComponent SetText() & Update() are heavy on hot path.
 // TODO 2: In TextComponent SetText() should do nothing if the text is the same as before.
 // TODO 2: When removing a GameObject from the scene, use a flag to mark it for deletion.
-// TODO 2: BaseComponent should be pure virtual.
 // TODO 2: FPSComponent should own a reference to a TextComponent instead of owning one.
 // TODO 2: TextComponent should own a reference to a TextureComponent instead of owning one.
 // TODO 2: Create RenderComponent and move all rendering logic there.

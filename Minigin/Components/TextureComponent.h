@@ -21,6 +21,7 @@ namespace dae
 		TextureComponent& operator=(const TextureComponent& other)	   = delete;
 		TextureComponent& operator=(TextureComponent&& other) noexcept = delete;
 
+		void Update(const float) override {};
 		void Render() const override;
 		void SetTexture(const std::string& filename);
 

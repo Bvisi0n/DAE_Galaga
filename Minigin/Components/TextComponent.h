@@ -26,7 +26,7 @@ namespace dae
 		TextComponent& operator=(const TextComponent&) = delete;
 		TextComponent& operator=(TextComponent&&)      = delete;
 
-		void Update([[maybe_unused]] const float deltaTime) override;
+		void Update(const float deltaTime) override;
 		void Render() const override;
 
 		void SetColor(const SDL_Color& color);

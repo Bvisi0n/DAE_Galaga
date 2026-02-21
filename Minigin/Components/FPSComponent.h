@@ -15,14 +15,14 @@ namespace dae
 	{
 	public:
 		FPSComponent(GameObject* pOwner, std::shared_ptr<Font> pFont);
-		virtual ~FPSComponent() = default;
+		~FPSComponent() = default;
 
 		FPSComponent(const FPSComponent&)            = delete;
 		FPSComponent(FPSComponent&&)                 = delete;
 		FPSComponent& operator=(const FPSComponent&) = delete;
 		FPSComponent& operator=(FPSComponent&&)      = delete;
 
-		void Update([[maybe_unused]] const float deltaTime) override;
+		void Update(const float deltaTime) override;
 		void Render() const override;
 
 	private:
