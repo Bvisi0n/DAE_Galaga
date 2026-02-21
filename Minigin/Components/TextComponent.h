@@ -19,7 +19,7 @@ namespace dae
 	{
 	public:
 		TextComponent(GameObject* pOwner, const std::string& text, std::shared_ptr<Font> pFont, const SDL_Color& color = { 255, 255, 255, 255 });
-		virtual ~TextComponent() = default;
+		~TextComponent() = default;
 
 		TextComponent(const TextComponent&)            = delete;
 		TextComponent(TextComponent&&)                 = delete;

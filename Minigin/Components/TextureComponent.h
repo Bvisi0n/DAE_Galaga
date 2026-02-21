@@ -14,7 +14,7 @@ namespace dae
 	{
 	public:
 		using BaseComponent::BaseComponent;
-		virtual ~TextureComponent() = default;
+		~TextureComponent() = default;
 
 		TextureComponent(const TextureComponent& other)				   = delete;
 		TextureComponent(TextureComponent&& other) noexcept			   = delete;
