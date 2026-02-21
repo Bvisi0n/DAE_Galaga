@@ -23,10 +23,8 @@ namespace dae
 		void RunOneFrame();
 
 	private:
-		static constexpr int m_desiredPhysicsFPS{ 120 };
-		static constexpr int m_desiredRenderFPS{ 60 };
-		static constexpr float m_fixedTimeStep{ 1.0f / m_desiredPhysicsFPS };
-		static constexpr std::chrono::nanoseconds m_nsPerFrame{ 1000000000 / m_desiredRenderFPS };
+		static constexpr int m_desiredFPS{ 60 };
+		static constexpr std::chrono::nanoseconds m_nsPerFrame{ 1000000000 / m_desiredFPS };
 
 		std::chrono::steady_clock::time_point m_lastTime{};
 		bool  m_quit{};
