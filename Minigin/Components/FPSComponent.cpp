@@ -24,7 +24,7 @@ void dae::FPSComponent::Update(const float deltaTime)
 
 	m_pText->SetText(frameString);
 
-	m_pText->Update(deltaTime);
+	m_pText->Update(deltaTime); // FPS no longer draws when deleting this line because FPSComponent owns the TextComponent.
 }
 
 void dae::FPSComponent::Render() const

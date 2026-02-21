@@ -45,12 +45,18 @@ void dae::TextComponent::Render() const
 
 void dae::TextComponent::SetColor(const SDL_Color& color)
 {
-	m_color = color;
-	m_needsUpdate = true;
+	if (m_color.r != color.r || m_color.g != color.g || m_color.b != color.b || m_color.a != color.a)
+	{
+		m_color = color;
+		m_needsUpdate = true;
+	}
 }
 
 void dae::TextComponent::SetText(std::string& text)
 {
-	m_text = std::move(text);
-	m_needsUpdate = true;
+	if (m_text != text)
+	{
+		m_text = std::move(text);
+		m_needsUpdate = true;
+	}
 }

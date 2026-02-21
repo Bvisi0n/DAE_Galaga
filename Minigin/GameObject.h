@@ -56,7 +56,6 @@ namespace dae
 				}), m_components.end());
 		}
 
-		void SetTexture(const std::string& filename);
 		void SetPosition(float x, float y);
 
 		Transform& GetTransform() { return m_transform; };
@@ -64,7 +63,6 @@ namespace dae
 	private:
 		std::vector<std::unique_ptr<BaseComponent>> m_components;
 		Transform m_transform{};
-		std::shared_ptr<Texture2D> m_texture{};
 	};
 }
 #endif

@@ -32,12 +32,11 @@
 //          Have another character from your game rotate around the first one.
 //          If implemented correctly, all you need is one extra component that is in charge of this rotation.
 
-// TODO 2: In FPSComponent SetText() & Update() are heavy on hot path.
-// TODO 2: In TextComponent SetText() should do nothing if the text is the same as before.
 // TODO 2: When removing a GameObject from the scene, use a flag to mark it for deletion.
 // TODO 2: FPSComponent should own a reference to a TextComponent instead of owning one.
 // TODO 2: TextComponent should own a reference to a TextureComponent instead of owning one.
 // TODO 2: Create RenderComponent and move all rendering logic there.
+// TODO 2: In FPSComponent SetText() & Update() should be happenign in the same method.
 // TODO 2: Create a TransformComponent.
 // TODO 2: Review the component management flow.
 //			Add a component to a game object.
@@ -50,8 +49,7 @@
 // TODO 3: Split engine and game into dll & exe.
 // TODO 3: Improve folder structure.
 
-// TODO 4: Confirm that VLD works.
-
+// TODO 5: Is using std::ostringstream in FPSComponent::Update expensive?
 // TODO 5: Is there a place for string_view when passing all these strings around?
 // TODO 5: Should Texture2D exist outside of TextureComponent?
 // TODO 5: Should Transform exist outside of TransformComponent?
