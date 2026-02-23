@@ -81,14 +81,14 @@ static void loadMainMenu()
 	scene.Add(std::move(rotation_center));
 
 	auto rotating_inner{ std::make_unique<dae::GameObject>() };
-	rotating_inner->AddComponent<dae::TextComponent>("I", font);
+	rotating_inner->AddComponent<dae::TextureComponent>()->SetTexture("starfighter.png");
 	rotating_inner->AddComponent<dae::RotatorComponent>(20.0f, 2.5f);
 	rotating_inner->SetParent(pCenter, false);
 	auto* pInner = rotating_inner.get();
 	scene.Add(std::move(rotating_inner));
 
 	auto rotating_outer{ std::make_unique<dae::GameObject>() };
-	rotating_outer->AddComponent<dae::TextComponent>("O", font);
+	rotating_outer->AddComponent<dae::TextureComponent>()->SetTexture("starfighter_captured.png");
 	rotating_outer->AddComponent<dae::RotatorComponent>(25.0f, -5.0f);
 	rotating_outer->SetParent(pInner, false);
 	scene.Add(std::move(rotating_outer));
