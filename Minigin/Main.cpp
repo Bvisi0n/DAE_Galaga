@@ -24,8 +24,6 @@
 //				4 Tweak
 //				5 Question
 
-// TODO 1: Replace rotating objects with Galaga textures.
-
 // TODO 2: When removing a GameObject from the scene, use a flag to mark it for deletion.
 // TODO 2: FPSComponent should own a reference to a TextComponent instead of owning one.
 // TODO 2: TextComponent should own a reference to a TextureComponent instead of owning one.
