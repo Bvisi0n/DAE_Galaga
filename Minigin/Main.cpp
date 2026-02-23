@@ -1,3 +1,5 @@
+#include <filesystem>
+
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
 
@@ -7,15 +9,12 @@
 
 #include "Minigin.h"
 #include "SceneManager.h"
-#include <filesystem>
-
 #include "Components/FPSComponent.h"
 #include "Components/TextureComponent.h"
 #include "Components/TextComponent.h"
 #include "GameObject.h"
 #include "ResourceManager.h"
 #include "Scene.h"
-#include "SceneManager.h"
 
 // Priority:	0 Breaks compilation
 //				1 New manditory feature
