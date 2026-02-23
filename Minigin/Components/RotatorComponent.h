@@ -7,13 +7,16 @@
 
 namespace dae
 {
+    class GameObject;
+
     class RotatorComponent final : public BaseComponent
     {
     public:
         RotatorComponent(GameObject* pOwner, float range, float speed);
-        virtual ~RotatorComponent() override = default;
+        ~RotatorComponent() override = default;
 
-        virtual void Update(float deltaTime) override;
+        void Update(float deltaTime) override;
+        void Render() const override {};
 
     private:
         float m_Angle{ 0.0f };

@@ -10,6 +10,7 @@
 #include "Minigin.h"
 #include "SceneManager.h"
 #include "Components/FPSComponent.h"
+#include "Components/RotatorComponent.h"
 #include "Components/TextureComponent.h"
 #include "Components/TextComponent.h"
 #include "GameObject.h"
@@ -23,10 +24,7 @@
 //				4 Tweak
 //				5 Question
 
-// TODO 1: Prove that your scene graph & dirty flag implementation works.
-//          Have a character from your game move in a circle on screen.
-//          Have another character from your game rotate around the first one.
-//          If implemented correctly, all you need is one extra component that is in charge of this rotation.
+// TODO 1: Replace rotating objects with Galaga textures.
 
 // TODO 2: When removing a GameObject from the scene, use a flag to mark it for deletion.
 // TODO 2: FPSComponent should own a reference to a TextComponent instead of owning one.
@@ -52,30 +50,48 @@
 // TODO 5: Should Transform exist outside of TransformComponent?
 // TODO 5: Should a GameObject be able to have the same component multiple times?
 
-static void load()
+static void loadMainMenu()
 {
-	auto& scene = dae::SceneManager::GetInstance().CreateScene();
+	auto& scene{ dae::SceneManager::GetInstance().CreateScene() };
 
-	auto background = std::make_unique<dae::GameObject>();
+	auto background{ std::make_unique<dae::GameObject>() };
 	background->AddComponent<dae::TextureComponent>()->SetTexture("background.png");
 	scene.Add(std::move(background));
 
-	auto logo = std::make_unique<dae::GameObject>();
+	auto logo{ std::make_unique<dae::GameObject>() };
 	logo->SetLocalPosition(358, 180);
 	logo->AddComponent<dae::TextureComponent>()->SetTexture("logo.png");
 	scene.Add(std::move(logo));
 
-	auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
-	auto title = std::make_unique<dae::GameObject>();
+	auto font{ dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 36) };
+	auto title{ std::make_unique<dae::GameObject>() };
 	title->SetLocalPosition(292, 20);
 	title->AddComponent<dae::TextComponent>("Programming 4 Assignment", font)->SetColor({ 255, 255, 0, 255 });
 	scene.Add(std::move(title));
 	
 	font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 24);
-	auto fps = std::make_unique<dae::GameObject>();
+	auto fps{ std::make_unique<dae::GameObject>() };
 	fps->SetLocalPosition(20, 20);
 	fps->AddComponent<dae::FPSComponent>(font);
 	scene.Add(std::move(fps));
+
+	auto rotation_center{ std::make_unique<dae::GameObject>() };
+	rotation_center->SetLocalPosition(512, 350);
+	auto* pCenter = rotation_center.get();
+	scene.Add(std::move(rotation_center));
+
+	auto rotating_inner{ std::make_unique<dae::GameObject>() };
+	rotating_inner->AddComponent<dae::TextComponent>("I", font);
+	rotating_inner->AddComponent<dae::RotatorComponent>(20.0f, 2.5f);
+	rotating_inner->SetParent(pCenter, false);
+	auto* pInner = rotating_inner.get();
+	scene.Add(std::move(rotating_inner));
+
+	auto rotating_outer{ std::make_unique<dae::GameObject>() };
+	rotating_outer->AddComponent<dae::TextComponent>("O", font);
+	rotating_outer->AddComponent<dae::RotatorComponent>(25.0f, -5.0f);
+	rotating_outer->SetParent(pInner, false);
+	scene.Add(std::move(rotating_outer));
 }
 
 int main(int, char*[]) {
@@ -87,6 +103,6 @@ int main(int, char*[]) {
 		data_location = "../Data/";
 #endif
 	dae::Minigin engine(data_location);
-	engine.Run(load);
+	engine.Run(loadMainMenu);
     return 0;
 }
