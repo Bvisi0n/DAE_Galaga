@@ -75,11 +75,6 @@ void dae::GameObject::SetLocalPosition(Transform pos)
 	SetPositionDirty();
 }
 
-dae::Transform& dae::GameObject::GetLocalPosition()
-{
-	return m_localPosition;
-}
-
 dae::Transform& dae::GameObject::GetWorldPosition()
 {
 	if (m_positionIsDirty)
@@ -114,4 +109,9 @@ void dae::GameObject::SetPositionDirty()
 	{
 		child->SetPositionDirty();
 	}
+}
+
+dae::Transform& dae::GameObject::GetLocalPosition()
+{
+	return m_localPosition;
 }

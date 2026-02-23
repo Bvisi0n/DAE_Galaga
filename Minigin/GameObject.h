@@ -63,7 +63,6 @@ namespace dae
 		
 		void SetLocalPosition(float x, float y);
 		void SetLocalPosition(Transform pos);
-		Transform& GetLocalPosition();
 		Transform& GetWorldPosition();
 
 	private:
@@ -76,6 +75,7 @@ namespace dae
 
 		void UpdateWorldPosition();
 		void SetPositionDirty();
+		Transform& GetLocalPosition();
 	};
 }
 #endif
