@@ -56,13 +56,26 @@ namespace dae
 				}), m_components.end());
 		}
 
-		void SetPosition(float x, float y);
-
-		Transform& GetTransform() { return m_transform; };
+		void SetParent(GameObject* parent, bool keepWorldPosition);
+		bool IsChild(GameObject* parent);
+		void RemoveChild(GameObject* parent);
+		void AddChild(GameObject* parent);
+		
+		void SetLocalPosition(float x, float y);
+		void SetLocalPosition(Transform pos);
+		Transform& GetLocalPosition();
+		Transform& GetWorldPosition();
 
 	private:
+		GameObject* m_parent;
+		std::vector<GameObject*> m_children;
 		std::vector<std::unique_ptr<BaseComponent>> m_components;
-		Transform m_transform{};
+		Transform m_localPosition;
+		Transform m_worldPosition;
+		bool m_positionIsDirty;
+
+		void UpdateWorldPosition();
+		void SetPositionDirty();
 	};
 }
 #endif

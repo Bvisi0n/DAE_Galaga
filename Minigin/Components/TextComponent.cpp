@@ -2,10 +2,10 @@
 
 #include <SDL3/SDL.h>
 
+#include "Components/TextComponent.h"
 #include "Font.h"
 #include "GameObject.h"
 #include "Renderer.h"
-#include "TextComponent.h"
 #include "Texture2D.h"
 
 dae::TextComponent::TextComponent(GameObject* pOwner, const std::string& text, std::shared_ptr<Font> pFont, const SDL_Color& color)
@@ -37,7 +37,7 @@ void dae::TextComponent::Render() const
 {
 	if (m_textTexture != nullptr && GetOwner() != nullptr)
 	{
-		const auto& pos = GetOwner()->GetTransform().GetPosition();
+		const auto& pos = GetOwner()->GetLocalPosition().GetPosition();
 		Renderer::GetInstance().RenderTexture(*m_textTexture, pos.x, pos.y);
 	}
 }

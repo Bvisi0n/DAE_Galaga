@@ -12,8 +12,10 @@
 #include "Components/FPSComponent.h"
 #include "Components/TextureComponent.h"
 #include "Components/TextComponent.h"
+#include "GameObject.h"
 #include "ResourceManager.h"
 #include "Scene.h"
+#include "SceneManager.h"
 
 // Priority:	0 Breaks compilation
 //				1 New manditory feature
@@ -64,19 +66,19 @@ static void load()
 	scene.Add(std::move(background));
 
 	auto logo = std::make_unique<dae::GameObject>();
-	logo->SetPosition(358, 180);
+	logo->SetLocalPosition(358, 180);
 	logo->AddComponent<dae::TextureComponent>()->SetTexture("logo.png");
 	scene.Add(std::move(logo));
 
 	auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
 	auto title = std::make_unique<dae::GameObject>();
-	title->SetPosition(292, 20);
+	title->SetLocalPosition(292, 20);
 	title->AddComponent<dae::TextComponent>("Programming 4 Assignment", font)->SetColor({ 255, 255, 0, 255 });
 	scene.Add(std::move(title));
 	
 	font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 24);
 	auto fps = std::make_unique<dae::GameObject>();
-	fps->SetPosition(20, 20);
+	fps->SetLocalPosition(20, 20);
 	fps->AddComponent<dae::FPSComponent>(font);
 	scene.Add(std::move(fps));
 }

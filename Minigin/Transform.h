@@ -8,6 +8,11 @@ namespace dae
 	class Transform final
 	{
 	public:
+		Transform() = default;
+		Transform(glm::vec3 pos);
+		Transform operator+(const Transform& other) const;
+		Transform operator-(const Transform& other) const;
+
 		const glm::vec3& GetPosition() const { return m_position; }
 		void SetPosition(float x, float y, float z = 0);
 		void SetPosition(const glm::vec3& position);
