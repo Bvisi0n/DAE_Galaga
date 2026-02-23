@@ -1,4 +1,5 @@
 #include <iomanip>
+#include <memory>
 #include <sstream>
 #include <string>
 #include <utility>
@@ -20,9 +21,9 @@ void dae::FPSComponent::Update(const float deltaTime)
 
 	std::ostringstream oss;
 	oss << std::fixed << std::setprecision(1) << fps << " FPS";
-	std::string frameString{ oss.str() };
+	std::string frame_string{ oss.str() };
 
-	m_pText->SetText(frameString);
+	m_pText->SetText(frame_string);
 
 	m_pText->Update(deltaTime); // FPS no longer draws when deleting this line because FPSComponent owns the TextComponent.
 }
