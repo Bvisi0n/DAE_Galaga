@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <string>
+#include <vector>
 
 #include "Components/BaseComponent.h"
 #include "Transform.h"
@@ -56,22 +57,24 @@ namespace dae
 				}), m_components.end());
 		}
 
-		void SetParent(GameObject* parent, bool keepWorldPosition);
-		bool IsChild(GameObject* parent);
-		void RemoveChild(GameObject* parent);
-		void AddChild(GameObject* parent);
+		void SetParent(GameObject* pParent, bool keepWorldPosition);
+		const std::vector<GameObject*>& GetChildren() const;
 		
 		void SetLocalPosition(float x, float y);
 		void SetLocalPosition(Transform pos);
 		Transform& GetWorldPosition();
 
 	private:
-		GameObject* m_parent;
+		GameObject* m_parent{ nullptr };
 		std::vector<GameObject*> m_children;
 		std::vector<std::unique_ptr<BaseComponent>> m_components;
-		Transform m_localPosition;
-		Transform m_worldPosition;
-		bool m_positionIsDirty;
+		Transform m_localPosition{};
+		Transform m_worldPosition{};
+		bool m_positionIsDirty{ true };
+
+		bool IsChild(GameObject* pCandidate);
+		void RemoveChild(GameObject* pParent);
+		void AddChild(GameObject* pParent);
 
 		void UpdateWorldPosition();
 		void SetPositionDirty();

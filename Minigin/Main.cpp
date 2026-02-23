@@ -24,12 +24,7 @@
 //				4 Tweak
 //				5 Question
 
-// TODO 1: Add code to your GameObject class enabling users to create a hierarchical scenegraph.
-//          It must be possible to attach a child to a parent.
-//          It must be possible to detach a child from a parent.
-//          It must be possible to iterate over the children of a parent.
-// TODO 1: Apply the dirty flag pattern when the position of a gameobject is changed.
-// TODO 1: Prove that your implementation works.
+// TODO 1: Prove that your scene graph & dirty flag implementation works.
 //          Have a character from your game move in a circle on screen.
 //          Have another character from your game rotate around the first one.
 //          If implemented correctly, all you need is one extra component that is in charge of this rotation.
@@ -51,6 +46,7 @@
 // TODO 3: Split engine and game into dll & exe.
 // TODO 3: Improve folder structure.
 
+// TODO 5: in GameObject::SetParent, if keepWorldPosition is false, should the local position be reset to something specific?
 // TODO 5: Is using std::ostringstream in FPSComponent::Update expensive?
 // TODO 5: Is there a place for string_view when passing all these strings around?
 // TODO 5: Should Texture2D exist outside of TextureComponent?
