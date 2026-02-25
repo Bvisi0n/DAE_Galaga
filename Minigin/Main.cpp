@@ -18,11 +18,11 @@
 #include "Scene.h"
 
 // Priority:	0 Breaks compilation
-//				1 New manditory feature
+//				1 Next Deadline
 //				2 Based on feedback
-//				3 Optimize
-//				4 Tweak
-//				5 Question
+//				3 Galaga related
+//				4 Other improvements
+//				5 Needs investigation
 
 // TODO 2: When removing a GameObject from the scene, use a flag to mark it for deletion.
 // TODO 2: FPSComponent should own a reference to a TextComponent instead of owning one.
@@ -38,15 +38,20 @@
 // TODO 2: Review the entire update flow.
 // TODO 2: Review game loop, what happens when frames start to take to long? Should we cap the max delta time?
 
-// TODO 3: Split engine and game into dll & exe.
-// TODO 3: Improve folder structure.
+// TODO 3: Add ScaleComponent
+// TODO 3: Add CollisionComponent and a way to check for collisions between GameObjects.
 
+// TODO 4: Add concept to dae::GameObject::AddComponent, HasComponent, GetComponent, RemoveComponent.
+// TODO 4: Split engine and game into dll & exe.
+// TODO 4: Improve folder structure.
+
+// TODO 5: Should a ScoreComponent be part of the engine or game?
 // TODO 5: in GameObject::SetParent, if keepWorldPosition is false, should the local position be reset to something specific?
-// TODO 5: Is using std::ostringstream in FPSComponent::Update expensive?
-// TODO 5: Is there a place for string_view when passing all these strings around?
 // TODO 5: Should Texture2D exist outside of TextureComponent?
 // TODO 5: Should Transform exist outside of TransformComponent?
 // TODO 5: Should a GameObject be able to have the same component multiple times?
+// TODO 5: Is using std::ostringstream in FPSComponent::Update expensive? Per.2: Don't optimize prematurely
+// TODO 5: Is there a place for string_view when passing all these strings around?
 
 static void loadMainMenu()
 {

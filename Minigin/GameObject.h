@@ -62,7 +62,7 @@ namespace dae
 		
 		void SetLocalPosition(float x, float y);
 		void SetLocalPosition(Transform pos);
-		Transform& GetWorldPosition();
+		Transform& GetGlobalPosition();
 
 	private:
 		GameObject* m_parent{ nullptr };

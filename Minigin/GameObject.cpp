@@ -28,13 +28,13 @@ void dae::GameObject::SetParent(GameObject* parent, bool keepWorldPosition)
 	// Update local position to maintain world position if needed
 	if (parent == nullptr)
 	{
-		SetLocalPosition(GetWorldPosition());
+		SetLocalPosition(GetGlobalPosition());
 	}
 	else
 	{
 		if (keepWorldPosition)
 		{
-			SetLocalPosition(GetWorldPosition() - parent->GetWorldPosition());
+			SetLocalPosition(GetGlobalPosition() - parent->GetGlobalPosition());
 		}
 		SetPositionDirty();
 	}
@@ -70,7 +70,7 @@ void dae::GameObject::SetLocalPosition(Transform pos)
 	SetPositionDirty();
 }
 
-dae::Transform& dae::GameObject::GetWorldPosition()
+dae::Transform& dae::GameObject::GetGlobalPosition()
 {
 	if (m_positionIsDirty)
 	{
@@ -105,7 +105,7 @@ void dae::GameObject::UpdateWorldPosition()
 		}
 		else
 		{
-			m_worldPosition = m_parent->GetWorldPosition() + m_localPosition;
+			m_worldPosition = m_parent->GetGlobalPosition() + m_localPosition;
 		}
 	}
 
