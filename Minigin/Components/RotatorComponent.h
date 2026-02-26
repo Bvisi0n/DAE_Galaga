@@ -20,8 +20,8 @@ namespace dae
 
     private:
         float m_Angle{ 0.0f };
-        float m_Range{ 0.0f }; // Radius of the circle
-        float m_RotationSpeed{ 0.0f }; // Radians or Degrees per second
+        float m_Range{ 0.0f };
+        float m_RotationSpeed{ 0.0f };
     };
 }
 

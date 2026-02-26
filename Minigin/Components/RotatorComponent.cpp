@@ -10,6 +10,17 @@ void dae::RotatorComponent::Update(float deltaTime)
 {
     m_Angle += m_RotationSpeed * deltaTime;
 
+    const float double_pi{ std::numbers::pi_v<float> *2.0f };
+
+    if (m_Angle > double_pi)
+    {
+        m_Angle -= double_pi;
+    }
+    else if (m_Angle < double_pi)
+    {
+        m_Angle += double_pi;
+    }
+
     // x = cos(a) * r, y = sin(a) * r
     GetOwner()->SetLocalPosition(cos(m_Angle) * m_Range, sin(m_Angle) * m_Range);
 }
