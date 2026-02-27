@@ -1,7 +1,7 @@
 #include "Components/TransformComponent.h"
 
-dae::TransformComponent::TransformComponent(glm::vec3 pos)
-	: m_position(pos) {}
+dae::TransformComponent::TransformComponent(const glm::vec3& position)
+	: m_position(position) {}
 
 dae::TransformComponent dae::TransformComponent::operator+(const TransformComponent& other) const
 {

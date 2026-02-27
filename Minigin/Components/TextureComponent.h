@@ -10,6 +10,7 @@ namespace dae
 {
 	class Texture2D;
 
+	// Renders an image using a Texture2D.
 	class TextureComponent final : public BaseComponent
 	{
 	public:

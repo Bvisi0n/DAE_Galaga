@@ -15,6 +15,7 @@ namespace dae
 	class GameObject;
 	class Texture2D;
 
+	// Renders text using a Font and a Texture2D.
 	class TextComponent final : public BaseComponent
 	{
 	public:

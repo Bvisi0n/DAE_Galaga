@@ -11,6 +11,7 @@ namespace dae
 	class GameObject;
 	class TextComponent;
 
+	// Displays the FPS in a given TextComponent.
 	class FPSComponent final : public BaseComponent
 	{
 	public:

@@ -9,12 +9,12 @@ namespace dae
 	{
 	public:
 		TransformComponent() = default;
-		TransformComponent(glm::vec3 pos);
+		TransformComponent(const glm::vec3& position);
 		TransformComponent operator+(const TransformComponent& other) const;
 		TransformComponent operator-(const TransformComponent& other) const;
 
 		const glm::vec3& GetPosition() const { return m_position; }
-		void SetPosition(float x, float y, float z = 0);
+		void SetPosition(const float x, const float y, const float z = 0);
 		void SetPosition(const glm::vec3& position);
 
 	private:

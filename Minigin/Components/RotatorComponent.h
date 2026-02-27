@@ -9,6 +9,7 @@ namespace dae
 {
     class GameObject;
 
+    // Allows a GameObject to rotate around a parent in a circular path.
     class RotatorComponent final : public BaseComponent
     {
     public:
