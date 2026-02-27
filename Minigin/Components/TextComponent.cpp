@@ -11,7 +11,9 @@
 dae::TextComponent::TextComponent(GameObject* pOwner, const std::string& text, std::shared_ptr<Font> pFont, const SDL_Color& color)
 	: BaseComponent(pOwner)
 	, m_text(text), m_font(std::move(pFont)), m_textTexture(nullptr), m_color(color), m_needsUpdate(true)
-{}
+{
+	assert(text.length() > 0 && "TextComponent requires non-empty text.");
+}
 
 void dae::TextComponent::Update(const float)
 {

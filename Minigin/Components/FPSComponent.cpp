@@ -1,18 +1,17 @@
-#include <iomanip>
-#include <memory>
-#include <sstream>
-#include <string>
-#include <utility>
+#include <cassert>	// assert
+#include <iomanip>	// std::fixed, std::setprecision
+#include <sstream>	// std::ostringstream
+#include <string>	// std::string
 
 #include "Components/FPSComponent.h"
 #include "Components/TextComponent.h"
-#include "Font.h"
 #include "GameObject.h"
 
-dae::FPSComponent::FPSComponent(GameObject* pOwner, std::shared_ptr<Font> pFont)
+dae::FPSComponent::FPSComponent(GameObject* pOwner, TextComponent* pText)
 	: BaseComponent(pOwner)
+	, m_pText(pText)
 {
-	m_pText = std::make_unique<TextComponent>(GetOwner(), "", std::move(pFont));
+	assert(m_pText != nullptr && "FPSComponent requires a valid TextComponent reference.");
 }
 
 void dae::FPSComponent::Update(const float deltaTime)
@@ -24,11 +23,4 @@ void dae::FPSComponent::Update(const float deltaTime)
 	std::string frame_string{ oss.str() };
 
 	m_pText->SetText(frame_string);
-
-	m_pText->Update(deltaTime); // FPS no longer draws when deleting this line because FPSComponent owns the TextComponent.
-}
-
-void dae::FPSComponent::Render() const
-{
-	m_pText->Render();
 }

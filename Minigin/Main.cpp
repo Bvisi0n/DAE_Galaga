@@ -28,8 +28,6 @@
 
 // TODO 2: When removing a GameObject from the scene, use a flag to mark it for deletion.
 // TODO 2: GameObjects should not update when marked for deletion.
-// TODO 2: FPSComponent should own a reference to a TextComponent instead of owning one.
-// TODO 2: TextComponent should own a reference to a TextureComponent instead of owning one.
 // TODO 2: Create RenderComponent and move all rendering logic there.
 // TODO 2: In FPSComponent SetText() & Update() should be happenign in the same method.
 // TODO 2: Encapsulate Transform and it's dirty flag into a component.
@@ -42,6 +40,7 @@
 // TODO 2: In GameObject if a parent gets deleted, then all kids should be deleted as well. (RAII if ownership is right)
 // TODO 2: Ensure GetComponent isn't called in the hotpath.
 // TODO 2: Start using a matrix for transformations.
+// TODO 2: Encapsulate coldpath data in a struct and use a pointer to it in the GameObject.
 
 // TODO 3: Add ScaleComponent
 // TODO 3: Add CollisionComponent and a way to check for collisions between GameObjects.
@@ -77,7 +76,8 @@ static void loadMainMenu()
 	font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 24);
 	auto fps{ std::make_unique<dae::GameObject>() };
 	fps->SetLocalPosition(20, 20);
-	fps->AddComponent<dae::FPSComponent>(font);
+	auto* pText = fps->AddComponent<dae::TextComponent>("FPS", font);
+	fps->AddComponent<dae::FPSComponent>(pText);
 	scene.Add(std::move(fps));
 
 	auto rotation_center{ std::make_unique<dae::GameObject>() };

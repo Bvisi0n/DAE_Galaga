@@ -14,7 +14,7 @@ namespace dae
 	class FPSComponent final : public BaseComponent
 	{
 	public:
-		FPSComponent(GameObject* pOwner, std::shared_ptr<Font> pFont);
+		FPSComponent(GameObject* pOwner, TextComponent* pText);
 		~FPSComponent() = default;
 
 		FPSComponent(const FPSComponent&)            = delete;
@@ -23,10 +23,10 @@ namespace dae
 		FPSComponent& operator=(FPSComponent&&)      = delete;
 
 		void Update(const float deltaTime) override;
-		void Render() const override;
+		void Render() const override {};
 
 	private:
-		std::unique_ptr<TextComponent> m_pText{ nullptr };
+		TextComponent* m_pText{ nullptr };
 	};
 }
 #endif
