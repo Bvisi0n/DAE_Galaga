@@ -6,7 +6,7 @@
 #include <vector>
 
 #include "Components/BaseComponent.h"
-#include "Transform.h"
+#include "Components/TransformComponent.h"
 
 namespace dae
 {
@@ -61,15 +61,15 @@ namespace dae
 		const std::vector<GameObject*>& GetChildren() const;
 		
 		void SetLocalPosition(float x, float y);
-		void SetLocalPosition(Transform pos);
-		Transform& GetGlobalPosition();
+		void SetLocalPosition(TransformComponent pos);
+		TransformComponent& GetGlobalPosition();
 
 	private:
 		GameObject* m_parent{ nullptr };
 		std::vector<GameObject*> m_children;
 		std::vector<std::unique_ptr<BaseComponent>> m_components;
-		Transform m_localPosition{};
-		Transform m_worldPosition{};
+		TransformComponent m_localPosition{};
+		TransformComponent m_worldPosition{};
 		bool m_positionIsDirty{ true };
 
 		bool IsChild(GameObject* pCandidate);
@@ -78,7 +78,7 @@ namespace dae
 
 		void UpdateWorldPosition();
 		void SetPositionDirty();
-		Transform& GetLocalPosition();
+		TransformComponent& GetLocalPosition();
 	};
 }
 #endif

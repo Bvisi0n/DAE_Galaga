@@ -1,9 +1,9 @@
 #include <string>
 
+#include "Components/TransformComponent.h"
 #include "GameObject.h"
 #include "ResourceManager.h"
 #include "Renderer.h"
-#include "Transform.h"
 
 dae::GameObject::~GameObject() = default;
 
@@ -64,13 +64,13 @@ void dae::GameObject::SetLocalPosition(float x, float y)
 	SetPositionDirty();
 }
 
-void dae::GameObject::SetLocalPosition(Transform pos)
+void dae::GameObject::SetLocalPosition(TransformComponent pos)
 {
 	m_localPosition = pos;
 	SetPositionDirty();
 }
 
-dae::Transform& dae::GameObject::GetGlobalPosition()
+dae::TransformComponent& dae::GameObject::GetGlobalPosition()
 {
 	if (m_positionIsDirty)
 	{
@@ -121,7 +121,7 @@ void dae::GameObject::SetPositionDirty()
 	}
 }
 
-dae::Transform& dae::GameObject::GetLocalPosition()
+dae::TransformComponent& dae::GameObject::GetLocalPosition()
 {
 	return m_localPosition;
 }

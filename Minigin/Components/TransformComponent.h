@@ -5,13 +5,13 @@
 
 namespace dae
 {
-	class Transform final
+	class TransformComponent final
 	{
 	public:
-		Transform() = default;
-		Transform(glm::vec3 pos);
-		Transform operator+(const Transform& other) const;
-		Transform operator-(const Transform& other) const;
+		TransformComponent() = default;
+		TransformComponent(glm::vec3 pos);
+		TransformComponent operator+(const TransformComponent& other) const;
+		TransformComponent operator-(const TransformComponent& other) const;
 
 		const glm::vec3& GetPosition() const { return m_position; }
 		void SetPosition(float x, float y, float z = 0);
