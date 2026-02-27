@@ -10,7 +10,7 @@
 
 dae::TextComponent::TextComponent(GameObject* pOwner, const std::string& text, std::shared_ptr<Font> pFont, const SDL_Color& color)
 	: BaseComponent(pOwner)
-	, m_text(text), m_font(std::move(pFont)), m_textTexture(nullptr), m_color(color), m_needsUpdate(true)
+	, m_text(text), m_font(std::move(pFont)), m_Texture(nullptr), m_color(color), m_needsUpdate(true)
 {
 	assert(text.length() > 0 && "TextComponent requires non-empty text.");
 }
@@ -30,17 +30,17 @@ void dae::TextComponent::Update(const float)
 			throw std::runtime_error(std::string("Create text texture from surface failed: ") + SDL_GetError());
 		}
 		SDL_DestroySurface(surf);
-		m_textTexture = std::make_shared<Texture2D>(texture);
+		m_Texture = std::make_shared<Texture2D>(texture);
 		m_needsUpdate = false;
 	}
 }
 
 void dae::TextComponent::Render() const
 {
-	if (m_textTexture != nullptr && GetOwner() != nullptr)
+	if (m_Texture != nullptr && GetOwner() != nullptr)
 	{
 		const auto& pos = GetOwner()->GetGlobalPosition().GetPosition();
-		Renderer::GetInstance().RenderTexture(*m_textTexture, pos.x, pos.y);
+		Renderer::GetInstance().RenderTexture(*m_Texture, pos.x, pos.y);
 	}
 }
 

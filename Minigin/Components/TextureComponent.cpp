@@ -7,8 +7,11 @@
 
 void dae::TextureComponent::Render() const
 {
-	const auto& pos = GetOwner()->GetGlobalPosition().GetPosition();
-	Renderer::GetInstance().RenderTexture(*m_texture, pos.x, pos.y);
+	if (m_texture != nullptr && GetOwner() != nullptr)
+	{
+		const auto& pos = GetOwner()->GetGlobalPosition().GetPosition();
+		Renderer::GetInstance().RenderTexture(*m_texture, pos.x, pos.y);
+	}
 }
 
 void dae::TextureComponent::SetTexture(const std::string& filename)
