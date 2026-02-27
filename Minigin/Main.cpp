@@ -26,8 +26,7 @@
 
 // TODO 1: Implement the Thrash the cache exercises into the main menu using Dear ImGui.
 
-// TODO 2: Encapsulate Transform and it's dirty flag into a component.
-// TODO 2: Start using a matrix for transformations.
+// TODO 2: Encapsulate all transform logic into the Transform class, transition it to use matrices.
 // TODO 2: Add a component to a game object, should check for doubles of same type, Text and Texture cannot coexist.
 // TODO 2: Remove a component should use a flag.
 // TODO 2: Ensure GetComponent isn't called in the hotpath.

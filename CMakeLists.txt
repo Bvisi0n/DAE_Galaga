@@ -19,7 +19,7 @@ add_executable(${TARGET_NAME} ${TARGET_PARAM}
   "Minigin/Components/RotatorComponent.cpp"
   "Minigin/Components/TextComponent.cpp"
   "Minigin/Components/TextureComponent.cpp"
-  "Minigin/Components/TransformComponent.cpp"
+  "Minigin/Transform.cpp"
   "Minigin/Font.cpp"
   "Minigin/GameObject.cpp"
   "Minigin/InputManager.cpp"
