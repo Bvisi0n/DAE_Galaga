@@ -2,7 +2,7 @@
 
 #include <SDL3/SDL.h>
 
-#include "Renderer.h"
+#include "Singletons/Renderer.h"
 #include "Texture2D.h"
 
 dae::Texture2D::Texture2D(SDL_Texture* texture) : m_texture{ texture }

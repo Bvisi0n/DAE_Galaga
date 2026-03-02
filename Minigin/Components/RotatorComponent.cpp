@@ -1,7 +1,7 @@
 #include <numbers>
 
+#include "Components/RotatorComponent.h"
 #include "GameObject.h"
-#include "RotatorComponent.h"
 
 dae::RotatorComponent::RotatorComponent(GameObject* pOwner, float range, float speed)
     : BaseComponent(pOwner), m_Range(range), m_RotationSpeed(speed) {}

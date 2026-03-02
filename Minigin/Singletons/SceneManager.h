@@ -5,8 +5,8 @@
 #include <string>
 #include <vector>
 
+#include "Singletons/Singleton.h"
 #include "Scene.h"
-#include "Singleton.h"
 
 namespace dae
 {

@@ -7,14 +7,14 @@
 #include <vld.h>
 #endif
 
-#include "Minigin.h"
-#include "SceneManager.h"
 #include "Components/FPSComponent.h"
 #include "Components/RotatorComponent.h"
 #include "Components/TextureComponent.h"
 #include "Components/TextComponent.h"
+#include "Singletons/ResourceManager.h"
+#include "Singletons/SceneManager.h"
 #include "GameObject.h"
-#include "ResourceManager.h"
+#include "Minigin.h"
 #include "Scene.h"
 
 // Priority:	0 Breaks compilation

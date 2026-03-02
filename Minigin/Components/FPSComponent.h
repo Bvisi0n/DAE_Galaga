@@ -3,7 +3,7 @@
 
 #include <memory>
 
-#include "BaseComponent.h"
+#include "Components/BaseComponent.h"
 
 namespace dae
 {

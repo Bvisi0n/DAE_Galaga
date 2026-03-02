@@ -6,7 +6,7 @@
 #include <memory>
 #include <string>
 
-#include "Singleton.h"
+#include "Singletons/Singleton.h"
 
 namespace dae
 {

@@ -4,7 +4,7 @@
 #include <memory>
 #include <string>
 
-#include "BaseComponent.h"
+#include "Components/BaseComponent.h"
 
 namespace dae
 {

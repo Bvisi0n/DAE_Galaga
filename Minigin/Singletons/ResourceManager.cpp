@@ -2,9 +2,9 @@
 
 #include <SDL3_ttf/SDL_ttf.h>
 
+#include "Singletons/Renderer.h"
+#include "Singletons/ResourceManager.h"
 #include "Font.h"
-#include "Renderer.h"
-#include "ResourceManager.h"
 #include "Texture2D.h"
 
 namespace fs = std::filesystem;

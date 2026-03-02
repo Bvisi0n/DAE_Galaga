@@ -3,9 +3,9 @@
 #include <SDL3/SDL.h>
 
 #include "Components/TextComponent.h"
+#include "Singletons/Renderer.h"
 #include "Font.h"
 #include "GameObject.h"
-#include "Renderer.h"
 #include "Texture2D.h"
 
 dae::TextComponent::TextComponent(GameObject* pOwner, const std::string& text, std::shared_ptr<Font> pFont, const SDL_Color& color)

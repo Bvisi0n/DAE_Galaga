@@ -3,7 +3,7 @@
 
 #include <SDL3/SDL.h>
 
-#include "Singleton.h"
+#include "Singletons/Singleton.h"
 
 namespace dae
 {

@@ -2,7 +2,7 @@
 #include <iostream>
 #include <stdexcept>
 
-#include "Renderer.h"
+#include "Singletons/Renderer.h"
 #include "SceneManager.h"
 #include "Texture2D.h"
 

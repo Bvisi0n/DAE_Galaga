@@ -1,9 +1,9 @@
 #include <string>
 
 #include "Components/TextureComponent.h"
+#include "Singletons/Renderer.h"
+#include "Singletons/ResourceManager.h"
 #include "GameObject.h"
-#include "Renderer.h"
-#include "ResourceManager.h"
 
 void dae::TextureComponent::Render() const
 {

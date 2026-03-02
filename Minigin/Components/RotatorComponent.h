@@ -3,7 +3,7 @@
 
 #include <glm/glm.hpp>
 
-#include "BaseComponent.h"
+#include "Components/BaseComponent.h"
 
 namespace dae
 {

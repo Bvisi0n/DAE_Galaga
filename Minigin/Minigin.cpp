@@ -11,11 +11,11 @@
 //#include <SDL3_image/SDL_image.h>
 #include <SDL3_ttf/SDL_ttf.h>
 
+#include "Singletons/InputManager.h"
+#include "Singletons/Renderer.h"
+#include "Singletons/ResourceManager.h"
+#include "Singletons/SceneManager.h"
 #include "Minigin.h"
-#include "InputManager.h"
-#include "SceneManager.h"
-#include "Renderer.h"
-#include "ResourceManager.h"
 
 SDL_Window* g_window{};
 

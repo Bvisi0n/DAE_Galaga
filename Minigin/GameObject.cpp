@@ -1,8 +1,8 @@
 #include <string>
 
+#include "Singletons/Renderer.h"
+#include "Singletons/ResourceManager.h"
 #include "GameObject.h"
-#include "ResourceManager.h"
-#include "Renderer.h"
 #include "Transform.h"
 
 dae::GameObject::~GameObject() = default;

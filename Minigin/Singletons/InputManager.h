@@ -1,7 +1,7 @@
 #ifndef INPUTMANAGER_H
 #define INPUTMANAGER_H
 
-#include "Singleton.h"
+#include "Singletons/Singleton.h"
 
 namespace dae
 {
