@@ -116,6 +116,8 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(imgui)
 
+add_compile_definitions(IMGUI_DEFINE_MATH_OPERATORS)
+
 add_library(imgui STATIC
   ${imgui_SOURCE_DIR}/imgui.cpp
   ${imgui_SOURCE_DIR}/imgui_draw.cpp
@@ -130,6 +132,26 @@ target_include_directories(imgui PUBLIC ${imgui_SOURCE_DIR} ${sdl3_SOURCE_DIR}/i
 target_link_libraries(imgui PUBLIC SDL3::SDL3)
 # enable c++20 features
 target_compile_features(imgui PUBLIC cxx_std_20)
+
+# Add imgui_plot
+FetchContent_Declare(
+  imgui_plot
+  GIT_REPOSITORY https://github.com/soulthreads/imgui-plot.git
+  GIT_TAG v0.1.0
+  EXCLUDE_FROM_ALL
+)
+FetchContent_Populate(imgui_plot) # This calls is deprecated but FetchContent_MakeAvailable breaks it... It's only for this assignment anyway...
+include_directories(${imgui_SOURCE_DIR})
+
+# Apply small compatibility patch to imgui_plot to work with latest ImGui version.
+# I lost many hours on this, I'm to stubborn to include the actual files manually.
+set(_imgui_plot_cpp "${imgui_plot_SOURCE_DIR}/src/imgui_plot.cpp")
+if(EXISTS "${_imgui_plot_cpp}")
+  file(READ "${_imgui_plot_cpp}" _src)
+  string(REPLACE "ItemHoverable(frame_bb, id)" "ItemHoverable(frame_bb, id, ImGuiItemFlags_None)" _src "${_src}")
+  file(WRITE "${_imgui_plot_cpp}" "${_src}")
+endif()
+add_subdirectory(${imgui_plot_SOURCE_DIR} ${imgui_plot_BINARY_DIR})
 
 if (WIN32)
   # Add VLD (Visual Leak Detector) for memory leak detection on Windows
@@ -154,6 +176,7 @@ target_link_libraries("${TARGET_NAME}" PUBLIC
   SDL3::SDL3
   SDL3_ttf::SDL3_ttf
   imgui
+  imgui_plot
   glm::glm
   ${VLD_LIBRARIES}
 )
