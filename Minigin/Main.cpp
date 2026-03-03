@@ -24,8 +24,6 @@
 //				4 Other improvements
 //				5 Needs investigation
 
-// TODO 1: Implement the Thrash the cache exercises into the main menu using Dear ImGui.
-
 // TODO 2: Encapsulate all transform logic into the Transform class, transition it to use matrices.
 // TODO 2: Add a component to a game object, should check for doubles of same type, Text and Texture cannot coexist.
 // TODO 2: Remove a component should use a flag.

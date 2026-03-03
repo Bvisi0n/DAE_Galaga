@@ -75,44 +75,5 @@ namespace dae::ThrashCache
 
         return averaged_results;
     }
-
-    // Shows how to interact with MeasureCache().
-    void UsageExample()
-    {
-        constexpr size_t buffer_size{ 67108864 };
-
-        // Integer
-        {
-            std::vector<int> integers(buffer_size);
-            auto results = MeasureCache(integers, 10, [](int& value) { value *= 2; });
-            //std::cout << "Integer:\n";
-            for (size_t i = 0; i < results.size(); ++i)
-            {
-                //std::cout << (1 << i) << "; " << results[i] << "\n";
-            }
-        }
-
-        // TestObject
-        {
-            std::vector<TestObject> game_objects(buffer_size);
-            auto results = MeasureCache(game_objects, 10, [](TestObject& obj) { obj.ID *= 2; });
-            //std::cout << "TestObject:\n";
-            for (size_t i = 0; i < results.size(); ++i)
-            {
-                //std::cout << (1 << i) << "; " << results[i] << "\n";
-            }
-        }
-
-        // TestObjectAlt
-        {
-            std::vector<TestObjectAlt> game_objects_alt(buffer_size);
-            auto results = MeasureCache(game_objects_alt, 10, [](TestObjectAlt& obj) { obj.ID *= 2; });
-            //std::cout << "TestObjectAlt:\n";
-            for (size_t i = 0; i < results.size(); ++i)
-            {
-                //std::cout << (1 << i) << "; " << results[i] << "\n";
-            }
-        }
-    }
 }
 #endif

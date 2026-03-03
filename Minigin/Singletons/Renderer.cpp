@@ -114,7 +114,7 @@ void dae::Renderer::ThrashCacheExercise1() const
 
 	if (!int_results.empty())
 	{
-        ThrashCacheDrawGraph("Integer", int_results);
+        ThrashCacheDrawGraph("Integer", int_results, ImColor{ 255, 0, 0 });
 	}
 
 	ImGui::End();
@@ -138,7 +138,7 @@ void dae::Renderer::ThrashCacheExercise2() const
 
 	if (!testObject_results.empty())
 	{
-        ThrashCacheDrawGraph("TestObject", testObject_results);
+		ThrashCacheDrawGraph("TestObject", testObject_results, ImColor{ 0, 255, 0 });
 	}
 
 	static std::vector<float> testObjectAlt_results;
@@ -151,29 +151,16 @@ void dae::Renderer::ThrashCacheExercise2() const
 
 	if (!testObjectAlt_results.empty())
 	{
-        ThrashCacheDrawGraph("TestObjectAlt", testObjectAlt_results);
+        ThrashCacheDrawGraph("TestObjectAlt", testObjectAlt_results, ImColor{ 0, 0, 255 });
 	}
 
 	if (!testObject_results.empty() && !testObjectAlt_results.empty())
 	{
-    ImGui::SeparatorText("Combined");
-	const float* data_list[] = { testObject_results.data(), testObjectAlt_results.data() };
-	static ImU32 colors[] = { ImColor(255, 0, 0), ImColor(0, 255, 0) };
-	ImGui::PlotConfig plot_config;
-	plot_config.values.count = static_cast<int>(testObject_results.size());
-	plot_config.values.ys_list = data_list; // Pass the list of arrays
-	plot_config.values.ys_count = 2;       // Number of lines to draw
-	plot_config.values.colors = colors;
-	float max_val = std::max(*std::max_element(testObject_results.begin(), testObject_results.end()),
-		*std::max_element(testObjectAlt_results.begin(), testObjectAlt_results.end()));
-	plot_config.scale.min = 0;
-	plot_config.scale.max = max_val * 1.1f;
-	plot_config.frame_size = ImVec2(200, 100); // Larger frame for better comparison
-	plot_config.line_thickness = 2.0f;
-	plot_config.grid_x.show = false;
-	plot_config.grid_y.show = false;
-
-	ImGui::Plot("Combined", plot_config);
+		ImGui::SeparatorText("Combined");
+		const float* data_list[] = { testObject_results.data(), testObjectAlt_results.data() };
+		static ImU32 colors[] = { ImColor(0, 255, 0), ImColor(0, 0, 255) };
+		float max_val = std::max(*std::max_element(testObject_results.begin(), testObject_results.end()), *std::max_element(testObjectAlt_results.begin(), testObjectAlt_results.end()));
+		ThrashCacheDrawGraph("Combined", data_list, colors, max_val, static_cast<int>(testObject_results.size()));
 	}
 
 	ImGui::End();
@@ -187,14 +174,31 @@ void dae::Renderer::ThrashCacheDrawInput(int& sampleCount) const
 	ImGui::Text("# samples");
 }
 
-void dae::Renderer::ThrashCacheDrawGraph(std::string name, std::vector<float>& data) const
+void dae::Renderer::ThrashCacheDrawGraph(const std::string name, const std::vector<float>& data, const ImColor color) const
 {
 	ImGui::PlotConfig plot_config;
 	plot_config.values.ys = data.data();
 	plot_config.values.count = static_cast<int>(data.size());
+    plot_config.values.color = color;
 	plot_config.scale.min = 0;
 	plot_config.scale.max = *std::max_element(data.begin(), data.end()) * 1.1f;
 	plot_config.tooltip.show = false;
+	plot_config.grid_x.show = false;
+	plot_config.grid_y.show = false;
+	plot_config.frame_size = ImVec2(200, 100);
+	plot_config.line_thickness = 2.0f;
+	ImGui::Plot(name.c_str(), plot_config);
+}
+
+void dae::Renderer::ThrashCacheDrawGraph(const std::string name, const float* data_list[], const ImU32 colors[], const float maxElement, const int valueCount) const
+{
+	ImGui::PlotConfig plot_config;
+	plot_config.values.ys_list = data_list;
+	plot_config.values.ys_count = 2;
+	plot_config.values.count = valueCount;
+	plot_config.values.colors = colors;
+	plot_config.scale.min = 0;
+	plot_config.scale.max = maxElement * 1.1f;
 	plot_config.grid_x.show = false;
 	plot_config.grid_y.show = false;
 	plot_config.frame_size = ImVec2(200, 100);
