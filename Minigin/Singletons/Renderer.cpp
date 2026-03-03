@@ -5,10 +5,12 @@
 #include <imgui.h>
 #include <backends/imgui_impl_sdl3.h>
 #include <backends/imgui_impl_sdlrenderer3.h>
+#include <imgui_plot.h>
 
 #include "Singletons/Renderer.h"
 #include "SceneManager.h"
 #include "Texture2D.h"
+#include "ThrashCache.h"
 
 void dae::Renderer::Init(SDL_Window* window)
 {
@@ -44,7 +46,42 @@ void dae::Renderer::Render() const
 	ImGui_ImplSDL3_NewFrame();
 	ImGui::NewFrame();
 
-	ImGui::ShowDemoWindow(); // For demonstration purposes, do not keep this in your engine
+	constexpr size_t buffer_size{ 67108864 };
+	static int sample_count{ 10 };
+	ImGui::Begin("Exercise 1"); // Creates a window, uses string as title
+	
+    ImGui::InputInt("##valueInput", &sample_count); // TODO: Clamp between 1 and 1000
+	ImGui::SameLine();
+	ImGui::Text("# samples");
+
+	static std::vector<float> int_results;
+
+	if (ImGui::Button("Thrash the cache"))
+	{
+		std::vector<int> integers(buffer_size);
+		int_results = dae::ThrashCache::MeasureCache(integers, sample_count, [](int& value) { value *= 2; });
+	}
+
+	if (!int_results.empty())
+	{
+		ImGui::PlotConfig plot_config;
+		plot_config.values.xs = nullptr; // Optional?
+		plot_config.values.ys = int_results.data();
+		plot_config.values.count = static_cast<int>(int_results.size());
+		plot_config.scale.min = 0;
+		plot_config.scale.max = *std::max_element(int_results.begin(), int_results.end()) * 1.1f;
+		plot_config.tooltip.show = true;
+		plot_config.grid_x.show = true;
+		plot_config.grid_y.show = true;
+		plot_config.frame_size = ImVec2(400, 200);
+		plot_config.line_thickness = 2.0f;
+		ImGui::Plot("TestTitle", plot_config);
+	}
+
+	ImGui::End();
+
+	//ImGui::Begin("Exercise 2");
+	//ImGui::End();
 
 	ImGui::Render();
 

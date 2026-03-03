@@ -32,7 +32,7 @@ namespace dae::ThrashCache
 	};
 
     template <typename T, typename WorkFunc>
-    std::vector<long long> MeasureCache(std::vector<T>& data, short sampleCount, WorkFunc doWork)
+    std::vector<float> MeasureCache(std::vector<T>& data, int sampleCount, WorkFunc doWork)
     {
         if (sampleCount < 1 || sampleCount > 1000)
         {
@@ -42,7 +42,7 @@ namespace dae::ThrashCache
         constexpr short max_step{ 1024 };
         std::map<short, std::vector<long long>> results_map{};
 
-        for (short sample = 0; sample < sampleCount + 2; ++sample)
+        for (int sample = 0; sample < sampleCount + 2; ++sample)
         {
             for (short step = 1; step <= max_step; step *= 2)
             {
@@ -58,7 +58,7 @@ namespace dae::ThrashCache
             }
         }
 
-        std::vector<long long> averaged_results{};
+        std::vector<float> averaged_results{};
 
         for (auto& [step, timings] : results_map)
         {
@@ -68,7 +68,7 @@ namespace dae::ThrashCache
             timings.pop_back();
 
             long long sum{ std::accumulate(timings.begin(), timings.end(), 0LL) };
-            long long average = static_cast<long long>(sum / timings.size());
+            float average = static_cast<float>(sum / timings.size());
 
             averaged_results.push_back(average);
         }
@@ -77,7 +77,7 @@ namespace dae::ThrashCache
     }
 
     // Shows how to interact with MeasureCache().
-    int UsageExample()
+    void UsageExample()
     {
         constexpr size_t buffer_size{ 67108864 };
 
