@@ -127,7 +127,12 @@ void dae::Renderer::ThrashCacheExercise2() const
 
     ThrashCacheDrawInput(sample_count);
 
-	constexpr size_t buffer_size{ 67108864 }; // Left here intentionally (Could go in header)
+#if __EMSCRIPTEN__
+	constexpr size_t buffer_size{ 4194304 }; // My browser was struggling
+#else
+	constexpr size_t buffer_size{ 67108864 };
+#endif
+	
 	static std::vector<float> testObject_results;
 
 	if (ImGui::Button("Thrash the cache with GameObject3D"))
