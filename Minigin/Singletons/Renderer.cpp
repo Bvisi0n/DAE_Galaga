@@ -1,4 +1,5 @@
-﻿#include <cstring>
+﻿#include <algorithm>
+#include <cstring>
 #include <iostream>
 #include <stdexcept>
 
@@ -46,42 +47,8 @@ void dae::Renderer::Render() const
 	ImGui_ImplSDL3_NewFrame();
 	ImGui::NewFrame();
 
-	constexpr size_t buffer_size{ 67108864 };
-	static int sample_count{ 10 };
-	ImGui::Begin("Exercise 1"); // Creates a window, uses string as title
-	
-    ImGui::InputInt("##valueInput", &sample_count); // TODO: Clamp between 1 and 1000
-	ImGui::SameLine();
-	ImGui::Text("# samples");
-
-	static std::vector<float> int_results;
-
-	if (ImGui::Button("Thrash the cache"))
-	{
-		std::vector<int> integers(buffer_size);
-		int_results = dae::ThrashCache::MeasureCache(integers, sample_count, [](int& value) { value *= 2; });
-	}
-
-	if (!int_results.empty())
-	{
-		ImGui::PlotConfig plot_config;
-		plot_config.values.xs = nullptr; // Optional?
-		plot_config.values.ys = int_results.data();
-		plot_config.values.count = static_cast<int>(int_results.size());
-		plot_config.scale.min = 0;
-		plot_config.scale.max = *std::max_element(int_results.begin(), int_results.end()) * 1.1f;
-		plot_config.tooltip.show = true;
-		plot_config.grid_x.show = true;
-		plot_config.grid_y.show = true;
-		plot_config.frame_size = ImVec2(400, 200);
-		plot_config.line_thickness = 2.0f;
-		ImGui::Plot("TestTitle", plot_config);
-	}
-
-	ImGui::End();
-
-	//ImGui::Begin("Exercise 2");
-	//ImGui::End();
+	ThrashCacheExercise1();
+	ThrashCacheExercise2();
 
 	ImGui::Render();
 
@@ -128,3 +95,109 @@ void dae::Renderer::RenderTexture(const Texture2D& texture, const float x, const
 }
 
 SDL_Renderer* dae::Renderer::GetSDLRenderer() const { return m_renderer; }
+
+void dae::Renderer::ThrashCacheExercise1() const
+{
+	static int sample_count{ 10 };
+	ImGui::Begin("Exercise 1");
+
+	ThrashCacheDrawInput(sample_count);
+
+	constexpr size_t buffer_size{ 67108864 }; // Left here intentionally (Could go in header)
+	static std::vector<float> int_results;
+
+	if (ImGui::Button("Thrash the cache"))
+	{
+		std::vector<int> test_data(buffer_size);
+		int_results = dae::ThrashCache::MeasureCache(test_data, sample_count, [](int& value) { value *= 2; });
+	}
+
+	if (!int_results.empty())
+	{
+        ThrashCacheDrawGraph("Integer", int_results);
+	}
+
+	ImGui::End();
+}
+
+void dae::Renderer::ThrashCacheExercise2() const
+{
+	static int sample_count{ 100 };
+	ImGui::Begin("Exercise 2");
+
+    ThrashCacheDrawInput(sample_count);
+
+	constexpr size_t buffer_size{ 67108864 }; // Left here intentionally (Could go in header)
+	static std::vector<float> testObject_results;
+
+	if (ImGui::Button("Thrash the cache with GameObject3D"))
+	{
+		std::vector<dae::ThrashCache::TestObject> test_data(buffer_size);
+		testObject_results = dae::ThrashCache::MeasureCache(test_data, sample_count, [](dae::ThrashCache::TestObject& obj) { obj.ID *= 2; });
+	}
+
+	if (!testObject_results.empty())
+	{
+        ThrashCacheDrawGraph("TestObject", testObject_results);
+	}
+
+	static std::vector<float> testObjectAlt_results;
+
+	if (ImGui::Button("Thrash the cache with GameObject3DAlt"))
+	{
+		std::vector<dae::ThrashCache::TestObjectAlt> test_data(buffer_size);
+		testObjectAlt_results = dae::ThrashCache::MeasureCache(test_data, sample_count, [](dae::ThrashCache::TestObjectAlt& obj) { obj.ID *= 2; });
+	}
+
+	if (!testObjectAlt_results.empty())
+	{
+        ThrashCacheDrawGraph("TestObjectAlt", testObjectAlt_results);
+	}
+
+	if (!testObject_results.empty() && !testObjectAlt_results.empty())
+	{
+    ImGui::SeparatorText("Combined");
+	const float* data_list[] = { testObject_results.data(), testObjectAlt_results.data() };
+	static ImU32 colors[] = { ImColor(255, 0, 0), ImColor(0, 255, 0) };
+	ImGui::PlotConfig plot_config;
+	plot_config.values.count = static_cast<int>(testObject_results.size());
+	plot_config.values.ys_list = data_list; // Pass the list of arrays
+	plot_config.values.ys_count = 2;       // Number of lines to draw
+	plot_config.values.colors = colors;
+	float max_val = std::max(*std::max_element(testObject_results.begin(), testObject_results.end()),
+		*std::max_element(testObjectAlt_results.begin(), testObjectAlt_results.end()));
+	plot_config.scale.min = 0;
+	plot_config.scale.max = max_val * 1.1f;
+	plot_config.frame_size = ImVec2(200, 100); // Larger frame for better comparison
+	plot_config.line_thickness = 2.0f;
+	plot_config.grid_x.show = false;
+	plot_config.grid_y.show = false;
+
+	ImGui::Plot("Combined", plot_config);
+	}
+
+	ImGui::End();
+}
+
+void dae::Renderer::ThrashCacheDrawInput(int& sampleCount) const
+{
+	ImGui::InputInt("##valueInput", &sampleCount);
+	sampleCount = std::clamp(sampleCount, 1, 1000);
+	ImGui::SameLine();
+	ImGui::Text("# samples");
+}
+
+void dae::Renderer::ThrashCacheDrawGraph(std::string name, std::vector<float>& data) const
+{
+	ImGui::PlotConfig plot_config;
+	plot_config.values.ys = data.data();
+	plot_config.values.count = static_cast<int>(data.size());
+	plot_config.scale.min = 0;
+	plot_config.scale.max = *std::max_element(data.begin(), data.end()) * 1.1f;
+	plot_config.tooltip.show = false;
+	plot_config.grid_x.show = false;
+	plot_config.grid_y.show = false;
+	plot_config.frame_size = ImVec2(200, 100);
+	plot_config.line_thickness = 2.0f;
+	ImGui::Plot(name.c_str(), plot_config);
+}

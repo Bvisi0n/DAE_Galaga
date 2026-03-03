@@ -1,6 +1,9 @@
 #ifndef RENDERER_H
 #define RENDERER_H
 
+#include <string>
+#include <vector>
+
 #include <SDL3/SDL.h>
 
 #include "Singletons/Singleton.h"
@@ -28,7 +31,12 @@ namespace dae
 	private:
 		SDL_Renderer* m_renderer{};
 		SDL_Window* m_window{};
-		SDL_Color m_clearColor{};	
+		SDL_Color m_clearColor{};
+
+        void ThrashCacheExercise1() const;
+        void ThrashCacheExercise2() const;
+		void ThrashCacheDrawInput(int& sampleCount) const;
+        void ThrashCacheDrawGraph(std::string name, std::vector<float>& data) const;
 	};
 }
 #endif
