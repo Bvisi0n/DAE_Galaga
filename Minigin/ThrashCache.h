@@ -27,7 +27,7 @@ namespace dae::ThrashCache
 
 	struct TestObjectAlt
 	{
-		Transform* pLocal{ new Transform };
+        std::unique_ptr<Transform> pLocal{ std::make_unique<Transform>() };
 		int ID{ 1 };
 	};
 
