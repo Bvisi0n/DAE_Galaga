@@ -5,7 +5,6 @@
 #include <vector>
 
 #include <SDL3/SDL.h>
-#include <imgui.h>
 
 #include "Singletons/Singleton.h"
 
@@ -33,12 +32,6 @@ namespace dae
 		SDL_Renderer* m_renderer{};
 		SDL_Window* m_window{};
 		SDL_Color m_clearColor{};
-
-        void ThrashCacheExercise1() const;
-        void ThrashCacheExercise2() const;
-		void ThrashCacheDrawInput(int& sampleCount) const;
-        void ThrashCacheDrawGraph(const std::string name, const std::vector<float>& data, const ImColor color) const;
-        void ThrashCacheDrawGraph(const std::string name, const float* data_list[], const ImU32 colors[], const float maxElement, const int valueCount) const;
 	};
 }
 #endif
