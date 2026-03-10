@@ -1,3 +1,6 @@
+// This could & should be done in CMake but I'm secretly a first year and have no formal training in CMake.
+// TODO 4: Split this into seperate dedicated cpp files and have CMake handle the platform specific compilation.
+
 #if WIN32
     #define WIN32_LEAN_AND_MEAN
     #include <windows.h>
