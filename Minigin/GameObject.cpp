@@ -9,12 +9,12 @@ dae::GameObject::~GameObject() = default;
 
 void dae::GameObject::Update(const float deltaTime)
 {
-	for (auto& comp : m_components) comp->Update(deltaTime);
+	for (auto& comp : m_pComponents) comp->Update(deltaTime);
 }
 
 void dae::GameObject::Render() const
 {
-	for (const auto& comp : m_components) comp->Render();
+	for (const auto& comp : m_pComponents) comp->Render();
 }
 
 void dae::GameObject::SetParent(GameObject* parent, bool keepWorldPosition)
@@ -55,7 +55,7 @@ void dae::GameObject::SetParent(GameObject* parent, bool keepWorldPosition)
 
 const std::vector<dae::GameObject*>& dae::GameObject::GetChildren() const
 {
-	return m_children;
+	return m_pChildren;
 }
 
 void dae::GameObject::SetLocalPosition(float x, float y)
@@ -77,7 +77,7 @@ dae::Transform& dae::GameObject::GetGlobalPosition()
 		UpdateWorldPosition();
 	}
 
-	return m_worldPosition;
+	return m_globalPosition;
 }
 
 bool dae::GameObject::IsChild(GameObject* parent)
@@ -87,12 +87,12 @@ bool dae::GameObject::IsChild(GameObject* parent)
 
 void dae::GameObject::RemoveChild(GameObject* pChild)
 {
-	m_children.erase(std::remove(m_children.begin(), m_children.end(), pChild), m_children.end());
+	m_pChildren.erase(std::remove(m_pChildren.begin(), m_pChildren.end(), pChild), m_pChildren.end());
 }
 
 void dae::GameObject::AddChild(GameObject* pChild)
 {
-	m_children.emplace_back(pChild);
+	m_pChildren.emplace_back(pChild);
 }
 
 void dae::GameObject::UpdateWorldPosition()
@@ -101,11 +101,11 @@ void dae::GameObject::UpdateWorldPosition()
 	{
 		if (m_pParent == nullptr)
 		{
-			m_worldPosition = m_localPosition;
+			m_globalPosition = m_localPosition;
 		}
 		else
 		{
-			m_worldPosition = m_pParent->GetGlobalPosition() + m_localPosition;
+			m_globalPosition = m_pParent->GetGlobalPosition() + m_localPosition;
 		}
 	}
 
@@ -115,7 +115,7 @@ void dae::GameObject::UpdateWorldPosition()
 void dae::GameObject::SetPositionDirty()
 {
 	m_positionIsDirty = true;
-	for (const auto& child : m_children)
+	for (const auto& child : m_pChildren)
 	{
 		child->SetPositionDirty();
 	}

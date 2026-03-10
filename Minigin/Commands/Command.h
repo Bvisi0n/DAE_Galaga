@@ -10,5 +10,4 @@ namespace dae
         virtual void Execute() = 0;
     };
 }
-
 #endif

@@ -30,7 +30,7 @@ namespace dae
 		T* AddComponent(Args&&... args) {
 			auto component = std::make_unique<T>(this, std::forward<Args>(args)...);
 			T* ptr = component.get();
-			m_components.push_back(std::move(component));
+			m_pComponents.push_back(std::move(component));
 			return ptr;
 		}
 
@@ -41,7 +41,7 @@ namespace dae
 
 		template <typename T>
 		T* GetComponent() const {
-			for (const auto& comp : m_components) {
+			for (const auto& comp : m_pComponents) {
 				T* ptr = dynamic_cast<T*>(comp.get());
 				if (ptr) return ptr;
 			}
@@ -50,11 +50,11 @@ namespace dae
 
 		template <typename T>
 		void RemoveComponent() {
-			m_components.erase(std::remove_if(m_components.begin(), m_components.end(),
+			m_pComponents.erase(std::remove_if(m_pComponents.begin(), m_pComponents.end(),
 				[](const std::unique_ptr<BaseComponent>& comp)
 				{
 					return dynamic_cast<T*>(comp.get()) != nullptr;
-				}), m_components.end());
+				}), m_pComponents.end());
 		}
 
 		void SetParent(GameObject* pParent, bool keepWorldPosition);
@@ -66,10 +66,10 @@ namespace dae
 
 	private:
 		GameObject* m_pParent{ nullptr };
-		std::vector<GameObject*> m_children;
-		std::vector<std::unique_ptr<BaseComponent>> m_components;
+		std::vector<GameObject*> m_pChildren;
+		std::vector<std::unique_ptr<BaseComponent>> m_pComponents;
 		Transform m_localPosition{};
-		Transform m_worldPosition{};
+		Transform m_globalPosition{};
 		bool m_positionIsDirty{ true };
 
 		bool IsChild(GameObject* pCandidate);
