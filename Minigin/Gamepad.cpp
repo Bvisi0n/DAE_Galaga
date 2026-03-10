@@ -1,6 +1,8 @@
-#define WIN32_LEAN_AND_MEAN
-#include <windows.h>
-#include <XInput.h>
+#if WIN32
+    #define WIN32_LEAN_AND_MEAN
+    #include <windows.h>
+    #include <XInput.h>
+#endif
 
 #include "Gamepad.h"
 
@@ -8,6 +10,7 @@ namespace dae
 {
     class Gamepad::GamepadImpl
     {
+#if WIN32
     public:
         GamepadImpl(unsigned int index) : m_ControllerIndex(index)
         {
@@ -38,11 +41,25 @@ namespace dae
             m_ButtonsReleasedThisFrame = buttonChanges & (~m_CurrentState.Gamepad.wButtons);
         }
 
-        bool IsDown(Gamepad::Button button) const { return m_ButtonsPressedThisFrame & static_cast<unsigned int>(button); }
-        bool IsUp(Gamepad::Button button) const { return m_ButtonsReleasedThisFrame & static_cast<unsigned int>(button); }
-        bool IsPressed(Gamepad::Button button) const { return m_CurrentState.Gamepad.wButtons & static_cast<unsigned int>(button); }
+        bool IsDown(Gamepad::Button button) const
+        {
+            return m_ButtonsPressedThisFrame & static_cast<unsigned int>(button);
+        }
 
-        bool IsConnected() const { return m_IsConnected; }
+        bool IsUp(Gamepad::Button button) const
+        {
+            return m_ButtonsReleasedThisFrame & static_cast<unsigned int>(button);
+        }
+
+        bool IsPressed(Gamepad::Button button) const
+        {
+            return m_CurrentState.Gamepad.wButtons & static_cast<unsigned int>(button);
+        }
+
+        bool IsConnected() const
+        {
+            return m_IsConnected;
+        }
 
     private:
         unsigned int m_ControllerIndex;
@@ -52,6 +69,15 @@ namespace dae
         unsigned int m_ButtonsPressedThisFrame{};
         unsigned int m_ButtonsReleasedThisFrame{};
         bool m_IsConnected{};
+#else
+    public:
+        GamepadImpl(unsigned int index) {}
+        void Update() {}
+        bool IsDown(Gamepad::Button button) const { return false; }
+        bool IsUp(Gamepad::Button button) const { return false; }
+        bool IsPressed(Gamepad::Button button) const { return false; }
+        bool IsConnected() const { return false; }
+#endif
     };
 
     Gamepad::Gamepad(unsigned int index)
