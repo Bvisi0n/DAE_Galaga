@@ -22,7 +22,7 @@ void Scene::Render() const
 
 void Scene::Add(std::unique_ptr<GameObject> pObject)
 {
-	assert(object != nullptr && "Cannot add a null GameObject to the scene.");
+	assert(pObject != nullptr && "Cannot add a null GameObject to the scene.");
 	m_pObjects.emplace_back(std::move(pObject));
 }
 
