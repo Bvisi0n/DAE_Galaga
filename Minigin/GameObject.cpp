@@ -19,13 +19,11 @@ void dae::GameObject::Render() const
 
 void dae::GameObject::SetParent(GameObject* parent, bool keepWorldPosition)
 {
-	// Prevent circular parenting
 	if (IsChild(parent) || parent == this || m_pParent == parent)
 	{
 		return;
 	}
 
-	// Update local position to maintain world position if needed
 	if (parent == nullptr)
 	{
 		SetLocalPosition(GetGlobalPosition());
@@ -39,13 +37,11 @@ void dae::GameObject::SetParent(GameObject* parent, bool keepWorldPosition)
 		SetPositionDirty();
 	}
 
-	// Detach from current parent
 	if (m_pParent)
 	{
 		m_pParent->RemoveChild(this);
 	}
 
-	// Attach to new parent
 	m_pParent = parent;
 	if (m_pParent)
 	{
@@ -80,9 +76,16 @@ dae::Transform& dae::GameObject::GetGlobalPosition()
 	return m_globalPosition;
 }
 
-bool dae::GameObject::IsChild(GameObject* parent)
+bool dae::GameObject::IsChild(GameObject* candidate)
 {
-	return parent == this;
+	if (candidate == nullptr) return false;
+
+	for (auto child : m_pChildren)
+	{
+		if (child == candidate) return true;
+		if (child->IsChild(candidate)) return true;
+	}
+	return false;
 }
 
 void dae::GameObject::RemoveChild(GameObject* pChild)
