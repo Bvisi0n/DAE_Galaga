@@ -74,11 +74,11 @@ namespace dae
         bool m_IsConnected{};
 #else
     public:
-        GamepadImpl(unsigned int index) {}
+        GamepadImpl(unsigned int /*index*/) {}
         void Update() {}
-        bool IsDown(Gamepad::Button button) const { return false; }
-        bool IsUp(Gamepad::Button button) const { return false; }
-        bool IsPressed(Gamepad::Button button) const { return false; }
+        bool IsDown(Gamepad::Button /*button*/) const { return false; }
+        bool IsUp(Gamepad::Button /*button*/) const { return false; }
+        bool IsPressed(Gamepad::Button /*button*/) const { return false; }
         bool IsConnected() const { return false; }
 #endif
     };
