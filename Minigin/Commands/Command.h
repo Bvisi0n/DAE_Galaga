@@ -7,7 +7,7 @@ namespace dae
     {
     public:
         virtual ~Command() = default;
-        virtual void Execute() = 0;
+        virtual void Execute(const float deltaTime) = 0;
     };
 }
 #endif

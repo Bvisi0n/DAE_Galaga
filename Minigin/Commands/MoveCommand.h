@@ -14,13 +14,12 @@ public:
         , m_direction(direction)
         , m_speed(speed) {}
 
-    void Execute() override
+    void Execute(const float deltaTime) override
     {
         auto position = m_pGameObject->GetLocalPosition().GetPosition();
 
-        const float dt = 0.016f; // TODO 1: Use deltaTime here!
-        position.x += m_direction.x * m_speed * dt;
-        position.y += m_direction.y * m_speed * dt;
+        position.x += m_direction.x * m_speed * deltaTime;
+        position.y += m_direction.y * m_speed * deltaTime;
 
         m_pGameObject->SetLocalPosition(position.x, position.y);
     }

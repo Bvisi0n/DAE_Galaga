@@ -19,7 +19,7 @@ namespace dae
         InputManager();
         ~InputManager() = default;
 
-        bool ProcessInput();
+        bool ProcessInput(const float deltaTime);
         void BindCommand(unsigned int controllerIndex, Gamepad::Button button, KeyState state, std::unique_ptr<dae::Command> pCommand);
 
         bool IsControllerConnected(unsigned int controllerIndex) const;

@@ -112,7 +112,7 @@ void dae::Minigin::RunOneFrame()
 	const float delta_time{ std::chrono::duration<float>(frame_start_time - m_lastTime).count() };
 	m_lastTime = frame_start_time;
 
-	m_quit = !InputManager::GetInstance().ProcessInput();
+	m_quit = !InputManager::GetInstance().ProcessInput(delta_time);
 
 	SceneManager::GetInstance().Update(delta_time);
 	Renderer::GetInstance().Render();

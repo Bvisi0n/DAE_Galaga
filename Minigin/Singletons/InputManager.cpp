@@ -11,7 +11,7 @@ dae::InputManager::InputManager()
 	}
 }
 
-bool dae::InputManager::ProcessInput()
+bool dae::InputManager::ProcessInput(const float deltaTime)
 {
 	for (auto& gamepad : m_pGamepads)
 	{
@@ -52,7 +52,7 @@ bool dae::InputManager::ProcessInput()
 
 		if (shouldExecute)
 		{
-			command->Execute();
+			command->Execute(deltaTime);
 		}
 	}
 
