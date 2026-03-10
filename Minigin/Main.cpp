@@ -7,10 +7,12 @@
 #include <vld.h>
 #endif
 
+#include "Commands/MoveCommand.h"
 #include "Components/FPSComponent.h"
 #include "Components/RotatorComponent.h"
 #include "Components/TextureComponent.h"
 #include "Components/TextComponent.h"
+#include "Singletons/InputManager.h"
 #include "Singletons/ResourceManager.h"
 #include "Singletons/SceneManager.h"
 #include "GameObject.h"
@@ -98,6 +100,25 @@ static void loadMainMenu()
 	rotating_outer->AddComponent<dae::RotatorComponent>(25.0f, -5.0f);
 	rotating_outer->SetParent(pInner, false);
 	scene.Add(std::move(rotating_outer));
+
+	const float speed = 200.0f;
+	auto& input = dae::InputManager::GetInstance();
+
+	// Up
+	input.BindCommand(0, dae::Gamepad::Button::DPadUp, dae::KeyState::Pressed,
+		std::make_unique<MoveCommand>(pCenter, glm::vec2{ 0, -1 }, speed));
+
+	// Down
+	input.BindCommand(0, dae::Gamepad::Button::DPadDown, dae::KeyState::Pressed,
+		std::make_unique<MoveCommand>(pCenter, glm::vec2{ 0, 1 }, speed));
+
+	// Left
+	input.BindCommand(0, dae::Gamepad::Button::DPadLeft, dae::KeyState::Pressed,
+		std::make_unique<MoveCommand>(pCenter, glm::vec2{ -1, 0 }, speed));
+
+	// Right
+	input.BindCommand(0, dae::Gamepad::Button::DPadRight, dae::KeyState::Pressed,
+		std::make_unique<MoveCommand>(pCenter, glm::vec2{ 1, 0 }, speed));
 }
 
 int main(int, char*[]) {

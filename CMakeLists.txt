@@ -26,6 +26,7 @@ add_executable(${TARGET_NAME} ${TARGET_PARAM}
   "Minigin/Transform.cpp"
   "Minigin/Font.cpp"
   "Minigin/GameObject.cpp"
+  "Minigin/Gamepad.cpp"
   "Minigin/Main.cpp"
   "Minigin/Minigin.cpp"
   "Minigin/Scene.cpp"
@@ -159,6 +160,10 @@ target_link_libraries("${TARGET_NAME}" PUBLIC
   glm::glm
   ${VLD_LIBRARIES}
 )
+
+if(WIN32)
+    target_link_libraries(${TARGET_NAME} PRIVATE xinput.lib)
+endif()
 
 if(MSVC)
   # compile at warning level 4 + treat warnings as errors

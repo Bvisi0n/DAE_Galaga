@@ -76,6 +76,11 @@ dae::Transform& dae::GameObject::GetGlobalPosition()
 	return m_globalPosition;
 }
 
+dae::Transform& dae::GameObject::GetLocalPosition()
+{
+	return m_localPosition;
+}
+
 bool dae::GameObject::IsChild(GameObject* candidate)
 {
 	if (candidate == nullptr) return false;
@@ -122,9 +127,4 @@ void dae::GameObject::SetPositionDirty()
 	{
 		child->SetPositionDirty();
 	}
-}
-
-dae::Transform& dae::GameObject::GetLocalPosition()
-{
-	return m_localPosition;
 }
