@@ -65,7 +65,7 @@ namespace dae
 		Transform& GetGlobalPosition();
 
 	private:
-		GameObject* m_parent{ nullptr };
+		GameObject* m_pParent{ nullptr };
 		std::vector<GameObject*> m_children;
 		std::vector<std::unique_ptr<BaseComponent>> m_components;
 		Transform m_localPosition{};

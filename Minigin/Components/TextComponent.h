@@ -35,8 +35,8 @@ namespace dae
 
 	private:
 		std::string m_text;
-		std::shared_ptr<Font>	   m_font{ nullptr };
-		std::shared_ptr<Texture2D> m_Texture{ nullptr };
+		std::shared_ptr<Font>	   m_pFont{ nullptr };
+		std::shared_ptr<Texture2D> m_pTexture{ nullptr };
 		SDL_Color m_color{ 255, 255, 255, 255 };
 		bool m_needsUpdate{ true };
 	};

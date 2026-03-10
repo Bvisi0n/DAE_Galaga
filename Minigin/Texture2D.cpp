@@ -5,9 +5,9 @@
 #include "Singletons/Renderer.h"
 #include "Texture2D.h"
 
-dae::Texture2D::Texture2D(SDL_Texture* texture) : m_texture{ texture }
+dae::Texture2D::Texture2D(SDL_Texture* pTexture) : m_pTexture{ pTexture }
 {
-    assert(m_texture != nullptr);
+    assert(m_pTexture != nullptr);
 }
 
 dae::Texture2D::Texture2D(const std::string& fullPath)
@@ -20,14 +20,14 @@ dae::Texture2D::Texture2D(const std::string& fullPath)
         );
     }
 
-    m_texture = SDL_CreateTextureFromSurface(
+    m_pTexture = SDL_CreateTextureFromSurface(
         Renderer::GetInstance().GetSDLRenderer(),
         surface
     );
 
     SDL_DestroySurface(surface);
 
-    if (!m_texture)
+    if (!m_pTexture)
     {
         throw std::runtime_error(
             std::string("Failed to create texture from surface: ") + SDL_GetError()
@@ -37,17 +37,17 @@ dae::Texture2D::Texture2D(const std::string& fullPath)
 
 dae::Texture2D::~Texture2D()
 {
-	SDL_DestroyTexture(m_texture);
+	SDL_DestroyTexture(m_pTexture);
 }
 
 SDL_Texture* dae::Texture2D::GetSDLTexture() const
 {
-    return m_texture;
+    return m_pTexture;
 }
 
 glm::vec2 dae::Texture2D::GetSize() const
 {
     float w{}, h{};
-    SDL_GetTextureSize(m_texture, &w, &h);
+    SDL_GetTextureSize(m_pTexture, &w, &h);
     return { w, h };
 }

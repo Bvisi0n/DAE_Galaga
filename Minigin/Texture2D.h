@@ -13,7 +13,7 @@ namespace dae
 	class Texture2D final
 	{
 	public:
-		explicit Texture2D(SDL_Texture* texture);
+		explicit Texture2D(SDL_Texture* pTexture);
 		explicit Texture2D(const std::string& fullPath);
 		~Texture2D();
 
@@ -26,7 +26,7 @@ namespace dae
 		glm::vec2	 GetSize()		 const;
 
 	private:
-		SDL_Texture* m_texture;
+		SDL_Texture* m_pTexture;
 	};
 }
 #endif

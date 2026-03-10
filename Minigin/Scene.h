@@ -22,7 +22,7 @@ namespace dae
 		void Update(const float deltaTime);
 		void Render() const;
 
-		void Add(std::unique_ptr<GameObject> object);
+		void Add(std::unique_ptr<GameObject> pObject);
 		void Remove(const GameObject& object);
 		void RemoveAll();
 

@@ -16,7 +16,7 @@ namespace dae
 	class Renderer final : public Singleton<Renderer>
 	{
 	public:
-		void Init(SDL_Window* window);
+		void Init(SDL_Window* pWindow);
 		void Render() const;
 		void Destroy();
 
@@ -29,8 +29,8 @@ namespace dae
 		void SetBackgroundColor(const SDL_Color& color) { m_clearColor = color; }
 
 	private:
-		SDL_Renderer* m_renderer{};
-		SDL_Window* m_window{};
+		SDL_Renderer* m_pRenderer{};
+		SDL_Window* m_pWindow{};
 		SDL_Color m_clearColor{};
 	};
 }

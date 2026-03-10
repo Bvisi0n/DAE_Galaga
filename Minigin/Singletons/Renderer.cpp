@@ -11,13 +11,13 @@
 #include "SceneManager.h"
 #include "Texture2D.h"
 
-void dae::Renderer::Init(SDL_Window* window)
+void dae::Renderer::Init(SDL_Window* pWindow)
 {
-	m_window = window;
+	m_pWindow = pWindow;
 	SDL_SetHint(SDL_HINT_RENDER_VSYNC, "1");
-	m_renderer = SDL_CreateRenderer(window, nullptr);
+	m_pRenderer = SDL_CreateRenderer(pWindow, nullptr);
 
-	if (m_renderer == nullptr)
+	if (m_pRenderer == nullptr)
 	{
 		std::cout << "Failed to create the renderer: " << SDL_GetError() << "\n";
 		throw std::runtime_error(std::string("SDL_CreateRenderer Error: ") + SDL_GetError());
@@ -35,8 +35,8 @@ void dae::Renderer::Init(SDL_Window* window)
 		io.IniFilename = NULL;
 	#endif
 
-	ImGui_ImplSDL3_InitForSDLRenderer(window, m_renderer);
-	ImGui_ImplSDLRenderer3_Init(m_renderer);
+	ImGui_ImplSDL3_InitForSDLRenderer(pWindow, m_pRenderer);
+	ImGui_ImplSDLRenderer3_Init(m_pRenderer);
 }
 
 void dae::Renderer::Render() const
@@ -47,14 +47,14 @@ void dae::Renderer::Render() const
 
 
 	const auto& color = GetBackgroundColor();
-	SDL_SetRenderDrawColor(m_renderer, color.r, color.g, color.b, color.a);
-	SDL_RenderClear(m_renderer);
+	SDL_SetRenderDrawColor(m_pRenderer, color.r, color.g, color.b, color.a);
+	SDL_RenderClear(m_pRenderer);
 
 	SceneManager::GetInstance().Render();
 
 	ImGui::Render();
-	ImGui_ImplSDLRenderer3_RenderDrawData(ImGui::GetDrawData(), m_renderer);
-	SDL_RenderPresent(m_renderer);
+	ImGui_ImplSDLRenderer3_RenderDrawData(ImGui::GetDrawData(), m_pRenderer);
+	SDL_RenderPresent(m_pRenderer);
 }
 
 void dae::Renderer::Destroy()
@@ -63,10 +63,10 @@ void dae::Renderer::Destroy()
 	ImGui_ImplSDL3_Shutdown();
 	ImGui::DestroyContext();
 
-	if (m_renderer != nullptr)
+	if (m_pRenderer != nullptr)
 	{
-		SDL_DestroyRenderer(m_renderer);
-		m_renderer = nullptr;
+		SDL_DestroyRenderer(m_pRenderer);
+		m_pRenderer = nullptr;
 	}
 }
 
@@ -89,4 +89,4 @@ void dae::Renderer::RenderTexture(const Texture2D& texture, const float x, const
 	SDL_RenderTexture(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst);
 }
 
-SDL_Renderer* dae::Renderer::GetSDLRenderer() const { return m_renderer; }
+SDL_Renderer* dae::Renderer::GetSDLRenderer() const { return m_pRenderer; }

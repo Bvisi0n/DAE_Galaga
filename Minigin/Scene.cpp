@@ -20,10 +20,10 @@ void Scene::Render() const
 	}
 }
 
-void Scene::Add(std::unique_ptr<GameObject> object)
+void Scene::Add(std::unique_ptr<GameObject> pObject)
 {
 	assert(object != nullptr && "Cannot add a null GameObject to the scene.");
-	m_objects.emplace_back(std::move(object));
+	m_objects.emplace_back(std::move(pObject));
 }
 
 void Scene::Remove(const GameObject& object)

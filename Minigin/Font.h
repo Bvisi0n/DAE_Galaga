@@ -22,7 +22,7 @@ namespace dae
 		TTF_Font* GetFont() const;
 
 	private:
-		TTF_Font* m_font;
+		TTF_Font* m_pFont;
 	};
 }
 #endif

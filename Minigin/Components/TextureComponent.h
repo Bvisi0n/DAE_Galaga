@@ -28,7 +28,7 @@ namespace dae
 
 	private:
 		std::string m_filename{};
-		std::shared_ptr<Texture2D> m_texture{ nullptr };
+		std::shared_ptr<Texture2D> m_pTexture{ nullptr };
 	};
 }
 #endif
