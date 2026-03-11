@@ -24,6 +24,7 @@ bool dae::InputManager::ProcessInput(const float deltaTime)
 		ImGui_ImplSDL3_ProcessEvent(&e);
 	}
 
+	// Careful when moving this around, is it dependent on SDL_PollEvent()? Check Emscripten build if you do!
 	for (auto& gamepad : m_pGamepads)
 	{
 		gamepad->Update();

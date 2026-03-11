@@ -26,7 +26,9 @@
 //				4 Other improvements
 //				5 Needs investigation
 
-// TODO 1: Add Input support for controllers, keyboard and mouse, use SDL, Xinput. Pimpl away the implementation and use Command Pattern.
+// TODO 1: Add keyboard support (SDL). Optional: Pimpl away and use both win32 and SDL.
+// TODO 1: Commands should be able to unbind.
+// TODO 1: Add 2 controllable gameobjects, one for each input, different movement speeds.
 
 // TODO 2: Encapsulate all transform logic into the Transform class, transition it to use matrices.
 // TODO 2: Add a component to a game object, should check for doubles of same type, Text and Texture cannot coexist.
