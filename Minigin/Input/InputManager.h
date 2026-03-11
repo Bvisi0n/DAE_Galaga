@@ -13,12 +13,6 @@
 
 namespace dae
 {
-    struct ControllerKey
-    {
-        unsigned int controllerIndex;
-        Gamepad::Button button;
-    };
-
     class InputManager final : public Singleton<InputManager>
     {
     public:
@@ -57,6 +51,12 @@ namespace dae
         bool IsControllerConnected(unsigned int controllerIndex) const;
 
     private:
+        struct ControllerKey
+        {
+            unsigned int controllerIndex;
+            Gamepad::Button button;
+        };
+
         using ControllerBinding = std::tuple<unsigned int, Gamepad::Button, KeyState>;
         using KeyboardBinding = std::pair<Keyboard::Key, KeyState>;
 
