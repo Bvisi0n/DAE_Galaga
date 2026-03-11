@@ -90,9 +90,9 @@ namespace dae
             {
                 int count;
                 std::unique_ptr<SDL_JoystickID, void(*)(void*)> gamepads(SDL_GetGamepads(&count), SDL_free);
-                if (gamepads && m_ControllerIndex < (unsigned int)count)
+                if (gamepads && m_ControllerIndex < static_cast<unsigned int>count)
                 {
-                    m_pGamepad = SDL_OpenGamepad(gamepads[m_ControllerIndex]);
+                    m_pGamepad = SDL_OpenGamepad(gamepads.get()[m_ControllerIndex]);
                 }
             }
 
