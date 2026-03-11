@@ -26,10 +26,6 @@
 //				4 Other improvements
 //				5 Needs investigation
 
-// TODO 1: Add keyboard support (SDL). Optional: Pimpl away and use both win32 and SDL.
-// TODO 1: Commands should be able to unbind.
-// TODO 1: Add 2 controllable gameobjects, one for each input, different movement speeds.
-
 // TODO 2: Encapsulate all transform logic into the Transform class, transition it to use matrices.
 // TODO 2: Add a component to a game object, should check for doubles of same type, Text and Texture cannot coexist.
 // TODO 2: Remove a component should use a flag.
@@ -53,6 +49,7 @@
 // TODO 4: Improve folder structure.
 // TODO 4: Make resolution, name etc. more accessible and less hard coded.
 // TODO 4: RotatorComponent should support ellipses.
+// TODO 4: Diagonal movement is currently double speed.
 
 // TODO 5: Should a ScoreComponent be part of the engine or game?
 			// Part of game, logic is game specific, it should use be a GameObject with TextComponent and custom score logic defined in game code.
@@ -85,42 +82,39 @@ static void loadMainMenu()
 	fps->AddComponent<dae::FPSComponent>(pText);
 	scene.Add(std::move(fps));
 
-	auto rotation_center{ std::make_unique<dae::GameObject>() };
-	rotation_center->SetLocalPosition(512, 350);
-	auto* pCenter = rotation_center.get();
-	scene.Add(std::move(rotation_center));
+	auto starfighter{ std::make_unique<dae::GameObject>() };
+	starfighter->AddComponent<dae::TextureComponent>()->SetTexture("starfighter.png");
+	starfighter->SetLocalPosition(400, 350);
+	auto* pStarfighter = starfighter.get();
+	scene.Add(std::move(starfighter));
 
-	auto rotating_inner{ std::make_unique<dae::GameObject>() };
-	rotating_inner->AddComponent<dae::TextureComponent>()->SetTexture("starfighter.png");
-	rotating_inner->AddComponent<dae::RotatorComponent>(20.0f, 2.5f);
-	rotating_inner->SetParent(pCenter, false);
-	auto* pInner = rotating_inner.get();
-	scene.Add(std::move(rotating_inner));
+	auto starfighter_captured{ std::make_unique<dae::GameObject>() };
+	starfighter_captured->AddComponent<dae::TextureComponent>()->SetTexture("starfighter_captured.png");
+	starfighter_captured->SetLocalPosition(600, 350);
+	auto* pStarfighter_captured = starfighter_captured.get();
+	scene.Add(std::move(starfighter_captured));
 
-	auto rotating_outer{ std::make_unique<dae::GameObject>() };
-	rotating_outer->AddComponent<dae::TextureComponent>()->SetTexture("starfighter_captured.png");
-	rotating_outer->AddComponent<dae::RotatorComponent>(25.0f, -5.0f);
-	rotating_outer->SetParent(pInner, false);
-	scene.Add(std::move(rotating_outer));
-
-	const float speed = 200.0f;
 	auto& input = dae::InputManager::GetInstance();
+	const float keyboard_speed = 100.0f;
+	const float gamepad_speed = 200.0f;
 
-	// Up
-	input.BindCommand(0, dae::Gamepad::Button::DPadUp, dae::KeyState::Pressed,
-		std::make_unique<MoveCommand>(pCenter, glm::vec2{ 0, -1 }, speed));
+	input.BindCommand(dae::Keyboard::Key::W, dae::InputManager::KeyState::Pressed, std::make_unique<MoveCommand>(pStarfighter, glm::vec2{ 0, -1 }, keyboard_speed));
 
-	// Down
-	input.BindCommand(0, dae::Gamepad::Button::DPadDown, dae::KeyState::Pressed,
-		std::make_unique<MoveCommand>(pCenter, glm::vec2{ 0, 1 }, speed));
+	input.BindCommand(dae::Keyboard::Key::S, dae::InputManager::KeyState::Pressed, std::make_unique<MoveCommand>(pStarfighter, glm::vec2{ 0, 1 }, keyboard_speed));
 
-	// Left
-	input.BindCommand(0, dae::Gamepad::Button::DPadLeft, dae::KeyState::Pressed,
-		std::make_unique<MoveCommand>(pCenter, glm::vec2{ -1, 0 }, speed));
+	input.BindCommand(dae::Keyboard::Key::A, dae::InputManager::KeyState::Pressed, std::make_unique<MoveCommand>(pStarfighter, glm::vec2{ -1, 0 }, keyboard_speed));
+	//input.UnbindCommand(dae::Keyboard::Key::A, dae::InputManager::KeyState::Pressed);
+	// Unbind works
 
-	// Right
-	input.BindCommand(0, dae::Gamepad::Button::DPadRight, dae::KeyState::Pressed,
-		std::make_unique<MoveCommand>(pCenter, glm::vec2{ 1, 0 }, speed));
+	input.BindCommand(dae::Keyboard::Key::D, dae::InputManager::KeyState::Pressed, std::make_unique<MoveCommand>(pStarfighter, glm::vec2{ 1, 0 }, keyboard_speed));
+
+	input.BindCommand(dae::Gamepad::Button::DPadUp, dae::InputManager::KeyState::Pressed, std::make_unique<MoveCommand>(pStarfighter_captured, glm::vec2{ 0, -1 }, gamepad_speed), 0);
+
+	input.BindCommand(dae::Gamepad::Button::DPadDown, dae::InputManager::KeyState::Pressed, std::make_unique<MoveCommand>(pStarfighter_captured, glm::vec2{ 0, 1 }, gamepad_speed), 0);
+
+	input.BindCommand(dae::Gamepad::Button::DPadLeft, dae::InputManager::KeyState::Pressed, std::make_unique<MoveCommand>(pStarfighter_captured, glm::vec2{ -1, 0 }, gamepad_speed), 0);
+
+	input.BindCommand(dae::Gamepad::Button::DPadRight, dae::InputManager::KeyState::Pressed, std::make_unique<MoveCommand>(pStarfighter_captured, glm::vec2{ 1, 0 }, gamepad_speed), 0);
 }
 
 int main(int, char*[]) {

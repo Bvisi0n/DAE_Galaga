@@ -1,5 +1,3 @@
-// TODO 4: Split this into seperate dedicated cpp files and have CMake handle the platform specific compilation.
-
 #if WIN32
     #define WIN32_LEAN_AND_MEAN
     #include <windows.h>
@@ -9,6 +7,8 @@
 #endif
 
 #include "Input/Gamepad.h"
+
+// TODO: Merge the branches as in Keyboard.cpp. I think that looks a bit cleaner? Purely style choice.
 
 namespace dae
 {
@@ -40,9 +40,9 @@ namespace dae
 
             m_IsConnected = true;
 
-            auto buttonChanges = m_CurrentState.Gamepad.wButtons ^ m_PreviousState.Gamepad.wButtons;
-            m_ButtonsPressedThisFrame = buttonChanges & m_CurrentState.Gamepad.wButtons;
-            m_ButtonsReleasedThisFrame = buttonChanges & (~m_CurrentState.Gamepad.wButtons);
+            auto button_changes = m_CurrentState.Gamepad.wButtons ^ m_PreviousState.Gamepad.wButtons;
+            m_ButtonsPressedThisFrame = button_changes & m_CurrentState.Gamepad.wButtons;
+            m_ButtonsReleasedThisFrame = button_changes & (~m_CurrentState.Gamepad.wButtons);
         }
 
         bool IsDown(Gamepad::Button button) const
@@ -87,13 +87,13 @@ namespace dae
             if (!m_pGamepad)
             {
                 int count;
-                // TODO 4: Wrap this in a small struct/class for RAII.
+                // TODO: Wrap this in a small struct/class for RAII.
                 SDL_JoystickID* gamepads = SDL_GetGamepads(&count);
                 if (gamepads && m_ControllerIndex < (unsigned int)count)
                 {
                     m_pGamepad = SDL_OpenGamepad(gamepads[m_ControllerIndex]);
                 }
-                SDL_free(gamepads); // IMPORTANT!
+                SDL_free(gamepads); // IMPORTANT!!!
             }
 
             if (!m_pGamepad)
@@ -104,7 +104,7 @@ namespace dae
             m_PreviousButtons = m_CurrentButtons;
             m_CurrentButtons = 0;
 
-            // TODO 4: Could be optimized for cache.
+            // TODO: This feels wrong but it works, doesn't feel cache friendly...
             auto MapButton = [&](SDL_GamepadButton sdlButton, Gamepad::Button daeButton)
                 {
                     if (SDL_GetGamepadButton(m_pGamepad, sdlButton))

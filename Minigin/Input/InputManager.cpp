@@ -4,6 +4,7 @@
 #include "Input/InputManager.h"
 
 dae::InputManager::InputManager()
+	: m_pKeyboard(std::make_unique<Keyboard>())
 {
 	for (unsigned int i = 0; i < 4; ++i)
 	{
@@ -24,45 +25,62 @@ bool dae::InputManager::ProcessInput(const float deltaTime)
 		ImGui_ImplSDL3_ProcessEvent(&e);
 	}
 
-	// Careful when moving this around, is it dependent on SDL_PollEvent()? Check Emscripten build if you do!
+	// Careful when moving these around, it's dependent on SDL_PollEvent(). Check Emscripten build if you do!
+	// See https://youtu.be/TSlJ3dX5GCI?si=_Nb7xtJYRhaWbBvI&t=339 for info.
+
+	m_pKeyboard->Update();
+
+	for (auto& [binding, command] : m_pKeyboardCommands)
+	{
+		bool execute = false;
+		switch (binding.second)
+		{
+			case KeyState::Down:
+				execute = m_pKeyboard->IsDown(binding.first);
+				break;
+			case KeyState::Up:
+				execute = m_pKeyboard->IsUp(binding.first);
+				break;
+			case KeyState::Pressed:
+				execute = m_pKeyboard->IsPressed(binding.first);
+				break;
+		}
+
+		if (execute)
+		{
+			command->Execute(deltaTime);
+		}
+	}
+
 	for (auto& gamepad : m_pGamepads)
 	{
 		gamepad->Update();
 	}
 
-	for (auto& [binding, command] : m_ConsoleCommands)
+	for (auto& [binding, command] : m_pGamepadCommands)
 	{
-		const auto& [key, state] = binding;
-		const auto& [controllerIdx, button] = key;
-
-		bool shouldExecute = false;
-		const auto& gamepad = m_pGamepads[controllerIdx];
-
+		const auto& [index, button, state] = binding;
+		bool execute = false;
 		switch (state)
 		{
-			case KeyState::Down:
-				shouldExecute = gamepad->IsDown(button);
-				break;
-			case KeyState::Up:
-				shouldExecute = gamepad->IsUp(button);
-				break;
-			case KeyState::Pressed:
-				shouldExecute = gamepad->IsPressed(button);
-				break;
+		case KeyState::Down:
+			execute = m_pGamepads[index]->IsDown(button);
+			break;
+		case KeyState::Up:
+			execute = m_pGamepads[index]->IsUp(button);
+			break;
+		case KeyState::Pressed:
+			execute = m_pGamepads[index]->IsPressed(button);
+			break;
 		}
 
-		if (shouldExecute)
+		if (execute)
 		{
 			command->Execute(deltaTime);
 		}
 	}
 
 	return true;
-}
-
-void dae::InputManager::BindCommand(unsigned int controllerIndex, Gamepad::Button button, KeyState state, std::unique_ptr<dae::Command> pCommand)
-{
-	m_ConsoleCommands[{ {controllerIndex, button}, state }] = std::move(pCommand);
 }
 
 bool dae::InputManager::IsControllerConnected(unsigned int controllerIndex) const
