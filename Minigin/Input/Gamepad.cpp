@@ -104,29 +104,36 @@ namespace dae
             m_PreviousButtons = m_CurrentButtons;
             m_CurrentButtons = 0;
 
-            // TODO: This feels wrong but it works, doesn't feel cache friendly...
-            auto MapButton = [&](SDL_GamepadButton sdlButton, Gamepad::Button daeButton)
-                {
-                    if (SDL_GetGamepadButton(m_pGamepad, sdlButton))
-                    {
-                        m_CurrentButtons |= static_cast<unsigned int>(daeButton);
-                    }
-                };
+            struct ButtonMapping
+            {
+                SDL_GamepadButton sdlButton;
+                Gamepad::Button daeButton;
+            };
 
-            MapButton(SDL_GAMEPAD_BUTTON_SOUTH, Button::A);
-            MapButton(SDL_GAMEPAD_BUTTON_EAST, Button::B);
-            MapButton(SDL_GAMEPAD_BUTTON_WEST, Button::X);
-            MapButton(SDL_GAMEPAD_BUTTON_NORTH, Button::Y);
-            MapButton(SDL_GAMEPAD_BUTTON_START, Button::Start);
-            MapButton(SDL_GAMEPAD_BUTTON_BACK, Button::Back);
-            MapButton(SDL_GAMEPAD_BUTTON_LEFT_STICK, Button::LeftThumb);
-            MapButton(SDL_GAMEPAD_BUTTON_RIGHT_STICK, Button::RightThumb);
-            MapButton(SDL_GAMEPAD_BUTTON_LEFT_SHOULDER, Button::LeftShoulder);
-            MapButton(SDL_GAMEPAD_BUTTON_RIGHT_SHOULDER, Button::RightShoulder);
-            MapButton(SDL_GAMEPAD_BUTTON_DPAD_UP, Button::DPadUp);
-            MapButton(SDL_GAMEPAD_BUTTON_DPAD_DOWN, Button::DPadDown);
-            MapButton(SDL_GAMEPAD_BUTTON_DPAD_LEFT, Button::DPadLeft);
-            MapButton(SDL_GAMEPAD_BUTTON_DPAD_RIGHT, Button::DPadRight);
+            static constexpr ButtonMapping mapping[] = {
+                { SDL_GAMEPAD_BUTTON_SOUTH, Button::A },
+                { SDL_GAMEPAD_BUTTON_EAST, Button::B },
+                { SDL_GAMEPAD_BUTTON_WEST, Button::X },
+                { SDL_GAMEPAD_BUTTON_NORTH, Button::Y },
+                { SDL_GAMEPAD_BUTTON_START, Button::Start },
+                { SDL_GAMEPAD_BUTTON_BACK, Button::Back },
+                { SDL_GAMEPAD_BUTTON_LEFT_STICK, Button::LeftThumb },
+                { SDL_GAMEPAD_BUTTON_RIGHT_STICK, Button::RightThumb },
+                { SDL_GAMEPAD_BUTTON_LEFT_SHOULDER, Button::LeftShoulder },
+                { SDL_GAMEPAD_BUTTON_RIGHT_SHOULDER, Button::RightShoulder },
+                { SDL_GAMEPAD_BUTTON_DPAD_UP, Button::DPadUp },
+                { SDL_GAMEPAD_BUTTON_DPAD_DOWN, Button::DPadDown },
+                { SDL_GAMEPAD_BUTTON_DPAD_LEFT, Button::DPadLeft },
+                { SDL_GAMEPAD_BUTTON_DPAD_RIGHT, Button::DPadRight }
+            };
+
+            for (const auto& m : mapping)
+            {
+                if (SDL_GetGamepadButton(m_pGamepad, m.sdlButton))
+                {
+                    m_CurrentButtons |= static_cast<unsigned int>(m.daeButton);
+                }
+            }
         }
 
         bool IsDown(Gamepad::Button button) const
