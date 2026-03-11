@@ -81,7 +81,7 @@ namespace dae
                 };
             #else
                 // https://wiki.libsdl.org/SDL3/SDL_Scancode
-                static const std::unordered_map<KeyboardKey, int> key_map =
+                static const std::unordered_map<Key, int> key_map =
                 {
                     {Key::W, SDL_SCANCODE_W},
                     {Key::A, SDL_SCANCODE_A},
