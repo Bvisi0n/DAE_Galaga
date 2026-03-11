@@ -11,7 +11,7 @@
 //#include <SDL3_image/SDL_image.h>
 #include <SDL3_ttf/SDL_ttf.h>
 
-#include "Singletons/InputManager.h"
+#include "Input/InputManager.h"
 #include "Singletons/Renderer.h"
 #include "Singletons/ResourceManager.h"
 #include "Singletons/SceneManager.h"
@@ -59,7 +59,11 @@ dae::Minigin::Minigin(const std::filesystem::path& dataPath)
 {
 	PrintSDLVersion();
 	
+#if WIN32
 	if (!SDL_InitSubSystem(SDL_INIT_VIDEO))
+#else
+	if (!SDL_InitSubSystem(SDL_INIT_VIDEO | SDL_INIT_GAMEPAD))
+#endif
 	{
 		SDL_Log("Renderer error: %s", SDL_GetError());
 		throw std::runtime_error(std::string("SDL_Init Error: ") + SDL_GetError());

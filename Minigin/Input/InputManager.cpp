@@ -1,7 +1,7 @@
 #include <SDL3/SDL.h>
 #include <backends/imgui_impl_sdl3.h>
 
-#include "Singletons/InputManager.h"
+#include "Input/InputManager.h"
 
 dae::InputManager::InputManager()
 {
@@ -13,11 +13,6 @@ dae::InputManager::InputManager()
 
 bool dae::InputManager::ProcessInput(const float deltaTime)
 {
-	for (auto& gamepad : m_pGamepads)
-	{
-		gamepad->Update();
-	}
-
 	SDL_Event e;
 	while (SDL_PollEvent(&e))
 	{
@@ -27,6 +22,11 @@ bool dae::InputManager::ProcessInput(const float deltaTime)
 		}
 
 		ImGui_ImplSDL3_ProcessEvent(&e);
+	}
+
+	for (auto& gamepad : m_pGamepads)
+	{
+		gamepad->Update();
 	}
 
 	for (auto& [binding, command] : m_ConsoleCommands)

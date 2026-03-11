@@ -12,7 +12,7 @@
 #include "Components/RotatorComponent.h"
 #include "Components/TextureComponent.h"
 #include "Components/TextComponent.h"
-#include "Singletons/InputManager.h"
+#include "Input/InputManager.h"
 #include "Singletons/ResourceManager.h"
 #include "Singletons/SceneManager.h"
 #include "GameObject.h"

@@ -6,8 +6,8 @@
 #include <vector>
 
 #include "Commands/Command.h"
+#include "Input/Gamepad.h"
 #include "Singletons/Singleton.h"
-#include "Gamepad.h"
 
 namespace dae
 {
