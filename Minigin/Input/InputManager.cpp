@@ -29,52 +29,42 @@ bool dae::InputManager::ProcessInput(const float deltaTime)
 	// See https://youtu.be/TSlJ3dX5GCI?si=_Nb7xtJYRhaWbBvI&t=339 for info.
 
 	m_pKeyboard->Update();
-
-	for (auto& [binding, command] : m_pKeyboardCommands)
-	{
-		bool execute = false;
-		switch (binding.second)
-		{
-			case KeyState::Down:
-				execute = m_pKeyboard->IsDown(binding.first);
-				break;
-			case KeyState::Up:
-				execute = m_pKeyboard->IsUp(binding.first);
-				break;
-			case KeyState::Pressed:
-				execute = m_pKeyboard->IsPressed(binding.first);
-				break;
-		}
-
-		if (execute)
-		{
-			command->Execute(deltaTime);
-		}
-	}
-
 	for (auto& gamepad : m_pGamepads)
 	{
 		gamepad->Update();
 	}
 
+	auto checkState = [](KeyState state, auto isDown, auto isUp, auto isPressed) -> bool
+		{
+			switch (state)
+			{
+				case KeyState::Down:
+					return isDown();
+				case KeyState::Up:
+					return isUp();
+				case KeyState::Pressed:
+					return isPressed();
+				default:
+					return false;
+			}
+		};
+
+	for (auto& [binding, command] : m_pKeyboardCommands)
+	{
+		const auto& [key, state] = binding;
+		if (checkState(state,	[&] { return m_pKeyboard->IsDown(key); },
+								[&] { return m_pKeyboard->IsUp(key); },
+								[&] { return m_pKeyboard->IsPressed(key); }))
+		{
+			command->Execute(deltaTime);
+		}
+	}
 	for (auto& [binding, command] : m_pGamepadCommands)
 	{
-		const auto& [index, button, state] = binding;
-		bool execute = false;
-		switch (state)
-		{
-		case KeyState::Down:
-			execute = m_pGamepads[index]->IsDown(button);
-			break;
-		case KeyState::Up:
-			execute = m_pGamepads[index]->IsUp(button);
-			break;
-		case KeyState::Pressed:
-			execute = m_pGamepads[index]->IsPressed(button);
-			break;
-		}
-
-		if (execute)
+		const auto& [idx, btn, state] = binding;
+		if (checkState(state,	[&] { return m_pGamepads[idx]->IsDown(btn); },
+								[&] { return m_pGamepads[idx]->IsUp(btn); },
+								[&] { return m_pGamepads[idx]->IsPressed(btn); }))
 		{
 			command->Execute(deltaTime);
 		}
