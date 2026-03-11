@@ -6,6 +6,8 @@
     #include <SDL3/SDL.h>
 #endif
 
+#include <memory>
+
 #include "Input/Gamepad.h"
 
 // TODO: Merge the branches as in Keyboard.cpp. I think that looks a bit cleaner? Purely style choice.
@@ -87,13 +89,11 @@ namespace dae
             if (!m_pGamepad)
             {
                 int count;
-                // TODO: Wrap this in a small struct/class for RAII.
-                SDL_JoystickID* gamepads = SDL_GetGamepads(&count);
+                std::unique_ptr<SDL_JoystickID, void(*)(void*)> gamepads(SDL_GetGamepads(&count), SDL_free);
                 if (gamepads && m_ControllerIndex < (unsigned int)count)
                 {
                     m_pGamepad = SDL_OpenGamepad(gamepads[m_ControllerIndex]);
                 }
-                SDL_free(gamepads); // IMPORTANT!!!
             }
 
             if (!m_pGamepad)
