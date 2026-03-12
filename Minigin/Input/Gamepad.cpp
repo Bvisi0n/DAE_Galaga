@@ -10,7 +10,7 @@
 
 #include "Input/Gamepad.h"
 
-// TODO: Merge the branches as in Keyboard.cpp. I think that looks a bit cleaner? Purely style choice.
+// DAEL: Merge the branches as in Keyboard.cpp. I think that looks a bit cleaner? Purely style choice.
 
 namespace dae
 {

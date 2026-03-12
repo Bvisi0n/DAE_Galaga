@@ -16,6 +16,7 @@ public:
 
     void Execute(const float deltaTime) override
     {
+        // DAEN: Diagonal movement is currently double speed.
         auto position = m_pGameObject->GetLocalPosition().GetPosition();
 
         position.x += m_direction.x * m_speed * deltaTime;

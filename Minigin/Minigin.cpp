@@ -8,7 +8,6 @@
 #endif
 
 #include <SDL3/SDL.h>
-//#include <SDL3_image/SDL_image.h>
 #include <SDL3_ttf/SDL_ttf.h>
 
 #include "Input/InputManager.h"
@@ -39,17 +38,11 @@ void LogSDLVersion(const std::string& message, int major, int minor, int patch)
 	}
 #endif
 
-// Why bother with this? Because sometimes students have a different SDL version installed on their pc.
-// That is not a problem unless for some reason the dll's from this project are not copied next to the exe.
-// These entries in the debug output help to identify that issue.
 void PrintSDLVersion()
 {
 	LogSDLVersion("Compiled with SDL", SDL_MAJOR_VERSION, SDL_MINOR_VERSION, SDL_MICRO_VERSION);
 	int version = SDL_GetVersion();
 	LogSDLVersion("Linked with SDL ", SDL_VERSIONNUM_MAJOR(version), SDL_VERSIONNUM_MINOR(version), SDL_VERSIONNUM_MICRO(version));
-	// LogSDLVersion("Compiled with SDL_image ",SDL_IMAGE_MAJOR_VERSION, SDL_IMAGE_MINOR_VERSION, SDL_IMAGE_MICRO_VERSION);
-	// version = IMG_Version();
-	// LogSDLVersion("Linked with SDL_image ", SDL_VERSIONNUM_MAJOR(version), SDL_VERSIONNUM_MINOR(version), SDL_VERSIONNUM_MICRO(version));
 	LogSDLVersion("Compiled with SDL_ttf ",	SDL_TTF_MAJOR_VERSION, SDL_TTF_MINOR_VERSION,SDL_TTF_MICRO_VERSION);
 	version = TTF_Version();
 	LogSDLVersion("Linked with SDL_ttf ", SDL_VERSIONNUM_MAJOR(version), SDL_VERSIONNUM_MINOR(version),	SDL_VERSIONNUM_MICRO(version));
@@ -69,6 +62,7 @@ dae::Minigin::Minigin(const std::filesystem::path& dataPath)
 		throw std::runtime_error(std::string("SDL_Init Error: ") + SDL_GetError());
 	}
 
+	// DAEN: Make resolution, name etc. more accessible and less hard coded.
 	g_window = SDL_CreateWindow(
 		"Programming 4 assignment",
 		1024,
@@ -124,11 +118,12 @@ void dae::Minigin::RunOneFrame()
 	const auto frame_end_time{ clock::now() };
 	const auto execution_time{ frame_end_time - frame_start_time };
 
+	// DAEN: What happens when frames start to take to long? Should we cap the max delta time?
+
 	if (execution_time < m_nsPerFrame)
 	{
 		const auto wait_duration = m_nsPerFrame - execution_time;
-		// Appearantly Windows had a sleep resolution of ~15ms on older versions and is just unreliable in general, even on newer versions.
-		// Likely overkill here but I opted for SDL_DelayPrecise, the last function in this file (line 664): https://github.com/libsdl-org/SDL/blob/main/src/timer/SDL_timer.c
+		// I opted for SDL_DelayPrecise, the last function in this file (line 664): https://github.com/libsdl-org/SDL/blob/main/src/timer/SDL_timer.c
 		SDL_DelayPrecise(static_cast<Uint64>(wait_duration.count()));
 	}
 }

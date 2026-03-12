@@ -7,6 +7,8 @@ namespace dae
 {
 	class Transform final
 	{
+		// DAEN: Encapsulate all transform logic into the Transform class, refactor it to use matrices.
+		// DAEN: Add Scale to transform & add support for it in rendering logic.
 	public:
 		Transform() = default;
 		Transform(const glm::vec3& position);

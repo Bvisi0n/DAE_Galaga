@@ -21,6 +21,8 @@ void dae::RotatorComponent::Update(float deltaTime)
         m_Angle += double_pi;
     }
 
+    // DAEN: RotatorComponent should support ellipses.
+
     // x = cos(a) * r, y = sin(a) * r
     GetOwner()->SetLocalPosition(cos(m_Angle) * m_Range, sin(m_Angle) * m_Range);
 }

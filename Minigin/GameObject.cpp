@@ -9,12 +9,20 @@ dae::GameObject::~GameObject() = default;
 
 void dae::GameObject::Update(const float deltaTime)
 {
-	for (auto& comp : m_pComponents) comp->Update(deltaTime);
+	// DAEN: GameObjects should not update when marked for deletion.
+	// DAEN: If a parent gets deleted, then all kids should be deleted as well.
+	for (auto& comp : m_pComponents)
+	{
+		comp->Update(deltaTime);
+	}
 }
 
 void dae::GameObject::Render() const
 {
-	for (const auto& comp : m_pComponents) comp->Render();
+	for (const auto& comp : m_pComponents)
+	{
+		comp->Render();
+	}
 }
 
 void dae::GameObject::SetParent(GameObject* parent, bool keepWorldPosition)

@@ -19,42 +19,7 @@
 #include "Minigin.h"
 #include "Scene.h"
 
-// Priority:	0 Breaks compilation
-//				1 Next Deadline
-//				2 Based on feedback
-//				3 Galaga related
-//				4 Other improvements
-//				5 Needs investigation
-
-// TODO 2: Encapsulate all transform logic into the Transform class, transition it to use matrices.
-// TODO 2: Add a component to a game object, should check for doubles of same type, Text and Texture cannot coexist.
-// TODO 2: Remove a component should use a flag.
-// TODO 2: Ensure GetComponent isn't called in the hotpath.
-// TODO 2: Add Scale to transform & add support in rendering.
-
-// TODO 2: When removing a GameObject from the scene, use a flag to mark it for deletion.
-// TODO 2: GameObjects should not update when marked for deletion.
-// TODO 2: GameObject::IsChild() should check the whole chain.
-// TODO 2: In GameObject a parent should own all children.
-// TODO 2: In GameObject if a parent gets deleted, then all kids should be deleted as well. (RAII if ownership is right)
-
-// TODO 2: Review the entire update flow.
-// TODO 2: Review game loop, what happens when frames start to take to long? Should we cap the max delta time?
-// TODO 2: Encapsulate coldpath data in a struct and use a pointer to it in the GameObject.
-
-// TODO 3: Add CollisionComponent and a way to check for collisions between GameObjects.
-
-// TODO 4: Add concept to dae::GameObject::AddComponent, HasComponent, GetComponent, RemoveComponent.
-// TODO 4: Split engine and game into dll & exe.
-// TODO 4: Improve folder structure.
-// TODO 4: Make resolution, name etc. more accessible and less hard coded.
-// TODO 4: RotatorComponent should support ellipses.
-// TODO 4: Diagonal movement is currently double speed.
-
-// TODO 5: Should a ScoreComponent be part of the engine or game?
-			// Part of game, logic is game specific, it should use be a GameObject with TextComponent and custom score logic defined in game code.
-// TODO 5: In GameObject::SetParent, if keepWorldPosition is false, should the local position be reset to something specific?
-			// Yes, depends on intention of the game, to the hand? In what rotation? Optional paramenter?
+// DAEN: Split engine and game into dll & exe.
 
 static void loadMainMenu()
 {

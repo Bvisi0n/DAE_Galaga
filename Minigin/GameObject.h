@@ -26,6 +26,8 @@ namespace dae
 		void Update(const float deltaTime);
 		void Render() const;
 
+		// DAEN: Should check for doubles of same type, Text and Texture cannot coexist.
+		// DAEN: Use concepts.
 		template <typename T, typename... Args>
 		T* AddComponent(Args&&... args) {
 			auto component = std::make_unique<T>(this, std::forward<Args>(args)...);
@@ -34,11 +36,14 @@ namespace dae
 			return ptr;
 		}
 
+		// DAEN: Use concepts.
 		template <typename T>
 		bool HasComponent() const {
 			return GetComponent<T>() != nullptr;
 		}
 
+		// DAEN: Ensure GetComponent isn't called in the hotpath.
+		// DAEN: Use concepts.
 		template <typename T>
 		T* GetComponent() const {
 			for (const auto& comp : m_pComponents) {
@@ -48,6 +53,8 @@ namespace dae
 			return nullptr;
 		}
 
+		// DAEN: Should use a flag to mark for deletion.
+		// DAEN: Use concepts.
 		template <typename T>
 		void RemoveComponent() {
 			m_pComponents.erase(std::remove_if(m_pComponents.begin(), m_pComponents.end(),

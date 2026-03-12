@@ -15,6 +15,7 @@ namespace dae
 {
     class InputManager final : public Singleton<InputManager>
     {
+        // DAEL: Consider wrapping all input related code in an Input namespace.
     public:
     enum class KeyState { Down, Up, Pressed };
         InputManager();
@@ -22,6 +23,7 @@ namespace dae
 
         bool ProcessInput(const float deltaTime);
 
+        // DAEN: Use concepts.
         template <typename T>
         void BindCommand(T inputType, KeyState state, std::unique_ptr<Command> pCommand, unsigned int controllerIndex = 0)
         {
@@ -35,6 +37,7 @@ namespace dae
             }
         }
 
+        // DAEN: Use concepts.
         template <typename T>
         void UnbindCommand(T inputType, KeyState state, unsigned int controllerIndex = 0)
         {
