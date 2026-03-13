@@ -11,6 +11,10 @@
 #include "Input/Gamepad.h"
 
 // DAEL: Merge the branches as in Keyboard.cpp. I think that looks a bit cleaner? Purely style choice.
+// DAEN: Rework the SDL implementation.
+//       XInput was made first and works as intended, SDL was then butchered to match it.
+//       A result of this is a flawed controller identification logic.
+//       SDL is event driven, currently burning cycles for no reason simulating XInput.
 
 namespace dae
 {
@@ -110,6 +114,7 @@ namespace dae
                 Gamepad::Button daeButton;
             };
 
+            // https://wiki.libsdl.org/SDL3/SDL_GamepadButton
             static constexpr ButtonMapping mapping[] = {
                 { SDL_GAMEPAD_BUTTON_SOUTH, Button::A },
                 { SDL_GAMEPAD_BUTTON_EAST, Button::B },

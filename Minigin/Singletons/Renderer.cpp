@@ -30,8 +30,8 @@ void dae::Renderer::Init(SDL_Window* pWindow)
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;	// Enable Gamepad Controls
 	
 	#if __EMSCRIPTEN__
-		// For an Emscripten build we are disabling file-system access, so let's not attempt to do a fopen() of the imgui.ini file.
-		// You may manually call LoadIniSettingsFromMemory() to load settings from your own storage.
+		// For an Emscripten build we are disabling file-system access.
+		// Use LoadIniSettingsFromMemory() to load settings from your own storage.
 		io.IniFilename = NULL;
 	#endif
 
@@ -45,9 +45,9 @@ void dae::Renderer::Render() const
 	ImGui_ImplSDL3_NewFrame();
 	ImGui::NewFrame();
 
-
 	const auto& color = GetBackgroundColor();
 	SDL_SetRenderDrawColor(m_pRenderer, color.r, color.g, color.b, color.a);
+	
 	SDL_RenderClear(m_pRenderer);
 
 	SceneManager::GetInstance().Render();

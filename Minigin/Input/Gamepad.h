@@ -10,6 +10,9 @@ namespace dae
     public:
         enum class Button : unsigned short
         {
+            // These values represent XInput button bitmasks, don't change without thinking.
+            // Add ButtonMapping logic if you do. (like for the SDL implementation)
+            // https://learn.microsoft.com/en-us/windows/win32/api/xinput/ns-xinput-xinput_gamepad
             DPadUp          = 0x0001,
             DPadDown        = 0x0002,
             DPadLeft        = 0x0004,
