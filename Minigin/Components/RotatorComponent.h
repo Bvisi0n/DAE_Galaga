@@ -3,14 +3,14 @@
 
 #include <glm/glm.hpp>
 
-#include "Components/BaseComponent.h"
+#include "Components/Component.h"
 
 namespace dae
 {
     class GameObject;
 
     // Allows a GameObject to rotate around a parent in a circular path.
-    class RotatorComponent final : public BaseComponent
+    class RotatorComponent final : public Component
     {
     public:
         RotatorComponent(GameObject* pOwner, float range, float speed);

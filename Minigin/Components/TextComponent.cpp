@@ -9,7 +9,7 @@
 #include "Texture2D.h"
 
 dae::TextComponent::TextComponent(GameObject* pOwner, const std::string& text, std::shared_ptr<Font> pFont, const SDL_Color& color)
-	: BaseComponent(pOwner)
+	: Component(pOwner)
 	, m_text(text), m_pFont(std::move(pFont)), m_pTexture(nullptr), m_color(color), m_needsUpdate(true)
 {
 	assert(text.length() > 0 && "TextComponent requires non-empty text.");

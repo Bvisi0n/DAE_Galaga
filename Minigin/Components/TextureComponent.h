@@ -4,17 +4,17 @@
 #include <memory>
 #include <string>
 
-#include "Components/BaseComponent.h"
+#include "Components/Component.h"
 
 namespace dae
 {
 	class Texture2D;
 
 	// Renders an image using a Texture2D.
-	class TextureComponent final : public BaseComponent
+	class TextureComponent final : public Component
 	{
 	public:
-		using BaseComponent::BaseComponent;
+		using Component::Component;
 		~TextureComponent() = default;
 
 		TextureComponent(const TextureComponent& other)				   = delete;

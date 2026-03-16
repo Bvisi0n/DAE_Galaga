@@ -4,7 +4,7 @@
 #include "GameObject.h"
 
 dae::RotatorComponent::RotatorComponent(GameObject* pOwner, float range, float speed)
-    : BaseComponent(pOwner), m_Range(range), m_RotationSpeed(speed) {}
+    : Component(pOwner), m_Range(range), m_RotationSpeed(speed) {}
 
 void dae::RotatorComponent::Update(float deltaTime)
 {

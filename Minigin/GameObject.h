@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-#include "Components/BaseComponent.h"
+#include "Components/Component.h"
 #include "Transform.h"
 
 namespace dae
@@ -58,7 +58,7 @@ namespace dae
 		template <typename T>
 		void RemoveComponent() {
 			m_pComponents.erase(std::remove_if(m_pComponents.begin(), m_pComponents.end(),
-				[](const std::unique_ptr<BaseComponent>& comp)
+				[](const std::unique_ptr<Component>& comp)
 				{
 					return dynamic_cast<T*>(comp.get()) != nullptr;
 				}), m_pComponents.end());
@@ -75,7 +75,7 @@ namespace dae
 	private:
 		GameObject* m_pParent{ nullptr };
 		std::vector<GameObject*> m_pChildren;
-		std::vector<std::unique_ptr<BaseComponent>> m_pComponents;
+		std::vector<std::unique_ptr<Component>> m_pComponents;
 		Transform m_localPosition{};
 		Transform m_globalPosition{};
 		bool m_positionIsDirty{ true };

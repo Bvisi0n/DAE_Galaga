@@ -8,7 +8,7 @@
 #include "GameObject.h"
 
 dae::FPSComponent::FPSComponent(GameObject* pOwner, TextComponent* pText)
-	: BaseComponent(pOwner)
+	: Component(pOwner)
 	, m_pText(pText)
 {
 	assert(m_pText != nullptr && "FPSComponent requires a valid TextComponent reference.");

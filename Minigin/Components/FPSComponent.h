@@ -3,7 +3,7 @@
 
 #include <memory>
 
-#include "Components/BaseComponent.h"
+#include "Components/Component.h"
 
 namespace dae
 {
@@ -12,7 +12,7 @@ namespace dae
 	class TextComponent;
 
 	// Displays the FPS in a given TextComponent.
-	class FPSComponent final : public BaseComponent
+	class FPSComponent final : public Component
 	{
 	public:
 		FPSComponent(GameObject* pOwner, TextComponent* pText);

@@ -7,7 +7,7 @@
 #include <SDL3/SDL.h>
 #include <SDL3_ttf/SDL_ttf.h>
 
-#include "Components/BaseComponent.h"
+#include "Components/Component.h"
 
 namespace dae
 {
@@ -16,7 +16,7 @@ namespace dae
 	class Texture2D;
 
 	// Renders text using a Font and a Texture2D.
-	class TextComponent final : public BaseComponent
+	class TextComponent final : public Component
 	{
 	public:
 		TextComponent(GameObject* pOwner, const std::string& text, std::shared_ptr<Font> pFont, const SDL_Color& color = { 255, 255, 255, 255 });
