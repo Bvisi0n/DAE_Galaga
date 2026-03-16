@@ -20,9 +20,9 @@ namespace dae
         void Render() const override {};
 
     private:
-        float m_Angle{ 0.0f };
-        float m_Range{ 0.0f };
-        float m_RotationSpeed{ 0.0f };
+        float m_angle{ 0.0f };
+        float m_range{ 0.0f };
+        float m_rotationSpeed{ 0.0f };
     };
 }
 
