@@ -14,7 +14,9 @@ namespace dae
     class UIValueObserver final : public Component, public Observer
     {
     public:
-        UIValueObserver(GameObject* pOwner, TextComponent* pText, GameEvent observedEvent, int initialValue);
+        using Formatter = std::function<std::string(int)>;
+
+        UIValueObserver(GameObject* pOwner, TextComponent* pText, GameEvent observedEvent, Formatter formatter, int initialValue);
 
         void OnNotify(GameEvent event, int value) override;
 
@@ -22,6 +24,7 @@ namespace dae
         void Render() const override {}
 
     private:
+        Formatter m_Formatter;
         TextComponent* m_pText{ nullptr };
         GameEvent m_observedEvent;
     };

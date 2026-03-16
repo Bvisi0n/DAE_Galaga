@@ -54,7 +54,7 @@ void dae::TextComponent::SetColor(const SDL_Color& color)
 	}
 }
 
-void dae::TextComponent::SetText(std::string& text)
+void dae::TextComponent::SetText(const std::string& text)
 {
 	if (m_text != text)
 	{

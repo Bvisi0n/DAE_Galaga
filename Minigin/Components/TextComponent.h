@@ -31,7 +31,7 @@ namespace dae
 		void Render() const override;
 
 		void SetColor(const SDL_Color& color);
-		void SetText(std::string& text);
+		void SetText(const std::string& text);
 
 	private:
 		std::string m_text;

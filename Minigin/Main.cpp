@@ -68,14 +68,14 @@ static void loadMainMenu()
 	font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 18);
 	auto player_1_lives{ std::make_unique<dae::GameObject>() };
 	pText = player_1_lives->AddComponent<dae::TextComponent>("Lives:", font);
-	auto pPlayer_1_observer = player_1_lives->AddComponent<dae::UIValueObserver>(pText, dae::GameEvent::PlayerDied, player_1_subject->GetLives());
+	auto pPlayer_1_observer = player_1_lives->AddComponent<dae::UIValueObserver>(pText, dae::GameEvent::PlayerDied, [](int v) { return "P1 Lives: " + std::to_string(v) + " (spacebar)"; }, player_1_subject->GetLives());
     player_1_subject->AttachObserver(pPlayer_1_observer);
 	player_1_lives->SetLocalPosition(20, 100);
 	scene.Add(std::move(player_1_lives));
 
 	auto player_2_lives{ std::make_unique<dae::GameObject>() };
 	pText = player_2_lives->AddComponent<dae::TextComponent>("Lives:", font);
-	auto pPlayer_2_observer = player_2_lives->AddComponent<dae::UIValueObserver>(pText, dae::GameEvent::PlayerDied, player_2_subject->GetLives());
+	auto pPlayer_2_observer = player_2_lives->AddComponent<dae::UIValueObserver>(pText, dae::GameEvent::PlayerDied, [](int v) { return "P2 Lives: " + std::to_string(v) + " (left shoulder)"; }, player_2_subject->GetLives());
     player_2_subject->AttachObserver(pPlayer_2_observer);
 	player_2_lives->SetLocalPosition(20, 150);
 	scene.Add(std::move(player_2_lives));

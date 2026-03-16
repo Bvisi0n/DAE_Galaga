@@ -1,3 +1,4 @@
+#include <functional>
 #include <string>
 
 #include "Components/TextComponent.h"
@@ -6,8 +7,9 @@
 
 namespace dae
 {
-    UIValueObserver::UIValueObserver(GameObject* pOwner, TextComponent* pText, GameEvent observedEvent, int initialValue)
+    UIValueObserver::UIValueObserver(GameObject* pOwner, TextComponent* pText, GameEvent observedEvent, Formatter formatter, int initialValue)
         : Component(pOwner)
+        , m_Formatter(std::move(formatter))
         , m_pText(pText)
         , m_observedEvent(observedEvent)
     {
@@ -18,10 +20,9 @@ namespace dae
     {
         if (event == m_observedEvent)
         {
-            if (m_pText)
+            if (m_pText && m_Formatter)
             {
-                std::string new_text = "Value: " + std::to_string(value) + " (spacebar / left shoulder)";
-                m_pText->SetText(new_text);
+                m_pText->SetText(m_Formatter(value));
             }
         }
     }
