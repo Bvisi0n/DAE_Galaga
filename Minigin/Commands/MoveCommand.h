@@ -6,7 +6,7 @@
 #include "Commands/Command.h"
 #include "GameObject.h"
 
-// DAEN: Split into .h & .cpp.
+// DAEL: Split into .h & .cpp.
 
 namespace dae
 {
