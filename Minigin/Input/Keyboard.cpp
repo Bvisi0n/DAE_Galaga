@@ -78,6 +78,7 @@ namespace dae
                     {Key::A, 'A'},
                     {Key::S, 'S'},
                     {Key::D, 'D'},
+                    {Key::Space, VK_SPACE},
                 };
             #else
                 // https://wiki.libsdl.org/SDL3/SDL_Scancode
@@ -87,6 +88,7 @@ namespace dae
                     {Key::A, SDL_SCANCODE_A},
                     {Key::S, SDL_SCANCODE_S},
                     {Key::D, SDL_SCANCODE_D},
+                    {Key::Space, SDL_SCANCODE_SPACE},
                 };
             #endif
             return key_map.at(key);

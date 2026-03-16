@@ -7,6 +7,7 @@
 #include <vld.h>
 #endif
 
+#include "Commands/DieCommand.h"
 #include "Commands/MoveCommand.h"
 #include "Components/FPSComponent.h"
 #include "Components/HealthComponent.h"
@@ -77,21 +78,23 @@ static void loadMainMenu()
 	const float keyboard_speed = 100.0f;
 	const float gamepad_speed = 200.0f;
 
-	input.BindCommand(dae::Keyboard::Key::W, dae::InputManager::KeyState::Pressed, std::make_unique<MoveCommand>(pPlayer_1, glm::vec2{ 0, -1 }, keyboard_speed));
+	input.BindCommand(dae::Keyboard::Key::W, dae::InputManager::KeyState::Pressed, std::make_unique<dae::MoveCommand>(pPlayer_1, glm::vec2{ 0, -1 }, keyboard_speed));
 
-	input.BindCommand(dae::Keyboard::Key::S, dae::InputManager::KeyState::Pressed, std::make_unique<MoveCommand>(pPlayer_1, glm::vec2{ 0, 1 }, keyboard_speed));
+	input.BindCommand(dae::Keyboard::Key::S, dae::InputManager::KeyState::Pressed, std::make_unique<dae::MoveCommand>(pPlayer_1, glm::vec2{ 0, 1 }, keyboard_speed));
 
-	input.BindCommand(dae::Keyboard::Key::A, dae::InputManager::KeyState::Pressed, std::make_unique<MoveCommand>(pPlayer_1, glm::vec2{ -1, 0 }, keyboard_speed));
+	input.BindCommand(dae::Keyboard::Key::A, dae::InputManager::KeyState::Pressed, std::make_unique<dae::MoveCommand>(pPlayer_1, glm::vec2{ -1, 0 }, keyboard_speed));
 
-	input.BindCommand(dae::Keyboard::Key::D, dae::InputManager::KeyState::Pressed, std::make_unique<MoveCommand>(pPlayer_1, glm::vec2{ 1, 0 }, keyboard_speed));
+	input.BindCommand(dae::Keyboard::Key::D, dae::InputManager::KeyState::Pressed, std::make_unique<dae::MoveCommand>(pPlayer_1, glm::vec2{ 1, 0 }, keyboard_speed));
 
-	input.BindCommand(dae::Gamepad::Button::DPadUp, dae::InputManager::KeyState::Pressed, std::make_unique<MoveCommand>(pPlayer_2, glm::vec2{ 0, -1 }, gamepad_speed), 0);
+	input.BindCommand(dae::Keyboard::Key::Space, dae::InputManager::KeyState::Up, std::make_unique<dae::DieCommand>(player_1_subject));
 
-	input.BindCommand(dae::Gamepad::Button::DPadDown, dae::InputManager::KeyState::Pressed, std::make_unique<MoveCommand>(pPlayer_2, glm::vec2{ 0, 1 }, gamepad_speed), 0);
+	input.BindCommand(dae::Gamepad::Button::DPadUp, dae::InputManager::KeyState::Pressed, std::make_unique<dae::MoveCommand>(pPlayer_2, glm::vec2{ 0, -1 }, gamepad_speed), 0);
 
-	input.BindCommand(dae::Gamepad::Button::DPadLeft, dae::InputManager::KeyState::Pressed, std::make_unique<MoveCommand>(pPlayer_2, glm::vec2{ -1, 0 }, gamepad_speed), 0);
+	input.BindCommand(dae::Gamepad::Button::DPadDown, dae::InputManager::KeyState::Pressed, std::make_unique<dae::MoveCommand>(pPlayer_2, glm::vec2{ 0, 1 }, gamepad_speed), 0);
 
-	input.BindCommand(dae::Gamepad::Button::DPadRight, dae::InputManager::KeyState::Pressed, std::make_unique<MoveCommand>(pPlayer_2, glm::vec2{ 1, 0 }, gamepad_speed), 0);
+	input.BindCommand(dae::Gamepad::Button::DPadLeft, dae::InputManager::KeyState::Pressed, std::make_unique<dae::MoveCommand>(pPlayer_2, glm::vec2{ -1, 0 }, gamepad_speed), 0);
+
+	input.BindCommand(dae::Gamepad::Button::DPadRight, dae::InputManager::KeyState::Pressed, std::make_unique<dae::MoveCommand>(pPlayer_2, glm::vec2{ 1, 0 }, gamepad_speed), 0);
 }
 
 int main(int, char*[]) {

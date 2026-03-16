@@ -9,7 +9,14 @@ namespace dae
     class Keyboard final
     {
     public:
-        enum class Key { W, A, S, D };
+        enum class Key
+        {
+            W,
+            A,
+            S,
+            D,
+            Space
+        };
 
         Keyboard();
         ~Keyboard();
