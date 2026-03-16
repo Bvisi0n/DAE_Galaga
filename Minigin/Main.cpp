@@ -59,7 +59,7 @@ static void loadMainMenu()
 
 	auto player_2{ std::make_unique<dae::GameObject>() };
 	player_2->AddComponent<dae::TextureComponent>()->SetTexture("starfighter_captured.png");
-	player_2->AddComponent<dae::HealthComponent>(3);
+	auto player_2_subject = player_2->AddComponent<dae::HealthComponent>(3);
 	player_2->SetLocalPosition(600, 350);
 	auto* pPlayer_2 = player_2.get();
 	scene.Add(std::move(player_2));
@@ -72,6 +72,13 @@ static void loadMainMenu()
     player_1_subject->AttachObserver(pPlayer_1_observer);
 	player_1_lives->SetLocalPosition(20, 100);
 	scene.Add(std::move(player_1_lives));
+
+	auto player_2_lives{ std::make_unique<dae::GameObject>() };
+	pText = player_2_lives->AddComponent<dae::TextComponent>("Lives:", font);
+	auto pPlayer_2_observer = player_2_lives->AddComponent<dae::UIValueObserver>(pText, dae::GameEvent::PlayerDied, player_2_subject->GetLives());
+    player_2_subject->AttachObserver(pPlayer_2_observer);
+	player_2_lives->SetLocalPosition(20, 150);
+	scene.Add(std::move(player_2_lives));
 
 
 	auto& input = dae::InputManager::GetInstance();
@@ -95,6 +102,8 @@ static void loadMainMenu()
 	input.BindCommand(dae::Gamepad::Button::DPadLeft, dae::InputManager::KeyState::Pressed, std::make_unique<dae::MoveCommand>(pPlayer_2, glm::vec2{ -1, 0 }, gamepad_speed), 0);
 
 	input.BindCommand(dae::Gamepad::Button::DPadRight, dae::InputManager::KeyState::Pressed, std::make_unique<dae::MoveCommand>(pPlayer_2, glm::vec2{ 1, 0 }, gamepad_speed), 0);
+
+	input.BindCommand(dae::Gamepad::Button::LeftShoulder, dae::InputManager::KeyState::Up, std::make_unique<dae::DieCommand>(player_2_subject));
 }
 
 int main(int, char*[]) {

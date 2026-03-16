@@ -20,7 +20,7 @@ namespace dae
         {
             if (m_pText)
             {
-                std::string new_text = "(spacebar) Value: " + std::to_string(value);
+                std::string new_text = "Value: " + std::to_string(value) + " (spacebar / left shoulder)";
                 m_pText->SetText(new_text);
             }
         }
