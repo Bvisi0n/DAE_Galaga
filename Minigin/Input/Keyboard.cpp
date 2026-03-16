@@ -74,21 +74,25 @@ namespace dae
                 // https://learn.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
                 static const std::unordered_map<Key, int> key_map =
                 {
-                    {Key::W, 'W'},
-                    {Key::A, 'A'},
-                    {Key::S, 'S'},
-                    {Key::D, 'D'},
-                    {Key::Space, VK_SPACE},
+                    {Key::W,        'W'},
+                    {Key::A,        'A'},
+                    {Key::S,        'S'},
+                    {Key::D,        'D'},
+                    {Key::Space,    VK_SPACE},
+                    {Key::Q,        'Q'},
+                    {Key::E,        'E'},
                 };
             #else
                 // https://wiki.libsdl.org/SDL3/SDL_Scancode
                 static const std::unordered_map<Key, int> key_map =
                 {
-                    {Key::W, SDL_SCANCODE_W},
-                    {Key::A, SDL_SCANCODE_A},
-                    {Key::S, SDL_SCANCODE_S},
-                    {Key::D, SDL_SCANCODE_D},
-                    {Key::Space, SDL_SCANCODE_SPACE},
+                    {Key::W,        SDL_SCANCODE_W},
+                    {Key::A,        SDL_SCANCODE_A},
+                    {Key::S,        SDL_SCANCODE_S},
+                    {Key::D,        SDL_SCANCODE_D},
+                    {Key::Space,    SDL_SCANCODE_SPACE},
+                    {Key::Q,        SDL_SCANCODE_Q},
+                    {Key::E,        SDL_SCANCODE_E},
                 };
             #endif
             return key_map.at(key);

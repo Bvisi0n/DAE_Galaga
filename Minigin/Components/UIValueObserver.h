@@ -16,7 +16,7 @@ namespace dae
     public:
         using Formatter = std::function<std::string(int)>;
 
-        UIValueObserver(GameObject* pOwner, TextComponent* pText, GameEvent observedEvent, Formatter formatter, int initialValue);
+        UIValueObserver(GameObject* pOwner, TextComponent* pText, GameEvent observedEvent, Formatter formatter, int initialValue = 0);
 
         void OnNotify(GameEvent event, int value) override;
 

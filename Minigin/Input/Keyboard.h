@@ -11,11 +11,8 @@ namespace dae
     public:
         enum class Key
         {
-            W,
-            A,
-            S,
-            D,
-            Space
+            W, A, S, D,
+            Space, Q, E
         };
 
         Keyboard();
