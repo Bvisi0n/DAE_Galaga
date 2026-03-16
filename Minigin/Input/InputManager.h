@@ -15,7 +15,7 @@ namespace dae
 {
     class InputManager final : public Singleton<InputManager>
     {
-        // DAEL: Consider wrapping all input related code in an Input namespace.
+    // DAEL: Consider wrapping all input related code in an Input namespace.
     public:
     enum class KeyState { Down, Up, Pressed };
         InputManager();
