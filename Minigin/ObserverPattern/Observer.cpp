@@ -1,5 +1,5 @@
-#include "Observer.h"
-#include "Subject.h"
+#include "ObserverPattern/Observer.h"
+#include "ObserverPattern/Subject.h"
 
 namespace dae
 {
@@ -15,7 +15,10 @@ namespace dae
 
     void Observer::DeRegisterSubject()
     {
-        m_pSubject->Detach(this);
-        m_pSubject = nullptr;
+        if (m_pSubject)
+        {
+            m_pSubject->DetachObserver(this);
+            m_pSubject = nullptr;
+        }
     }
 }

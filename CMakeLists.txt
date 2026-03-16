@@ -22,6 +22,8 @@ add_executable(${TARGET_NAME} ${TARGET_PARAM}
   "Minigin/Input/Gamepad.cpp"
   "Minigin/Input/Keyboard.cpp"
   "Minigin/Input/InputManager.cpp"
+  "Minigin/ObserverPattern/Observer.cpp"
+  "Minigin/ObserverPattern/Subject.cpp"
   "Minigin/Singletons/Renderer.cpp"
   "Minigin/Singletons/ResourceManager.cpp"
   "Minigin/Singletons/SceneManager.cpp"
@@ -30,11 +32,9 @@ add_executable(${TARGET_NAME} ${TARGET_PARAM}
   "Minigin/GameObject.cpp"
   "Minigin/Main.cpp"
   "Minigin/Minigin.cpp"
-  "Minigin/Observer.cpp"
   "Minigin/Scene.cpp"
-  "Minigin/Subject.cpp"
   "Minigin/Texture2D.cpp"
-)
+ "Minigin/Components/HealthComponent.cpp" "Minigin/Components/UIValueObserver.cpp")
 
 # enable c++20 features
 target_compile_features(${TARGET_NAME} PUBLIC cxx_std_20)

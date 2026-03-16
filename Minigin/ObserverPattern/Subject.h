@@ -1,14 +1,14 @@
 #ifndef SUBJECT_H
 #define SUBJECT_H
 
-#include <algorithm>
-#include <memory>
 #include <vector>
 
-#include "Observer.h"
+#include "ObserverPattern/GameEvent.h"
 
 namespace dae
 {
+    class Observer;
+
     class Subject
     {
         // https://gameprogrammingpatterns.com/observer.html
@@ -17,16 +17,16 @@ namespace dae
     public:
         virtual ~Subject();
 
-        virtual void Attach(dae::Observer* observer);
-        virtual void Detach(dae::Observer* observer);
+        virtual void AttachObserver(Observer* observer);
+        virtual void DetachObserver(Observer* observer);
 
-        virtual void Notify() = 0;
+        virtual void NotifyObservers(GameEvent event, int value);
 
     protected:
         Subject() = default;
 
     private:
-        std::vector<dae::Observer*> m_pObservers;
+        std::vector<Observer*> m_pObservers;
     };
 }
 #endif

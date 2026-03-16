@@ -1,4 +1,5 @@
-#include "Subject.h"
+#include "ObserverPattern/Observer.h"
+#include "ObserverPattern/Subject.h"
 
 namespace dae
 {
@@ -10,7 +11,7 @@ namespace dae
         }
     }
 
-    void Subject::Attach(dae::Observer* observer)
+    void Subject::AttachObserver(dae::Observer* observer)
     {
         if (observer == nullptr)
         {
@@ -23,8 +24,15 @@ namespace dae
         }
     }
 
-    void Subject::Detach(dae::Observer* observer)
+    void Subject::DetachObserver(dae::Observer* observer)
     {
         std::erase(m_pObservers, observer);
+    }
+
+    void Subject::NotifyObservers(GameEvent event, int value)
+    {
+        for (auto observer : m_pObservers) {
+            observer->OnNotify(event, value);
+        }
     }
 }

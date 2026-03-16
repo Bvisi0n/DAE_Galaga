@@ -1,6 +1,8 @@
 #ifndef OBSERVER_H
 #define OBSERVER_H
 
+#include "ObserverPattern/GameEvent.h"
+
 namespace dae
 {
     class Subject;
@@ -16,7 +18,7 @@ namespace dae
         void RegisterSubject(Subject* subject);
         void DeRegisterSubject();
 
-        virtual void OnNotify() = 0;
+        virtual void OnNotify(GameEvent event, int value) = 0;
 
     private:
         Subject* m_pSubject = nullptr;
