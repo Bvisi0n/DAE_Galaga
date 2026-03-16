@@ -6,10 +6,10 @@
 
 namespace dae
 {
-    class HealthComponent final : public dae::Component, public dae::Subject
+    class HealthComponent final : public Component, public Subject
     {
     public:
-        HealthComponent(dae::GameObject* pOwner, int lives);
+        HealthComponent(GameObject* pOwner, int lives);
 
         void Update(float) override {}
         void Render() const override {}

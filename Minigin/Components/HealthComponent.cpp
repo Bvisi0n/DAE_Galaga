@@ -2,7 +2,7 @@
 
 namespace dae
 {
-    HealthComponent::HealthComponent(dae::GameObject* pOwner, int lives)
+    HealthComponent::HealthComponent(GameObject* pOwner, int lives)
         : Component(pOwner)
         , m_lives(lives) {}
 
@@ -16,7 +16,7 @@ namespace dae
         if (m_lives > 0)
         {
             --m_lives;
-            NotifyObservers(dae::GameEvent::PlayerDied, m_lives);
+            NotifyObservers(GameEvent::PlayerDied, m_lives);
         }
     }
 }
