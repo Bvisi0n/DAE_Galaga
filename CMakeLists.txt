@@ -30,7 +30,9 @@ add_executable(${TARGET_NAME} ${TARGET_PARAM}
   "Minigin/GameObject.cpp"
   "Minigin/Main.cpp"
   "Minigin/Minigin.cpp"
+  "Minigin/Observer.cpp"
   "Minigin/Scene.cpp"
+  "Minigin/Subject.cpp"
   "Minigin/Texture2D.cpp"
 )
 
