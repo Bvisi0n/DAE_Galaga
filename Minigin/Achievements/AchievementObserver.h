@@ -20,6 +20,7 @@ namespace dae
 
         void OnNotify(GameEvent event, int value)  override
         {
+            // DAEL: Currently only supports score based achievements. Should use a lambda like UIValueObserver so the user can just define his own achievement logic.
             if (event == GameEvent::ScoreChanged && value >= 500)
             {
                 #if USE_STEAMWORKS && !__EMSCRIPTEN__
