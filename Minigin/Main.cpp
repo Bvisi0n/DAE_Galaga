@@ -7,6 +7,9 @@
 	#include <vld.h>
 #endif
 
+#include "Achievements/AchievementManager.h"
+#include "Achievements/AchievementObserver.h"
+
 #include "Commands/DieCommand.h"
 #include "Commands/MoveCommand.h"
 #include "Commands/ScoreCommand.h"
@@ -103,6 +106,7 @@ static void loadMainMenu()
 	pText = player_1_score_UI->AddComponent<dae::TextComponent>("Lives:", font);
 	pPlayer_observer = player_1_score_UI->AddComponent<dae::UIValueObserver>(pText, dae::GameEvent::ScoreChanged, [](int v) { return "White Score: " + std::to_string(v) + " (Q & E)"; });
 	player_1_score->AttachObserver(pPlayer_observer);
+	player_1_score->AttachObserver(dae::AchievementManager::GetInstance().GetAchievementObserver());
 	player_1_score_UI->SetLocalPosition(20, 150);
 	scene.Add(std::move(player_1_score_UI));
 
@@ -110,6 +114,8 @@ static void loadMainMenu()
 	pText = player_2_score_UI->AddComponent<dae::TextComponent>("Lives:", font);
 	pPlayer_observer = player_2_score_UI->AddComponent<dae::UIValueObserver>(pText, dae::GameEvent::ScoreChanged, [](int v) { return "Red Score:    " + std::to_string(v) + " (X & Y)"; });
 	player_2_score->AttachObserver(pPlayer_observer);
+	// Observer currently doesn't support multiple subjects.
+	//player_2_score->AttachObserver(dae::AchievementManager::GetInstance().GetAchievementObserver());
 	player_2_score_UI->SetLocalPosition(20, 200);
 	scene.Add(std::move(player_2_score_UI));
 
@@ -131,6 +137,8 @@ static void loadMainMenu()
 	input.BindCommand(dae::Keyboard::Key::Q, dae::InputManager::KeyState::Up, std::make_unique<dae::ScoreCommand>(player_1_score, 10));
 
 	input.BindCommand(dae::Keyboard::Key::E, dae::InputManager::KeyState::Up, std::make_unique<dae::ScoreCommand>(player_1_score, 100));
+
+	// DAEH: Gamepad input is currently broken!
 
 	input.BindCommand(dae::Gamepad::Button::DPadUp, dae::InputManager::KeyState::Pressed, std::make_unique<dae::MoveCommand>(pPlayer_2, glm::vec2{ 0, -1 }, gamepad_speed), 0);
 
