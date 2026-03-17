@@ -138,8 +138,6 @@ static void loadMainMenu()
 
 	input.BindCommand(dae::Keyboard::Key::E, dae::InputManager::KeyState::Up, std::make_unique<dae::ScoreCommand>(player_1_score, 100));
 
-	// DAEH: Gamepad input is currently broken!
-
 	input.BindCommand(dae::Gamepad::Button::DPadUp, dae::InputManager::KeyState::Pressed, std::make_unique<dae::MoveCommand>(pPlayer_2, glm::vec2{ 0, -1 }, gamepad_speed), 0);
 
 	input.BindCommand(dae::Gamepad::Button::DPadDown, dae::InputManager::KeyState::Pressed, std::make_unique<dae::MoveCommand>(pPlayer_2, glm::vec2{ 0, 1 }, gamepad_speed), 0);
