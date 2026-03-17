@@ -4,7 +4,7 @@
 #include <SDL3/SDL_main.h>
 
 #if _DEBUG && __has_include(<vld.h>)
-#include <vld.h>
+	#include <vld.h>
 #endif
 
 #include "Commands/DieCommand.h"
@@ -52,7 +52,7 @@ static void loadMainMenu()
 	scene.Add(std::move(fps));
 
 	
-	// DAEL: We're making setup a bit messier to avoid usage of GetComponent... can this be improved?
+	// DAEL: I'm making setup a bit messier to avoid usage of GetComponent... can this be improved?
 	// Maybe during initialization the objects can extract the pointers with a single GetComponent call? What if the user doesn't follow the correct order of things? Use (static_)asserts? Leave as is? Stop caring and allow GetComponent? Choices... These setups are far from dry tho... maybe with the correct dryness it's better on the optical nerves?
 
 	font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
@@ -147,15 +147,18 @@ static void loadMainMenu()
 	input.BindCommand(dae::Gamepad::Button::Y, dae::InputManager::KeyState::Up, std::make_unique<dae::ScoreCommand>(player_2_score, 100));
 }
 
-int main(int, char*[]) {
-#if __EMSCRIPTEN__
-	std::filesystem::path data_location = "";
-#else
-	std::filesystem::path data_location = "./Data/";
-	if(!std::filesystem::exists(data_location))
-		data_location = "../Data/";
-#endif
+int main(int, char*[])
+{
+	#if __EMSCRIPTEN__
+		std::filesystem::path data_location = "";
+	#else
+		std::filesystem::path data_location = "./Data/";
+		if(!std::filesystem::exists(data_location))
+			data_location = "../Data/";
+	#endif
+
 	dae::Minigin engine(data_location);
 	engine.Run(loadMainMenu);
-    return 0;
+	
+	return 0;
 }

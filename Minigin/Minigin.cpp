@@ -7,6 +7,13 @@
 	#include <windows.h>
 #endif
 
+#if USE_STEAMWORKS && !__EMSCRIPTEN__
+	#pragma warning (push)
+	#pragma warning (disable:4996)
+	#include <steam_api.h>
+	#pragma warning (pop)
+#endif
+
 #include <SDL3/SDL.h>
 #include <SDL3_ttf/SDL_ttf.h>
 
@@ -51,24 +58,28 @@ void PrintSDLVersion()
 dae::Minigin::Minigin(const std::filesystem::path& dataPath)
 {
 	PrintSDLVersion();
-	
-#if WIN32
-	if (!SDL_InitSubSystem(SDL_INIT_VIDEO))
-#else
-	if (!SDL_InitSubSystem(SDL_INIT_VIDEO | SDL_INIT_GAMEPAD))
-#endif
+
+	#if USE_STEAMWORKS && !__EMSCRIPTEN__
+		if (!SteamAPI_Init())
+		{
+			throw std::runtime_error(std::string("Fatal Error - Steam must be running to play this game (SteamAPI_Init() failed)."));
+		}
+	#endif
+
+	#if WIN32
+		if (!SDL_InitSubSystem(SDL_INIT_VIDEO))
+	#else
+		if (!SDL_InitSubSystem(SDL_INIT_VIDEO | SDL_INIT_GAMEPAD))
+	#endif
+
 	{
 		SDL_Log("Renderer error: %s", SDL_GetError());
 		throw std::runtime_error(std::string("SDL_Init Error: ") + SDL_GetError());
 	}
 
 	// DAEN: Make resolution, name etc. more accessible and less hard coded.
-	g_window = SDL_CreateWindow(
-		"Programming 4 assignment",
-		1024,
-		576,
-		SDL_WINDOW_OPENGL
-	);
+	g_window = SDL_CreateWindow("Programming 4 assignment", 1024, 576, SDL_WINDOW_OPENGL);
+
 	if (g_window == nullptr) 
 	{
 		throw std::runtime_error(std::string("SDL_CreateWindow Error: ") + SDL_GetError());
@@ -84,6 +95,9 @@ dae::Minigin::~Minigin()
 	SDL_DestroyWindow(g_window);
 	g_window = nullptr;
 	SDL_Quit();
+	#if USE_STEAMWORKS && !__EMSCRIPTEN__
+			SteamAPI_Shutdown();
+	#endif
 }
 
 void dae::Minigin::Run(const std::function<void()>& load)
@@ -97,6 +111,9 @@ void dae::Minigin::Run(const std::function<void()>& load)
 		while (!m_quit)
 		{
 			RunOneFrame();
+			#if USE_STEAMWORKS
+				SteamAPI_RunCallbacks();
+			#endif
 		}
 	#else
 		emscripten_set_main_loop_arg(&LoopCallback, this, 0, true);
