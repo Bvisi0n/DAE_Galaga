@@ -1,9 +1,9 @@
 #include <string>
 
+#include "Components/TransformComponent.h"
 #include "Singletons/Renderer.h"
 #include "Singletons/ResourceManager.h"
 #include "GameObject.h"
-#include "Transform.h"
 
 dae::GameObject::~GameObject() = default;
 
@@ -34,15 +34,18 @@ void dae::GameObject::SetParent(GameObject* parent, bool keepWorldPosition)
 
 	if (parent == nullptr)
 	{
-		SetLocalPosition(GetGlobalPosition());
+		// DAEH: Fix me! (Transform)
+		//SetLocalPosition(GetGlobalPosition());
 	}
 	else
 	{
 		if (keepWorldPosition)
 		{
-			SetLocalPosition(GetGlobalPosition() - parent->GetGlobalPosition());
+			// DAEH: Fix me! (Transform)
+			//SetLocalPosition(GetGlobalPosition() - parent->GetGlobalPosition());
 		}
-		SetPositionDirty();
+		// DAEH: Fix me! (Transform)
+		//SetPositionDirty();
 	}
 
 	if (m_pParent)
@@ -62,32 +65,36 @@ const std::vector<dae::GameObject*>& dae::GameObject::GetChildren() const
 	return m_pChildren;
 }
 
-void dae::GameObject::SetLocalPosition(float x, float y)
-{
-	m_localPosition.SetPosition(x, y, 0.0f);
-	SetPositionDirty();
-}
+// DAEH: Fix me! (Transform)
+//void dae::GameObject::SetLocalPosition(float x, float y)
+//{
+//	m_localPosition.SetPosition(x, y, 0.0f);
+//	SetPositionDirty();
+//}
 
-void dae::GameObject::SetLocalPosition(Transform pos)
-{
-	m_localPosition = pos;
-	SetPositionDirty();
-}
+// DAEH: Fix me! (Transform)
+//void dae::GameObject::SetLocalPosition(TransformComponent pos)
+//{
+//	m_localPosition = pos;
+//	SetPositionDirty();
+//}
 
-dae::Transform& dae::GameObject::GetGlobalPosition()
-{
-	if (m_positionIsDirty)
-	{
-		UpdateWorldPosition();
-	}
+// DAEH: Fix me! (Transform)
+//dae::TransformComponent& dae::GameObject::GetGlobalPosition()
+//{
+//	if (m_positionIsDirty)
+//	{
+//		UpdateWorldPosition();
+//	}
+//
+//	return m_globalPosition;
+//}
 
-	return m_globalPosition;
-}
-
-dae::Transform& dae::GameObject::GetLocalPosition()
-{
-	return m_localPosition;
-}
+// DAEH: Fix me! (Transform)
+//dae::TransformComponent& dae::GameObject::GetLocalPosition()
+//{
+//	return m_localPosition;
+//}
 
 bool dae::GameObject::IsChild(GameObject* candidate)
 {
@@ -111,28 +118,30 @@ void dae::GameObject::AddChild(GameObject* pChild)
 	m_pChildren.emplace_back(pChild);
 }
 
-void dae::GameObject::UpdateWorldPosition()
-{
-	if (m_positionIsDirty)
-	{
-		if (m_pParent == nullptr)
-		{
-			m_globalPosition = m_localPosition;
-		}
-		else
-		{
-			m_globalPosition = m_pParent->GetGlobalPosition() + m_localPosition;
-		}
-	}
+// DAEH: Fix me! (Transform)
+//void dae::GameObject::UpdateWorldPosition()
+//{
+//	if (m_positionIsDirty)
+//	{
+//		if (m_pParent == nullptr)
+//		{
+//			m_globalPosition = m_localPosition;
+//		}
+//		else
+//		{
+//			m_globalPosition = m_pParent->GetGlobalPosition() + m_localPosition;
+//		}
+//	}
+//
+//	m_positionIsDirty = false;
+//}
 
-	m_positionIsDirty = false;
-}
-
-void dae::GameObject::SetPositionDirty()
-{
-	m_positionIsDirty = true;
-	for (const auto& child : m_pChildren)
-	{
-		child->SetPositionDirty();
-	}
-}
+// DAEH: Fix me! (Transform)
+//void dae::GameObject::SetPositionDirty()
+//{
+//	m_positionIsDirty = true;
+//	for (const auto& child : m_pChildren)
+//	{
+//		child->SetPositionDirty();
+//	}
+//}

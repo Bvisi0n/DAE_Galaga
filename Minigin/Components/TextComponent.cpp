@@ -3,6 +3,7 @@
 #include <SDL3/SDL.h>
 
 #include "Components/TextComponent.h"
+#include "Components/TransformComponent.h"
 #include "Singletons/Renderer.h"
 #include "Font.h"
 #include "GameObject.h"
@@ -39,7 +40,8 @@ void dae::TextComponent::Render() const
 {
 	if (m_pTexture != nullptr && GetOwner() != nullptr)
 	{
-		const auto& pos = GetOwner()->GetGlobalPosition().GetPosition();
+		// DAEN: What if there is no TransformComponent?
+        const auto& pos = GetOwner()->GetComponent<dae::TransformComponent>()->GetPosition();
 		Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x, pos.y);
 	}
 }

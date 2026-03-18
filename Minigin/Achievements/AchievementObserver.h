@@ -8,7 +8,6 @@
 #include "ObserverPattern/Observer.h"
 
 // DAEL: Split into .h & .cpp.
-// DAEL: Pimpl idiom candidate?
 
 namespace dae
 {

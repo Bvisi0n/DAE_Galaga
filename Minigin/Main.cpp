@@ -16,6 +16,7 @@
 #include "Components/ScoreComponent.h"
 #include "Components/TextureComponent.h"
 #include "Components/TextComponent.h"
+#include "Components/TransformComponent.h"
 #include "Components/UIValueObserver.h"
 #include "Input/InputManager.h"
 #include "Singletons/ResourceManager.h"
@@ -28,93 +29,93 @@
 
 static void loadMainMenu()
 {
+
 	auto& scene{ dae::SceneManager::GetInstance().CreateScene() };
 
 	auto background{ std::make_unique<dae::GameObject>() };
+	background->AddComponent<dae::TransformComponent>(0.f, 0.f);
 	background->AddComponent<dae::TextureComponent>()->SetTexture("background.png");
 	scene.Add(std::move(background));
 
 	auto logo{ std::make_unique<dae::GameObject>() };
-	logo->SetLocalPosition(358, 180);
+    logo->AddComponent<dae::TransformComponent>(358.f, 180.f);
 	logo->AddComponent<dae::TextureComponent>()->SetTexture("logo.png");
 	scene.Add(std::move(logo));
 
 	auto font{ dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 36) };
 	auto title{ std::make_unique<dae::GameObject>() };
-	title->SetLocalPosition(292, 20);
+    title->AddComponent<dae::TransformComponent>(292.f, 20.f);
 	title->AddComponent<dae::TextComponent>("Programming 4 Assignment", font)->SetColor({ 255, 255, 0, 255 });
 	scene.Add(std::move(title));
 	
 	font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 24);
 	auto fps{ std::make_unique<dae::GameObject>() };
-	fps->SetLocalPosition(20, 20);
+    fps->AddComponent<dae::TransformComponent>(20.f, 20.f);
 	auto* pText = fps->AddComponent<dae::TextComponent>("FPS", font);
 	fps->AddComponent<dae::FPSComponent>(pText);
 	scene.Add(std::move(fps));
 
-	
-	// DAEL: I'm making setup a bit messier to avoid usage of GetComponent... can this be improved?
-	// Maybe during initialization the objects can extract the pointers with a single GetComponent call? What if the user doesn't follow the correct order of things? Use (static_)asserts? Leave as is? Stop caring and allow GetComponent? Choices... These setups are far from dry tho... maybe with the correct dryness it's better on the optical nerves?
+	// DAEN: Observer / Subject setup: Move the pointer assignments to the internal logic so the API stays clean.
 
 	font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
 	auto tutorial_white{ std::make_unique<dae::GameObject>() };
-	tutorial_white->SetLocalPosition(20, 75);
+    tutorial_white->AddComponent<dae::TransformComponent>(20.f, 75.f);
 	tutorial_white->AddComponent<dae::TextComponent>("Use the WASD to move the white starfighter, spacebar to inflict damage and Q & E to score points.", font);
 	scene.Add(std::move(tutorial_white));
 
 	auto tutorial_red{ std::make_unique<dae::GameObject>() };
-	tutorial_red->SetLocalPosition(20, 100);
+    tutorial_red->AddComponent<dae::TransformComponent>(20.f, 100.f);
 	tutorial_red->AddComponent<dae::TextComponent>("Use the D-Pad to move the red starfighter, left shoulder to inflict damage and X & Y to score points.", font);
 	scene.Add(std::move(tutorial_red));
 
 
 	auto player_1{ std::make_unique<dae::GameObject>() };
+    player_1->AddComponent<dae::TransformComponent>(400.f, 350.f);
 	player_1->AddComponent<dae::TextureComponent>()->SetTexture("starfighter.png");
 	auto player_1_health = player_1->AddComponent<dae::HealthComponent>(3);
 	auto player_1_score = player_1->AddComponent<dae::ScoreComponent>();
-	player_1->SetLocalPosition(400, 350);
 	auto* pPlayer_1 = player_1.get();
 	scene.Add(std::move(player_1));
 
 	auto player_2{ std::make_unique<dae::GameObject>() };
+    player_2->AddComponent<dae::TransformComponent>(600.f, 350.f);
 	player_2->AddComponent<dae::TextureComponent>()->SetTexture("starfighter_captured.png");
 	auto player_2_health = player_2->AddComponent<dae::HealthComponent>(3);
 	auto player_2_score = player_2->AddComponent<dae::ScoreComponent>();
-	player_2->SetLocalPosition(600, 350);
 	auto* pPlayer_2 = player_2.get();
 	scene.Add(std::move(player_2));
 
 
 	font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 16);
 	auto player_1_lives_UI{ std::make_unique<dae::GameObject>() };
+    player_1_lives_UI->AddComponent<dae::TransformComponent>(20.f, 125.f);
 	pText = player_1_lives_UI->AddComponent<dae::TextComponent>("Lives:", font);
 	auto pPlayer_observer = player_1_lives_UI->AddComponent<dae::UIValueObserver>(pText, dae::GameEvent::PlayerDied, [](int v) { return "White Lives:  " + std::to_string(v) + " (spacebar)"; }, player_1_health->GetLives());
     player_1_health->AttachObserver(pPlayer_observer);
-	player_1_lives_UI->SetLocalPosition(20, 125);
 	scene.Add(std::move(player_1_lives_UI));
 
 	auto player_2_lives_UI{ std::make_unique<dae::GameObject>() };
+    player_2_lives_UI->AddComponent<dae::TransformComponent>(20.f, 175.f);
 	pText = player_2_lives_UI->AddComponent<dae::TextComponent>("Lives:", font);
 	pPlayer_observer = player_2_lives_UI->AddComponent<dae::UIValueObserver>(pText, dae::GameEvent::PlayerDied, [](int v) { return "Red Lives:     " + std::to_string(v) + " (left shoulder)"; }, player_2_health->GetLives());
     player_2_health->AttachObserver(pPlayer_observer);
-	player_2_lives_UI->SetLocalPosition(20, 175);
 	scene.Add(std::move(player_2_lives_UI));
 
 	auto player_1_score_UI{ std::make_unique<dae::GameObject>() };
+    player_1_score_UI->AddComponent<dae::TransformComponent>(20.f, 150.f);
 	pText = player_1_score_UI->AddComponent<dae::TextComponent>("Lives:", font);
 	pPlayer_observer = player_1_score_UI->AddComponent<dae::UIValueObserver>(pText, dae::GameEvent::ScoreChanged, [](int v) { return "White Score: " + std::to_string(v) + " (Q & E)"; });
 	player_1_score->AttachObserver(pPlayer_observer);
 	player_1_score->AttachObserver(dae::AchievementManager::GetInstance().GetAchievementObserver());
-	player_1_score_UI->SetLocalPosition(20, 150);
 	scene.Add(std::move(player_1_score_UI));
 
 	auto player_2_score_UI{ std::make_unique<dae::GameObject>() };
+    player_2_score_UI->AddComponent<dae::TransformComponent>(20.f, 200.f);
 	pText = player_2_score_UI->AddComponent<dae::TextComponent>("Lives:", font);
 	pPlayer_observer = player_2_score_UI->AddComponent<dae::UIValueObserver>(pText, dae::GameEvent::ScoreChanged, [](int v) { return "Red Score:    " + std::to_string(v) + " (X & Y)"; });
 	player_2_score->AttachObserver(pPlayer_observer);
 	// Observer currently doesn't support multiple subjects.
 	//player_2_score->AttachObserver(dae::AchievementManager::GetInstance().GetAchievementObserver());
-	player_2_score_UI->SetLocalPosition(20, 200);
 	scene.Add(std::move(player_2_score_UI));
 
 

@@ -4,8 +4,6 @@
 #include "Components/Component.h"
 #include "ObserverPattern/Observer.h"
 
-// DAEL: Should this go in the Components or ObserverPattern folder? Or should it be renamed?
-
 namespace dae
 {
     class GameObject;
