@@ -1,48 +1,96 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "Components/TransformComponent.h"
+#include "GameObject.h"
 
 namespace dae
 {
     TransformComponent::TransformComponent(GameObject* pOwner, float xPos, float yPos, float xScale, float yScale)
         : Component(pOwner)
-        , m_matrix(1.0f)
-        , m_position(xPos, yPos, 0.f)
-        , m_scale(xScale, yScale, 1.0f)
+        , m_localPosition(xPos, yPos, 0.f)
+        , m_localScale(xScale, yScale, 1.f)
+        , m_localRotation(0.f)
+        , m_localMatrix(1.f)
+        , m_worldMatrix(1.f)
+        , m_worldPosition(xPos, yPos, 0.f) {}
+
+    void TransformComponent::SetLocalPosition(const glm::vec3& pos)
     {
-        UpdateMatrix();
+        m_localPosition = pos;
+        SetDirty();
     }
 
-    const glm::mat4& TransformComponent::GetTransformMatrix() const
+    void TransformComponent::SetLocalPosition(float x, float y, float z)
     {
-        return m_matrix;
+        SetLocalPosition(glm::vec3{ x, y, z });
     }
 
-    void TransformComponent::SetPosition(float x, float y, float z)
+    const glm::vec3& TransformComponent::GetLocalPosition() const
     {
-        m_position = { x, y, z };
-        UpdateMatrix();
+        return m_localPosition;
     }
 
-    const glm::vec3& TransformComponent::GetPosition() const
+    void TransformComponent::SetLocalRotation(float angle)
     {
-        return m_position;
+        m_localRotation = angle;
+        SetDirty();
     }
 
-    void TransformComponent::SetScale(float x, float y, float z)
+    float TransformComponent::GetLocalRotation() const
     {
-        m_scale = { x, y, z };
-        UpdateMatrix();
+        return m_localRotation;
     }
 
-    const glm::vec3& TransformComponent::GetScale() const
+    void TransformComponent::SetLocalScale(const glm::vec3& scale)
     {
-        return m_scale;
+        m_localScale = scale;
+        SetDirty();
     }
 
-    void TransformComponent::UpdateMatrix()
+    void TransformComponent::SetLocalScale(float x, float y, float z)
     {
-        m_matrix = glm::translate(glm::mat4(1.0f), m_position);
-        m_matrix = glm::scale(m_matrix, m_scale);
+        SetLocalScale(glm::vec3{ x, y, z });
+    }
+
+    const glm::vec3& TransformComponent::GetLocalScale() const
+    {
+        return m_localScale;
+    }
+
+    const glm::mat4& TransformComponent::GetWorldMatrix() const
+    {
+        return m_worldMatrix;
+    }
+
+    const glm::vec3& dae::TransformComponent::GetWorldPosition()
+    {
+        return m_worldPosition;
+    }
+
+    void TransformComponent::UpdateWorldMatrix(const glm::mat4& parentWorldMatrix)
+    {
+        UpdateLocalMatrix();
+        m_worldMatrix = parentWorldMatrix * m_localMatrix;
+        m_worldPosition = glm::vec3(m_worldMatrix[3]);
+    }
+
+    void TransformComponent::SetDirty()
+    {
+        m_isDirty = true;
+        for (const auto& child : GetOwner()->GetChildren())
+        {
+            child->GetComponent<TransformComponent>()->SetDirty();
+        }
+    }
+
+    void TransformComponent::UpdateLocalMatrix()
+    {
+        if (!m_isDirty) return;
+
+        m_localMatrix = glm::translate(glm::mat4(1.0f), m_localPosition);
+        m_localMatrix = glm::rotate(m_localMatrix, m_localRotation, { 0, 0, 1 });
+        m_localMatrix = glm::scale(m_localMatrix, m_localScale);
+
+        m_isDirty = false;
     }
 }

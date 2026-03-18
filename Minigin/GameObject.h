@@ -69,31 +69,17 @@ namespace dae
 		}
 
 		void SetParent(GameObject* pParent, bool keepWorldPosition);
+		GameObject* GetParent() const;
 		const std::vector<GameObject*>& GetChildren() const;
 		
-		// DAEH: Fix me! (Transform)
-		//void SetLocalPosition(float x, float y);
-		//void SetLocalPosition(TransformComponent pos);
-		//TransformComponent& GetGlobalPosition();
-		//TransformComponent& GetLocalPosition();
-
 	private:
 		GameObject* m_pParent{ nullptr };
 		std::vector<GameObject*> m_pChildren;
 		std::vector<std::unique_ptr<Component>> m_pComponents;
 
-		// DAEH: Fix me! (Transform)
-		//TransformComponent m_localPosition{};
-		//TransformComponent m_globalPosition{};
-		//bool m_positionIsDirty{ true };
-
 		bool IsChild(GameObject* pCandidate);
 		void RemoveChild(GameObject* pParent);
 		void AddChild(GameObject* pParent);
-
-		// DAEH: Fix me! (Transform)
-		//void UpdateWorldPosition();
-		//void SetPositionDirty();
 	};
 }
 #endif

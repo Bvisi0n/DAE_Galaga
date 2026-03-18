@@ -16,20 +16,35 @@ namespace dae
 		void Update(float) override {}
 		void Render() const override {}
 
-		const glm::mat4& GetTransformMatrix() const;
+		void SetLocalPosition(const glm::vec3& pos);
+		void SetLocalPosition(float x, float y, float z = 0.f);
+		const glm::vec3& GetLocalPosition() const;
 
-		void SetPosition(float x, float y, float z = 0.f);
-		const glm::vec3& GetPosition() const;
+		void SetLocalRotation(float angleInRadians);
+		float GetLocalRotation() const;
 
-		void SetScale(float x, float y, float z = 1.f);
-		const glm::vec3& GetScale() const;
+		void SetLocalScale(const glm::vec3& scale);
+		void SetLocalScale(float x, float y, float z = 1.f);
+		const glm::vec3& GetLocalScale() const;
+
+		const glm::mat4& GetWorldMatrix() const;
+		const glm::vec3& GetWorldPosition();
+
+		void UpdateWorldMatrix(const glm::mat4& parentWorldMatrix);
+		void SetDirty();
 
 	private:
-		void UpdateMatrix();
+		glm::mat4 m_localMatrix;
+		glm::mat4 m_worldMatrix;
+		glm::vec3 m_worldPosition;
 
-		glm::mat4 m_matrix;
-		glm::vec3 m_position;
-		glm::vec3 m_scale;
+		glm::vec3 m_localPosition;
+		glm::vec3 m_localScale;
+		float m_localRotation;
+
+		bool m_isDirty{ true };
+
+		void UpdateLocalMatrix();
 	};
 }
 #endif

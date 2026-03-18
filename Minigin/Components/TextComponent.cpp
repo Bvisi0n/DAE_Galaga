@@ -41,8 +41,8 @@ void dae::TextComponent::Render() const
 	if (m_pTexture != nullptr && GetOwner() != nullptr)
 	{
 		// DAEN: What if there is no TransformComponent?
-        const auto& pos = GetOwner()->GetComponent<dae::TransformComponent>()->GetPosition();
-		Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x, pos.y);
+        const auto& position = GetOwner()->GetComponent<dae::TransformComponent>()->GetWorldPosition();
+		Renderer::GetInstance().RenderTexture(*m_pTexture, position.x, position.y);
 	}
 }
 

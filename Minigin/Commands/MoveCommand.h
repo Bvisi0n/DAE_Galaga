@@ -4,6 +4,7 @@
 #include <glm/glm.hpp>
 
 #include "Commands/Command.h"
+#include "Components/TransformComponent.h"
 #include "GameObject.h"
 
 // DAEL: Split into .h & .cpp.
@@ -18,16 +19,16 @@ namespace dae
             , m_direction(direction)
             , m_speed(speed) {}
 
-        void Execute(const float /*deltaTime*/) override
+        void Execute(const float deltaTime) override
         {
             // DAEN: Diagonal movement is currently double speed.
-            // DAEH: Fix me! (Transform)
-            //auto position = m_pGameObject->GetLocalPosition().GetPosition();
+            auto* transform = m_pGameObject->GetComponent<dae::TransformComponent>();
+            auto position = transform->GetLocalPosition();
 
-            //position.x += m_direction.x * m_speed * deltaTime;
-            //position.y += m_direction.y * m_speed * deltaTime;
+            position.x += m_direction.x * m_speed * deltaTime;
+            position.y += m_direction.y * m_speed * deltaTime;
 
-            //m_pGameObject->SetLocalPosition(position.x, position.y);
+            transform->SetLocalPosition(position);
         }
 
     private:

@@ -13,14 +13,14 @@ void dae::TextureComponent::Render() const
 	{
 		// DAEN: What if there is no TransformComponent?
 		const auto& transform = GetOwner()->GetComponent<dae::TransformComponent>();
-		const auto& pos = transform->GetPosition();
-		const auto& scale = transform->GetScale();
+		const auto& position = transform->GetWorldPosition();
+		const auto& scale = transform->GetLocalScale();
 
 		auto texture_size = m_pTexture->GetSize();
-		float finalWidth = texture_size.x * scale.x;
-		float finalHeight = texture_size.y * scale.y;
+		float final_width = texture_size.x * scale.x;
+		float final_height = texture_size.y * scale.y;
 
-		Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x, pos.y, finalWidth, finalHeight);
+		Renderer::GetInstance().RenderTexture(*m_pTexture, position.x, position.y, final_width, final_height);
 	}
 }
 

@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <cassert>
 
+#include "Components/TransformComponent.h"
 #include "Scene.h"
 
 using namespace dae;
@@ -10,6 +11,14 @@ void Scene::Update(const float deltaTime)
 	for(auto& object : m_pObjects)
 	{
 		object->Update(deltaTime);
+	}
+
+	for (auto& object : m_pObjects)
+	{
+		if (!object->GetParent())
+		{
+			object->GetComponent<dae::TransformComponent>()->UpdateWorldMatrix(glm::mat4(1.0f));
+		}
 	}
 }
 
