@@ -8,8 +8,6 @@
 #endif
 
 #include "Achievements/AchievementManager.h"
-#include "Achievements/AchievementObserver.h"
-
 #include "Commands/DieCommand.h"
 #include "Commands/MoveCommand.h"
 #include "Commands/ScoreCommand.h"
