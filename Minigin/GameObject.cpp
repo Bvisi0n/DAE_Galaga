@@ -1,138 +1,92 @@
 #include <string>
 
+#include "Components/TransformComponent.h"
 #include "Singletons/Renderer.h"
 #include "Singletons/ResourceManager.h"
 #include "GameObject.h"
-#include "Transform.h"
 
-dae::GameObject::~GameObject() = default;
-
-void dae::GameObject::Update(const float deltaTime)
+namespace dae
 {
-	// DAEN: GameObjects should not update when marked for deletion.
-	// DAEN: If a parent gets deleted, then all kids should be deleted as well.
-	for (auto& comp : m_pComponents)
-	{
-		comp->Update(deltaTime);
-	}
-}
+	GameObject::~GameObject() = default;
 
-void dae::GameObject::Render() const
-{
-	for (const auto& comp : m_pComponents)
+	void GameObject::Update(const float deltaTime)
 	{
-		comp->Render();
-	}
-}
-
-void dae::GameObject::SetParent(GameObject* parent, bool keepWorldPosition)
-{
-	if (IsChild(parent) || parent == this || m_pParent == parent)
-	{
-		return;
-	}
-
-	if (parent == nullptr)
-	{
-		SetLocalPosition(GetGlobalPosition());
-	}
-	else
-	{
-		if (keepWorldPosition)
+		// DAEN: GameObjects should not update when marked for deletion.
+		// DAEN: If a parent gets deleted, then all kids should be deleted as well.
+		for (auto& comp : m_pComponents)
 		{
-			SetLocalPosition(GetGlobalPosition() - parent->GetGlobalPosition());
+			comp->Update(deltaTime);
 		}
-		SetPositionDirty();
 	}
 
-	if (m_pParent)
+	void GameObject::Render() const
 	{
-		m_pParent->RemoveChild(this);
-	}
-
-	m_pParent = parent;
-	if (m_pParent)
-	{
-		m_pParent->AddChild(this);
-	}
-}
-
-const std::vector<dae::GameObject*>& dae::GameObject::GetChildren() const
-{
-	return m_pChildren;
-}
-
-void dae::GameObject::SetLocalPosition(float x, float y)
-{
-	m_localPosition.SetPosition(x, y, 0.0f);
-	SetPositionDirty();
-}
-
-void dae::GameObject::SetLocalPosition(Transform pos)
-{
-	m_localPosition = pos;
-	SetPositionDirty();
-}
-
-dae::Transform& dae::GameObject::GetGlobalPosition()
-{
-	if (m_positionIsDirty)
-	{
-		UpdateWorldPosition();
-	}
-
-	return m_globalPosition;
-}
-
-dae::Transform& dae::GameObject::GetLocalPosition()
-{
-	return m_localPosition;
-}
-
-bool dae::GameObject::IsChild(GameObject* candidate)
-{
-	if (candidate == nullptr) return false;
-
-	for (auto child : m_pChildren)
-	{
-		if (child == candidate) return true;
-		if (child->IsChild(candidate)) return true;
-	}
-	return false;
-}
-
-void dae::GameObject::RemoveChild(GameObject* pChild)
-{
-	m_pChildren.erase(std::remove(m_pChildren.begin(), m_pChildren.end(), pChild), m_pChildren.end());
-}
-
-void dae::GameObject::AddChild(GameObject* pChild)
-{
-	m_pChildren.emplace_back(pChild);
-}
-
-void dae::GameObject::UpdateWorldPosition()
-{
-	if (m_positionIsDirty)
-	{
-		if (m_pParent == nullptr)
+		for (const auto& comp : m_pComponents)
 		{
-			m_globalPosition = m_localPosition;
+			comp->Render();
+		}
+	}
+
+	void GameObject::SetParent(GameObject* parent, bool keepWorldPosition)
+	{
+		if (IsChild(parent) || parent == this || m_pParent == parent)
+		{
+			return;
+		}
+
+		if (parent == nullptr)
+		{
+			GetComponent<TransformComponent>()->SetLocalPosition(GetComponent<TransformComponent>()->GetWorldPosition());
 		}
 		else
 		{
-			m_globalPosition = m_pParent->GetGlobalPosition() + m_localPosition;
+			if (keepWorldPosition)
+			{
+				GetComponent<TransformComponent>()->SetLocalPosition(GetComponent<TransformComponent>()->GetWorldPosition() - parent->GetComponent<TransformComponent>()->GetWorldPosition());
+			}
+		}
+
+		if (m_pParent)
+		{
+			m_pParent->RemoveChild(this);
+		}
+
+		m_pParent = parent;
+		if (m_pParent)
+		{
+			m_pParent->AddChild(this);
 		}
 	}
 
-	m_positionIsDirty = false;
-}
-
-void dae::GameObject::SetPositionDirty()
-{
-	m_positionIsDirty = true;
-	for (const auto& child : m_pChildren)
+	GameObject* GameObject::GetParent() const
 	{
-		child->SetPositionDirty();
+		return m_pParent;
+	}
+
+	const std::vector<GameObject*>& GameObject::GetChildren() const
+	{
+		return m_pChildren;
+	}
+
+	bool GameObject::IsChild(GameObject* candidate)
+	{
+		if (candidate == nullptr) return false;
+
+		for (auto child : m_pChildren)
+		{
+			if (child == candidate) return true;
+			if (child->IsChild(candidate)) return true;
+		}
+		return false;
+	}
+
+	void GameObject::RemoveChild(GameObject* pChild)
+	{
+		m_pChildren.erase(std::remove(m_pChildren.begin(), m_pChildren.end(), pChild), m_pChildren.end());
+	}
+
+	void GameObject::AddChild(GameObject* pChild)
+	{
+		m_pChildren.emplace_back(pChild);
 	}
 }

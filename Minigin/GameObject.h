@@ -6,7 +6,6 @@
 #include <vector>
 
 #include "Components/Component.h"
-#include "Transform.h"
 
 namespace dae
 {
@@ -29,7 +28,8 @@ namespace dae
 		// DAEN: Should check for doubles of same type, Text and Texture cannot coexist.
 		// DAEN: Use concepts.
 		template <typename T, typename... Args>
-		T* AddComponent(Args&&... args) {
+		T* AddComponent(Args&&... args)
+		{
 			auto component = std::make_unique<T>(this, std::forward<Args>(args)...);
 			T* ptr = component.get();
 			m_pComponents.push_back(std::move(component));
@@ -38,15 +38,18 @@ namespace dae
 
 		// DAEN: Use concepts.
 		template <typename T>
-		bool HasComponent() const {
+		bool HasComponent() const
+		{
 			return GetComponent<T>() != nullptr;
 		}
 
 		// DAEN: Ensure GetComponent isn't called in the hotpath.
 		// DAEN: Use concepts.
 		template <typename T>
-		T* GetComponent() const {
-			for (const auto& comp : m_pComponents) {
+		T* GetComponent() const
+		{
+			for (const auto& comp : m_pComponents)
+			{
 				T* ptr = dynamic_cast<T*>(comp.get());
 				if (ptr) return ptr;
 			}
@@ -56,7 +59,8 @@ namespace dae
 		// DAEN: Should use a flag to mark for deletion.
 		// DAEN: Use concepts.
 		template <typename T>
-		void RemoveComponent() {
+		void RemoveComponent()
+		{
 			m_pComponents.erase(std::remove_if(m_pComponents.begin(), m_pComponents.end(),
 				[](const std::unique_ptr<Component>& comp)
 				{
@@ -65,27 +69,17 @@ namespace dae
 		}
 
 		void SetParent(GameObject* pParent, bool keepWorldPosition);
+		GameObject* GetParent() const;
 		const std::vector<GameObject*>& GetChildren() const;
 		
-		void SetLocalPosition(float x, float y);
-		void SetLocalPosition(Transform pos);
-		Transform& GetGlobalPosition();
-		Transform& GetLocalPosition();
-
 	private:
 		GameObject* m_pParent{ nullptr };
 		std::vector<GameObject*> m_pChildren;
 		std::vector<std::unique_ptr<Component>> m_pComponents;
-		Transform m_localPosition{};
-		Transform m_globalPosition{};
-		bool m_positionIsDirty{ true };
 
 		bool IsChild(GameObject* pCandidate);
 		void RemoveChild(GameObject* pParent);
 		void AddChild(GameObject* pParent);
-
-		void UpdateWorldPosition();
-		void SetPositionDirty();
 	};
 }
 #endif

@@ -13,7 +13,7 @@ namespace dae
         // https://refactoring.guru/design-patterns/observer
         // https://refactoring.guru/design-patterns/observer/cpp/example
 
-        // DAEL: Current implementation only allows an observer to observe a single subject, a problem for achievements.
+        // DAEN: Current implementation only allows an observer to observe a single subject, a problem for achievements.
 
     public:
         virtual ~Observer();
