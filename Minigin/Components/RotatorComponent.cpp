@@ -17,7 +17,7 @@ void dae::RotatorComponent::Update(float deltaTime)
     {
         m_angle -= double_pi;
     }
-    else if (m_angle < double_pi)
+    else if (m_angle < 0.f)
     {
         m_angle += double_pi;
     }

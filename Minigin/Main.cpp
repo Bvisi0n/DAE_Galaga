@@ -13,6 +13,7 @@
 #include "Commands/ScoreCommand.h"
 #include "Components/FPSComponent.h"
 #include "Components/HealthComponent.h"
+#include "Components/RotatorComponent.h"
 #include "Components/ScoreComponent.h"
 #include "Components/TextureComponent.h"
 #include "Components/TextComponent.h"
@@ -117,6 +118,13 @@ static void loadMainMenu()
 	// Observer currently doesn't support multiple subjects.
 	//player_2_score->AttachObserver(dae::AchievementManager::GetInstance().GetAchievementObserver());
 	scene.Add(std::move(player_2_score_UI));
+
+	auto rotator{ std::make_unique<dae::GameObject>() };
+    rotator->AddComponent<dae::TransformComponent>(0.f, 0.f);
+	rotator->AddComponent<dae::TextureComponent>()->SetTexture("starfighter.png");
+    rotator->AddComponent<dae::RotatorComponent>(20.0f, 2.5f);
+    rotator->SetParent(pPlayer_1, true);
+    scene.Add(std::move(rotator));
 
 
 	auto& input = dae::InputManager::GetInstance();

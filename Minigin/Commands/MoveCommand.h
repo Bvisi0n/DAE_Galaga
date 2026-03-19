@@ -22,13 +22,13 @@ namespace dae
         void Execute(const float deltaTime) override
         {
             // DAEN: Diagonal movement is currently double speed.
-            auto* transform = m_pGameObject->GetComponent<dae::TransformComponent>();
-            auto position = transform->GetLocalPosition();
+            auto* pTransform = m_pGameObject->GetComponent<dae::TransformComponent>();
+            auto position = pTransform->GetLocalPosition();
 
             position.x += m_direction.x * m_speed * deltaTime;
             position.y += m_direction.y * m_speed * deltaTime;
 
-            transform->SetLocalPosition(position);
+            pTransform->SetLocalPosition(position);
         }
 
     private:

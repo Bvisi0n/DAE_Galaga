@@ -72,6 +72,14 @@ namespace dae
         UpdateLocalMatrix();
         m_worldMatrix = parentWorldMatrix * m_localMatrix;
         m_worldPosition = glm::vec3(m_worldMatrix[3]);
+
+        for (const auto& child : GetOwner()->GetChildren())
+        {
+            if (auto childTransform = child->GetComponent<TransformComponent>())
+            {
+                childTransform->UpdateWorldMatrix(m_worldMatrix);
+            }
+        }
     }
 
     void TransformComponent::SetDirty()
