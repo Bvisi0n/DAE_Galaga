@@ -7,12 +7,12 @@ namespace dae
 {
     TransformComponent::TransformComponent(GameObject* pOwner, float xPos, float yPos, float xScale, float yScale)
         : Component(pOwner)
-        , m_localPosition(xPos, yPos, 0.f)
-        , m_localScale(xScale, yScale, 1.f)
-        , m_localRotation(0.f)
         , m_localMatrix(1.f)
         , m_worldMatrix(1.f)
-        , m_worldPosition(xPos, yPos, 0.f) {}
+        , m_worldPosition(xPos, yPos, 0.f)
+        , m_localPosition(xPos, yPos, 0.f)
+        , m_localScale(xScale, yScale, 1.f)
+        , m_localRotation(0.f) {}
 
     void TransformComponent::SetLocalPosition(const glm::vec3& pos)
     {
