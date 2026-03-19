@@ -17,6 +17,7 @@ void Scene::Update(const float deltaTime)
 	{
 		if (!object->GetParent())
 		{
+			// DAEH: What if there is no TransformComponent, what if a parent doesn't have one but a child does?
 			object->GetComponent<dae::TransformComponent>()->UpdateWorldMatrix(glm::mat4(1.0f));
 		}
 	}

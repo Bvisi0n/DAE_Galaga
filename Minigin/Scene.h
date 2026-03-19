@@ -12,7 +12,6 @@ namespace dae
 	class Scene final
 	{
 		// DAEL: The ECS dream, can it be done? I really want to achieve it!
-		// Back in 2024 around the time of my first readthrough of Gameplay Programming Patterns, I learned of it's existence and was immediately intrigued by the idea of DOD and it's insane perfomance but I still don't really understand how to actually do it...
 
 	public:
 		~Scene() = default;

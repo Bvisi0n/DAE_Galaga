@@ -9,7 +9,6 @@ namespace dae
 {
     class TransformComponent final : public Component
 	{
-		// DAEN: Encapsulate all transform logic into the Transform class, refactor it to use matrices.
 	public:
 		TransformComponent(GameObject* pOwner, float xPos, float yPos, float xScale = 1.f, float yScale = 1.f);
 
