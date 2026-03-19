@@ -8,6 +8,7 @@
 #include "ObserverPattern/Observer.h"
 
 // DAEL: Split into .h & .cpp.
+// DAEL: Should be completely reworked; should first figure out which achievements are already achieved. Then optimize which achievements should be actively checked for.
 
 namespace dae
 {

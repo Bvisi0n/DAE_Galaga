@@ -14,6 +14,9 @@ namespace dae
         // https://gameprogrammingpatterns.com/observer.html
         // https://refactoring.guru/design-patterns/observer
         // https://refactoring.guru/design-patterns/observer/cpp/example
+
+        // DAEN: This should be an interface, pure virtual with no data members. Read the material again.
+
     public:
         virtual ~Subject();
 

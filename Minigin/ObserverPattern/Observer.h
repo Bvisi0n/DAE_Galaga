@@ -13,6 +13,7 @@ namespace dae
         // https://refactoring.guru/design-patterns/observer
         // https://refactoring.guru/design-patterns/observer/cpp/example
 
+        // DAEN: This should be an interface, pure virtual with no data members. Read the material again.
         // DAEN: Current implementation only allows an observer to observe a single subject, a problem for achievements.
 
     public:

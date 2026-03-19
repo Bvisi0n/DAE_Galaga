@@ -25,6 +25,7 @@ namespace dae
             auto* pTransform = m_pGameObject->GetComponent<dae::TransformComponent>();
             auto position = pTransform->GetLocalPosition();
 
+            // DAEN: Use vector math.
             position.x += m_direction.x * m_speed * deltaTime;
             position.y += m_direction.y * m_speed * deltaTime;
 
