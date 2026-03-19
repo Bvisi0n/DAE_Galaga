@@ -9,7 +9,7 @@
 
 // If this ever gets fleshed out, consider https://gameprogrammingpatterns.com/service-locator.html before going all in on Singleton. Also consider swapping Observer out for Event-queue, they aren't time sensitive.
 
-// DAEL: Split into .h & .cpp.
+// TODO L: Split into .h & .cpp.
 
 namespace dae
 {

@@ -3,7 +3,7 @@
 
 namespace dae
 {
-    // DAEN: Use Hash function instead of enum.
+    // TODO N: Use Hash function instead of enum.
     enum class GameEvent
     {
         PlayerDied,

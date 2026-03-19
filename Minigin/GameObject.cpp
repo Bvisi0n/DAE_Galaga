@@ -11,8 +11,8 @@ namespace dae
 
 	void GameObject::Update(const float deltaTime)
 	{
-		// DAEN: GameObjects should not update when marked for deletion.
-		// DAEN: If a parent gets deleted, then all kids should be deleted as well.
+		// TODO N: GameObjects should not update when marked for deletion.
+		// TODO N: If a parent gets deleted, then all kids should be deleted as well.
 		for (auto& comp : m_pComponents)
 		{
 			comp->Update(deltaTime);
@@ -34,7 +34,7 @@ namespace dae
 			return;
 		}
 
-		// DAEH: What if there is no TransformComponent?
+		// TODO H: What if there is no TransformComponent?
 		if (parent == nullptr)
 		{
 			GetComponent<TransformComponent>()->SetLocalPosition(GetComponent<TransformComponent>()->GetWorldPosition());

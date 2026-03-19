@@ -78,7 +78,7 @@ dae::Minigin::Minigin(const std::filesystem::path& dataPath)
 		throw std::runtime_error(std::string("SDL_Init Error: ") + SDL_GetError());
 	}
 
-	// DAEN: Make resolution, name etc. more accessible and less hard coded.
+	// TODO N: Make resolution, name etc. more accessible and less hard coded.
 	g_window = SDL_CreateWindow("Programming 4 assignment", 1024, 576, SDL_WINDOW_OPENGL);
 
 	if (g_window == nullptr) 
@@ -137,7 +137,7 @@ void dae::Minigin::RunOneFrame()
 	const auto frame_end_time{ clock::now() };
 	const auto execution_time{ frame_end_time - frame_start_time };
 
-	// DAEN: What happens when frames start to take to long? Should we cap the max delta time?
+	// TODO N: What happens when frames start to take to long? Should we cap the max delta time?
 
 	if (execution_time < m_nsPerFrame)
 	{

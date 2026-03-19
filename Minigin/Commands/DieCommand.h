@@ -4,7 +4,7 @@
 #include "Commands/Command.h"
 #include "Components/HealthComponent.h"
 
-// DAEL: Split into .h & .cpp.
+// TODO L: Split into .h & .cpp.
 
 namespace dae
 {

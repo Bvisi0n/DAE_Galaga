@@ -4,8 +4,8 @@
 #include "Commands/Command.h"
 #include "Components/ScoreComponent.h"
 
-// DAEL: Split into .h & .cpp.
-// DAEN: Should trigger an event (Picked up pellet, killed an enemy), not add score. The observer should add score.
+// TODO L: Split into .h & .cpp.
+// TODO N: Should trigger an event (Picked up pellet, killed an enemy), not add score. The observer should add score.
 
 namespace dae
 {

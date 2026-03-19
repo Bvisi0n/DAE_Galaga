@@ -25,8 +25,8 @@ namespace dae
 		void Update(const float deltaTime);
 		void Render() const;
 
-		// DAEN: Should check for doubles of same type, Text and Texture cannot coexist.
-		// DAEN: Use concepts.
+		// TODO N: Should check for doubles of same type, Text and Texture cannot coexist.
+		// TODO N: Use concepts.
 		template <typename T, typename... Args>
 		T* AddComponent(Args&&... args)
 		{
@@ -36,15 +36,15 @@ namespace dae
 			return ptr;
 		}
 
-		// DAEN: Use concepts.
+		// TODO N: Use concepts.
 		template <typename T>
 		bool HasComponent() const
 		{
 			return GetComponent<T>() != nullptr;
 		}
 
-		// DAEN: Ensure GetComponent isn't called in the hotpath.
-		// DAEN: Use concepts.
+		// TODO N: Ensure GetComponent isn't called in the hotpath. (Transform, Texture, Text...)
+		// TODO N: Use concepts.
 		template <typename T>
 		T* GetComponent() const
 		{
@@ -56,8 +56,8 @@ namespace dae
 			return nullptr;
 		}
 
-		// DAEN: Should use a flag to mark for deletion.
-		// DAEN: Use concepts.
+		// TODO N: Should use a flag to mark for deletion.
+		// TODO N: Use concepts.
 		template <typename T>
 		void RemoveComponent()
 		{

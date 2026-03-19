@@ -7,7 +7,7 @@
 #include "Components/TransformComponent.h"
 #include "GameObject.h"
 
-// DAEL: Split into .h & .cpp.
+// TODO L: Split into .h & .cpp.
 
 namespace dae
 {
@@ -21,11 +21,11 @@ namespace dae
 
         void Execute(const float deltaTime) override
         {
-            // DAEN: Diagonal movement is currently double speed.
+            // TODO N: Diagonal movement is currently double speed.
             auto* pTransform = m_pGameObject->GetComponent<dae::TransformComponent>();
             auto position = pTransform->GetLocalPosition();
 
-            // DAEN: Use vector math.
+            // TODO N: Use vector math.
             position.x += m_direction.x * m_speed * deltaTime;
             position.y += m_direction.y * m_speed * deltaTime;
 

@@ -15,7 +15,7 @@ namespace dae
         // https://refactoring.guru/design-patterns/observer
         // https://refactoring.guru/design-patterns/observer/cpp/example
 
-        // DAEN: This should be an interface, pure virtual with no data members. Read the material again.
+        // TODO N: This should be an interface, pure virtual with no data members. Read the material again.
 
     public:
         virtual ~Subject();

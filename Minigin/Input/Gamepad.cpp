@@ -10,8 +10,8 @@
 
 #include "Input/Gamepad.h"
 
-// DAEL: Merge the branches as in Keyboard.cpp. I think that looks a bit cleaner? Purely style choice.
-// DAEN: Rework the SDL implementation.
+// TODO L: Merge the branches as in Keyboard.cpp. I think that looks a bit cleaner? Purely style choice.
+// TODO N: Rework the SDL implementation.
 //       XInput was made first and works as intended, SDL was then butchered to match it.
 //       A result of this is a flawed controller identification logic.
 //       SDL is event driven, currently burning cycles for no reason simulating XInput.

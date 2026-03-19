@@ -26,7 +26,7 @@
 #include "Minigin.h"
 #include "Scene.h"
 
-// DAEN: Split engine and game into dll & exe.
+// TODO N: Split engine and game into dll & exe.
 
 static void loadMainMenu()
 {
@@ -56,7 +56,7 @@ static void loadMainMenu()
 	fps->AddComponent<dae::FPSComponent>(pText);
 	scene.Add(std::move(fps));
 
-	// DAEN: Observer / Subject setup: Move the pointer assignments to the internal logic so the API stays clean.
+	// TODO N: Observer / Subject setup: Move the pointer assignments to the internal logic so the API stays clean.
 
 	font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
 	auto tutorial_white{ std::make_unique<dae::GameObject>() };

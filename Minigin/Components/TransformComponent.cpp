@@ -85,7 +85,7 @@ namespace dae
     void TransformComponent::SetDirty()
     {
         m_isDirty = true;
-        // DAEH: What if there is no TransformComponent?
+        // TODO H: What if there is no TransformComponent?
         for (const auto& child : GetOwner()->GetChildren())
         {
             child->GetComponent<TransformComponent>()->SetDirty();

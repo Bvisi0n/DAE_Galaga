@@ -11,7 +11,7 @@ void dae::TextureComponent::Render() const
 {
 	if (m_pTexture != nullptr && GetOwner() != nullptr)
 	{
-		// DAEH: What if there is no TransformComponent?
+		// TODO H: What if there is no TransformComponent?
 		const auto& transform = GetOwner()->GetComponent<dae::TransformComponent>();
 		const auto& position = transform->GetWorldPosition();
 		const auto& scale = transform->GetLocalScale();

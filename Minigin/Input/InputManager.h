@@ -22,7 +22,7 @@ namespace dae
 
         bool ProcessInput(const float deltaTime);
 
-        // DAEN: Use concepts.
+        // TODO N: Use concepts.
         template <typename T>
         void BindCommand(T inputType, KeyState state, std::unique_ptr<Command> pCommand, unsigned int controllerIndex = 0)
         {
@@ -36,7 +36,7 @@ namespace dae
             }
         }
 
-        // DAEN: Use concepts.
+        // TODO N: Use concepts.
         template <typename T>
         void UnbindCommand(T inputType, KeyState state, unsigned int controllerIndex = 0)
         {
@@ -62,7 +62,7 @@ namespace dae
         using ControllerBinding = std::tuple<unsigned int, Gamepad::Button, KeyState>;
         using KeyboardBinding = std::pair<Keyboard::Key, KeyState>;
 
-        // DAEN: Use std::vector and Binding struct?
+        // TODO N: Use std::vector and Binding struct?
         //       Data locality, cache misses, 1 command per button limit.
         std::map<ControllerBinding, std::unique_ptr<Command>> m_pGamepadCommands;
         std::map<KeyboardBinding, std::unique_ptr<Command>> m_pKeyboardCommands;
