@@ -17,7 +17,6 @@
 #include <SDL3/SDL.h>
 #include <SDL3_ttf/SDL_ttf.h>
 
-#include "Achievements/AchievementManager.h"
 #include "Input/InputManager.h"
 #include "Singletons/Renderer.h"
 #include "Singletons/ResourceManager.h"
@@ -88,7 +87,6 @@ dae::Minigin::Minigin(const std::filesystem::path& dataPath)
 
 	Renderer::GetInstance().Init(g_window);
 	ResourceManager::GetInstance().Init(dataPath);
-	AchievementManager::GetInstance().Init();
 }
 
 dae::Minigin::~Minigin()

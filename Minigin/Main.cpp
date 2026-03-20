@@ -7,7 +7,6 @@
 	#include <vld.h>
 #endif
 
-#include "Achievements/AchievementManager.h"
 #include "Commands/DieCommand.h"
 #include "Commands/MoveCommand.h"
 #include "Commands/ScoreCommand.h"
@@ -107,7 +106,6 @@ static void loadMainMenu()
 	pText = player_1_score_UI->AddComponent<dae::TextComponent>("Lives:", font);
 	pPlayer_observer = player_1_score_UI->AddComponent<dae::UIValueObserver>(pText, dae::GameEvent::ScoreChanged, [](int v) { return "White Score: " + std::to_string(v) + " (Q & E)"; });
 	player_1_score->AttachObserver(pPlayer_observer);
-	player_1_score->AttachObserver(dae::AchievementManager::GetInstance().GetAchievementObserver());
 	scene.Add(std::move(player_1_score_UI));
 
 	auto player_2_score_UI{ std::make_unique<dae::GameObject>() };
@@ -115,8 +113,6 @@ static void loadMainMenu()
 	pText = player_2_score_UI->AddComponent<dae::TextComponent>("Lives:", font);
 	pPlayer_observer = player_2_score_UI->AddComponent<dae::UIValueObserver>(pText, dae::GameEvent::ScoreChanged, [](int v) { return "Red Score:    " + std::to_string(v) + " (X & Y)"; });
 	player_2_score->AttachObserver(pPlayer_observer);
-	// Observer currently doesn't support multiple subjects.
-	//player_2_score->AttachObserver(dae::AchievementManager::GetInstance().GetAchievementObserver());
 	scene.Add(std::move(player_2_score_UI));
 
 	auto rotator{ std::make_unique<dae::GameObject>() };
