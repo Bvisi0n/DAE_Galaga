@@ -1,27 +1,26 @@
-#include <functional>
-#include <string>
-
 #include "Components/TextComponent.h"
 #include "Components/UIValueObserver.h"
 #include "GameObject.h"
+#include "SDBMHash.h"
 
 namespace dae
 {
-    UIValueObserver::UIValueObserver(GameObject* pOwner, TextComponent* pText, GameEvent observedEvent, Formatter formatter, int initialValue)
+    UIValueObserver::UIValueObserver(GameObject* pOwner, TextComponent* pText, GameEvent observedEvent, Formatter formatter)
         : Component(pOwner)
         , m_Formatter(std::move(formatter))
         , m_pText(pText)
         , m_observedEvent(observedEvent)
     {
-        OnNotify(observedEvent, initialValue);
+        OnNotify(observedEvent);
     }
 
-    void UIValueObserver::OnNotify(GameEvent event, int value)
+    void UIValueObserver::OnNotify(const GameEvent event)
     {
-        if (event == m_observedEvent)
+        if (event.id == m_observedEvent.id)
         {
             if (m_pText && m_Formatter)
             {
+                int value = 0; // TODO H: Continue here. Should pull data from observed subject. Just have OnNotify accept std::any?
                 m_pText->SetText(m_Formatter(value));
             }
         }

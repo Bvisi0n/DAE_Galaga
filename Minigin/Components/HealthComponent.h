@@ -1,12 +1,16 @@
 #ifndef HEALTHCOMPONENT_H
 #define HEALTHCOMPONENT_H
 
+#include <vector>
+
 #include "Components/Component.h"
-#include "ObserverPattern/Subject.h"
+#include "ObserverPattern/ISubject.h"
 
 namespace dae
 {
-    class HealthComponent final : public Component, public Subject
+    class GameObject;
+
+    class HealthComponent final : public Component, public ISubject
     {
     public:
         HealthComponent(GameObject* pOwner, int lives);
@@ -14,11 +18,16 @@ namespace dae
         void Update(float) override {}
         void Render() const override {}
 
+        void AttachObserver(IObserver* observer) override;
+        void DetachObserver(IObserver* observer) override;
+        void NotifyObservers() override;
+
         int GetLives() const;
 
         void Die();
 
     private:
+        std::vector<IObserver*> m_pObservers;
         int m_lives;
     };
 }

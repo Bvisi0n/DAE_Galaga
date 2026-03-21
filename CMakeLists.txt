@@ -26,8 +26,8 @@ add_executable(${TARGET_NAME} ${TARGET_PARAM}
   "Minigin/Input/Gamepad.cpp"
   "Minigin/Input/Keyboard.cpp"
   "Minigin/Input/InputManager.cpp"
-  "Minigin/ObserverPattern/Observer.cpp"
-  "Minigin/ObserverPattern/Subject.cpp"
+  
+  
   "Minigin/Singletons/Renderer.cpp"
   "Minigin/Singletons/ResourceManager.cpp"
   "Minigin/Singletons/SceneManager.cpp"

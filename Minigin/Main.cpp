@@ -24,6 +24,7 @@
 #include "GameObject.h"
 #include "Minigin.h"
 #include "Scene.h"
+#include "SDBMHash.h"
 
 // TODO N: Split engine and game into dll & exe.
 
@@ -90,28 +91,28 @@ static void loadMainMenu()
 	auto player_1_lives_UI{ std::make_unique<dae::GameObject>() };
     player_1_lives_UI->AddComponent<dae::TransformComponent>(20.f, 125.f);
 	pText = player_1_lives_UI->AddComponent<dae::TextComponent>("Lives:", font);
-	auto pPlayer_observer = player_1_lives_UI->AddComponent<dae::UIValueObserver>(pText, dae::GameEvent::PlayerDied, [](int v) { return "White Lives:  " + std::to_string(v) + " (spacebar)"; }, player_1_health->GetLives());
+	auto pPlayer_observer = player_1_lives_UI->AddComponent<dae::UIValueObserver>(pText, dae::GameEvent{ dae::make_sdbm_hash("PlayerDied") }, [](int v) { return "White Lives:  " + std::to_string(v) + " (spacebar)"; });
     player_1_health->AttachObserver(pPlayer_observer);
 	scene.Add(std::move(player_1_lives_UI));
 
 	auto player_2_lives_UI{ std::make_unique<dae::GameObject>() };
     player_2_lives_UI->AddComponent<dae::TransformComponent>(20.f, 175.f);
 	pText = player_2_lives_UI->AddComponent<dae::TextComponent>("Lives:", font);
-	pPlayer_observer = player_2_lives_UI->AddComponent<dae::UIValueObserver>(pText, dae::GameEvent::PlayerDied, [](int v) { return "Red Lives:     " + std::to_string(v) + " (left shoulder)"; }, player_2_health->GetLives());
+	pPlayer_observer = player_2_lives_UI->AddComponent<dae::UIValueObserver>(pText, dae::GameEvent{ dae::make_sdbm_hash("PlayerDied") }, [](int v) { return "Red Lives:     " + std::to_string(v) + " (left shoulder)"; });
     player_2_health->AttachObserver(pPlayer_observer);
 	scene.Add(std::move(player_2_lives_UI));
 
 	auto player_1_score_UI{ std::make_unique<dae::GameObject>() };
     player_1_score_UI->AddComponent<dae::TransformComponent>(20.f, 150.f);
 	pText = player_1_score_UI->AddComponent<dae::TextComponent>("Lives:", font);
-	pPlayer_observer = player_1_score_UI->AddComponent<dae::UIValueObserver>(pText, dae::GameEvent::ScoreChanged, [](int v) { return "White Score: " + std::to_string(v) + " (Q & E)"; });
+	pPlayer_observer = player_1_score_UI->AddComponent<dae::UIValueObserver>(pText, dae::GameEvent{ dae::make_sdbm_hash("ScoreChanged") }, [](int v) { return "White Score: " + std::to_string(v) + " (Q & E)"; });
 	player_1_score->AttachObserver(pPlayer_observer);
 	scene.Add(std::move(player_1_score_UI));
 
 	auto player_2_score_UI{ std::make_unique<dae::GameObject>() };
     player_2_score_UI->AddComponent<dae::TransformComponent>(20.f, 200.f);
 	pText = player_2_score_UI->AddComponent<dae::TextComponent>("Lives:", font);
-	pPlayer_observer = player_2_score_UI->AddComponent<dae::UIValueObserver>(pText, dae::GameEvent::ScoreChanged, [](int v) { return "Red Score:    " + std::to_string(v) + " (X & Y)"; });
+	pPlayer_observer = player_2_score_UI->AddComponent<dae::UIValueObserver>(pText, dae::GameEvent{ dae::make_sdbm_hash("ScoreChanged") }, [](int v) { return "Red Score:    " + std::to_string(v) + " (X & Y)"; });
 	player_2_score->AttachObserver(pPlayer_observer);
 	scene.Add(std::move(player_2_score_UI));
 
