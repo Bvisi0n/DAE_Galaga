@@ -13,8 +13,15 @@ else()
   set(TARGET_PARAM WIN32)
 endif()
 
+# I have no clue on how to split this up into library and executable targets without breaking the Emscripten build.
+# Since I haven't seen anyone else do it either, I'm postponing it and hoping it will be covered in class.
+# For now, I'm already splitting the folder structure up to make that transition easier in the future.
+# I also hope it will show the lecturers that I know what should be engine and what should be game code despite my lacking understanding of CMake & Emscripten.
+
 # list source files here
 add_executable(${TARGET_NAME} ${TARGET_PARAM}
+  "Game/Main.cpp"
+
   "Minigin/Components/FPSComponent.cpp"
   "Minigin/Components/HealthComponent.cpp"
   "Minigin/Components/RotatorComponent.cpp"
@@ -26,14 +33,11 @@ add_executable(${TARGET_NAME} ${TARGET_PARAM}
   "Minigin/Input/Gamepad.cpp"
   "Minigin/Input/Keyboard.cpp"
   "Minigin/Input/InputManager.cpp"
-  
-  
   "Minigin/Singletons/Renderer.cpp"
   "Minigin/Singletons/ResourceManager.cpp"
   "Minigin/Singletons/SceneManager.cpp"
   "Minigin/Font.cpp"
   "Minigin/GameObject.cpp"
-  "Minigin/Main.cpp"
   "Minigin/Minigin.cpp"
   "Minigin/Scene.cpp"
   "Minigin/Texture2D.cpp"
