@@ -11,8 +11,6 @@ namespace dae
 {
 	class Scene final
 	{
-		// TODO L: The ECS dream, can it be done? I really want to achieve it!
-
 	public:
 		~Scene() = default;
 

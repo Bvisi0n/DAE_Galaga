@@ -34,7 +34,7 @@ namespace dae
 			return;
 		}
 
-		// TODO H: What if there is no TransformComponent?
+		// TODO N: What if there is no TransformComponent?
 		if (parent == nullptr)
 		{
 			GetComponent<TransformComponent>()->SetLocalPosition(GetComponent<TransformComponent>()->GetWorldPosition());

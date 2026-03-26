@@ -43,7 +43,7 @@ namespace dae
 			return GetComponent<T>() != nullptr;
 		}
 
-		// TODO N: Ensure GetComponent isn't called in the hotpath. (Transform, Texture, Text...)
+		// TODO L: Can we disable GetComponent calls in the hotpath with code somehow? (Transform, Texture, Text...)
 		// TODO N: Use concepts.
 		template <typename T>
 		T* GetComponent() const

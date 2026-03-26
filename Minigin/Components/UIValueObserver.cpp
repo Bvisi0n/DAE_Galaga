@@ -20,7 +20,7 @@ namespace dae
         {
             if (m_pText && m_Formatter)
             {
-                int value = 0; // TODO H: Continue here. Should pull data from observed subject. Just have OnNotify accept std::any?
+                int value = 0; // TODO H: Continue here. Should pull data from observed subject. Just have OnNotify accept std::variant, maybe use a getter lambda passed with constructor?
                 m_pText->SetText(m_Formatter(value));
             }
         }

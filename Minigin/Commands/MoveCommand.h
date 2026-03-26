@@ -21,11 +21,11 @@ namespace dae
 
         void Execute(const float deltaTime) override
         {
-            // TODO N: Diagonal movement is currently double speed.
+            // TODO L: Diagonal movement is currently double speed.
             auto* pTransform = m_pGameObject->GetComponent<dae::TransformComponent>();
             auto position = pTransform->GetLocalPosition();
 
-            // TODO N: Use vector math.
+            // TODO L: Use vector math.
             position.x += m_direction.x * m_speed * deltaTime;
             position.y += m_direction.y * m_speed * deltaTime;
 

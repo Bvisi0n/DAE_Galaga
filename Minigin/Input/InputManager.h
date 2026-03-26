@@ -62,7 +62,7 @@ namespace dae
         using ControllerBinding = std::tuple<unsigned int, Gamepad::Button, KeyState>;
         using KeyboardBinding = std::pair<Keyboard::Key, KeyState>;
 
-        // TODO N: Use std::vector and Binding struct?
+        // TODO L: Use std::vector and Binding struct?
         //       Data locality, cache misses, 1 command per button limit.
         std::map<ControllerBinding, std::unique_ptr<Command>> m_pGamepadCommands;
         std::map<KeyboardBinding, std::unique_ptr<Command>> m_pKeyboardCommands;
