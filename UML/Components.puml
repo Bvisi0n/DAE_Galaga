@@ -1,1 +1,79 @@
-@startumlclass GameObject {+ Update()+ Render()- m_pComponents : vector<unique_ptr<BaseComponent>>- m_pRenderable : IRenderable*- m_transform : TransformComponent}interface ISubject {+ AttachObserver()+ DetachObserver()- NotifyObservers()}interface IObserver {+ OnNotify()}interface IRenderable {+ Render()}abstract class BaseComponent {+ GetOwner()+ Update()- m_pOwner : GameObject*}abstract class ObservableComponent {- m_pObservers : vector<IObserver*>}class TextComponent {+ SetState()- m_texture : shared_ptr<Texture2D>- m_state}class TextureComponent {- m_texture : shared_ptr<Texture2D>}class UIStateObserver {- UpdateUIState()}class HealthComponent {+ TakeDamage()- m_health : int- m_isPlayer : bool}class ScoreComponent {- ChangeScore()- m_score : int}BaseComponent <|-- ObservableComponent : inheritsISubject <|.. ObservableComponent : implementsIObserver o-- ObservableComponent : refersBaseComponent <|-- TextComponent : inheritsIRenderable <|.. TextComponent : implementsBaseComponent <|-- TextureComponent : inheritsIRenderable <|.. TextureComponent : implementsBaseComponent <|-- UIStateObserver : inheritsIObserver <|.. UIStateObserver : implementsTextComponent <-- UIStateObserver : usesObservableComponent <|-- HealthComponent : inheritsObservableComponent <|-- ScoreComponent : inheritsIObserver <|.. ScoreComponent : implements@enduml
+@startuml
+
+class GameObject {
++ Update()
++ Render()
+- m_pComponents : vector<unique_ptr<BaseComponent>>
+- m_pRenderable : IRenderable*
+- m_transform : TransformComponent
+}
+
+interface ISubject {
++ AttachObserver()
++ DetachObserver()
+- NotifyObservers()
+}
+
+interface IObserver {
++ OnNotify()
+}
+
+interface IRenderable {
++ Render()
+}
+
+abstract class BaseComponent {
++ GetOwner()
++ Update()
+- m_pOwner : GameObject*
+}
+
+abstract class ObservableComponent {
+- m_pObservers : vector<IObserver*>
+}
+
+class TextComponent {
++ SetState()
+- m_texture : shared_ptr<Texture2D>
+- m_state
+}
+
+class TextureComponent {
+- m_texture : shared_ptr<Texture2D>
+}
+
+class UIStateObserver {
+- UpdateUIState()
+}
+
+class HealthComponent {
++ TakeDamage()
+- m_health : int
+- m_isPlayer : bool
+}
+
+class ScoreComponent {
+- ChangeScore()
+- m_score : int
+}
+
+BaseComponent <|-- ObservableComponent : inherits
+ISubject <|.. ObservableComponent : implements
+IObserver o-- ObservableComponent : refers
+
+BaseComponent <|-- TextComponent : inherits
+IRenderable <|.. TextComponent : implements
+
+BaseComponent <|-- TextureComponent : inherits
+IRenderable <|.. TextureComponent : implements
+
+BaseComponent <|-- UIStateObserver : inherits
+IObserver <|.. UIStateObserver : implements
+TextComponent <-- UIStateObserver : uses
+
+ObservableComponent <|-- HealthComponent : inherits
+
+ObservableComponent <|-- ScoreComponent : inherits
+IObserver <|.. ScoreComponent : implements
+
+@enduml
