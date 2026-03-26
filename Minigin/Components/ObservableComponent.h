@@ -18,8 +18,8 @@ namespace dae
             : Component(pOwner) {};
         virtual ~ObservableComponent() = default;
 
-        virtual void Update(const float deltaTime) = 0;
-        virtual void Render() const = 0;
+        virtual void Update(const float deltaTime) override = 0;
+        virtual void Render() const override = 0;
 
         void AttachObserver(IObserver* observer) override;
         void DetachObserver(IObserver* observer) override;
