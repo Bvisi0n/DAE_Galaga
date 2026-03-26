@@ -11,7 +11,7 @@ class GameObject {
 interface ISubject {
 + AttachObserver()
 + DetachObserver()
-- NotifyObservers()
+# NotifyObservers()
 }
 
 interface IObserver {

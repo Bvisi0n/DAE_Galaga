@@ -14,6 +14,7 @@ namespace dae
         virtual ~ISubject() {};
         virtual void AttachObserver(IObserver* observer) = 0;
         virtual void DetachObserver(IObserver* observer) = 0;
+    protected:
         virtual void NotifyObservers() = 0;
     };
 }
