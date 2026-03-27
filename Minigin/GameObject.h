@@ -6,13 +6,14 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <algorithm>
 
 #include "Components/Component.h"
+#include "Components/IRenderable.h"
 
 namespace dae
 {
 	class Texture2D;
-	class IRenderable;
 
 	template<typename T>
 	concept IsComponent = std::derived_from<T, Component>;
