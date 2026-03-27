@@ -115,7 +115,7 @@ namespace dae
 				m_pComponents.erase(std::remove_if(m_pComponents.begin(), m_pComponents.end()
 					, [this](const std::unique_ptr<Component>& comp)
 					{
-						return comp.get() == m_pRenderable;
+						return dynamic_cast<IRenderable*>(comp.get()) == m_pRenderable;
 					}), m_pComponents.end());
 				m_pRenderable = nullptr;
 			}
