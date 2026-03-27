@@ -17,7 +17,6 @@ namespace dae
         ~RotatorComponent() override = default;
 
         void Update(float deltaTime) override;
-        void Render() const override {};
 
     private:
         float m_angle{ 0.0f };

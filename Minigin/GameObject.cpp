@@ -1,6 +1,7 @@
 #include <string>
 
 #include "Components/TransformComponent.h"
+#include "Components/IRenderable.h"
 #include "Singletons/Renderer.h"
 #include "Singletons/ResourceManager.h"
 #include "GameObject.h"
@@ -21,9 +22,9 @@ namespace dae
 
 	void GameObject::Render() const
 	{
-		for (const auto& comp : m_pComponents)
+		if (m_pRenderable)
 		{
-			comp->Render();
+			m_pRenderable->Render();
 		}
 	}
 

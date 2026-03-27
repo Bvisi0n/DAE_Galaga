@@ -12,7 +12,6 @@ namespace dae
         virtual ~ScoreComponent() = default;
 
         void Update(float) override {}
-        void Render() const override {}
 
         void AddScore(int score);
         int GetScore() const;

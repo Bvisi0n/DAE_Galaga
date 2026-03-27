@@ -5,6 +5,8 @@
 
 #include "Components/Component.h"
 
+// TODO N: Refactor into Transform, no longer a component but a regular member class of GameObject.
+
 namespace dae
 {
     class TransformComponent final : public Component
@@ -13,7 +15,6 @@ namespace dae
 		TransformComponent(GameObject* pOwner, float xPos, float yPos, float xScale = 1.f, float yScale = 1.f);
 
 		void Update(float) override {}
-		void Render() const override {}
 
 		void SetLocalPosition(const glm::vec3& pos);
 		void SetLocalPosition(float x, float y, float z = 0.f);

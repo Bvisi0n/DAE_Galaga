@@ -24,7 +24,6 @@ namespace dae
 		FPSComponent& operator=(FPSComponent&&)      = delete;
 
 		void Update(const float deltaTime) override;
-		void Render() const override {};
 
 	private:
 		TextComponent* m_pText{ nullptr };

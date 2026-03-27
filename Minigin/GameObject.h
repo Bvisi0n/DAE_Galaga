@@ -1,6 +1,8 @@
 #ifndef GAMEOBJECT_H
 #define GAMEOBJECT_H
 
+#include <cassert>
+#include <concepts>
 #include <memory>
 #include <string>
 #include <vector>
@@ -10,9 +12,17 @@
 namespace dae
 {
 	class Texture2D;
+	class IRenderable;
+
+	template<typename T>
+	concept IsComponent = std::derived_from<T, Component>;
+
+	template<typename T>
+	concept IsRenderable = std::derived_from<T, Component>&& std::derived_from<T, IRenderable>;
 
 	class GameObject final
 	{
+		// TODO N: Fit entire object in 64 bytes.
 	public:
 		GameObject() = default;
 		~GameObject();
@@ -25,9 +35,9 @@ namespace dae
 		void Update(const float deltaTime);
 		void Render() const;
 
-		// TODO N: Should check for doubles of same type, Text and Texture cannot coexist.
-		// TODO N: Use concepts.
-		template <typename T, typename... Args>
+		// TODO N: Should check for doubles of same type.
+		template <IsComponent T, typename... Args>
+			requires (!IsRenderable<T>)
 		T* AddComponent(Args&&... args)
 		{
 			auto component = std::make_unique<T>(this, std::forward<Args>(args)...);
@@ -36,36 +46,79 @@ namespace dae
 			return ptr;
 		}
 
-		// TODO N: Use concepts.
-		template <typename T>
+		template <IsRenderable T, typename... Args>
+		T* AddComponent(Args&&... args)
+		{
+			if (m_pRenderable)
+			{
+				assert(!m_pRenderable && "GameObject can only have one IRenderable.");
+				return nullptr;
+			}
+
+			auto component = std::make_unique<T>(this, std::forward<Args>(args)...);
+			T* ptr = component.get();
+
+			m_pRenderable = ptr;
+			m_pComponents.push_back(std::move(component));
+			return ptr;
+		}
+
+		template <IsComponent T>
 		bool HasComponent() const
 		{
 			return GetComponent<T>() != nullptr;
 		}
 
-		// TODO L: Can we disable GetComponent calls in the hotpath with code somehow? (Transform, Texture, Text...)
-		// TODO N: Use concepts.
-		template <typename T>
+		template <IsComponent T>
+			requires (!IsRenderable<T>)
 		T* GetComponent() const
 		{
 			for (const auto& comp : m_pComponents)
 			{
 				T* ptr = dynamic_cast<T*>(comp.get());
-				if (ptr) return ptr;
+				if (ptr)
+				{
+					return ptr;
+				}
 			}
 			return nullptr;
 		}
 
+		template <IsRenderable T>
+		T* GetComponent() const
+		{
+			if (!m_pRenderable)
+			{
+				assert(m_pRenderable && "Attempting to get an IRenderable from a GameObject that has none.");
+				return nullptr;
+			}
+			return dynamic_cast<T*>(m_pRenderable);
+		}
+
 		// TODO N: Should use a flag to mark for deletion.
-		// TODO N: Use concepts.
-		template <typename T>
+		template <IsComponent T>
+			requires (!IsRenderable<T>)
 		void RemoveComponent()
 		{
-			m_pComponents.erase(std::remove_if(m_pComponents.begin(), m_pComponents.end(),
-				[](const std::unique_ptr<Component>& comp)
+			m_pComponents.erase(std::remove_if(m_pComponents.begin(), m_pComponents.end()
+				, [](const std::unique_ptr<Component>& comp)
 				{
 					return dynamic_cast<T*>(comp.get()) != nullptr;
 				}), m_pComponents.end());
+		}
+
+		template <IsRenderable T>
+		void RemoveComponent()
+		{
+			if (m_pRenderable && dynamic_cast<T*>(m_pRenderable))
+			{
+				m_pComponents.erase(std::remove_if(m_pComponents.begin(), m_pComponents.end()
+					, [this](const std::unique_ptr<Component>& comp)
+					{
+						return comp.get() == m_pRenderable;
+					}), m_pComponents.end());
+				m_pRenderable = nullptr;
+			}
 		}
 
 		void SetParent(GameObject* pParent, bool keepWorldPosition);
@@ -75,7 +128,9 @@ namespace dae
 	private:
 		GameObject* m_pParent{ nullptr };
 		std::vector<GameObject*> m_pChildren;
+
 		std::vector<std::unique_ptr<Component>> m_pComponents;
+		IRenderable* m_pRenderable{ nullptr };
 
 		bool IsChild(GameObject* pCandidate);
 		void RemoveChild(GameObject* pParent);

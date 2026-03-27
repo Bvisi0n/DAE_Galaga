@@ -19,7 +19,6 @@ namespace dae
         virtual ~ObservableComponent() = default;
 
         virtual void Update(const float deltaTime) override = 0;
-        virtual void Render() const override = 0;
 
         void AttachObserver(IObserver* observer) override;
         void DetachObserver(IObserver* observer) override;

@@ -24,7 +24,6 @@ namespace dae
         void OnNotify(const GameEvent event) override;
 
         void Update(float) override {}
-        void Render() const override {}
 
     private:
         Formatter m_Formatter;
