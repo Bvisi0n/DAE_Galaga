@@ -36,15 +36,22 @@ namespace dae
 		void Update(const float deltaTime);
 		void Render() const;
 
-		// TODO N: Should check for doubles of same type.
 		template <IsComponent T, typename... Args>
 			requires (!IsRenderable<T>)
 		T* AddComponent(Args&&... args)
 		{
-			auto component = std::make_unique<T>(this, std::forward<Args>(args)...);
-			T* ptr = component.get();
-			m_pComponents.push_back(std::move(component));
-			return ptr;
+			if (HasComponent<T>())
+			{
+				assert(!HasComponent<T>() && "GameObject already has a component of this type.");
+				return GetComponent<T>();
+			}
+			else
+			{
+				auto component = std::make_unique<T>(this, std::forward<Args>(args)...);
+				T* ptr = component.get();
+				m_pComponents.push_back(std::move(component));
+				return ptr;
+			}
 		}
 
 		template <IsRenderable T, typename... Args>
@@ -55,13 +62,15 @@ namespace dae
 				assert(!m_pRenderable && "GameObject can only have one IRenderable.");
 				return nullptr;
 			}
+			else
+			{
+				auto component = std::make_unique<T>(this, std::forward<Args>(args)...);
+				T* ptr = component.get();
 
-			auto component = std::make_unique<T>(this, std::forward<Args>(args)...);
-			T* ptr = component.get();
-
-			m_pRenderable = ptr;
-			m_pComponents.push_back(std::move(component));
-			return ptr;
+				m_pRenderable = ptr;
+				m_pComponents.push_back(std::move(component));
+				return ptr;
+			}
 		}
 
 		template <IsComponent T>
@@ -88,12 +97,14 @@ namespace dae
 		template <IsRenderable T>
 		T* GetComponent() const
 		{
-			if (!m_pRenderable)
+			if (m_pRenderable)
 			{
-				assert(m_pRenderable && "Attempting to get an IRenderable from a GameObject that has none.");
+				return dynamic_cast<T*>(m_pRenderable);
+			}
+			else
+			{
 				return nullptr;
 			}
-			return dynamic_cast<T*>(m_pRenderable);
 		}
 
 		// TODO N: Should use a flag to mark for deletion.
