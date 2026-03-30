@@ -4,20 +4,24 @@
 
 #include "Font.h"
 
-dae::Font::Font(const std::string& fullPath, float size) : m_pFont(nullptr)
+namespace dae
 {
-	m_pFont = TTF_OpenFont(fullPath.c_str(), size);
-	if (m_pFont == nullptr) 
+	Font::Font(const std::string& fullPath, float size) : m_pFont(nullptr)
 	{
-		throw std::runtime_error(std::string("Failed to load font: ") + SDL_GetError());
+		m_pFont = TTF_OpenFont(fullPath.c_str(), size);
+		if (m_pFont == nullptr) 
+		{
+			throw std::runtime_error(std::string("Failed to load font: ") + SDL_GetError());
+		}
 	}
-}
 
-dae::Font::~Font()
-{
-	TTF_CloseFont(m_pFont);
-}
+	Font::~Font()
+	{
+		TTF_CloseFont(m_pFont);
+	}
 
-TTF_Font* dae::Font::GetFont() const {
-	return m_pFont;
+	TTF_Font* Font::GetFont() const
+	{
+		return m_pFont;
+	}
 }

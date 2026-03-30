@@ -26,6 +26,7 @@ namespace dae
 		std::vector<std::unique_ptr<Scene>> m_pScenes{};
 
 		SceneManager() = default;
+		virtual ~SceneManager() = default;
 	};
 }
 #endif

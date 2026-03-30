@@ -23,15 +23,19 @@ namespace dae
 		void RenderTexture(const Texture2D& texture, float x, float y) const;
 		void RenderTexture(const Texture2D& texture, float x, float y, float width, float height) const;
 
-		SDL_Renderer* GetSDLRenderer() const;
-
-		const SDL_Color& GetBackgroundColor() const { return m_clearColor; }
 		void SetBackgroundColor(const SDL_Color& color) { m_clearColor = color; }
+
+		[[nodiscard]] SDL_Renderer* GetSDLRenderer() const;
+		[[nodiscard]] const SDL_Color& GetBackgroundColor() const { return m_clearColor; }
 
 	private:
 		SDL_Renderer* m_pRenderer{};
 		SDL_Window* m_pWindow{};
 		SDL_Color m_clearColor{};
+
+		friend class Singleton<Renderer>;
+		Renderer() = default;
+		virtual ~Renderer() = default;
 	};
 }
 #endif

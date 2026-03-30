@@ -12,9 +12,9 @@ namespace dae
     public:
         HealthComponent(GameObject* pOwner, int lives);
 
-        void Update(float) override {}
+        void Update(const float) override {}
 
-        int GetLives() const;
+        [[nodiscard]] int GetLives() const;
 
         void Die();
 

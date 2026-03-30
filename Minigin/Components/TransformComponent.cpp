@@ -62,7 +62,7 @@ namespace dae
         return m_worldMatrix;
     }
 
-    const glm::vec3& dae::TransformComponent::GetWorldPosition()
+    const glm::vec3& TransformComponent::GetWorldPosition()
     {
         return m_worldPosition;
     }

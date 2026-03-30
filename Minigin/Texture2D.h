@@ -22,8 +22,8 @@ namespace dae
 		Texture2D & operator= (const Texture2D &)  = delete;
 		Texture2D & operator= (const Texture2D &&) = delete;
 
-		SDL_Texture* GetSDLTexture() const;
-		glm::vec2	 GetSize()		 const;
+		[[nodiscard]] SDL_Texture* GetSDLTexture() const;
+		[[nodiscard]] glm::vec2 GetSize() const;
 
 	private:
 		SDL_Texture* m_pTexture;

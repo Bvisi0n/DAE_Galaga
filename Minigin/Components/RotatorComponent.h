@@ -16,7 +16,7 @@ namespace dae
         RotatorComponent(GameObject* pOwner, float range, float speed);
         ~RotatorComponent() override = default;
 
-        void Update(float deltaTime) override;
+        void Update(const float deltaTime) override;
 
     private:
         float m_angle{ 0.0f };
@@ -24,5 +24,4 @@ namespace dae
         float m_rotationSpeed{ 0.0f };
     };
 }
-
 #endif

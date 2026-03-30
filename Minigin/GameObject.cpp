@@ -8,8 +8,6 @@
 
 namespace dae
 {
-	GameObject::~GameObject() = default;
-
 	void GameObject::Update(const float deltaTime)
 	{
 		// TODO N: GameObjects should not update when marked for deletion.

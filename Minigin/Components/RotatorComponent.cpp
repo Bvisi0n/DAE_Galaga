@@ -7,7 +7,7 @@
 dae::RotatorComponent::RotatorComponent(GameObject* pOwner, float range, float speed)
     : Component(pOwner), m_range(range), m_rotationSpeed(speed) {}
 
-void dae::RotatorComponent::Update(float deltaTime)
+void dae::RotatorComponent::Update(const float deltaTime)
 {
     m_angle += m_rotationSpeed * deltaTime;
 

@@ -15,6 +15,9 @@ namespace dae
     class Keyboard::KeyboardImpl
     {
     public:
+        KeyboardImpl() = default;
+        ~KeyboardImpl() = default;
+
         void Update()
         {
             m_PreviousState = m_CurrentState;
@@ -37,7 +40,7 @@ namespace dae
             }
         }
 
-        bool IsPressed(Key key) const
+        bool IsPressed(const Key key) const
         {
             int platform_key = GetPlatformKey(key);
             #if WIN32
@@ -47,18 +50,18 @@ namespace dae
             #endif
         }
 
-        bool IsDown(Key key) const
+        bool IsDown(const Key key) const
         {
             return IsPressed(key) && !WasPressed(key);
         }
 
-        bool IsUp(Key key) const
+        bool IsUp(const Key key) const
         {
             return !IsPressed(key) && WasPressed(key);
         }
 
     private:
-        bool WasPressed(Key key) const
+        bool WasPressed(const Key key) const
         {
             int platform_key = GetPlatformKey(key);
             #if WIN32
@@ -68,7 +71,7 @@ namespace dae
             #endif
         }
 
-        int GetPlatformKey(Key key) const
+        int GetPlatformKey(const Key key) const
         {
             #if WIN32
                 // https://learn.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
@@ -105,6 +108,7 @@ namespace dae
     Keyboard::Keyboard()
         : m_pImpl(std::make_unique<KeyboardImpl>()) {}
 
+    // Don't remove, needs to be here for definition of KeyboardImpl.
     Keyboard::~Keyboard() = default;
 
     void Keyboard::Update()
@@ -112,17 +116,17 @@ namespace dae
         m_pImpl->Update();
     }
 
-    bool Keyboard::IsDown(Key key) const
+    bool Keyboard::IsDown(const Key key) const
     {
         return m_pImpl->IsDown(key);
     }
 
-    bool Keyboard::IsUp(Key key) const
+    bool Keyboard::IsUp(const Key key) const
     {
         return m_pImpl->IsUp(key);
     }
 
-    bool Keyboard::IsPressed(Key key) const
+    bool Keyboard::IsPressed(const Key key) const
     {
         return m_pImpl->IsPressed(key);
     }

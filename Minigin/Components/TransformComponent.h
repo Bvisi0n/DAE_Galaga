@@ -14,21 +14,21 @@ namespace dae
 	public:
 		TransformComponent(GameObject* pOwner, float xPos, float yPos, float xScale = 1.f, float yScale = 1.f);
 
-		void Update(float) override {}
+		void Update(const float) override {}
 
 		void SetLocalPosition(const glm::vec3& pos);
 		void SetLocalPosition(float x, float y, float z = 0.f);
-		const glm::vec3& GetLocalPosition() const;
+		[[nodiscard]] const glm::vec3& GetLocalPosition() const;
 
 		void SetLocalRotation(float angleInRadians);
-		float GetLocalRotation() const;
+		[[nodiscard]] float GetLocalRotation() const;
 
 		void SetLocalScale(const glm::vec3& scale);
 		void SetLocalScale(float x, float y, float z = 1.f);
-		const glm::vec3& GetLocalScale() const;
+		[[nodiscard]] const glm::vec3& GetLocalScale() const;
 
-		const glm::mat4& GetWorldMatrix() const;
-		const glm::vec3& GetWorldPosition();
+		[[nodiscard]] const glm::mat4& GetWorldMatrix() const;
+		[[nodiscard]] const glm::vec3& GetWorldPosition();
 
 		void UpdateWorldMatrix(const glm::mat4& parentWorldMatrix);
 		void SetDirty();

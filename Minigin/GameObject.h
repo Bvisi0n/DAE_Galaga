@@ -26,7 +26,7 @@ namespace dae
 		// TODO N: Fit entire object in 64 bytes.
 	public:
 		GameObject() = default;
-		~GameObject();
+		~GameObject() = default;
 
 		GameObject(const GameObject& other)			   = delete;
 		GameObject(GameObject&& other)				   = delete;
@@ -74,14 +74,14 @@ namespace dae
 		}
 
 		template <IsComponent T>
-		bool HasComponent() const
+		[[nodiscard]] bool HasComponent() const
 		{
 			return GetComponent<T>() != nullptr;
 		}
 
 		template <IsComponent T>
 			requires (!IsRenderable<T>)
-		T* GetComponent() const
+		[[nodiscard]] T* GetComponent() const
 		{
 			for (const auto& comp : m_pComponents)
 			{
@@ -95,7 +95,7 @@ namespace dae
 		}
 
 		template <IsRenderable T>
-		T* GetComponent() const
+		[[nodiscard]] T* GetComponent() const
 		{
 			if (m_pRenderable)
 			{
@@ -135,8 +135,8 @@ namespace dae
 		}
 
 		void SetParent(GameObject* pParent, bool keepWorldPosition);
-		GameObject* GetParent() const;
-		const std::vector<GameObject*>& GetChildren() const;
+		[[nodiscard]] GameObject* GetParent() const;
+		[[nodiscard]] const std::vector<GameObject*>& GetChildren() const;
 		
 	private:
 		GameObject* m_pParent{ nullptr };

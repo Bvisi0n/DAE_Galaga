@@ -23,7 +23,7 @@ namespace dae
 
         void OnNotify(const GameEvent event) override;
 
-        void Update(float) override {}
+        void Update(const float) override {}
 
     private:
         Formatter m_Formatter;

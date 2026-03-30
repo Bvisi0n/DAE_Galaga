@@ -6,7 +6,7 @@ namespace dae
         : ObservableComponent(pOwner)
         , m_score(0) {}
 
-    void ScoreComponent::AddScore(int score)
+    void ScoreComponent::AddScore(const int score)
     {
         m_score += score;
         NotifyObservers();
@@ -16,5 +16,4 @@ namespace dae
     {
         return m_score;
     }
-
 }
