@@ -178,7 +178,7 @@ endif()
 
 if(MSVC)
   # compile at warning level 4 + treat warnings as errors
-  target_compile_options(${TARGET_NAME} PRIVATE /W4 /WX)
+  target_compile_options(${TARGET_NAME} PRIVATE /W4 /WX /w14242 /w14265 /w14296 /w14311 /permissive-)
 else()
   target_compile_options(${TARGET_NAME} PRIVATE -Wall -Wextra -Werror)
 endif()
