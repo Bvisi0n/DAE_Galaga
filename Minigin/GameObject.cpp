@@ -16,8 +16,13 @@ namespace dae
 		// TODO N: If a parent gets deleted, then all kids should be deleted as well.
 		for (auto& comp : m_pComponents)
 		{
-			comp->Update(deltaTime);
+			if (!comp->IsPendingDeletion())
+			{
+				comp->Update(deltaTime);
+			}
 		}
+
+		CleanupComponents();
 	}
 
 	void GameObject::Render() const
@@ -90,5 +95,9 @@ namespace dae
 	void GameObject::AddChild(GameObject* pChild)
 	{
 		m_pChildren.emplace_back(pChild);
+	}
+	void GameObject::CleanupComponents()
+	{
+		std::erase_if(m_pComponents, [](const auto& component){ return component->IsPendingDeletion(); });
 	}
 }

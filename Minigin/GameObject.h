@@ -86,7 +86,7 @@ namespace dae
 			for (const auto& comp : m_pComponents)
 			{
 				T* ptr = dynamic_cast<T*>(comp.get());
-				if (ptr)
+				if (ptr && !ptr->IsPendingDeletion())
 				{
 					return ptr;
 				}
@@ -107,29 +107,30 @@ namespace dae
 			}
 		}
 
-		// TODO N: Should use a flag to mark for deletion.
 		template <IsComponent T>
 			requires (!IsRenderable<T>)
 		void RemoveComponent()
 		{
-			m_pComponents.erase(std::remove_if(m_pComponents.begin(), m_pComponents.end()
-				, [](const std::unique_ptr<Component>& comp)
+			for (auto& comp : m_pComponents)
+			{
+				if (dynamic_cast<T*>(comp.get()))
 				{
-					return dynamic_cast<T*>(comp.get()) != nullptr;
-				}), m_pComponents.end());
+					comp->MarkForDeletion();
+					return;
+				}
+			}
 		}
 
 		template <IsRenderable T>
 		void RemoveComponent()
 		{
-			if (m_pRenderable && dynamic_cast<T*>(m_pRenderable))
+			if (m_pRenderable)
 			{
-				m_pComponents.erase(std::remove_if(m_pComponents.begin(), m_pComponents.end()
-					, [this](const std::unique_ptr<Component>& comp)
-					{
-						return dynamic_cast<IRenderable*>(comp.get()) == m_pRenderable;
-					}), m_pComponents.end());
-				m_pRenderable = nullptr;
+				if (auto casted = dynamic_cast<T*>(m_pRenderable))
+				{
+					casted->MarkForDeletion();
+					m_pRenderable = nullptr;
+				}
 			}
 		}
 
@@ -147,6 +148,8 @@ namespace dae
 		bool IsChild(GameObject* pCandidate);
 		void RemoveChild(GameObject* pParent);
 		void AddChild(GameObject* pParent);
+
+		void CleanupComponents();
 	};
 }
 #endif

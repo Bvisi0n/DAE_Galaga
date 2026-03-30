@@ -120,6 +120,8 @@ static void loadMainMenu()
     rotator->AddComponent<dae::TransformComponent>(0.f, 0.f);
 	rotator->AddComponent<dae::TextureComponent>()->SetTexture("starfighter.png");
     rotator->AddComponent<dae::RotatorComponent>(20.0f, 2.5f);
+    rotator->RemoveComponent<dae::RotatorComponent>();
+    rotator->AddComponent<dae::RotatorComponent>(20.0f, 2.5f);
     rotator->SetParent(pPlayer_1, true);
     scene.Add(std::move(rotator));
 

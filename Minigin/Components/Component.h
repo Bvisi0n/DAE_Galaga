@@ -17,12 +17,15 @@ namespace dae
         Component& operator=(Component&&)      = delete;
 
         virtual void Update(const float deltaTime) = 0;
+        void MarkForDeletion() { m_IsPendingDeletion = true; }
+        bool IsPendingDeletion() const { return m_IsPendingDeletion; }
 
     protected:
         GameObject* GetOwner() const { return m_pOwner; }
 
     private:
         GameObject* m_pOwner;
+        bool m_IsPendingDeletion{ false };
     };
 }
 #endif
