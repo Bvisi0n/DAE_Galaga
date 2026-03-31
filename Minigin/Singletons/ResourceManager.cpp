@@ -23,7 +23,6 @@ namespace dae
 	{
 		m_pLoadedFonts.clear();
 		m_pLoadedTextures.clear();
-		TTF_Quit();
 	}
 
 	std::shared_ptr<Texture2D> ResourceManager::LoadTexture(const std::string& file)

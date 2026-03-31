@@ -17,7 +17,11 @@ namespace dae
 
 	Font::~Font()
 	{
-		TTF_CloseFont(m_pFont);
+		if (m_pFont)
+		{
+			TTF_CloseFont(m_pFont);
+			m_pFont = nullptr;
+		}
 	}
 
 	TTF_Font* Font::GetFont() const
