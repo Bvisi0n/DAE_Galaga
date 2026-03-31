@@ -1,13 +1,16 @@
 #include <string>
 
-#include "Components/TransformComponent.h"
 #include "Components/IRenderable.h"
 #include "Singletons/Renderer.h"
 #include "Singletons/ResourceManager.h"
 #include "GameObject.h"
+#include "Transform.h"
 
 namespace dae
 {
+	GameObject::GameObject(const float x, const float y)
+		: m_transform{ this, x, y } {}
+	
 	void GameObject::Update(const float deltaTime)
 	{
 		// TODO N: GameObjects should not update when marked for deletion.
@@ -38,16 +41,15 @@ namespace dae
 			return;
 		}
 
-		// TODO N: What if there is no TransformComponent?
 		if (parent == nullptr)
 		{
-			GetComponent<TransformComponent>()->SetLocalPosition(GetComponent<TransformComponent>()->GetWorldPosition());
+			m_transform.SetLocalPosition(m_transform.GetWorldPosition());
 		}
 		else
 		{
 			if (keepWorldPosition)
 			{
-				GetComponent<TransformComponent>()->SetLocalPosition(GetComponent<TransformComponent>()->GetWorldPosition() - parent->GetComponent<TransformComponent>()->GetWorldPosition());
+				m_transform.SetLocalPosition(m_transform.GetWorldPosition() - parent->GetTransform().GetWorldPosition());
 			}
 		}
 
@@ -71,6 +73,16 @@ namespace dae
 	const std::vector<GameObject*>& GameObject::GetChildren() const
 	{
 		return m_pChildren;
+	}
+
+	Transform& GameObject::GetTransform()
+	{
+		return m_transform;
+	}
+
+	const Transform& GameObject::GetTransform() const
+	{
+		return m_transform;
 	}
 
 	bool GameObject::IsChild(GameObject* candidate)

@@ -3,11 +3,11 @@
 #include <SDL3/SDL.h>
 
 #include "Components/TextComponent.h"
-#include "Components/TransformComponent.h"
 #include "Singletons/Renderer.h"
 #include "Font.h"
 #include "GameObject.h"
 #include "Texture2D.h"
+#include "Transform.h"
 
 dae::TextComponent::TextComponent(GameObject* pOwner, const std::string& text, std::shared_ptr<Font> pFont, const SDL_Color& color)
 	: Component(pOwner)
@@ -40,8 +40,7 @@ void dae::TextComponent::Render() const
 {
 	if (m_pTexture != nullptr && GetOwner() != nullptr)
 	{
-		// TODO N: What if there is no TransformComponent?
-        const auto& position = GetOwner()->GetComponent<dae::TransformComponent>()->GetWorldPosition();
+		const auto& position = GetOwner()->GetTransform().GetWorldPosition();
 		Renderer::GetInstance().RenderTexture(*m_pTexture, position.x, position.y);
 	}
 }

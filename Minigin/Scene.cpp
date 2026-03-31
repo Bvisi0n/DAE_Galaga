@@ -1,8 +1,8 @@
 #include <algorithm>
 #include <cassert>
 
-#include "Components/TransformComponent.h"
 #include "Scene.h"
+#include "Transform.h"
 
 namespace dae
 {
@@ -17,8 +17,7 @@ namespace dae
 		{
 			if (!object->GetParent())
 			{
-				// TODO N: What if there is no TransformComponent, what if a parent doesn't have one but a child does?
-				object->GetComponent<dae::TransformComponent>()->UpdateWorldMatrix(glm::mat4(1.0f));
+				object->GetTransform().UpdateWorldMatrix(glm::mat4(1.0f));
 			}
 		}
 	}

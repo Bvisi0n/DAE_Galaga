@@ -1,20 +1,19 @@
 #include <string>
 
 #include "Components/TextureComponent.h"
-#include "Components/TransformComponent.h"
 #include "Singletons/Renderer.h"
 #include "Singletons/ResourceManager.h"
 #include "GameObject.h"
 #include "Texture2D.h"
+#include "Transform.h"
 
 void dae::TextureComponent::Render() const
 {
 	if (m_pTexture != nullptr && GetOwner() != nullptr)
 	{
-		// TODO N: What if there is no TransformComponent?
-		const auto& transform = GetOwner()->GetComponent<dae::TransformComponent>();
-		const auto& position = transform->GetWorldPosition();
-		const auto& scale = transform->GetLocalScale();
+		const auto& transform = GetOwner()->GetTransform();
+		const auto& position = transform.GetWorldPosition();
+		const auto& scale = transform.GetLocalScale();
 
 		auto texture_size = m_pTexture->GetSize();
 		float final_width = texture_size.x * scale.x;

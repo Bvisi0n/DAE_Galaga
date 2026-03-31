@@ -1,8 +1,8 @@
 #include <numbers>
 
 #include "Components/RotatorComponent.h"
-#include "Components/TransformComponent.h"
 #include "GameObject.h"
+#include "Transform.h"
 
 dae::RotatorComponent::RotatorComponent(GameObject* pOwner, float range, float speed)
     : Component(pOwner), m_range(range), m_rotationSpeed(speed) {}
@@ -24,7 +24,7 @@ void dae::RotatorComponent::Update(const float deltaTime)
 
     // TODO L: RotatorComponent should support ellipses.
 
-    auto* pTransform = GetOwner()->GetComponent<dae::TransformComponent>();
+    auto& transform = GetOwner()->GetTransform();
     // x = cos(a) * r, y = sin(a) * r
-    pTransform->SetLocalPosition(cos(m_angle) * m_range, sin(m_angle) * m_range);
+    transform.SetLocalPosition(cos(m_angle) * m_range, sin(m_angle) * m_range);
 }

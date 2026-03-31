@@ -10,6 +10,7 @@
 
 #include "Components/Component.h"
 #include "Components/IRenderable.h"
+#include "Transform.h"
 
 namespace dae
 {
@@ -25,7 +26,7 @@ namespace dae
 	{
 		// TODO N: Fit entire object in 64 bytes.
 	public:
-		GameObject() = default;
+		GameObject(const float x = 0.f, const float y = 0.f);
 		~GameObject() = default;
 
 		GameObject(const GameObject& other)			   = delete;
@@ -137,13 +138,18 @@ namespace dae
 		void SetParent(GameObject* pParent, bool keepWorldPosition);
 		[[nodiscard]] GameObject* GetParent() const;
 		[[nodiscard]] const std::vector<GameObject*>& GetChildren() const;
-		
+
+		[[nodiscard]] Transform& GetTransform();
+		[[nodiscard]] const Transform& GetTransform() const;
+
 	private:
 		GameObject* m_pParent{ nullptr };
 		std::vector<GameObject*> m_pChildren;
 
 		std::vector<std::unique_ptr<Component>> m_pComponents;
 		IRenderable* m_pRenderable{ nullptr };
+
+		Transform m_transform;
 
 		bool IsChild(GameObject* pCandidate);
 		void RemoveChild(GameObject* pParent);

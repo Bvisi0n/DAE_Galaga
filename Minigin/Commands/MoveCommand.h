@@ -4,8 +4,8 @@
 #include <glm/glm.hpp>
 
 #include "Commands/Command.h"
-#include "Components/TransformComponent.h"
 #include "GameObject.h"
+#include "Transform.h"
 
 // TODO L: Split into .h & .cpp.
 
@@ -22,14 +22,14 @@ namespace dae
         void Execute(const float deltaTime) override
         {
             // TODO L: Diagonal movement is currently double speed.
-            auto* pTransform = m_pGameObject->GetComponent<dae::TransformComponent>();
-            auto position = pTransform->GetLocalPosition();
+            auto& transform = m_pGameObject->GetTransform();
+            auto position = transform.GetLocalPosition();
 
             // TODO L: Use vector math.
             position.x += m_direction.x * m_speed * deltaTime;
             position.y += m_direction.y * m_speed * deltaTime;
 
-            pTransform->SetLocalPosition(position);
+            transform.SetLocalPosition(position);
         }
 
     private:

@@ -9,12 +9,12 @@
 
 namespace dae
 {
-    class TransformComponent final : public Component
+	class GameObject;
+
+	class Transform final
 	{
 	public:
-		TransformComponent(GameObject* pOwner, float xPos, float yPos, float xScale = 1.f, float yScale = 1.f);
-
-		void Update(const float) override {}
+		Transform(GameObject* pOwner, float xPos, float yPos, float xScale = 1.f, float yScale = 1.f);
 
 		void SetLocalPosition(const glm::vec3& pos);
 		void SetLocalPosition(float x, float y, float z = 0.f);
@@ -28,12 +28,14 @@ namespace dae
 		[[nodiscard]] const glm::vec3& GetLocalScale() const;
 
 		[[nodiscard]] const glm::mat4& GetWorldMatrix() const;
-		[[nodiscard]] const glm::vec3& GetWorldPosition();
+		[[nodiscard]] const glm::vec3& GetWorldPosition() const;
 
 		void UpdateWorldMatrix(const glm::mat4& parentWorldMatrix);
 		void SetDirty();
 
 	private:
+		GameObject* m_pOwner;
+
 		glm::mat4 m_localMatrix;
 		glm::mat4 m_worldMatrix;
 		glm::vec3 m_worldPosition;

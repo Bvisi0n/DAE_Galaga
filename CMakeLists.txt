@@ -29,7 +29,7 @@ add_executable(${TARGET_NAME} ${TARGET_PARAM}
   "Minigin/Components/ScoreComponent.cpp"
   "Minigin/Components/TextComponent.cpp"
   "Minigin/Components/TextureComponent.cpp"
-  "Minigin/Components/TransformComponent.cpp"
+  "Minigin/Transform.cpp"
   "Minigin/Components/UIValueObserver.cpp"
   "Minigin/Input/Gamepad.cpp"
   "Minigin/Input/Keyboard.cpp"
