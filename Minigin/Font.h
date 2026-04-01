@@ -19,7 +19,7 @@ namespace dae
 		Font & operator= (const Font &)	 = delete;
 		Font & operator= (const Font &&) = delete;
 
-		[[nodiscard]] TTF_Font* GetFont() const;
+		[[nodiscard]] TTF_Font* GetFont() const noexcept;
 
 	private:
 		TTF_Font* m_pFont;

@@ -9,7 +9,7 @@ namespace dae
     class DieCommand final : public Command
     {
     public:
-        DieCommand(HealthComponent* healthComponent)
+        DieCommand(HealthComponent* healthComponent) noexcept
             : m_pHealthComponent(healthComponent) {}
 
         void Execute(const float) override

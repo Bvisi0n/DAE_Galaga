@@ -24,7 +24,7 @@ namespace dae
 		}
 	}
 
-	TTF_Font* Font::GetFont() const
+	TTF_Font* Font::GetFont() const noexcept
 	{
 		return m_pFont;
 	}

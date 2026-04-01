@@ -140,7 +140,7 @@ add_library(imgui STATIC
   ${imgui_SOURCE_DIR}/backends/imgui_impl_sdlrenderer3.cpp
 )
 
-target_include_directories(imgui PUBLIC ${imgui_SOURCE_DIR} ${sdl3_SOURCE_DIR}/include)
+target_include_directories(imgui SYSTEM PUBLIC ${imgui_SOURCE_DIR} ${sdl3_SOURCE_DIR}/include)
 target_link_libraries(imgui PUBLIC SDL3::SDL3)
 # enable c++20 features
 target_compile_features(imgui PUBLIC cxx_std_20)
@@ -156,6 +156,9 @@ find_package(Steamworks QUIET)
 
 target_include_directories("${TARGET_NAME}" PUBLIC
   ${CMAKE_SOURCE_DIR}/Minigin/
+)
+
+target_include_directories("${TARGET_NAME}" SYSTEM PUBLIC
   ${glm_SOURCE_DIR}
   ${sdl3_SOURCE_DIR}/include
   ${sdl3_image_SOURCE_DIR}/include
@@ -178,9 +181,21 @@ endif()
 
 if(MSVC)
   # compile at warning level 4 + treat warnings as errors
-  target_compile_options(${TARGET_NAME} PRIVATE /W4 /WX /permissive-)
+  target_compile_options(${TARGET_NAME} PRIVATE
+   /W4
+   /WX
+   /permissive-
+   #/analyze
+   #/analyze:plugin EspXEngine.dll
+   #/analyze:external-
+  )
 else()
-  target_compile_options(${TARGET_NAME} PRIVATE -Wall -Wextra -Werror)
+  target_compile_options(${TARGET_NAME} PRIVATE
+   -Wall
+   -Wextra
+   -Werror
+   -Winconsistent-missing-override
+  )
 endif()
 
 if(EMSCRIPTEN)

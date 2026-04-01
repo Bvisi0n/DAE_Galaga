@@ -30,7 +30,6 @@
 
 static void loadMainMenu()
 {
-
 	auto& scene{ dae::SceneManager::GetInstance().CreateScene() };
 
 	auto background{ std::make_unique<dae::GameObject>() };
@@ -52,7 +51,6 @@ static void loadMainMenu()
 	fps->AddComponent<dae::FPSComponent>(pText);
 	scene.Add(std::move(fps));
 
-	// TODO N: Observer / Subject setup: Move the pointer assignments to the internal logic so the API stays clean.
 
 	font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
 	auto tutorial_white{ std::make_unique<dae::GameObject>(20.f, 75.f) };
@@ -109,10 +107,8 @@ static void loadMainMenu()
 	player_2_score->Initialize();
 	scene.Add(std::move(player_2_score_UI));
 
-	auto rotator{ std::make_unique<dae::GameObject>(0.f, 0.f) };
+	auto rotator{ std::make_unique<dae::GameObject>() };
 	rotator->AddComponent<dae::TextureComponent>()->SetTexture("starfighter.png");
-	rotator->AddComponent<dae::RotatorComponent>(20.0f, 2.5f);
-	rotator->RemoveComponent<dae::RotatorComponent>();
 	rotator->AddComponent<dae::RotatorComponent>(20.0f, 2.5f);
 	rotator->SetParent(pPlayer_1, true);
 	scene.Add(std::move(rotator));

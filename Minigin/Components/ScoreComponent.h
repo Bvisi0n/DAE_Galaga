@@ -11,8 +11,8 @@ namespace dae
         ScoreComponent(GameObject* pOwner);
         virtual ~ScoreComponent() = default;
 
-        void Initialize() override {}
-        void Update(const float) override {}
+        void Initialize() noexcept override {}
+        void Update(const float) noexcept override {}
 
         void AddScore(const int score);
         [[nodiscard]] int GetScore() const;

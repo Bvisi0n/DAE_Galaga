@@ -13,7 +13,7 @@ namespace dae
         HealthComponent(GameObject* pOwner, int lives);
 
         void Initialize() override;
-        void Update(const float) override {}
+        void Update(const float) noexcept override {}
 
         [[nodiscard]] int GetLives() const;
 

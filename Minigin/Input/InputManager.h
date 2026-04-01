@@ -21,7 +21,7 @@ namespace dae
     {
     public:
     enum class KeyState { Down, Up, Pressed };
-        InputManager();
+        InputManager() noexcept;
         ~InputManager() = default;
 
         bool ProcessInput(const float deltaTime);

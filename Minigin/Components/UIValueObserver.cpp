@@ -3,6 +3,8 @@
 #include "GameObject.h"
 #include "SDBMHash.h"
 
+// TODO N: Move m_pText assignment to Initialize() which should then extract the TextComponent from the owner GameObject.
+
 namespace dae
 {
     UIValueObserver::UIValueObserver(GameObject* pOwner, TextComponent* pText, GameEvent observedEvent, Formatter formatter)

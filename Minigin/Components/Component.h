@@ -8,7 +8,9 @@ namespace dae
     class Component
     {
     public:
-        explicit Component(GameObject* pOwner) : m_pOwner(pOwner) {}
+        explicit Component(GameObject* pOwner) noexcept
+            : m_pOwner(pOwner) {}
+
         virtual ~Component() = default;
 
         Component(const Component&)            = delete;
@@ -19,11 +21,22 @@ namespace dae
         virtual void Initialize() = 0;
 
         virtual void Update(const float deltaTime) = 0;
-        void MarkForDeletion() { m_IsPendingDeletion = true; }
-        [[nodiscard]] bool IsPendingDeletion() const { return m_IsPendingDeletion; }
+
+        void MarkForDeletion() noexcept
+        {
+            m_IsPendingDeletion = true;
+        }
+
+        [[nodiscard]] bool IsPendingDeletion() const noexcept
+        {
+            return m_IsPendingDeletion;
+        }
 
     protected:
-        [[nodiscard]] GameObject* GetOwner() const { return m_pOwner; }
+        [[nodiscard]] GameObject* GetOwner() const noexcept
+        {
+            return m_pOwner;
+        }
 
     private:
         GameObject* m_pOwner;

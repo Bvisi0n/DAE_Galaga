@@ -15,7 +15,7 @@ namespace dae
     class ObservableComponent : public Component, public ISubject
     {
     public:
-        ObservableComponent(GameObject* pOwner)
+        ObservableComponent(GameObject* pOwner) noexcept
             : Component(pOwner) {};
         virtual ~ObservableComponent() = default;
 

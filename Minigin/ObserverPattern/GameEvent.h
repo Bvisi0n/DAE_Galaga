@@ -36,7 +36,7 @@ namespace dae
         uint8_t argumentCount{ 0 };
         EventArg args[MAX_ARGS]{};
 
-        explicit GameEvent(EventId _id)
+        explicit GameEvent(EventId _id) noexcept
             : id{ _id } {}
 
         template <typename T>
