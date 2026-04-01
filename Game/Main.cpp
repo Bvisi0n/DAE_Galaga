@@ -26,7 +26,7 @@
 #include "SDBMHash.h"
 #include "Transform.h"
 
-// TODO N: Split engine and game into dll & exe.
+// TODO L: Split engine and game into dll & exe.
 
 static void loadMainMenu()
 {

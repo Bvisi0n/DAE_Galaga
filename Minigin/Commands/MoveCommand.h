@@ -7,8 +7,6 @@
 #include "GameObject.h"
 #include "Transform.h"
 
-// TODO L: Split into .h & .cpp.
-
 namespace dae
 {
     class MoveCommand final : public Command

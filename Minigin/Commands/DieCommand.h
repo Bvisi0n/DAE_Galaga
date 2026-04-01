@@ -4,8 +4,6 @@
 #include "Commands/Command.h"
 #include "Components/HealthComponent.h"
 
-// TODO L: Split into .h & .cpp.
-
 namespace dae
 {
     class DieCommand final : public Command
