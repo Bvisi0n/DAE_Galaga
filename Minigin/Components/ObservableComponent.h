@@ -19,13 +19,14 @@ namespace dae
             : Component(pOwner) {};
         virtual ~ObservableComponent() = default;
 
+        virtual void Initialize() override = 0;
         virtual void Update(const float deltaTime) override = 0;
 
         void AttachObserver(IObserver* observer) override;
         void DetachObserver(IObserver* observer) override;
 
     protected:
-        void NotifyObservers(GameEvent event) override;
+        void NotifyObservers(GameEvent event) const override;
 
     private:
         std::vector<IObserver*> m_pObservers;

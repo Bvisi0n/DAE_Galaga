@@ -24,7 +24,7 @@ namespace dae
         std::erase(m_pObservers, observer);
     }
 
-    void ObservableComponent::NotifyObservers(GameEvent event)
+    void ObservableComponent::NotifyObservers(GameEvent event) const
     {
         for (auto observer : m_pObservers)
         {

@@ -8,6 +8,11 @@ namespace dae
         : ObservableComponent(pOwner)
         , m_lives(lives) {}
 
+    void HealthComponent::Initialize()
+    {
+        NotifyPlayerDied();
+    }
+
     int HealthComponent::GetLives() const
     {
         return m_lives;
@@ -18,11 +23,14 @@ namespace dae
         if (m_lives > 0)
         {
             --m_lives;
-
-            dae::GameEvent event{ dae::make_sdbm_hash("PlayerDied") };
-            event.PushArg(m_lives);
-
-            NotifyObservers(event);
+            NotifyPlayerDied();
         }
+    }
+
+    void HealthComponent::NotifyPlayerDied() const
+    {
+        dae::GameEvent event{ dae::make_sdbm_hash("PlayerDied") };
+        event.PushArg(m_lives);
+        NotifyObservers(event);
     }
 }

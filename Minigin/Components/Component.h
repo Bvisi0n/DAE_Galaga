@@ -16,6 +16,8 @@ namespace dae
         Component& operator=(const Component&) = delete;
         Component& operator=(Component&&)      = delete;
 
+        virtual void Initialize() = 0;
+
         virtual void Update(const float deltaTime) = 0;
         void MarkForDeletion() { m_IsPendingDeletion = true; }
         [[nodiscard]] bool IsPendingDeletion() const { return m_IsPendingDeletion; }

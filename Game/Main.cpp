@@ -83,34 +83,39 @@ static void loadMainMenu()
 	auto player_1_lives_UI{ std::make_unique<dae::GameObject>(20.f, 125.f) };
 	pText = player_1_lives_UI->AddComponent<dae::TextComponent>("Lives:", font);
 	auto pPlayer_observer = player_1_lives_UI->AddComponent<dae::UIValueObserver>(pText, dae::GameEvent{ dae::make_sdbm_hash("PlayerDied") }, [](int v) { return "White Lives:  " + std::to_string(v) + " (spacebar)"; });
-    player_1_health->AttachObserver(pPlayer_observer);
+	player_1_health->AttachObserver(pPlayer_observer);
+	// TODO N: Initialize should be called by the engine, not manually like this.
+	player_1_health->Initialize();
 	scene.Add(std::move(player_1_lives_UI));
 
 	auto player_2_lives_UI{ std::make_unique<dae::GameObject>(20.f, 175.f) };
 	pText = player_2_lives_UI->AddComponent<dae::TextComponent>("Lives:", font);
 	pPlayer_observer = player_2_lives_UI->AddComponent<dae::UIValueObserver>(pText, dae::GameEvent{ dae::make_sdbm_hash("PlayerDied") }, [](int v) { return "Red Lives:     " + std::to_string(v) + " (left shoulder)"; });
-    player_2_health->AttachObserver(pPlayer_observer);
+	player_2_health->AttachObserver(pPlayer_observer);
+	player_2_health->Initialize();
 	scene.Add(std::move(player_2_lives_UI));
 
 	auto player_1_score_UI{ std::make_unique<dae::GameObject>(20.f, 150.f) };
 	pText = player_1_score_UI->AddComponent<dae::TextComponent>("Lives:", font);
 	pPlayer_observer = player_1_score_UI->AddComponent<dae::UIValueObserver>(pText, dae::GameEvent{ dae::make_sdbm_hash("ScoreChanged") }, [](int v) { return "White Score: " + std::to_string(v) + " (Q & E)"; });
 	player_1_score->AttachObserver(pPlayer_observer);
+	player_1_score->Initialize();
 	scene.Add(std::move(player_1_score_UI));
 
 	auto player_2_score_UI{ std::make_unique<dae::GameObject>(20.f, 200.f) };
 	pText = player_2_score_UI->AddComponent<dae::TextComponent>("Lives:", font);
 	pPlayer_observer = player_2_score_UI->AddComponent<dae::UIValueObserver>(pText, dae::GameEvent{ dae::make_sdbm_hash("ScoreChanged") }, [](int v){ return "Red Score:    " + std::to_string(v) + " (X & Y)"; });
 	player_2_score->AttachObserver(pPlayer_observer);
+	player_2_score->Initialize();
 	scene.Add(std::move(player_2_score_UI));
 
 	auto rotator{ std::make_unique<dae::GameObject>(0.f, 0.f) };
 	rotator->AddComponent<dae::TextureComponent>()->SetTexture("starfighter.png");
-    rotator->AddComponent<dae::RotatorComponent>(20.0f, 2.5f);
-    rotator->RemoveComponent<dae::RotatorComponent>();
-    rotator->AddComponent<dae::RotatorComponent>(20.0f, 2.5f);
-    rotator->SetParent(pPlayer_1, true);
-    scene.Add(std::move(rotator));
+	rotator->AddComponent<dae::RotatorComponent>(20.0f, 2.5f);
+	rotator->RemoveComponent<dae::RotatorComponent>();
+	rotator->AddComponent<dae::RotatorComponent>(20.0f, 2.5f);
+	rotator->SetParent(pPlayer_1, true);
+	scene.Add(std::move(rotator));
 
 
 	auto& input = dae::InputManager::GetInstance();

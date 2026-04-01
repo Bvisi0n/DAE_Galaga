@@ -16,6 +16,7 @@ namespace dae
         RotatorComponent(GameObject* pOwner, float range, float speed);
         ~RotatorComponent() override = default;
 
+        void Initialize() override {}
         void Update(const float deltaTime) override;
 
     private:

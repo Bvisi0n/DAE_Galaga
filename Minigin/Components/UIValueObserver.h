@@ -21,6 +21,8 @@ namespace dae
 
         UIValueObserver(GameObject* pOwner, TextComponent* pText, GameEvent observedEvent, Formatter formatter);
 
+        void Initialize() override {}
+
         void OnNotify(const GameEvent event) override;
 
         void Update(const float) override {}

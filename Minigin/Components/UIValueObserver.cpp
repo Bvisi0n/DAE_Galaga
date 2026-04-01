@@ -9,10 +9,7 @@ namespace dae
         : Component(pOwner)
         , m_Formatter(std::move(formatter))
         , m_pText(pText)
-        , m_observedEvent(observedEvent)
-    {
-        OnNotify(observedEvent);
-    }
+        , m_observedEvent(observedEvent) {}
 
     void UIValueObserver::OnNotify(const GameEvent event)
     {

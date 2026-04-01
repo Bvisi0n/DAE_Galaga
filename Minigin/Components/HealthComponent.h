@@ -12,6 +12,7 @@ namespace dae
     public:
         HealthComponent(GameObject* pOwner, int lives);
 
+        void Initialize();
         void Update(const float) override {}
 
         [[nodiscard]] int GetLives() const;
@@ -20,6 +21,8 @@ namespace dae
 
     private:
         int m_lives;
+
+        void NotifyPlayerDied() const;
     };
 }
 #endif
