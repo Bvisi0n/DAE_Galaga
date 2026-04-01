@@ -1,6 +1,7 @@
-﻿#include <stdexcept>
-#include <sstream>
+﻿#include <algorithm>
 #include <iostream>
+#include <sstream>
+#include <stdexcept>
 
 #if WIN32
 	#define WIN32_LEAN_AND_MEAN
@@ -128,17 +129,16 @@ namespace dae
 		using clock = std::chrono::steady_clock; // Steady clock is guaranteed to be monotonic
 		const auto frame_start_time{ clock::now() };
 		const float delta_time{ std::chrono::duration<float>(frame_start_time - m_lastTime).count() };
+		const float clamped_delta_time = std::min(delta_time, m_maxDeltaTime);
 		m_lastTime = frame_start_time;
 
-		m_quit = !InputManager::GetInstance().ProcessInput(delta_time);
+		m_quit = !InputManager::GetInstance().ProcessInput(clamped_delta_time);
 
-		SceneManager::GetInstance().Update(delta_time);
+		SceneManager::GetInstance().Update(clamped_delta_time);
 		Renderer::GetInstance().Render();
 
 		const auto frame_end_time{ clock::now() };
 		const auto execution_time{ frame_end_time - frame_start_time };
-
-		// TODO N: What happens when frames start to take to long? Should we cap the max delta time?
 
 		if (execution_time < m_nsPerFrame)
 		{

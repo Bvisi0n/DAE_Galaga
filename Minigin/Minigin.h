@@ -23,8 +23,8 @@ namespace dae
 		void RunOneFrame();
 
 	private:
-		static constexpr int m_desiredFPS{ 60 };
-		static constexpr std::chrono::nanoseconds m_nsPerFrame{ 1000000000 / m_desiredFPS };
+		static constexpr float m_maxDeltaTime{ 1.0f / 10.0f }; // Set a limit to the delta time
+        static constexpr std::chrono::nanoseconds m_nsPerFrame{ 1000000000 / 60 }; // 1 second in nanoseconds divided by max FPS
 
 		std::chrono::steady_clock::time_point m_lastTime{};
 		bool  m_quit{};

@@ -5,8 +5,6 @@
 
 #include "Components/Component.h"
 
-// TODO N: Refactor into Transform, no longer a component but a regular member class of GameObject.
-
 namespace dae
 {
 	class GameObject;
