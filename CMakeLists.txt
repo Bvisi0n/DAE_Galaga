@@ -29,7 +29,6 @@ add_executable(${TARGET_NAME} ${TARGET_PARAM}
   "Minigin/Components/ScoreComponent.cpp"
   "Minigin/Components/TextComponent.cpp"
   "Minigin/Components/TextureComponent.cpp"
-  "Minigin/Transform.cpp"
   "Minigin/Components/UIValueObserver.cpp"
   "Minigin/Input/Gamepad.cpp"
   "Minigin/Input/Keyboard.cpp"
@@ -42,6 +41,7 @@ add_executable(${TARGET_NAME} ${TARGET_PARAM}
   "Minigin/Minigin.cpp"
   "Minigin/Scene.cpp"
   "Minigin/Texture2D.cpp"
+  "Minigin/Transform.cpp"
 )
 
 # enable c++20 features

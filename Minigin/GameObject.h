@@ -20,11 +20,10 @@ namespace dae
 	concept IsComponent = std::derived_from<T, Component>;
 
 	template<typename T>
-	concept IsRenderable = std::derived_from<T, Component>&& std::derived_from<T, IRenderable>;
+	concept IsRenderable = std::derived_from<T, Component> && std::derived_from<T, IRenderable>;
 
 	class GameObject final
 	{
-		// TODO N: Fit entire object in 64 bytes.
 	public:
 		GameObject(const float x = 0.f, const float y = 0.f);
 		~GameObject() = default;

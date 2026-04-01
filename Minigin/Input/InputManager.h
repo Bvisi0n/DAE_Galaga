@@ -1,6 +1,7 @@
 #ifndef INPUTMANAGER_H
 #define INPUTMANAGER_H
 
+#include <concepts>
 #include <map>
 #include <memory>
 #include <vector>
@@ -13,6 +14,9 @@
 
 namespace dae
 {
+    template<typename T>
+    concept IsInputType = std::same_as<T, Gamepad::Button> || std::same_as<T, Keyboard::Key>;
+
     class InputManager final : public Singleton<InputManager>
     {
     public:
@@ -22,8 +26,7 @@ namespace dae
 
         bool ProcessInput(const float deltaTime);
 
-        // TODO N: Use concepts.
-        template <typename T>
+        template <IsInputType T>
         void BindCommand(T inputType, KeyState state, std::unique_ptr<Command> pCommand, unsigned int controllerIndex = 0)
         {
             if constexpr (std::is_same_v<T, Keyboard::Key>)
@@ -36,8 +39,7 @@ namespace dae
             }
         }
 
-        // TODO N: Use concepts.
-        template <typename T>
+        template <IsInputType T>
         void UnbindCommand(T inputType, KeyState state, unsigned int controllerIndex = 0)
         {
             if constexpr (std::is_same_v<T, Keyboard::Key>)
