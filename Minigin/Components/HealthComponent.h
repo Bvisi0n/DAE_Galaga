@@ -12,7 +12,7 @@ namespace dae
     public:
         HealthComponent(GameObject* pOwner, int lives);
 
-        void Initialize();
+        void Initialize() override;
         void Update(const float) override {}
 
         [[nodiscard]] int GetLives() const;
