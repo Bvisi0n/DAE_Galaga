@@ -156,7 +156,7 @@ int main(int, char*[])
 			data_location = "../Data/";
 	#endif
 
-	dae::Minigin engine(data_location);
+	dae::Minigin engine(data_location, "Programming 4 assignment", 1024, 576);
 	engine.Run(loadMainMenu);
 	
 	return 0;

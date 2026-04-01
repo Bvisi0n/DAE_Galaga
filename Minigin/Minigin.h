@@ -11,7 +11,7 @@ namespace dae
 	class Minigin final
 	{
 	public:
-		explicit Minigin(const std::filesystem::path& dataPath);
+		explicit Minigin(const std::filesystem::path& dataPath, const std::string name, const unsigned short windowWidth = 1280, const unsigned short windowHeight = 720);
 		~Minigin();
 
 		Minigin(const Minigin& other)			 = delete;

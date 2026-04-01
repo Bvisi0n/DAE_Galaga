@@ -58,7 +58,7 @@ void PrintSDLVersion()
 
 namespace dae
 {
-	Minigin::Minigin(const std::filesystem::path& dataPath)
+	Minigin::Minigin(const std::filesystem::path& dataPath, const std::string name, const unsigned short windowWidth, const unsigned short windowHeight)
 	{
 		PrintSDLVersion();
 
@@ -80,8 +80,7 @@ namespace dae
 			throw std::runtime_error(std::string("SDL_Init Error: ") + SDL_GetError());
 		}
 
-		// TODO N: Make resolution, name etc. more accessible and less hard coded.
-		g_window = SDL_CreateWindow("Programming 4 assignment", 1024, 576, SDL_WINDOW_OPENGL);
+		g_window = SDL_CreateWindow(name.c_str(), windowWidth, windowHeight, SDL_WINDOW_OPENGL);
 
 		if (g_window == nullptr) 
 		{
