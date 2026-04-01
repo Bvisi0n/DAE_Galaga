@@ -24,9 +24,8 @@ namespace dae
         std::erase(m_pObservers, observer);
     }
 
-    void ObservableComponent::NotifyObservers()
+    void ObservableComponent::NotifyObservers(GameEvent event)
     {
-        GameEvent event(make_sdbm_hash("PlayerDied"));
         for (auto observer : m_pObservers)
         {
             observer->OnNotify(event);

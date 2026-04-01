@@ -1,4 +1,6 @@
 #include "Components/HealthComponent.h"
+#include "ObserverPattern/GameEvent.h"
+#include "SDBMHash.h"
 
 namespace dae
 {
@@ -16,7 +18,11 @@ namespace dae
         if (m_lives > 0)
         {
             --m_lives;
-            NotifyObservers();
+
+            dae::GameEvent event{ dae::make_sdbm_hash("PlayerDied") };
+            event.PushArg(m_lives);
+
+            NotifyObservers(event);
         }
     }
 }

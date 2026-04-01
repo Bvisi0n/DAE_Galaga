@@ -4,6 +4,7 @@
 namespace dae
 {
     class IObserver;
+    struct GameEvent;
 
     class ISubject
     {
@@ -15,7 +16,7 @@ namespace dae
         virtual void AttachObserver(IObserver* observer) = 0;
         virtual void DetachObserver(IObserver* observer) = 0;
     protected:
-        virtual void NotifyObservers() = 0;
+        virtual void NotifyObservers(GameEvent event) = 0;
     };
 }
 #endif

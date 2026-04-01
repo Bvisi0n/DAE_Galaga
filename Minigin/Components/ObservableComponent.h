@@ -10,6 +10,7 @@ namespace dae
 {
     class GameObject;
     class IObserver;
+    struct GameEvent;
 
     class ObservableComponent : public Component, public ISubject
     {
@@ -24,7 +25,7 @@ namespace dae
         void DetachObserver(IObserver* observer) override;
 
     protected:
-        void NotifyObservers() override;
+        void NotifyObservers(GameEvent event) override;
 
     private:
         std::vector<IObserver*> m_pObservers;

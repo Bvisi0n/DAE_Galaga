@@ -100,7 +100,7 @@ static void loadMainMenu()
 
 	auto player_2_score_UI{ std::make_unique<dae::GameObject>(20.f, 200.f) };
 	pText = player_2_score_UI->AddComponent<dae::TextComponent>("Lives:", font);
-	pPlayer_observer = player_2_score_UI->AddComponent<dae::UIValueObserver>(pText, dae::GameEvent{ dae::make_sdbm_hash("ScoreChanged") }, [](int v) { return "Red Score:    " + std::to_string(v) + " (X & Y)"; });
+	pPlayer_observer = player_2_score_UI->AddComponent<dae::UIValueObserver>(pText, dae::GameEvent{ dae::make_sdbm_hash("ScoreChanged") }, [](int v){ return "Red Score:    " + std::to_string(v) + " (X & Y)"; });
 	player_2_score->AttachObserver(pPlayer_observer);
 	scene.Add(std::move(player_2_score_UI));
 

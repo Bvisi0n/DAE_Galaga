@@ -1,4 +1,6 @@
 #include "Components/ScoreComponent.h"
+#include "ObserverPattern/GameEvent.h"
+#include "SDBMHash.h"
 
 namespace dae
 {
@@ -9,7 +11,11 @@ namespace dae
     void ScoreComponent::AddScore(const int score)
     {
         m_score += score;
-        NotifyObservers();
+
+        dae::GameEvent event{ dae::make_sdbm_hash("ScoreChanged") };
+        event.PushArg(m_score);
+
+        NotifyObservers(event);
     }
 
     int ScoreComponent::GetScore() const

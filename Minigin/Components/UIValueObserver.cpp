@@ -20,7 +20,8 @@ namespace dae
         {
             if (m_pText && m_Formatter)
             {
-                int value = 0; // TODO H: Continue here. Should pull data from observed subject. Just have OnNotify accept std::variant, maybe use a getter lambda passed with constructor?
+                int value = std::get<int>(event.args[0]);
+
                 m_pText->SetText(m_Formatter(value));
             }
         }
