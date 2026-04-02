@@ -20,28 +20,28 @@ endif()
 
 # list source files here
 add_executable(${TARGET_NAME} ${TARGET_PARAM}
-  "Game/Main.cpp"
+  "Game/Components/FPSComponent.cpp"
+  "Game/Components/HealthComponent.cpp"
+  "Game/Components/RotatorComponent.cpp"
+  "Game/Components/ScoreComponent.cpp"
+  "Game/Components/UIValueObserver.cpp"
+  "Game/Core/Main.cpp"
 
-  "Minigin/Components/FPSComponent.cpp"
-  "Minigin/Components/HealthComponent.cpp"
-  "Minigin/Components/ObservableComponent.cpp"
-  "Minigin/Components/RotatorComponent.cpp"
-  "Minigin/Components/ScoreComponent.cpp"
-  "Minigin/Components/TextComponent.cpp"
-  "Minigin/Components/TextureComponent.cpp"
-  "Minigin/Components/UIValueObserver.cpp"
+  "Minigin/Core/GameObject.cpp"
+  "Minigin/Core/Minigin.cpp"
+  "Minigin/Core/Transform.cpp"
+  "Minigin/Events/ObservableComponent.cpp"
+  "Minigin/Graphics/Font.cpp"
+  "Minigin/Graphics/Renderer.cpp"
+  "Minigin/Graphics/TextComponent.cpp"
+  "Minigin/Graphics/TextureComponent.cpp"
+  "Minigin/Graphics/Texture2D.cpp"
   "Minigin/Input/Gamepad.cpp"
-  "Minigin/Input/Keyboard.cpp"
   "Minigin/Input/InputManager.cpp"
-  "Minigin/Singletons/Renderer.cpp"
-  "Minigin/Singletons/ResourceManager.cpp"
-  "Minigin/Singletons/SceneManager.cpp"
-  "Minigin/Font.cpp"
-  "Minigin/GameObject.cpp"
-  "Minigin/Minigin.cpp"
-  "Minigin/Scene.cpp"
-  "Minigin/Texture2D.cpp"
-  "Minigin/Transform.cpp"
+  "Minigin/Input/Keyboard.cpp"
+  "Minigin/Resources/ResourceManager.cpp"
+  "Minigin/Scene/Scene.cpp"
+  "Minigin/Scene/SceneManager.cpp"
 )
 
 # enable c++20 features
@@ -154,8 +154,9 @@ endif()
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/steam")
 find_package(Steamworks QUIET)
 
+# For now strictly enforce the includes to specify Minigin/ or Game/ to reduce congitive load
 target_include_directories("${TARGET_NAME}" PUBLIC
-  ${CMAKE_SOURCE_DIR}/Minigin/
+  ${CMAKE_SOURCE_DIR}
 )
 
 target_include_directories("${TARGET_NAME}" SYSTEM PUBLIC

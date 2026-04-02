@@ -7,10 +7,10 @@
 #include <vector>
 #include <type_traits>
 
-#include "Commands/Command.h"
-#include "Input/Gamepad.h"
-#include "Input/Keyboard.h"
-#include "Singletons/Singleton.h"
+#include "Minigin/Input/Command.h"
+#include "Minigin/Input/Gamepad.h"
+#include "Minigin/Input/Keyboard.h"
+#include "Minigin/Utilities/Singleton.h"
 
 namespace dae
 {

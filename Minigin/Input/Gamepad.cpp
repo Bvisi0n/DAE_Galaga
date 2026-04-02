@@ -8,7 +8,7 @@
 
 #include <memory>
 
-#include "Input/Gamepad.h"
+#include "Minigin/Input/Gamepad.h"
 
 // TODO L: Rework the SDL implementation.
 //       XInput was made first and works as intended, SDL was then butchered to match it.

@@ -1,0 +1,36 @@
+#ifndef UIVALUEOBSERVER_H
+#define UIVALUEOBSERVER_H
+
+#include <functional>
+#include <string>
+#include <vector>
+
+#include "Minigin/Core/Component.h"
+#include "Minigin/Events/GameEvent.h"
+#include "Minigin/Events/IObserver.h"
+
+namespace dae
+{
+    class GameObject;
+    class TextComponent;
+
+    class UIValueObserver final : public Component, public IObserver
+    {
+    public:
+        using Formatter = std::function<std::string(int)>;
+
+        UIValueObserver(GameObject* pOwner, TextComponent* pText, GameEvent observedEvent, Formatter formatter);
+
+        void Initialize() override {} // TODO L: Move m_pText assignment to Initialize() which should then extract the TextComponent from the owner GameObject.
+
+        void OnNotify(const GameEvent event) override;
+
+        void Update(const float) override {}
+
+    private:
+        Formatter m_Formatter;
+        TextComponent* m_pText{ nullptr };
+        GameEvent m_observedEvent; // TODO L: Does it have to be a whole GameEvent object?
+    };
+}
+#endif

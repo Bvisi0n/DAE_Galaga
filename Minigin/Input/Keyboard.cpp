@@ -8,7 +8,7 @@
 #include <unordered_map>
 #include <vector>
 
-#include "Keyboard.h"
+#include "Minigin/Input/Keyboard.h"
 
 namespace dae
 {
