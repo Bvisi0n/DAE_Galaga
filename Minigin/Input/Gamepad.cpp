@@ -15,7 +15,7 @@
 //       A result of this is a flawed controller identification logic.
 //       SDL is event driven, currently burning cycles for no reason simulating XInput.
 
-namespace dae
+namespace dae::input
 {
     class Gamepad::GamepadImpl
     {

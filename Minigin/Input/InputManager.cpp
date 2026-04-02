@@ -3,7 +3,7 @@
 
 #include "Minigin/Input/InputManager.h"
 
-namespace dae
+namespace dae::input
 {
 	InputManager::InputManager() noexcept
 		: m_pKeyboard(std::make_unique<Keyboard>())

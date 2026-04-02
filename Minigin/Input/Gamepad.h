@@ -3,7 +3,7 @@
 
 #include <memory>
 
-namespace dae
+namespace dae::input
 {
     class Gamepad final
     {

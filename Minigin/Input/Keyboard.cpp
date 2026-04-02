@@ -10,7 +10,7 @@
 
 #include "Minigin/Input/Keyboard.h"
 
-namespace dae
+namespace dae::input
 {
     class Keyboard::KeyboardImpl
     {

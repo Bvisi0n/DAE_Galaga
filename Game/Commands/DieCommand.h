@@ -7,7 +7,7 @@
 
 namespace dae
 {
-    class DieCommand final : public Command
+    class DieCommand final : public input::Command
     {
     public:
         DieCommand(HealthComponent* healthComponent) noexcept

@@ -12,7 +12,7 @@
 #include "Minigin/Input/Keyboard.h"
 #include "Minigin/Utilities/Singleton.h"
 
-namespace dae
+namespace dae::input
 {
     template<typename T>
     concept IsInputType = std::same_as<T, Gamepad::Button> || std::same_as<T, Keyboard::Key>;

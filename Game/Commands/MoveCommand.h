@@ -9,7 +9,7 @@
 
 namespace dae
 {
-    class MoveCommand final : public Command
+    class MoveCommand final : public input::Command
     {
     public:
         MoveCommand(core::GameObject* pGameObject, const glm::vec2& direction, float speed)

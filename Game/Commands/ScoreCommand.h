@@ -7,7 +7,7 @@
 
 namespace dae
 {
-    class ScoreCommand final : public Command
+    class ScoreCommand final : public input::Command
     {
     public:
         ScoreCommand(ScoreComponent* scoreComponent, int valueOfChange)

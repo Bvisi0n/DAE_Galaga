@@ -131,7 +131,7 @@ namespace dae::core
 		const float clamped_delta_time = std::min(delta_time, m_maxDeltaTime);
 		m_lastTime = frame_start_time;
 
-		m_quit = !InputManager::GetInstance().ProcessInput(clamped_delta_time);
+		m_quit = !input::InputManager::GetInstance().ProcessInput(clamped_delta_time);
 
 		scene::SceneManager::GetInstance().Update(clamped_delta_time);
 		graphics::Renderer::GetInstance().Render();
