@@ -5,17 +5,24 @@
 
 #include "Minigin/Core/Component.h"
 
+namespace dae::core
+{
+	class GameObject;
+}
+
+namespace dae::graphics
+{
+    class Font;
+	class TextComponent;
+}
+
 namespace dae
 {
-	class Font;
-	class core::GameObject;
-	class TextComponent;
-
 	// Displays the FPS in a given TextComponent.
 	class FPSComponent final : public core::Component
 	{
 	public:
-		FPSComponent(core::GameObject* pOwner, TextComponent* pText);
+		FPSComponent(core::GameObject* pOwner, graphics::TextComponent* pText);
 		~FPSComponent() = default;
 
 		FPSComponent(const FPSComponent&)            = delete;
@@ -27,7 +34,7 @@ namespace dae
 		void Update(const float deltaTime) override;
 
 	private:
-		TextComponent* m_pText{ nullptr };
+		graphics::TextComponent* m_pText{ nullptr };
 	};
 }
 #endif

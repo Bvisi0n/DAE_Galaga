@@ -25,20 +25,20 @@ namespace dae::resources
 		m_pLoadedTextures.clear();
 	}
 
-	std::shared_ptr<Texture2D> ResourceManager::LoadTexture(const std::string& file)
+	std::shared_ptr<graphics::Texture2D> ResourceManager::LoadTexture(const std::string& file)
 	{
 		const auto full_path = m_dataPath / file;
 		const auto filename = std::filesystem::path(full_path).filename().string();
 
 		if (m_pLoadedTextures.find(filename) == m_pLoadedTextures.end())
 		{
-			m_pLoadedTextures.insert(std::pair(filename, std::make_shared<Texture2D>(full_path.string())));
+			m_pLoadedTextures.insert(std::pair(filename, std::make_shared<graphics::Texture2D>(full_path.string())));
 		}
 
 		return m_pLoadedTextures.at(filename);
 	}
 
-	std::shared_ptr<Font> ResourceManager::LoadFont(const std::string& file, uint8_t size)
+	std::shared_ptr<graphics::Font> ResourceManager::LoadFont(const std::string& file, uint8_t size)
 	{
 		const auto full_path = m_dataPath / file;
 		const auto filename = std::filesystem::path(full_path).filename().string();
@@ -46,7 +46,7 @@ namespace dae::resources
 
 		if (m_pLoadedFonts.find(key) == m_pLoadedFonts.end())
 		{
-			m_pLoadedFonts.insert(std::pair(key, std::make_shared<Font>(full_path.string(), size)));
+			m_pLoadedFonts.insert(std::pair(key, std::make_shared<graphics::Font>(full_path.string(), size)));
 		}
 
 		return m_pLoadedFonts.at(key);

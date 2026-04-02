@@ -41,44 +41,44 @@ static void loadMainMenu()
 	auto& scene{ scene::SceneManager::GetInstance().CreateScene() };
 
 	auto background{ std::make_unique<core::GameObject>() };
-	background->AddComponent<TextureComponent>()->SetTexture("background.png");
+	background->AddComponent<graphics::TextureComponent>()->SetTexture("background.png");
 	scene.Add(std::move(background));
 
 	auto logo{ std::make_unique<core::GameObject>(358.f, 180.f) };
-	logo->AddComponent<TextureComponent>()->SetTexture("logo.png");
+	logo->AddComponent<graphics::TextureComponent>()->SetTexture("logo.png");
 	scene.Add(std::move(logo));
 
 	auto font{ resources::ResourceManager::GetInstance().LoadFont("Lingua.otf", 36) };
 	auto title{ std::make_unique<core::GameObject>(292.f, 20.f) };
-	title->AddComponent<TextComponent>("Programming 4 Assignment", font)->SetColor({ 255, 255, 0, 255 });
+	title->AddComponent<graphics::TextComponent>("Programming 4 Assignment", font)->SetColor({ 255, 255, 0, 255 });
 	scene.Add(std::move(title));
 	
 	font = resources::ResourceManager::GetInstance().LoadFont("Lingua.otf", 24);
 	auto fps{ std::make_unique<core::GameObject>(20.f, 20.f) };
-	auto* pText = fps->AddComponent<TextComponent>("FPS", font);
+	auto* pText = fps->AddComponent<graphics::TextComponent>("FPS", font);
 	fps->AddComponent<FPSComponent>(pText);
 	scene.Add(std::move(fps));
 
 
 	font = resources::ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
 	auto tutorial_white{ std::make_unique<core::GameObject>(20.f, 75.f) };
-	tutorial_white->AddComponent<TextComponent>("Use the WASD to move the white starfighter, spacebar to inflict damage and Q & E to score points.", font);
+	tutorial_white->AddComponent<graphics::TextComponent>("Use the WASD to move the white starfighter, spacebar to inflict damage and Q & E to score points.", font);
 	scene.Add(std::move(tutorial_white));
 
 	auto tutorial_red{ std::make_unique<core::GameObject>(20.f, 100.f) };
-	tutorial_red->AddComponent<TextComponent>("Use the D-Pad to move the red starfighter, left shoulder to inflict damage and X & Y to score points.", font);
+	tutorial_red->AddComponent<graphics::TextComponent>("Use the D-Pad to move the red starfighter, left shoulder to inflict damage and X & Y to score points.", font);
 	scene.Add(std::move(tutorial_red));
 
 
 	auto player_1{ std::make_unique<core::GameObject>(400.f, 350.f) };
-	player_1->AddComponent<TextureComponent>()->SetTexture("starfighter.png");
+	player_1->AddComponent<graphics::TextureComponent>()->SetTexture("starfighter.png");
 	auto player_1_health = player_1->AddComponent<HealthComponent>(3);
 	auto player_1_score = player_1->AddComponent<ScoreComponent>();
 	auto* pPlayer_1 = player_1.get();
 	scene.Add(std::move(player_1));
 
 	auto player_2{ std::make_unique<core::GameObject>(600.f, 350.f) };
-	player_2->AddComponent<TextureComponent>()->SetTexture("starfighter_captured.png");
+	player_2->AddComponent<graphics::TextureComponent>()->SetTexture("starfighter_captured.png");
 	auto player_2_health = player_2->AddComponent<HealthComponent>(3);
 	auto player_2_score = player_2->AddComponent<ScoreComponent>();
 	auto* pPlayer_2 = player_2.get();
@@ -87,7 +87,7 @@ static void loadMainMenu()
 
 	font = resources::ResourceManager::GetInstance().LoadFont("Lingua.otf", 16);
 	auto player_1_lives_UI{ std::make_unique<core::GameObject>(20.f, 125.f) };
-	pText = player_1_lives_UI->AddComponent<TextComponent>("Lives:", font);
+	pText = player_1_lives_UI->AddComponent<graphics::TextComponent>("Lives:", font);
 	auto pPlayer_observer = player_1_lives_UI->AddComponent<UIValueObserver>(pText, events::GameEvent{ core::make_sdbm_hash("PlayerDied") }, [](int v) { return "White Lives:  " + std::to_string(v) + " (spacebar)"; });
 	player_1_health->AttachObserver(pPlayer_observer);
 	// TODO N: Initialize should be called by the engine, not manually like this.
@@ -95,28 +95,28 @@ static void loadMainMenu()
 	scene.Add(std::move(player_1_lives_UI));
 
 	auto player_2_lives_UI{ std::make_unique<core::GameObject>(20.f, 175.f) };
-	pText = player_2_lives_UI->AddComponent<TextComponent>("Lives:", font);
+	pText = player_2_lives_UI->AddComponent<graphics::TextComponent>("Lives:", font);
 	pPlayer_observer = player_2_lives_UI->AddComponent<UIValueObserver>(pText, events::GameEvent{ core::make_sdbm_hash("PlayerDied") }, [](int v) { return "Red Lives:     " + std::to_string(v) + " (left shoulder)"; });
 	player_2_health->AttachObserver(pPlayer_observer);
 	player_2_health->Initialize();
 	scene.Add(std::move(player_2_lives_UI));
 
 	auto player_1_score_UI{ std::make_unique<core::GameObject>(20.f, 150.f) };
-	pText = player_1_score_UI->AddComponent<TextComponent>("Lives:", font);
+	pText = player_1_score_UI->AddComponent<graphics::TextComponent>("Lives:", font);
 	pPlayer_observer = player_1_score_UI->AddComponent<UIValueObserver>(pText, events::GameEvent{ core::make_sdbm_hash("ScoreChanged") }, [](int v) { return "White Score: " + std::to_string(v) + " (Q & E)"; });
 	player_1_score->AttachObserver(pPlayer_observer);
 	player_1_score->Initialize();
 	scene.Add(std::move(player_1_score_UI));
 
 	auto player_2_score_UI{ std::make_unique<core::GameObject>(20.f, 200.f) };
-	pText = player_2_score_UI->AddComponent<TextComponent>("Lives:", font);
+	pText = player_2_score_UI->AddComponent<graphics::TextComponent>("Lives:", font);
 	pPlayer_observer = player_2_score_UI->AddComponent<UIValueObserver>(pText, events::GameEvent{ core::make_sdbm_hash("ScoreChanged") }, [](int v){ return "Red Score:    " + std::to_string(v) + " (X & Y)"; });
 	player_2_score->AttachObserver(pPlayer_observer);
 	player_2_score->Initialize();
 	scene.Add(std::move(player_2_score_UI));
 
 	auto rotator{ std::make_unique<core::GameObject>() };
-	rotator->AddComponent<TextureComponent>()->SetTexture("starfighter.png");
+	rotator->AddComponent<graphics::TextureComponent>()->SetTexture("starfighter.png");
 	rotator->AddComponent<RotatorComponent>(20.0f, 2.5f);
 	rotator->SetParent(pPlayer_1, true);
 	scene.Add(std::move(rotator));

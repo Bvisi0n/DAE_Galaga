@@ -12,7 +12,7 @@
 #include "Minigin/Core/Transform.h"
 #include "Minigin/Graphics/IRenderable.h"
 
-namespace dae
+namespace dae::graphics
 {
 	class Texture2D;
 }
@@ -24,7 +24,7 @@ namespace dae::core
 	concept IsComponent = std::derived_from<T, Component>;
 
 	template<typename T>
-	concept IsRenderable = std::derived_from<T, Component> && std::derived_from<T, IRenderable>;
+	concept IsRenderable = std::derived_from<T, Component> && std::derived_from<T, graphics::IRenderable>;
 
 	class GameObject final
 	{
@@ -150,7 +150,7 @@ namespace dae::core
 		std::vector<GameObject*> m_pChildren;
 
 		std::vector<std::unique_ptr<Component>> m_pComponents;
-		IRenderable* m_pRenderable{ nullptr };
+		graphics::IRenderable* m_pRenderable{ nullptr };
 
 		Transform m_transform;
 

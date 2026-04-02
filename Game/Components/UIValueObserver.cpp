@@ -6,7 +6,7 @@
 
 namespace dae
 {
-    UIValueObserver::UIValueObserver(core::GameObject* pOwner, TextComponent* pText, events::GameEvent observedEvent, Formatter formatter)
+    UIValueObserver::UIValueObserver(core::GameObject* pOwner, graphics::TextComponent* pText, events::GameEvent observedEvent, Formatter formatter)
         : Component(pOwner)
         , m_Formatter(std::move(formatter))
         , m_pText(pText)

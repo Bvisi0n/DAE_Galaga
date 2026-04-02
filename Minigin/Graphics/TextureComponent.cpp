@@ -9,7 +9,7 @@
 
 #include "Minigin/Resources/ResourceManager.h"
 
-namespace dae
+namespace dae::graphics
 {
 	void TextureComponent::Render() const
 	{

@@ -4,7 +4,7 @@
 
 #include "Minigin/Graphics/Font.h"
 
-namespace dae
+namespace dae::graphics
 {
 	Font::Font(const std::string& fullPath, float size) : m_pFont(nullptr)
 	{

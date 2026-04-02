@@ -8,7 +8,7 @@
 
 #include "Minigin/Utilities/Singleton.h"
 
-namespace dae
+namespace dae::graphics
 {
 	class Texture2D;
 

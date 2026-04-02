@@ -11,7 +11,7 @@
 #include "Minigin/Graphics/Texture2D.h"
 #include "Minigin/Scene/SceneManager.h"
 
-namespace dae
+namespace dae::graphics
 {
 	void Renderer::Init(SDL_Window* pWindow)
 	{

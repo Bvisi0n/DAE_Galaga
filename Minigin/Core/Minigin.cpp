@@ -87,14 +87,14 @@ namespace dae::core
 			throw std::runtime_error(std::string("SDL_CreateWindow Error: ") + SDL_GetError());
 		}
 
-		Renderer::GetInstance().Init(g_window);
+		graphics::Renderer::GetInstance().Init(g_window);
 		resources::ResourceManager::GetInstance().Init(dataPath);
 	}
 
 	Minigin::~Minigin()
 	{
 		resources::ResourceManager::GetInstance().Destroy();
-		Renderer::GetInstance().Destroy();
+		graphics::Renderer::GetInstance().Destroy();
 		SDL_DestroyWindow(g_window);
 		g_window = nullptr;
 		SDL_Quit();
@@ -134,7 +134,7 @@ namespace dae::core
 		m_quit = !InputManager::GetInstance().ProcessInput(clamped_delta_time);
 
 		scene::SceneManager::GetInstance().Update(clamped_delta_time);
-		Renderer::GetInstance().Render();
+		graphics::Renderer::GetInstance().Render();
 
 		const auto frame_end_time{ clock::now() };
 		const auto execution_time{ frame_end_time - frame_start_time };

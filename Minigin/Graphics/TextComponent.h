@@ -10,7 +10,7 @@
 #include "Minigin/Core/Component.h"
 #include "Minigin/Graphics/IRenderable.h"
 
-namespace dae
+namespace dae::graphics
 {
 	class Font;
 	class core::GameObject;

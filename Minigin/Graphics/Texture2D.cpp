@@ -5,7 +5,7 @@
 #include "Minigin/Graphics/Renderer.h"
 #include "Minigin/Graphics/Texture2D.h"
 
-namespace dae
+namespace dae::graphics
 {
     Texture2D::Texture2D(SDL_Texture* pTexture)
         : m_pTexture{ pTexture }

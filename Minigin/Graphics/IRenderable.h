@@ -1,7 +1,7 @@
 #ifndef IRENDERABLE_H
 #define IRENDERABLE_H
 
-namespace dae
+namespace dae::graphics
 {
 	class IRenderable
 	{
