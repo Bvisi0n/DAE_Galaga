@@ -6,7 +6,10 @@
 #include "Minigin/Core/Component.h"
 #include "Minigin/Events/ISubject.h"
 
-class dae::core::GameObject;
+namespace dae::core
+{
+    class GameObject;
+}
 
 namespace dae::events
 {

@@ -10,10 +10,14 @@
 #include "Minigin/Core/Component.h"
 #include "Minigin/Graphics/IRenderable.h"
 
+namespace core
+{
+	class GameObject;
+}
+
 namespace dae::graphics
 {
 	class Font;
-	class core::GameObject;
 	class Texture2D;
 
 	// Renders text using a Font and a Texture2D.
