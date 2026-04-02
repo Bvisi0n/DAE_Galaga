@@ -7,12 +7,12 @@
 #include "Minigin/Core/Transform.h"
 #include "Minigin/Input/Command.h"
 
-namespace dae
+namespace bvi
 {
-    class MoveCommand final : public input::Command
+    class MoveCommand final : public dae::input::Command
     {
     public:
-        MoveCommand(core::GameObject* pGameObject, const glm::vec2& direction, float speed)
+        MoveCommand(dae::core::GameObject* pGameObject, const glm::vec2& direction, float speed)
             : m_pGameObject(pGameObject)
             , m_direction(direction)
             , m_speed(speed) {}
@@ -31,7 +31,7 @@ namespace dae
         }
 
     private:
-        core::GameObject* m_pGameObject;
+        dae::core::GameObject* m_pGameObject;
         glm::vec2 m_direction;
         float m_speed;
     };

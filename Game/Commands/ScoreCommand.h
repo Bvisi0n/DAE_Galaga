@@ -5,9 +5,9 @@
 
 #include "Minigin/Input/Command.h"
 
-namespace dae
+namespace bvi
 {
-    class ScoreCommand final : public input::Command
+    class ScoreCommand final : public dae::input::Command
     {
     public:
         ScoreCommand(ScoreComponent* scoreComponent, int valueOfChange)

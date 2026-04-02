@@ -3,12 +3,12 @@
 
 #include "Minigin/Events/ObservableComponent.h"
 
-namespace dae
+namespace bvi
 {
-    class ScoreComponent final : public events::ObservableComponent
+    class ScoreComponent final : public dae::events::ObservableComponent
     {
     public:
-        ScoreComponent(core::GameObject* pOwner);
+        ScoreComponent(dae::core::GameObject* pOwner);
         virtual ~ScoreComponent() = default;
 
         void Initialize() noexcept override;

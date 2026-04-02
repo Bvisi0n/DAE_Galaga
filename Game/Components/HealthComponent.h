@@ -3,14 +3,17 @@
 
 #include "Minigin/Events/ObservableComponent.h"
 
-namespace dae
+namespace dae::core
 {
-    class core::GameObject;
+    class GameObject;
+}
 
-    class HealthComponent final : public events::ObservableComponent
+namespace bvi
+{
+    class HealthComponent final : public dae::events::ObservableComponent
     {
     public:
-        HealthComponent(core::GameObject* pOwner, int lives);
+        HealthComponent(dae::core::GameObject* pOwner, int lives);
 
         void Initialize() override;
         void Update(const float) noexcept override {}

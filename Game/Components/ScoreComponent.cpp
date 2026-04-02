@@ -3,9 +3,9 @@
 #include "Minigin/Core/SDBMHash.h"
 #include "Minigin/Events/GameEvent.h"
 
-namespace dae
+namespace bvi
 {
-    ScoreComponent::ScoreComponent(core::GameObject* pOwner)
+    ScoreComponent::ScoreComponent(dae::core::GameObject* pOwner)
         : ObservableComponent(pOwner)
         , m_score(0) {}
 
@@ -27,7 +27,7 @@ namespace dae
 
     void ScoreComponent::NotifyScoreChanged() const
     {
-        events::GameEvent event{ core::make_sdbm_hash("ScoreChanged") };
+        dae::events::GameEvent event{ dae::core::make_sdbm_hash("ScoreChanged") };
         event.PushArg(m_score);
         NotifyObservers(event);
     }

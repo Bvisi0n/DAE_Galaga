@@ -37,6 +37,7 @@
 static void loadMainMenu()
 {
 	using namespace dae;
+	using namespace bvi;
 
 	auto& scene{ scene::SceneManager::GetInstance().CreateScene() };
 

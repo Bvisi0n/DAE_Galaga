@@ -19,25 +19,25 @@ namespace dae::graphics
     class TextComponent;
 }
 
-namespace dae
+namespace bvi
 {
-    class UIValueObserver final : public core::Component, public events::IObserver
+    class UIValueObserver final : public dae::core::Component, public dae::events::IObserver
     {
     public:
         using Formatter = std::function<std::string(int)>;
 
-        UIValueObserver(core::GameObject* pOwner, graphics::TextComponent* pText, events::GameEvent observedEvent, Formatter formatter);
+        UIValueObserver(dae::core::GameObject* pOwner, dae::graphics::TextComponent* pText, dae::events::GameEvent observedEvent, Formatter formatter);
 
         void Initialize() override {} // TODO L: Move m_pText assignment to Initialize() which should then extract the TextComponent from the owner GameObject.
 
-        void OnNotify(const events::GameEvent event) override;
+        void OnNotify(const dae::events::GameEvent event) override;
 
         void Update(const float) override {}
 
     private:
         Formatter m_Formatter;
-        graphics::TextComponent* m_pText{ nullptr };
-        events::GameEvent m_observedEvent; // TODO L: Does it have to be a whole GameEvent object?
+        dae::graphics::TextComponent* m_pText{ nullptr };
+        dae::events::GameEvent m_observedEvent; // TODO L: Does it have to be a whole GameEvent object?
     };
 }
 #endif

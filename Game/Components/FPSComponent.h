@@ -16,13 +16,13 @@ namespace dae::graphics
 	class TextComponent;
 }
 
-namespace dae
+namespace bvi
 {
 	// Displays the FPS in a given TextComponent.
-	class FPSComponent final : public core::Component
+	class FPSComponent final : public dae::core::Component
 	{
 	public:
-		FPSComponent(core::GameObject* pOwner, graphics::TextComponent* pText);
+		FPSComponent(dae::core::GameObject* pOwner, dae::graphics::TextComponent* pText);
 		~FPSComponent() = default;
 
 		FPSComponent(const FPSComponent&)            = delete;
@@ -34,7 +34,7 @@ namespace dae
 		void Update(const float deltaTime) override;
 
 	private:
-		graphics::TextComponent* m_pText{ nullptr };
+		dae::graphics::TextComponent* m_pText{ nullptr };
 	};
 }
 #endif

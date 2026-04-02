@@ -4,15 +4,15 @@
 #include "Minigin/Core/GameObject.h"
 #include "Minigin/Core/SDBMHash.h"
 
-namespace dae
+namespace bvi
 {
-    UIValueObserver::UIValueObserver(core::GameObject* pOwner, graphics::TextComponent* pText, events::GameEvent observedEvent, Formatter formatter)
+    UIValueObserver::UIValueObserver(dae::core::GameObject* pOwner, dae::graphics::TextComponent* pText, dae::events::GameEvent observedEvent, Formatter formatter)
         : Component(pOwner)
         , m_Formatter(std::move(formatter))
         , m_pText(pText)
         , m_observedEvent(observedEvent) {}
 
-    void UIValueObserver::OnNotify(const events::GameEvent event)
+    void UIValueObserver::OnNotify(const dae::events::GameEvent event)
     {
         if (event.id == m_observedEvent.id)
         {

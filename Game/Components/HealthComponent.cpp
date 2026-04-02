@@ -3,9 +3,9 @@
 #include "Minigin/Core/SDBMHash.h"
 #include "Minigin/Events/GameEvent.h"
 
-namespace dae
+namespace bvi
 {
-    HealthComponent::HealthComponent(core::GameObject* pOwner, int lives)
+    HealthComponent::HealthComponent(dae::core::GameObject* pOwner, int lives)
         : ObservableComponent(pOwner)
         , m_lives(lives) {}
 
@@ -30,7 +30,7 @@ namespace dae
 
     void HealthComponent::NotifyPlayerDied() const
     {
-        events::GameEvent event{ core::make_sdbm_hash("PlayerDied") };
+        dae::events::GameEvent event{ dae::core::make_sdbm_hash("PlayerDied") };
         event.PushArg(m_lives);
         NotifyObservers(event);
     }

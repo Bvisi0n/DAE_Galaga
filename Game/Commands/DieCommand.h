@@ -5,9 +5,9 @@
 
 #include "Minigin/Input/Command.h"
 
-namespace dae
+namespace bvi
 {
-    class DieCommand final : public input::Command
+    class DieCommand final : public dae::input::Command
     {
     public:
         DieCommand(HealthComponent* healthComponent) noexcept

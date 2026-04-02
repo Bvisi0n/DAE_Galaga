@@ -5,15 +5,18 @@
 
 #include "Minigin/Core/Component.h"
 
-namespace dae
+namespace dae::core
 {
-    class core::GameObject;
+    class GameObject;
+}
 
+namespace bvi
+{
     // Allows a GameObject to rotate around a parent in a circular path.
-    class RotatorComponent final : public core::Component
+    class RotatorComponent final : public dae::core::Component
     {
     public:
-        RotatorComponent(core::GameObject* pOwner, float range, float speed);
+        RotatorComponent(dae::core::GameObject* pOwner, float range, float speed);
         ~RotatorComponent() override = default;
 
         void Initialize() override {}

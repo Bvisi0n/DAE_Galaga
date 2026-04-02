@@ -8,9 +8,9 @@
 #include "Minigin/Core/GameObject.h"
 #include "Minigin/Graphics/TextComponent.h"
 
-namespace dae
+namespace bvi
 {
-	FPSComponent::FPSComponent(core::GameObject* pOwner, graphics::TextComponent* pText)
+	FPSComponent::FPSComponent(dae::core::GameObject* pOwner, dae::graphics::TextComponent* pText)
 		: Component(pOwner)
 		, m_pText(pText)
 	{
