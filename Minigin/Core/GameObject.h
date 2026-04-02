@@ -15,6 +15,10 @@
 namespace dae
 {
 	class Texture2D;
+}
+
+namespace dae::core
+{
 
 	template<typename T>
 	concept IsComponent = std::derived_from<T, Component>;

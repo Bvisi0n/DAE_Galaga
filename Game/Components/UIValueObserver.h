@@ -11,15 +11,15 @@
 
 namespace dae
 {
-    class GameObject;
+    class core::GameObject;
     class TextComponent;
 
-    class UIValueObserver final : public Component, public events::IObserver
+    class UIValueObserver final : public core::Component, public events::IObserver
     {
     public:
         using Formatter = std::function<std::string(int)>;
 
-        UIValueObserver(GameObject* pOwner, TextComponent* pText, events::GameEvent observedEvent, Formatter formatter);
+        UIValueObserver(core::GameObject* pOwner, TextComponent* pText, events::GameEvent observedEvent, Formatter formatter);
 
         void Initialize() override {} // TODO L: Move m_pText assignment to Initialize() which should then extract the TextComponent from the owner GameObject.
 

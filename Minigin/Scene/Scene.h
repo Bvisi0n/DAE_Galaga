@@ -22,15 +22,15 @@ namespace dae::scene
 		void Update(const float deltaTime);
 		void Render() const;
 
-		void Add(std::unique_ptr<GameObject> pObject);
-		void Remove(const GameObject& object);
+		void Add(std::unique_ptr<core::GameObject> pObject);
+		void Remove(const core::GameObject& object);
 		void RemoveAll();
 
 	private:
 		friend class SceneManager;
 		explicit Scene() = default;
 
-		std::vector <std::unique_ptr<GameObject>> m_pObjects{};
+		std::vector <std::unique_ptr<core::GameObject>> m_pObjects{};
 	};
 }
 #endif

@@ -6,7 +6,7 @@
 #include <functional>
 #include <string>
 
-namespace dae
+namespace dae::core
 {
 	class Minigin final
 	{

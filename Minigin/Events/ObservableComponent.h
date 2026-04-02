@@ -6,20 +6,17 @@
 #include "Minigin/Core/Component.h"
 #include "Minigin/Events/ISubject.h"
 
-namespace dae
-{
-    class GameObject;
-}
+class dae::core::GameObject;
 
 namespace dae::events
 {
     class IObserver;
     struct GameEvent;
 
-    class ObservableComponent : public Component, public ISubject
+    class ObservableComponent : public core::Component, public ISubject
     {
     public:
-        ObservableComponent(GameObject* pOwner) noexcept
+        ObservableComponent(core::GameObject* pOwner) noexcept
             : Component(pOwner) {};
         virtual ~ObservableComponent() = default;
 

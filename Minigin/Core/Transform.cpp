@@ -3,7 +3,7 @@
 #include "Minigin/Core/GameObject.h"
 #include "Minigin/Core/Transform.h"
 
-namespace dae
+namespace dae::core
 {
     Transform::Transform(GameObject* pOwner, float xPos, float yPos, float xScale, float yScale)
         : m_pOwner(pOwner)

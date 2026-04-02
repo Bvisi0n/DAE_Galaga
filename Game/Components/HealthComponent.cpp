@@ -5,7 +5,7 @@
 
 namespace dae
 {
-    HealthComponent::HealthComponent(GameObject* pOwner, int lives)
+    HealthComponent::HealthComponent(core::GameObject* pOwner, int lives)
         : ObservableComponent(pOwner)
         , m_lives(lives) {}
 
@@ -30,7 +30,7 @@ namespace dae
 
     void HealthComponent::NotifyPlayerDied() const
     {
-        events::GameEvent event{ dae::make_sdbm_hash("PlayerDied") };
+        events::GameEvent event{ core::make_sdbm_hash("PlayerDied") };
         event.PushArg(m_lives);
         NotifyObservers(event);
     }

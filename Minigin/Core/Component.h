@@ -1,7 +1,7 @@
 #ifndef COMPONENT_H
 #define COMPONENT_H
 
-namespace dae
+namespace dae::core
 {
     class GameObject;
 

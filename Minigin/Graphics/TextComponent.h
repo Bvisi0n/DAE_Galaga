@@ -13,14 +13,14 @@
 namespace dae
 {
 	class Font;
-	class GameObject;
+	class core::GameObject;
 	class Texture2D;
 
 	// Renders text using a Font and a Texture2D.
-    class TextComponent final : public Component, public IRenderable
+    class TextComponent final : public core::Component, public IRenderable
 	{
 	public:
-		TextComponent(GameObject* pOwner, const std::string& text, std::shared_ptr<Font> pFont, const SDL_Color& color = { 255, 255, 255, 255 });
+		TextComponent(core::GameObject* pOwner, const std::string& text, std::shared_ptr<Font> pFont, const SDL_Color& color = { 255, 255, 255, 255 });
 		~TextComponent() = default;
 
 		TextComponent(const TextComponent&)            = delete;

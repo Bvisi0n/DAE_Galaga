@@ -56,7 +56,7 @@ void PrintSDLVersion()
 	LogSDLVersion("Linked with SDL_ttf ", SDL_VERSIONNUM_MAJOR(version), SDL_VERSIONNUM_MINOR(version),	SDL_VERSIONNUM_MICRO(version));
 }
 
-namespace dae
+namespace dae::core
 {
 	Minigin::Minigin(const std::filesystem::path& dataPath, const std::string name, const unsigned short windowWidth, const unsigned short windowHeight)
 	{

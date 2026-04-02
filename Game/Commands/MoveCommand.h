@@ -12,7 +12,7 @@ namespace dae
     class MoveCommand final : public Command
     {
     public:
-        MoveCommand(GameObject* pGameObject, const glm::vec2& direction, float speed)
+        MoveCommand(core::GameObject* pGameObject, const glm::vec2& direction, float speed)
             : m_pGameObject(pGameObject)
             , m_direction(direction)
             , m_speed(speed) {}
@@ -31,7 +31,7 @@ namespace dae
         }
 
     private:
-        GameObject* m_pGameObject;
+        core::GameObject* m_pGameObject;
         glm::vec2 m_direction;
         float m_speed;
     };

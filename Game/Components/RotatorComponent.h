@@ -7,13 +7,13 @@
 
 namespace dae
 {
-    class GameObject;
+    class core::GameObject;
 
     // Allows a GameObject to rotate around a parent in a circular path.
-    class RotatorComponent final : public Component
+    class RotatorComponent final : public core::Component
     {
     public:
-        RotatorComponent(GameObject* pOwner, float range, float speed);
+        RotatorComponent(core::GameObject* pOwner, float range, float speed);
         ~RotatorComponent() override = default;
 
         void Initialize() override {}

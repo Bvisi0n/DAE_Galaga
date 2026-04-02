@@ -3,7 +3,7 @@
 
 // DAE/Prog4/observer_eventqueue.pdf: "Inspired by: Learn C++ For Game Development by Bruce Sutherland"
 
-namespace dae
+namespace dae::core
 {
     template <int length> struct sdbm_hash
     {

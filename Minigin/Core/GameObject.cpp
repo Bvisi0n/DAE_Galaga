@@ -6,7 +6,7 @@
 #include "Minigin/Graphics/Renderer.h"
 #include "Minigin/Resources/ResourceManager.h"
 
-namespace dae
+namespace dae::core
 {
 	GameObject::GameObject(const float x, const float y)
 		: m_transform{ this, x, y } {}

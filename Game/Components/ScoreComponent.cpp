@@ -5,7 +5,7 @@
 
 namespace dae
 {
-    ScoreComponent::ScoreComponent(GameObject* pOwner)
+    ScoreComponent::ScoreComponent(core::GameObject* pOwner)
         : ObservableComponent(pOwner)
         , m_score(0) {}
 
@@ -27,7 +27,7 @@ namespace dae
 
     void ScoreComponent::NotifyScoreChanged() const
     {
-        events::GameEvent event{ dae::make_sdbm_hash("ScoreChanged") };
+        events::GameEvent event{ core::make_sdbm_hash("ScoreChanged") };
         event.PushArg(m_score);
         NotifyObservers(event);
     }

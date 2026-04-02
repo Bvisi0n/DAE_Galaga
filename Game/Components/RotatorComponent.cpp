@@ -5,7 +5,7 @@
 #include "Minigin/Core/GameObject.h"
 #include "Minigin/Core/Transform.h"
 
-dae::RotatorComponent::RotatorComponent(GameObject* pOwner, float range, float speed)
+dae::RotatorComponent::RotatorComponent(core::GameObject* pOwner, float range, float speed)
     : Component(pOwner), m_range(range), m_rotationSpeed(speed) {}
 
 void dae::RotatorComponent::Update(const float deltaTime)

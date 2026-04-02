@@ -5,7 +5,7 @@
 
 #include "Minigin/Core/Component.h"
 
-namespace dae
+namespace dae::core
 {
 	class GameObject;
 

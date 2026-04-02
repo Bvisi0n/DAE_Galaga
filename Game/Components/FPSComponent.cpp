@@ -10,7 +10,7 @@
 
 namespace dae
 {
-	FPSComponent::FPSComponent(GameObject* pOwner, TextComponent* pText)
+	FPSComponent::FPSComponent(core::GameObject* pOwner, TextComponent* pText)
 		: Component(pOwner)
 		, m_pText(pText)
 	{

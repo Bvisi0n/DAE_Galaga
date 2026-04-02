@@ -8,7 +8,7 @@ namespace dae
     class ScoreComponent final : public events::ObservableComponent
     {
     public:
-        ScoreComponent(GameObject* pOwner);
+        ScoreComponent(core::GameObject* pOwner);
         virtual ~ScoreComponent() = default;
 
         void Initialize() noexcept override;

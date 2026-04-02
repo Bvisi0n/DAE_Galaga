@@ -5,12 +5,12 @@
 
 namespace dae
 {
-    class GameObject;
+    class core::GameObject;
 
     class HealthComponent final : public events::ObservableComponent
     {
     public:
-        HealthComponent(GameObject* pOwner, int lives);
+        HealthComponent(core::GameObject* pOwner, int lives);
 
         void Initialize() override;
         void Update(const float) noexcept override {}

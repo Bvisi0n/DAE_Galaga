@@ -8,14 +8,14 @@
 namespace dae
 {
 	class Font;
-	class GameObject;
+	class core::GameObject;
 	class TextComponent;
 
 	// Displays the FPS in a given TextComponent.
-	class FPSComponent final : public Component
+	class FPSComponent final : public core::Component
 	{
 	public:
-		FPSComponent(GameObject* pOwner, TextComponent* pText);
+		FPSComponent(core::GameObject* pOwner, TextComponent* pText);
 		~FPSComponent() = default;
 
 		FPSComponent(const FPSComponent&)            = delete;
