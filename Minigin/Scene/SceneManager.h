@@ -12,7 +12,7 @@ namespace dae
 {
 	class Scene;
 
-	class SceneManager final : public Singleton<SceneManager>
+	class SceneManager final : public utils::Singleton<SceneManager>
 	{
 	public:
 		Scene& CreateScene();
@@ -21,7 +21,7 @@ namespace dae
 		void Render();
 
 	private:
-		friend class Singleton<SceneManager>;
+		friend class utils::Singleton<SceneManager>;
 		
 		std::vector<std::unique_ptr<Scene>> m_pScenes{};
 

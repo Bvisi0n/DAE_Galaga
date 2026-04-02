@@ -13,7 +13,7 @@ namespace dae
 	class Font;
 	class Texture2D;
 
-	class ResourceManager final : public Singleton<ResourceManager>
+	class ResourceManager final : public utils::Singleton<ResourceManager>
 	{
 	public:
 		void Init(const std::filesystem::path& data);
@@ -23,7 +23,7 @@ namespace dae
 		[[nodiscard]] std::shared_ptr<Font>		 LoadFont(const std::string& file, uint8_t size);
 
 	private:
-		friend class Singleton<ResourceManager>;
+		friend class utils::Singleton<ResourceManager>;
 		
 		std::filesystem::path m_dataPath;
 		std::map<std::string, std::shared_ptr<Texture2D>> m_pLoadedTextures;

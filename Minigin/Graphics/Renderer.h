@@ -13,7 +13,7 @@ namespace dae
 	class Texture2D;
 
 	// Simple RAII wrapper for the SDL renderer
-	class Renderer final : public Singleton<Renderer>
+	class Renderer final : public utils::Singleton<Renderer>
 	{
 	public:
 		void Init(SDL_Window* pWindow);
@@ -39,7 +39,7 @@ namespace dae
 		SDL_Window* m_pWindow{};
 		SDL_Color m_clearColor{};
 
-		friend class Singleton<Renderer>;
+		friend class utils::Singleton<Renderer>;
 		Renderer() = default;
 		virtual ~Renderer() = default;
 	};

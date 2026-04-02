@@ -17,7 +17,7 @@ namespace dae
     template<typename T>
     concept IsInputType = std::same_as<T, Gamepad::Button> || std::same_as<T, Keyboard::Key>;
 
-    class InputManager final : public Singleton<InputManager>
+    class InputManager final : public utils::Singleton<InputManager>
     {
     public:
     enum class KeyState { Down, Up, Pressed };
