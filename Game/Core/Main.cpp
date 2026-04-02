@@ -36,7 +36,7 @@
 
 static void loadMainMenu()
 {
-	auto& scene{ dae::SceneManager::GetInstance().CreateScene() };
+	auto& scene{ dae::scene::SceneManager::GetInstance().CreateScene() };
 
 	auto background{ std::make_unique<dae::GameObject>() };
 	background->AddComponent<dae::TextureComponent>()->SetTexture("background.png");

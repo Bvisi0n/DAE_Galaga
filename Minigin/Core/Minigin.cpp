@@ -133,7 +133,7 @@ namespace dae
 
 		m_quit = !InputManager::GetInstance().ProcessInput(clamped_delta_time);
 
-		SceneManager::GetInstance().Update(clamped_delta_time);
+		scene::SceneManager::GetInstance().Update(clamped_delta_time);
 		Renderer::GetInstance().Render();
 
 		const auto frame_end_time{ clock::now() };

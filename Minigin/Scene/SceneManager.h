@@ -8,7 +8,7 @@
 #include "Minigin/Scene/Scene.h"
 #include "Minigin/Utilities/Singleton.h"
 
-namespace dae
+namespace dae::scene
 {
 	class Scene;
 

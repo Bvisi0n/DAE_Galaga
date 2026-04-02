@@ -7,7 +7,7 @@
 
 #include "Minigin/Core/GameObject.h"
 
-namespace dae
+namespace dae::scene
 {
 	class Scene final
 	{

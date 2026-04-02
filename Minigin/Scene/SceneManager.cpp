@@ -1,24 +1,27 @@
 #include "Minigin/Scene/Scene.h"
 #include "Minigin/Scene/SceneManager.h"
 
-dae::Scene& dae::SceneManager::CreateScene()
+namespace dae::scene
 {
-	m_pScenes.emplace_back(new Scene());
-	return *m_pScenes.back();
-}
-
-void dae::SceneManager::Update(const float deltaTime)
-{
-	for(auto& scene : m_pScenes)
+	Scene& SceneManager::CreateScene()
 	{
-		scene->Update(deltaTime);
+		m_pScenes.emplace_back(new Scene());
+		return *m_pScenes.back();
 	}
-}
 
-void dae::SceneManager::Render()
-{
-	for (const auto& scene : m_pScenes)
+	void SceneManager::Update(const float deltaTime)
 	{
-		scene->Render();
+		for (auto& scene : m_pScenes)
+		{
+			scene->Update(deltaTime);
+		}
+	}
+
+	void SceneManager::Render()
+	{
+		for (const auto& scene : m_pScenes)
+		{
+			scene->Render();
+		}
 	}
 }

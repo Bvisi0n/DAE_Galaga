@@ -4,7 +4,7 @@
 #include "Minigin/Core/Transform.h"
 #include "Minigin/Scene/Scene.h"
 
-namespace dae
+namespace dae::scene
 {
 	void Scene::Update(const float deltaTime)
 	{
