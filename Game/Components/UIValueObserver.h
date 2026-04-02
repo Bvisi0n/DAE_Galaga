@@ -28,7 +28,7 @@ namespace bvi
 
         UIValueObserver(dae::core::GameObject* pOwner, dae::graphics::TextComponent* pText, dae::events::GameEvent observedEvent, Formatter formatter);
 
-        void Initialize() override {} // TODO L: Move m_pText assignment to Initialize() which should then extract the TextComponent from the owner GameObject.
+        void Initialize() override {} // TODO N: Should fetch m_pText from the owner.
 
         void OnNotify(const dae::events::GameEvent event) override;
 

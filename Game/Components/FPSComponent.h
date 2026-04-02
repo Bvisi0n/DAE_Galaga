@@ -30,7 +30,7 @@ namespace bvi
 		FPSComponent& operator=(const FPSComponent&) = delete;
 		FPSComponent& operator=(FPSComponent&&)      = delete;
 
-		void Initialize() override {} // TODO L: Should fetch m_pText from the owner.
+		void Initialize() override {} // TODO N: Should fetch m_pText from the owner.
 		void Update(const float deltaTime) override;
 
 	private:

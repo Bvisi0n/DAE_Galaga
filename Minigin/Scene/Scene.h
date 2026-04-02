@@ -22,9 +22,9 @@ namespace dae::scene
 		void Update(const float deltaTime);
 		void Render() const;
 
-		void Add(std::unique_ptr<core::GameObject> pObject);
-		void Remove(const core::GameObject& object);
-		void RemoveAll();
+		void AddGameObject(std::unique_ptr<core::GameObject> pObject);
+		void RemoveGameObject(const core::GameObject& object);
+		void RemoveAllGameObjects();
 
 	private:
 		friend class SceneManager;

@@ -31,13 +31,13 @@ namespace dae::scene
 		}
 	}
 
-	void Scene::Add(std::unique_ptr<core::GameObject> pObject)
+	void Scene::AddGameObject(std::unique_ptr<core::GameObject> pObject)
 	{
 		assert(pObject != nullptr && "Cannot add a null GameObject to the scene.");
 		m_pObjects.emplace_back(std::move(pObject));
 	}
 
-	void Scene::Remove(const core::GameObject& object)
+	void Scene::RemoveGameObject(const core::GameObject& object)
 	{
 		// TODO N: Use a flag to mark it for deletion, this function should be private and called in between Update() and Render(). The public variant should just mark it.
 		m_pObjects.erase(
@@ -50,7 +50,7 @@ namespace dae::scene
 		);
 	}
 
-	void Scene::RemoveAll()
+	void Scene::RemoveAllGameObjects()
 	{
 		m_pObjects.clear();
 	}

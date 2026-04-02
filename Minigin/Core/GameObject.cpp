@@ -14,7 +14,6 @@ namespace dae::core
 	void GameObject::Update(const float deltaTime)
 	{
 		// TODO N: GameObjects should not update when marked for deletion.
-		// TODO N: If a parent gets deleted, then all kids should be deleted as well.
 		for (auto& comp : m_pComponents)
 		{
 			if (!comp->IsPendingDeletion())

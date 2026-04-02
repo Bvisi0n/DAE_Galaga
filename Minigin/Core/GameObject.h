@@ -30,7 +30,7 @@ namespace dae::core
 	{
 	public:
 		GameObject(const float x = 0.f, const float y = 0.f);
-		~GameObject() = default;
+		~GameObject() = default; // TODO N: If a parent gets deleted, then all kids should be deleted as well.
 
 		GameObject(const GameObject& other)			   = delete;
 		GameObject(GameObject&& other)				   = delete;
