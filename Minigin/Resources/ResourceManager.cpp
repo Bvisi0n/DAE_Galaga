@@ -7,7 +7,7 @@
 #include "Minigin/Graphics/Texture2D.h"
 #include "Minigin/Resources/ResourceManager.h"
 
-namespace dae
+namespace dae::resources
 {
 	void ResourceManager::Init(const std::filesystem::path& dataPath)
 	{

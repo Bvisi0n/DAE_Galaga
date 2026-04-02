@@ -88,12 +88,12 @@ namespace dae
 		}
 
 		Renderer::GetInstance().Init(g_window);
-		ResourceManager::GetInstance().Init(dataPath);
+		resources::ResourceManager::GetInstance().Init(dataPath);
 	}
 
 	Minigin::~Minigin()
 	{
-		ResourceManager::GetInstance().Destroy();
+		resources::ResourceManager::GetInstance().Destroy();
 		Renderer::GetInstance().Destroy();
 		SDL_DestroyWindow(g_window);
 		g_window = nullptr;

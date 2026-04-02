@@ -46,19 +46,19 @@ static void loadMainMenu()
 	logo->AddComponent<dae::TextureComponent>()->SetTexture("logo.png");
 	scene.Add(std::move(logo));
 
-	auto font{ dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 36) };
+	auto font{ dae::resources::ResourceManager::GetInstance().LoadFont("Lingua.otf", 36) };
 	auto title{ std::make_unique<dae::GameObject>(292.f, 20.f) };
 	title->AddComponent<dae::TextComponent>("Programming 4 Assignment", font)->SetColor({ 255, 255, 0, 255 });
 	scene.Add(std::move(title));
 	
-	font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 24);
+	font = dae::resources::ResourceManager::GetInstance().LoadFont("Lingua.otf", 24);
 	auto fps{ std::make_unique<dae::GameObject>(20.f, 20.f) };
 	auto* pText = fps->AddComponent<dae::TextComponent>("FPS", font);
 	fps->AddComponent<dae::FPSComponent>(pText);
 	scene.Add(std::move(fps));
 
 
-	font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
+	font = dae::resources::ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
 	auto tutorial_white{ std::make_unique<dae::GameObject>(20.f, 75.f) };
 	tutorial_white->AddComponent<dae::TextComponent>("Use the WASD to move the white starfighter, spacebar to inflict damage and Q & E to score points.", font);
 	scene.Add(std::move(tutorial_white));
@@ -83,7 +83,7 @@ static void loadMainMenu()
 	scene.Add(std::move(player_2));
 
 
-	font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 16);
+	font = dae::resources::ResourceManager::GetInstance().LoadFont("Lingua.otf", 16);
 	auto player_1_lives_UI{ std::make_unique<dae::GameObject>(20.f, 125.f) };
 	pText = player_1_lives_UI->AddComponent<dae::TextComponent>("Lives:", font);
 	auto pPlayer_observer = player_1_lives_UI->AddComponent<dae::UIValueObserver>(pText, dae::GameEvent{ dae::make_sdbm_hash("PlayerDied") }, [](int v) { return "White Lives:  " + std::to_string(v) + " (spacebar)"; });

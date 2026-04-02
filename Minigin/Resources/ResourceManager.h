@@ -12,7 +12,10 @@ namespace dae
 {
 	class Font;
 	class Texture2D;
+}
 
+namespace dae::resources
+{
 	class ResourceManager final : public utils::Singleton<ResourceManager>
 	{
 	public:
