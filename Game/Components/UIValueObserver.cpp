@@ -6,13 +6,13 @@
 
 namespace dae
 {
-    UIValueObserver::UIValueObserver(GameObject* pOwner, TextComponent* pText, GameEvent observedEvent, Formatter formatter)
+    UIValueObserver::UIValueObserver(GameObject* pOwner, TextComponent* pText, events::GameEvent observedEvent, Formatter formatter)
         : Component(pOwner)
         , m_Formatter(std::move(formatter))
         , m_pText(pText)
         , m_observedEvent(observedEvent) {}
 
-    void UIValueObserver::OnNotify(const GameEvent event)
+    void UIValueObserver::OnNotify(const events::GameEvent event)
     {
         if (event.id == m_observedEvent.id)
         {

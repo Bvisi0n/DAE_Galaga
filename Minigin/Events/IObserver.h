@@ -3,7 +3,7 @@
 
 #include "Minigin/Events/GameEvent.h"
 
-namespace dae
+namespace dae::events
 {
     class IObserver
     {

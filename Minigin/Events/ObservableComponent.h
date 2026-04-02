@@ -9,6 +9,10 @@
 namespace dae
 {
     class GameObject;
+}
+
+namespace dae::events
+{
     class IObserver;
     struct GameEvent;
 

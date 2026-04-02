@@ -5,7 +5,7 @@
 #include "Minigin/Events/IObserver.h"
 #include "Minigin/Events/ObservableComponent.h"
 
-namespace dae
+namespace dae::events
 {
     void ObservableComponent::AttachObserver(IObserver* observer)
     {

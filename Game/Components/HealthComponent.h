@@ -7,7 +7,7 @@ namespace dae
 {
     class GameObject;
 
-    class HealthComponent final : public ObservableComponent
+    class HealthComponent final : public events::ObservableComponent
     {
     public:
         HealthComponent(GameObject* pOwner, int lives);

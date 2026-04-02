@@ -19,7 +19,7 @@
 // 
 // Consider std::visit as alternative but more research is needed, probably with lambda's...
 
-namespace dae
+namespace dae::events
 {
     struct Vector2D { float x, y; };
     using EventId = uint32_t;

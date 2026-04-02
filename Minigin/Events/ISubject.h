@@ -1,7 +1,7 @@
 #ifndef ISUBJECT_H
 #define ISUBJECT_H
 
-namespace dae
+namespace dae::events
 {
     class IObserver;
     struct GameEvent;

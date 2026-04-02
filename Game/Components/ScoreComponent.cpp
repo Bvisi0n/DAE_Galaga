@@ -27,7 +27,7 @@ namespace dae
 
     void ScoreComponent::NotifyScoreChanged() const
     {
-        dae::GameEvent event{ dae::make_sdbm_hash("ScoreChanged") };
+        events::GameEvent event{ dae::make_sdbm_hash("ScoreChanged") };
         event.PushArg(m_score);
         NotifyObservers(event);
     }

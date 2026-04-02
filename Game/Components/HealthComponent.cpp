@@ -30,7 +30,7 @@ namespace dae
 
     void HealthComponent::NotifyPlayerDied() const
     {
-        dae::GameEvent event{ dae::make_sdbm_hash("PlayerDied") };
+        events::GameEvent event{ dae::make_sdbm_hash("PlayerDied") };
         event.PushArg(m_lives);
         NotifyObservers(event);
     }

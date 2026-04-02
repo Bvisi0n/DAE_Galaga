@@ -5,7 +5,7 @@
 
 namespace dae
 {
-    class ScoreComponent final : public ObservableComponent
+    class ScoreComponent final : public events::ObservableComponent
     {
     public:
         ScoreComponent(GameObject* pOwner);

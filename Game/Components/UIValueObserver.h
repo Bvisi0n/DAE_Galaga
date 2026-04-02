@@ -14,23 +14,23 @@ namespace dae
     class GameObject;
     class TextComponent;
 
-    class UIValueObserver final : public Component, public IObserver
+    class UIValueObserver final : public Component, public events::IObserver
     {
     public:
         using Formatter = std::function<std::string(int)>;
 
-        UIValueObserver(GameObject* pOwner, TextComponent* pText, GameEvent observedEvent, Formatter formatter);
+        UIValueObserver(GameObject* pOwner, TextComponent* pText, events::GameEvent observedEvent, Formatter formatter);
 
         void Initialize() override {} // TODO L: Move m_pText assignment to Initialize() which should then extract the TextComponent from the owner GameObject.
 
-        void OnNotify(const GameEvent event) override;
+        void OnNotify(const events::GameEvent event) override;
 
         void Update(const float) override {}
 
     private:
         Formatter m_Formatter;
         TextComponent* m_pText{ nullptr };
-        GameEvent m_observedEvent; // TODO L: Does it have to be a whole GameEvent object?
+        events::GameEvent m_observedEvent; // TODO L: Does it have to be a whole GameEvent object?
     };
 }
 #endif
