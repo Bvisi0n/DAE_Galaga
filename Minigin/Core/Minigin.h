@@ -38,10 +38,9 @@ namespace dae::core
 		void RunOneFrame();
 
 	private:
-		const float m_maxDeltaTime; // Set a limit to the delta time
-		const std::chrono::nanoseconds m_nsPerFrame; // 1 second in nanoseconds divided by max FPS
-
 		std::chrono::steady_clock::time_point m_lastTime{};
+		const std::chrono::nanoseconds m_nsPerFrame;
+		const float m_maxDeltaTime;
 		bool  m_quit{};
 	};
 }
