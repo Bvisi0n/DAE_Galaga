@@ -166,7 +166,13 @@ int main(int, char*[])
 			data_location = "../Data/";
 	#endif
 
-	dae::core::Minigin engine(data_location, "Programming 4 assignment", 1024, 576);
+	dae::core::Minigin engine(
+		{
+			.dataPath = data_location,
+			.windowTitle = "Programming 4 assignment",
+			.windowWidth = 1024,
+			.windowHeight = 576
+		});
 	engine.Run(loadMainMenu);
 	
 	return 0;

@@ -58,7 +58,9 @@ void PrintSDLVersion()
 
 namespace dae::core
 {
-	Minigin::Minigin(const std::filesystem::path& dataPath, const std::string name, const unsigned short windowWidth, const unsigned short windowHeight)
+	Minigin::Minigin(const MiniginConfig& config)
+        : m_nsPerFrame(std::chrono::nanoseconds(1'000'000'000 / std::max<uint16_t>(1, config.targetFPS)))
+        , m_maxDeltaTime(1.0f / std::max<uint16_t>(1, config.minProcessableFPS))
 	{
 		PrintSDLVersion();
 
@@ -80,7 +82,7 @@ namespace dae::core
 			throw std::runtime_error(std::string("SDL_Init Error: ") + SDL_GetError());
 		}
 
-		g_window = SDL_CreateWindow(name.c_str(), windowWidth, windowHeight, SDL_WINDOW_OPENGL);
+		g_window = SDL_CreateWindow(config.windowTitle.c_str(), config.windowWidth, config.windowHeight, SDL_WINDOW_OPENGL);
 
 		if (g_window == nullptr) 
 		{
@@ -88,7 +90,7 @@ namespace dae::core
 		}
 
 		graphics::Renderer::GetInstance().Init(g_window);
-		resources::ResourceManager::GetInstance().Init(dataPath);
+		resources::ResourceManager::GetInstance().Init(config.dataPath);
 	}
 
 	Minigin::~Minigin()

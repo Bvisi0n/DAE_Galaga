@@ -2,16 +2,31 @@
 #define MINIGIN_H
 
 #include <chrono>
+#include <cstdint>
 #include <filesystem>
 #include <functional>
 #include <string>
 
 namespace dae::core
 {
+	struct MiniginConfig
+	{
+		// C.1: Organize related data into structures (structs or classes)
+		// I.23: Keep the number of function arguments low.
+		// I.24: Avoid adjacent parameters that can be invoked by the same arguments in either order with different meaning.
+
+		std::filesystem::path dataPath{ "./Data/" };
+		std::string windowTitle{ "Minigin Engine" };
+		uint16_t windowWidth{ 1280 };
+		uint16_t windowHeight{ 720 };
+		uint16_t targetFPS{ 60 };
+		uint16_t minProcessableFPS{ 10 };
+	};
+
 	class Minigin final
 	{
 	public:
-		explicit Minigin(const std::filesystem::path& dataPath, const std::string name, const unsigned short windowWidth = 1280, const unsigned short windowHeight = 720);
+		explicit Minigin(const MiniginConfig& config);
 		~Minigin();
 
 		Minigin(const Minigin& other)			 = delete;
@@ -23,8 +38,8 @@ namespace dae::core
 		void RunOneFrame();
 
 	private:
-		static constexpr float m_maxDeltaTime{ 1.0f / 10.0f }; // Set a limit to the delta time
-        static constexpr std::chrono::nanoseconds m_nsPerFrame{ 1000000000 / 60 }; // 1 second in nanoseconds divided by max FPS
+		const float m_maxDeltaTime; // Set a limit to the delta time
+		const std::chrono::nanoseconds m_nsPerFrame; // 1 second in nanoseconds divided by max FPS
 
 		std::chrono::steady_clock::time_point m_lastTime{};
 		bool  m_quit{};
