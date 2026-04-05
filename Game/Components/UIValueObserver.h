@@ -11,33 +11,33 @@
 
 namespace dae::core
 {
-    class GameObject;
+	class GameObject;
 }
 
 namespace dae::graphics
 {
-    class TextComponent;
+	class TextComponent;
 }
 
 namespace bvi
 {
-    class UIValueObserver final : public dae::core::Component, public dae::events::IObserver
-    {
-    public:
-        using Formatter = std::function<std::string(int)>;
+	class UIValueObserver final : public dae::core::Component, public dae::events::IObserver
+	{
+	public:
+		using Formatter = std::function<std::string(int)>;
 
-        UIValueObserver(dae::core::GameObject* pOwner, dae::graphics::TextComponent* pText, dae::events::GameEvent observedEvent, Formatter formatter);
+		UIValueObserver(dae::core::GameObject* pOwner, dae::events::GameEvent observedEvent, Formatter formatter);
 
-        void Initialize() override {} // TODO N: Should fetch m_pText from the owner.
+		void Initialize() override;
 
-        void OnNotify(const dae::events::GameEvent event) override;
+		void OnNotify(const dae::events::GameEvent event) override;
 
-        void Update(const float) override {}
+		void Update(const float) override {}
 
-    private:
-        Formatter m_Formatter;
-        dae::graphics::TextComponent* m_pText{ nullptr };
-        dae::events::GameEvent m_observedEvent; // TODO L: Does it have to be a whole GameEvent object?
-    };
+	private:
+		Formatter m_Formatter;
+		dae::graphics::TextComponent* m_pText{ nullptr };
+		dae::events::GameEvent m_observedEvent; // TODO L: Does it have to be a whole GameEvent object?
+	};
 }
 #endif

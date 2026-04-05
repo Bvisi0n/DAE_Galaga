@@ -12,7 +12,7 @@ namespace dae::core
 
 namespace dae::graphics
 {
-    class Font;
+	class Font;
 	class TextComponent;
 }
 

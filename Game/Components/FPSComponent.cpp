@@ -18,15 +18,15 @@ namespace bvi
 		m_pText = GetOwner()->GetComponent<dae::graphics::TextComponent>();
 		if (!m_pText)
 		{
-			assert(m_pText && "FPSComponent requires a TextComponent on the same GameObject.");
-        }
+			assert(m_pText && "requires a TextComponent on the same GameObject.");
+		}
 	}
 
 	void FPSComponent::Update(const float deltaTime)
 	{
 		if (!m_pText)
 		{
-			assert(m_pText && "FPSComponent requires a TextComponent on the same GameObject.");
+			assert(m_pText && "requires a TextComponent on the same GameObject.");
 			return;
 		}
 
