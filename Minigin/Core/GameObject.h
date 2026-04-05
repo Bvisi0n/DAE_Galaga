@@ -106,13 +106,22 @@ namespace dae::core
 		template <IsRenderable T>
 		[[nodiscard]] T* GetComponent() const
 		{
-			if (m_pRenderable)
+			if (!m_pRenderable)
 			{
-				return dynamic_cast<T*>(m_pRenderable);
+				return nullptr;
 			}
 			else
 			{
-				return nullptr;
+				T* pCastedRenderable = dynamic_cast<T*>(m_pRenderable);
+
+				if (pCastedRenderable && !pCastedRenderable->IsPendingDeletion())
+				{
+					return pCastedRenderable;
+				}
+				else
+				{
+					return nullptr;
+				}
 			}
 		}
 
