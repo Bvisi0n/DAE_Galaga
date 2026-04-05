@@ -180,7 +180,7 @@ namespace dae::core
 
 			if (pChild->GetParent() == this)
 			{
-				pChild->SetParent(nullptr, true);
+				pChild->m_pParent = nullptr;
 			}
 		}
 	}
