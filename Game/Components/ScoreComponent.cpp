@@ -9,7 +9,7 @@ namespace bvi
         : ObservableComponent(pOwner)
         , m_score(0) {}
 
-    void ScoreComponent::Initialize() noexcept
+    void ScoreComponent::InitializeState() noexcept
     {
         NotifyScoreChanged();
     }

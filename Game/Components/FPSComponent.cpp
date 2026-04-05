@@ -13,7 +13,7 @@ namespace bvi
 	FPSComponent::FPSComponent(dae::core::GameObject* pOwner)
 		: Component(pOwner) {}
 
-	void FPSComponent::Initialize()
+	void FPSComponent::InitializeLinkage()
 	{
 		m_pText = GetOwner()->GetComponent<dae::graphics::TextComponent>();
 		if (!m_pText)

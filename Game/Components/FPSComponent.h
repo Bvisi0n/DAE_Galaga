@@ -30,7 +30,8 @@ namespace bvi
 		FPSComponent& operator=(const FPSComponent&) = delete;
 		FPSComponent& operator=(FPSComponent&&)      = delete;
 
-		void Initialize() override;
+		void InitializeLinkage() override;
+		void InitializeState() override {}
 
 		void Update(const float deltaTime) override;
 

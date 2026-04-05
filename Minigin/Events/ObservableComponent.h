@@ -23,7 +23,8 @@ namespace dae::events
             : Component(pOwner) {};
         virtual ~ObservableComponent() = default;
 
-        virtual void Initialize() override = 0;
+        virtual void InitializeLinkage() override = 0;
+        virtual void InitializeState() override = 0;
         virtual void Update(const float deltaTime) override = 0;
 
         void AttachObserver(IObserver* observer) override;

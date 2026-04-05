@@ -14,7 +14,7 @@ namespace bvi
 		, m_Formatter(std::move(formatter))
 		, m_observedEvent(observedEvent) {}
 
-	void UIValueObserver::Initialize()
+	void UIValueObserver::InitializeLinkage()
 	{
 		m_pText = GetOwner()->GetComponent<dae::graphics::TextComponent>();
 		if (!m_pText)
@@ -27,8 +27,6 @@ namespace bvi
 	{
 		if (!m_pText)
 		{
-            // TODO N: This is triggered if object is initialized after the caller is.
-                // 2 Step initialization? First sets up all the references, second sets all the initial values?
 			assert(m_pText && "requires a TextComponent on the same GameObject.");
 			return;
 		}

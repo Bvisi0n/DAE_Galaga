@@ -18,7 +18,8 @@ namespace dae::core
         Component& operator=(const Component&) = delete;
         Component& operator=(Component&&)      = delete;
 
-        virtual void Initialize() = 0;
+        virtual void InitializeLinkage() = 0;
+        virtual void InitializeState() = 0;
 
         virtual void Update(const float deltaTime) = 0;
 

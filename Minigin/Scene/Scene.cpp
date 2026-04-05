@@ -6,6 +6,19 @@
 
 namespace dae::scene
 {
+	void Scene::Initialize()
+	{
+		for (auto& object : m_pObjects)
+		{
+			object->InitializeLinkage();
+		}
+
+		for (auto& object : m_pObjects)
+		{
+			object->InitializeState();
+		}
+	}
+
 	void Scene::Update(const float deltaTime)
 	{
 		for (auto& object : m_pObjects)

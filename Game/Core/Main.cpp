@@ -58,7 +58,6 @@ static void loadMainMenu()
 	auto fps{ std::make_unique<core::GameObject>(20.f, 20.f) };
 	fps->AddComponent<graphics::TextComponent>("FPS", font);
 	fps->AddComponent<FPSComponent>();
-	fps->GetComponent<FPSComponent>()->Initialize();
 	scene.AddGameObject(std::move(fps));
 
 
@@ -92,33 +91,24 @@ static void loadMainMenu()
 	player_1_lives_UI->AddComponent<graphics::TextComponent>("Lives:", font);
 	auto pPlayer_observer = player_1_lives_UI->AddComponent<UIValueObserver>(events::GameEvent{ core::make_sdbm_hash("PlayerDied") }, [](int v) { return "White Lives:  " + std::to_string(v) + " (spacebar)"; });
 	player_1_health->AttachObserver(pPlayer_observer);
-	// TODO N: Initialize should be called by the engine, not manually like this.
-    player_1_lives_UI->GetComponent<UIValueObserver>()->Initialize();
-	player_1_health->Initialize();
 	scene.AddGameObject(std::move(player_1_lives_UI));
 
 	auto player_2_lives_UI{ std::make_unique<core::GameObject>(20.f, 175.f) };
 	player_2_lives_UI->AddComponent<graphics::TextComponent>("Lives:", font);
 	pPlayer_observer = player_2_lives_UI->AddComponent<UIValueObserver>(events::GameEvent{ core::make_sdbm_hash("PlayerDied") }, [](int v) { return "Red Lives:     " + std::to_string(v) + " (left shoulder)"; });
 	player_2_health->AttachObserver(pPlayer_observer);
-    player_2_lives_UI->GetComponent<UIValueObserver>()->Initialize();
-	player_2_health->Initialize();
 	scene.AddGameObject(std::move(player_2_lives_UI));
 
 	auto player_1_score_UI{ std::make_unique<core::GameObject>(20.f, 150.f) };
 	player_1_score_UI->AddComponent<graphics::TextComponent>("Lives:", font);
 	pPlayer_observer = player_1_score_UI->AddComponent<UIValueObserver>(events::GameEvent{ core::make_sdbm_hash("ScoreChanged") }, [](int v) { return "White Score: " + std::to_string(v) + " (Q & E)"; });
 	player_1_score->AttachObserver(pPlayer_observer);
-	player_1_score_UI->GetComponent<UIValueObserver>()->Initialize();
-	player_1_score->Initialize();
 	scene.AddGameObject(std::move(player_1_score_UI));
 
 	auto player_2_score_UI{ std::make_unique<core::GameObject>(20.f, 200.f) };
 	player_2_score_UI->AddComponent<graphics::TextComponent>("Lives:", font);
 	pPlayer_observer = player_2_score_UI->AddComponent<UIValueObserver>(events::GameEvent{ core::make_sdbm_hash("ScoreChanged") }, [](int v){ return "Red Score:    " + std::to_string(v) + " (X & Y)"; });
 	player_2_score->AttachObserver(pPlayer_observer);
-	player_2_score_UI->GetComponent<UIValueObserver>()->Initialize();
-	player_2_score->Initialize();
 	scene.AddGameObject(std::move(player_2_score_UI));
 
 	auto rotator{ std::make_unique<core::GameObject>() };
@@ -159,6 +149,8 @@ static void loadMainMenu()
 	input.BindCommand(input::Gamepad::Button::X, input::InputManager::KeyState::Up, std::make_unique<ScoreCommand>(player_2_score, 10));
 
 	input.BindCommand(input::Gamepad::Button::Y, input::InputManager::KeyState::Up, std::make_unique<ScoreCommand>(player_2_score, 100));
+
+	scene.Initialize();
 }
 
 int main(int, char*[])

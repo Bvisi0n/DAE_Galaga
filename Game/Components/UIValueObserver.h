@@ -28,7 +28,8 @@ namespace bvi
 
 		UIValueObserver(dae::core::GameObject* pOwner, dae::events::GameEvent observedEvent, Formatter formatter);
 
-		void Initialize() override;
+		void InitializeLinkage() override;
+		void InitializeState() override {}
 
 		void OnNotify(const dae::events::GameEvent event) override;
 

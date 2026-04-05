@@ -11,6 +11,22 @@ namespace dae::core
 	GameObject::GameObject(const float x, const float y)
 		: m_transform{ this, x, y } {}
 	
+	void GameObject::InitializeLinkage()
+	{
+		for (auto& comp : m_pComponents)
+		{
+			comp->InitializeLinkage();
+		}
+	}
+
+	void GameObject::InitializeState()
+	{
+		for (auto& comp : m_pComponents)
+		{
+			comp->InitializeState();
+		}
+	}
+
 	void GameObject::Update(const float deltaTime)
 	{
 		// TODO N: GameObjects should not update when marked for deletion.

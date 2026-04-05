@@ -9,7 +9,7 @@ namespace bvi
         : ObservableComponent(pOwner)
         , m_lives(lives) {}
 
-    void HealthComponent::Initialize()
+    void HealthComponent::InitializeState()
     {
         NotifyPlayerDied();
     }

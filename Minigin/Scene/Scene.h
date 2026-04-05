@@ -19,6 +19,7 @@ namespace dae::scene
 		Scene& operator=(const Scene& other) = delete;
 		Scene& operator=(Scene&& other)		 = delete;
 
+		void Initialize();
 		void Update(const float deltaTime);
 		void Render() const;
 

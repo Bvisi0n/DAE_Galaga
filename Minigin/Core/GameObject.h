@@ -37,6 +37,8 @@ namespace dae::core
 		GameObject& operator=(const GameObject& other) = delete;
 		GameObject& operator=(GameObject&& other)	   = delete;
 
+		void InitializeLinkage();
+		void InitializeState();
 		void Update(const float deltaTime);
 		void Render() const;
 
