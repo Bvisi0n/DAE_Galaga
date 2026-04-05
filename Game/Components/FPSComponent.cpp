@@ -10,15 +10,26 @@
 
 namespace bvi
 {
-	FPSComponent::FPSComponent(dae::core::GameObject* pOwner, dae::graphics::TextComponent* pText)
-		: Component(pOwner)
-		, m_pText(pText)
+	FPSComponent::FPSComponent(dae::core::GameObject* pOwner)
+		: Component(pOwner) {}
+
+	void FPSComponent::Initialize()
 	{
-		assert(m_pText != nullptr && "FPSComponent requires a valid TextComponent reference.");
+		m_pText = GetOwner()->GetComponent<dae::graphics::TextComponent>();
+		if (!m_pText)
+		{
+			assert(m_pText && "FPSComponent requires a TextComponent on the same GameObject.");
+        }
 	}
 
 	void FPSComponent::Update(const float deltaTime)
 	{
+		if (!m_pText)
+		{
+			assert(m_pText && "FPSComponent requires a TextComponent on the same GameObject.");
+			return;
+		}
+
 		const float fps{ (deltaTime > 0.f) ? (1.f / deltaTime) : 0.f };
 
 		std::ostringstream oss;

@@ -57,7 +57,8 @@ static void loadMainMenu()
 	font = resources::ResourceManager::GetInstance().LoadFont("Lingua.otf", 24);
 	auto fps{ std::make_unique<core::GameObject>(20.f, 20.f) };
 	auto* pText = fps->AddComponent<graphics::TextComponent>("FPS", font);
-	fps->AddComponent<FPSComponent>(pText);
+	fps->AddComponent<FPSComponent>();
+    fps->GetComponent<FPSComponent>()->Initialize();
 	scene.AddGameObject(std::move(fps));
 
 

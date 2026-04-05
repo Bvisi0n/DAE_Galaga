@@ -22,7 +22,7 @@ namespace bvi
 	class FPSComponent final : public dae::core::Component
 	{
 	public:
-		FPSComponent(dae::core::GameObject* pOwner, dae::graphics::TextComponent* pText);
+		FPSComponent(dae::core::GameObject* pOwner);
 		~FPSComponent() = default;
 
 		FPSComponent(const FPSComponent&)            = delete;
@@ -30,7 +30,8 @@ namespace bvi
 		FPSComponent& operator=(const FPSComponent&) = delete;
 		FPSComponent& operator=(FPSComponent&&)      = delete;
 
-		void Initialize() override {} // TODO N: Should fetch m_pText from the owner.
+		void Initialize() override;
+
 		void Update(const float deltaTime) override;
 
 	private:
