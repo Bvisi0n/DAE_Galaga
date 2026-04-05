@@ -2,7 +2,6 @@
 #define SCENE_H
 
 #include <memory>
-#include <string>
 #include <vector>
 
 #include "Minigin/Core/GameObject.h"
@@ -30,9 +29,14 @@ namespace dae::scene
 
 	private:
 		friend class SceneManager;
+		
 		explicit Scene() = default;
 
+		void FlushPendingObjects();
+
 		std::vector <std::unique_ptr<core::GameObject>> m_pObjects{};
+		std::vector<std::unique_ptr<core::GameObject>> m_pPendingObjects{};
+		bool m_isInitialized{ false };
 	};
 }
 #endif

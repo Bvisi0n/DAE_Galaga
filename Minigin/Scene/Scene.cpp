@@ -8,24 +8,30 @@ namespace dae::scene
 {
 	void Scene::Initialize()
 	{
-		for (auto& object : m_pObjects)
+		if (m_isInitialized)
 		{
-			object->InitializeLinkage();
+			assert(!m_isInitialized && "Scene is already initialized.");
+			return;
 		}
 
-		for (auto& object : m_pObjects)
-		{
-			object->InitializeState();
-		}
+		FlushPendingObjects();
+
+		m_isInitialized = true;
 	}
 
 	void Scene::Update(const float deltaTime)
 	{
-		for (auto& object : m_pObjects)
+		assert(m_isInitialized && "Scene isn't initialized.");
+		FlushPendingObjects();
+
+		// Don't change to ranged based for loop:
+		// std::vector iterator invalidation
+		const size_t objectCount = m_pObjects.size();
+		for (size_t i = 0; i < objectCount; ++i)
 		{
-			if (!object->IsPendingDeletion())
+			if (!m_pObjects[i]->IsPendingDeletion())
 			{
-				object->Update(deltaTime);
+				m_pObjects[i]->Update(deltaTime);
 			}
 		}
 
@@ -51,7 +57,8 @@ namespace dae::scene
 	void Scene::AddGameObject(std::unique_ptr<core::GameObject> pObject)
 	{
 		assert(pObject != nullptr && "Cannot add a null GameObject to the scene.");
-		m_pObjects.emplace_back(std::move(pObject));
+
+		m_pPendingObjects.emplace_back(std::move(pObject));
 	}
 
 	void Scene::RemoveGameObject(core::GameObject& object)
@@ -71,5 +78,35 @@ namespace dae::scene
 	void Scene::RemoveAllGameObjects()
 	{
 		m_pObjects.clear();
+	}
+
+	void Scene::FlushPendingObjects()
+	{
+		if (m_pPendingObjects.empty())
+		{
+			return;
+		}
+
+		// Allows adding new objects during the flush without iterator invalidation issues, they will be flushed in the next frame.
+		auto p_new_objects = std::move(m_pPendingObjects);
+		m_pPendingObjects.clear();
+
+		const size_t new_index_start = m_pObjects.size();
+
+		m_pObjects.reserve(m_pObjects.size() + p_new_objects.size());
+		for (auto& object : p_new_objects)
+		{
+			m_pObjects.emplace_back(std::move(object));
+		}
+
+		for (size_t index = new_index_start; index < m_pObjects.size(); ++index)
+		{
+			m_pObjects[index]->InitializeLinkage();
+		}
+
+		for (size_t index = new_index_start; index < m_pObjects.size(); ++index)
+		{
+			m_pObjects[index]->InitializeState();
+		}
 	}
 }

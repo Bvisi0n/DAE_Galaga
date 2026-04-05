@@ -70,7 +70,7 @@ namespace dae::core
 		}
 
 		// Don't change to ranged based for loop:
-		// std::vector iterator invalidation https://en.cppreference.com/w/cpp/container/vector.html
+		// std::vector iterator invalidation
 		const size_t component_count = m_pComponents.size();
 		for (size_t i = 0; i < component_count; ++i)
 		{
