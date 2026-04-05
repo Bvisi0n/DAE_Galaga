@@ -69,11 +69,14 @@ namespace dae::core
 			return;
 		}
 
-		for (auto& comp : m_pComponents)
+		// Don't change to ranged based for loop:
+		// std::vector iterator invalidation https://en.cppreference.com/w/cpp/container/vector.html
+		const size_t component_count = m_pComponents.size();
+		for (size_t i = 0; i < component_count; ++i)
 		{
-			if (!comp->IsPendingDeletion())
+			if (!m_pComponents[i]->IsPendingDeletion())
 			{
-				comp->Update(deltaTime);
+				m_pComponents[i]->Update(deltaTime);
 			}
 		}
 
