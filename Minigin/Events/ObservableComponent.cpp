@@ -26,7 +26,9 @@ namespace dae::events
 
 	void ObservableComponent::NotifyObservers(GameEvent event) const
 	{
-		for (auto observer : m_pObservers)
+		// Prevents iterator invalidation if an observer detaches itself during notification.
+		auto observersCopy = m_pObservers;
+		for (auto observer : observersCopy)
 		{
 			observer->OnNotify(event);
 		}
