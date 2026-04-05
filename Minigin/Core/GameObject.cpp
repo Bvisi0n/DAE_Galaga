@@ -10,7 +10,42 @@ namespace dae::core
 {
 	GameObject::GameObject(const float x, const float y)
 		: m_transform{ this, x, y } {}
+
+	GameObject::~GameObject()
+	{
+		// TODO L: Works but doesn't feel right, research is required. Who owns what, use smart pointers?
+		for (auto* pChild : m_pChildren)
+		{
+			if (pChild)
+			{
+				pChild->m_pParent = nullptr;
+			}
+		}
+
+		if (m_pParent && !m_pParent->IsPendingDeletion())
+		{
+			m_pParent->RemoveChild(this);
+		}
+	}
 	
+	void GameObject::MarkForDeletion()
+	{
+		m_isPendingDeletion = true;
+
+		for (auto* pChild : m_pChildren)
+		{
+			if (pChild)
+			{
+				pChild->MarkForDeletion();
+			}
+		}
+	}
+
+	bool GameObject::IsPendingDeletion() const noexcept
+	{
+		return m_isPendingDeletion;
+	}
+
 	void GameObject::InitializeLinkage()
 	{
 		for (auto& comp : m_pComponents)
@@ -29,7 +64,11 @@ namespace dae::core
 
 	void GameObject::Update(const float deltaTime)
 	{
-		// TODO N: GameObjects should not update when marked for deletion.
+		if (m_isPendingDeletion)
+		{
+			return;
+		}
+
 		for (auto& comp : m_pComponents)
 		{
 			if (!comp->IsPendingDeletion())
@@ -56,17 +95,18 @@ namespace dae::core
 			return;
 		}
 
-		if (parent == nullptr)
+		if (keepWorldPosition)
 		{
-			m_transform.SetLocalPosition(m_transform.GetWorldPosition());
-		}
-		else
-		{
-			if (keepWorldPosition)
+			if (parent == nullptr)
+			{
+				m_transform.SetLocalPosition(m_transform.GetWorldPosition());
+			}
+			else
 			{
 				m_transform.SetLocalPosition(m_transform.GetWorldPosition() - parent->GetTransform().GetWorldPosition());
 			}
 		}
+		//else if (!keepWorldPosition) the current LocalPosition is preserved as is
 
 		if (m_pParent)
 		{
@@ -74,6 +114,7 @@ namespace dae::core
 		}
 
 		m_pParent = parent;
+
 		if (m_pParent)
 		{
 			m_pParent->AddChild(this);
@@ -112,17 +153,44 @@ namespace dae::core
 		return false;
 	}
 
-	void GameObject::RemoveChild(GameObject* pChild)
-	{
-		m_pChildren.erase(std::remove(m_pChildren.begin(), m_pChildren.end(), pChild), m_pChildren.end());
-	}
-
 	void GameObject::AddChild(GameObject* pChild)
 	{
-		m_pChildren.emplace_back(pChild);
+		if (pChild == nullptr)
+		{
+			return;
+		}
+		else
+		{
+			if (std::ranges::find(m_pChildren, pChild) == m_pChildren.end())
+			{
+				m_pChildren.emplace_back(pChild);
+			}
+		}
 	}
+
+	void GameObject::RemoveChild(GameObject* pChild)
+	{
+		if (pChild == nullptr)
+		{
+			return;
+		}
+		else
+		{
+			std::erase(m_pChildren, pChild);
+
+			if (pChild->GetParent() == this)
+			{
+				pChild->SetParent(nullptr, true);
+			}
+		}
+	}
+
 	void GameObject::CleanupComponents()
 	{
-		std::erase_if(m_pComponents, [](const auto& component){ return component->IsPendingDeletion(); });
+		std::erase_if(m_pComponents,
+			[](const auto& component)
+			{
+				return component->IsPendingDeletion();
+			});
 	}
 }

@@ -3,45 +3,45 @@
 
 namespace dae::core
 {
-    class GameObject;
+	class GameObject;
 
-    class Component
-    {
-    public:
-        explicit Component(GameObject* pOwner) noexcept
-            : m_pOwner(pOwner) {}
+	class Component
+	{
+	public:
+		explicit Component(GameObject* pOwner) noexcept
+			: m_pOwner(pOwner) {}
 
-        virtual ~Component() = default;
+		virtual ~Component() = default;
 
-        Component(const Component&)            = delete;
-        Component(Component&&)                 = delete;
-        Component& operator=(const Component&) = delete;
-        Component& operator=(Component&&)      = delete;
+		Component(const Component&)            = delete;
+		Component(Component&&)                 = delete;
+		Component& operator=(const Component&) = delete;
+		Component& operator=(Component&&)      = delete;
 
-        virtual void InitializeLinkage() = 0;
-        virtual void InitializeState() = 0;
+		virtual void InitializeLinkage() = 0;
+		virtual void InitializeState() = 0;
 
-        virtual void Update(const float deltaTime) = 0;
+		virtual void Update(const float deltaTime) = 0;
 
-        void MarkForDeletion() noexcept
-        {
-            m_IsPendingDeletion = true;
-        }
+		void MarkForDeletion() noexcept
+		{
+			m_isPendingDeletion = true;
+		}
 
-        [[nodiscard]] bool IsPendingDeletion() const noexcept
-        {
-            return m_IsPendingDeletion;
-        }
+		[[nodiscard]] bool IsPendingDeletion() const noexcept
+		{
+			return m_isPendingDeletion;
+		}
 
-    protected:
-        [[nodiscard]] GameObject* GetOwner() const noexcept
-        {
-            return m_pOwner;
-        }
+	protected:
+		[[nodiscard]] GameObject* GetOwner() const noexcept
+		{
+			return m_pOwner;
+		}
 
-    private:
-        GameObject* m_pOwner;
-        bool m_IsPendingDeletion{ false };
-    };
+	private:
+		GameObject* m_pOwner;
+		bool m_isPendingDeletion{ false };
+	};
 }
 #endif

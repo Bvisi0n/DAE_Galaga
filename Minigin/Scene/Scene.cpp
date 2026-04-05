@@ -23,21 +23,25 @@ namespace dae::scene
 	{
 		for (auto& object : m_pObjects)
 		{
-			object->Update(deltaTime);
+			if (!object->IsPendingDeletion())
+			{
+				object->Update(deltaTime);
+			}
 		}
 
 		for (auto& object : m_pObjects)
 		{
-			if (!object->GetParent())
+			if (!object->IsPendingDeletion() && !object->GetParent())
 			{
 				object->GetTransform().UpdateWorldMatrix(glm::mat4(1.0f));
 			}
 		}
+
+		CleanupGameObjects();
 	}
 
 	void Scene::Render() const
 	{
-		// TODO N: Gameobjects marked for deletion should be removed before rendering.
 		for (const auto& object : m_pObjects)
 		{
 			object->Render();
@@ -50,17 +54,18 @@ namespace dae::scene
 		m_pObjects.emplace_back(std::move(pObject));
 	}
 
-	void Scene::RemoveGameObject(const core::GameObject& object)
+	void Scene::RemoveGameObject(core::GameObject& object)
 	{
-		// TODO N: Use a flag to mark it for deletion, this function should be private and called in between Update() and Render(). The public variant should just mark it.
-		m_pObjects.erase(
-			std::remove_if(
-				m_pObjects.begin(),
-				m_pObjects.end(),
-				[&object](const auto& ptr) { return ptr.get() == &object; }
-			),
-			m_pObjects.end()
-		);
+		object.MarkForDeletion();
+	}
+
+	void Scene::CleanupGameObjects()
+	{
+		std::erase_if(m_pObjects,
+			[](const auto& pObj)
+			{
+				return pObj->IsPendingDeletion();
+			});
 	}
 
 	void Scene::RemoveAllGameObjects()

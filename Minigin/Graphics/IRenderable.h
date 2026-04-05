@@ -7,7 +7,7 @@ namespace dae::graphics
 	{
 	public:
 		virtual ~IRenderable() {};
-        virtual void Render() const = 0;
+		virtual void Render() const = 0;
 	};
 }
 #endif

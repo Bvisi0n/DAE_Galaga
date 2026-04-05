@@ -8,33 +8,33 @@
 
 namespace dae::core
 {
-    class GameObject;
+	class GameObject;
 }
 
 namespace dae::events
 {
-    class IObserver;
-    struct GameEvent;
+	class IObserver;
+	struct GameEvent;
 
-    class ObservableComponent : public core::Component, public ISubject
-    {
-    public:
-        ObservableComponent(core::GameObject* pOwner) noexcept
-            : Component(pOwner) {};
-        virtual ~ObservableComponent() = default;
+	class ObservableComponent : public core::Component, public ISubject
+	{
+	public:
+		ObservableComponent(core::GameObject* pOwner) noexcept
+			: Component(pOwner) {};
+		virtual ~ObservableComponent() = default;
 
-        virtual void InitializeLinkage() override = 0;
-        virtual void InitializeState() override = 0;
-        virtual void Update(const float deltaTime) override = 0;
+		virtual void InitializeLinkage() override = 0;
+		virtual void InitializeState() override = 0;
+		virtual void Update(const float deltaTime) override = 0;
 
-        void AttachObserver(IObserver* observer) override;
-        void DetachObserver(IObserver* observer) override;
+		void AttachObserver(IObserver* observer) override;
+		void DetachObserver(IObserver* observer) override;
 
-    protected:
-        void NotifyObservers(GameEvent event) const override;
+	protected:
+		void NotifyObservers(GameEvent event) const override;
 
-    private:
-        std::vector<IObserver*> m_pObservers;
-    };
+	private:
+		std::vector<IObserver*> m_pObservers;
+	};
 }
 #endif

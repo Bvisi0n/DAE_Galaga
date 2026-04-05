@@ -30,12 +30,15 @@ namespace dae::core
 	{
 	public:
 		GameObject(const float x = 0.f, const float y = 0.f);
-		~GameObject() = default; // TODO N: If a parent gets deleted, then all kids should be deleted as well.
+		~GameObject();
 
 		GameObject(const GameObject& other)			   = delete;
 		GameObject(GameObject&& other)				   = delete;
 		GameObject& operator=(const GameObject& other) = delete;
 		GameObject& operator=(GameObject&& other)	   = delete;
+
+		void MarkForDeletion();
+		[[nodiscard]] bool IsPendingDeletion() const noexcept;
 
 		void InitializeLinkage();
 		void InitializeState();
@@ -155,10 +158,11 @@ namespace dae::core
 		graphics::IRenderable* m_pRenderable{ nullptr };
 
 		Transform m_transform;
+		bool m_isPendingDeletion{ false };
 
 		bool IsChild(GameObject* pCandidate);
-		void RemoveChild(GameObject* pParent);
-		void AddChild(GameObject* pParent);
+		void AddChild(GameObject* pChild);
+		void RemoveChild(GameObject* pChild);
 
 		void CleanupComponents();
 	};

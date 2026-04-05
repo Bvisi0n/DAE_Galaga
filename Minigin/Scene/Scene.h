@@ -24,7 +24,8 @@ namespace dae::scene
 		void Render() const;
 
 		void AddGameObject(std::unique_ptr<core::GameObject> pObject);
-		void RemoveGameObject(const core::GameObject& object);
+		void RemoveGameObject(core::GameObject& object);
+		void CleanupGameObjects();
 		void RemoveAllGameObjects();
 
 	private:

@@ -21,35 +21,35 @@
 
 namespace dae::events
 {
-    struct Vector2D { float x, y; };
-    using EventId = uint32_t;
-    using EntityId = uint32_t;
-    using EventArg = std::variant<int32_t, float, bool, Vector2D, EntityId>;
+	struct Vector2D { float x, y; };
+	using EventId = uint32_t;
+	using EntityId = uint32_t;
+	using EventArg = std::variant<int32_t, float, bool, Vector2D, EntityId>;
 
-    struct GameEvent
-    {
-        const EventId id;
+	struct GameEvent
+	{
+		const EventId id;
 
-        // Should pack nicely within 64 Bytes
-        static constexpr uint8_t MAX_ARGS{ 4 };
-        
-        uint8_t argumentCount{ 0 };
-        EventArg args[MAX_ARGS]{};
+		// Should pack nicely within 64 Bytes
+		static constexpr uint8_t MAX_ARGS{ 4 };
+		
+		uint8_t argumentCount{ 0 };
+		EventArg args[MAX_ARGS]{};
 
-        explicit GameEvent(EventId _id) noexcept
-            : id{ _id } {}
+		explicit GameEvent(EventId _id) noexcept
+			: id{ _id } {}
 
-        template <typename T>
-        void PushArg(T&& argument)
-        {
-            if (argumentCount >= MAX_ARGS)
-            {
-                assert(false && "GameEvent: Maximum arguments exceeded.");
-                return;
-            }
+		template <typename T>
+		void PushArg(T&& argument)
+		{
+			if (argumentCount >= MAX_ARGS)
+			{
+				assert(false && "GameEvent: Maximum arguments exceeded.");
+				return;
+			}
 
-            args[argumentCount++] = std::forward<T>(argument);
-        }
-    };
+			args[argumentCount++] = std::forward<T>(argument);
+		}
+	};
 }
 #endif

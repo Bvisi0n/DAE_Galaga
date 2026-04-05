@@ -5,28 +5,28 @@
 
 namespace dae::core
 {
-    class GameObject;
+	class GameObject;
 }
 
 namespace bvi
 {
-    class HealthComponent final : public dae::events::ObservableComponent
-    {
-    public:
-        HealthComponent(dae::core::GameObject* pOwner, int lives);
+	class HealthComponent final : public dae::events::ObservableComponent
+	{
+	public:
+		HealthComponent(dae::core::GameObject* pOwner, int lives);
 
-        void InitializeLinkage() override {}
-        void InitializeState() override;
-        void Update(const float) noexcept override {}
+		void InitializeLinkage() override {}
+		void InitializeState() override;
+		void Update(const float) noexcept override {}
 
-        [[nodiscard]] int GetLives() const;
+		[[nodiscard]] int GetLives() const;
 
-        void Die();
+		void Die();
 
-    private:
-        int m_lives;
+	private:
+		int m_lives;
 
-        void NotifyPlayerDied() const;
-    };
+		void NotifyPlayerDied() const;
+	};
 }
 #endif

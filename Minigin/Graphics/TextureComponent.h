@@ -12,7 +12,7 @@ namespace dae::graphics
 	class Texture2D;
 
 	// Renders an image using a Texture2D.
-    class TextureComponent final : public core::Component, public IRenderable
+	class TextureComponent final : public core::Component, public IRenderable
 	{
 	public:
 		using Component::Component;

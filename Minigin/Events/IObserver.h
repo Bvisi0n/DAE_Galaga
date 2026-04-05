@@ -5,14 +5,14 @@
 
 namespace dae::events
 {
-    class IObserver
-    {
-        // https://gameprogrammingpatterns.com/observer.html
-        // https://refactoring.guru/design-patterns/observer
-        // https://refactoring.guru/design-patterns/observer/cpp/example
-    public:
-        virtual ~IObserver() {};
-        virtual void OnNotify(const GameEvent event) = 0;
-    };
+	class IObserver
+	{
+		// https://gameprogrammingpatterns.com/observer.html
+		// https://refactoring.guru/design-patterns/observer
+		// https://refactoring.guru/design-patterns/observer/cpp/example
+	public:
+		virtual ~IObserver() {};
+		virtual void OnNotify(const GameEvent event) = 0;
+	};
 }
 #endif
