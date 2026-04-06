@@ -27,14 +27,16 @@ namespace dae::events
 		virtual void InitializeState() override = 0;
 		virtual void Update(const float deltaTime) override = 0;
 
-		void AttachObserver(IObserver* observer) override;
-		void DetachObserver(IObserver* observer) override;
+		void AttachObserver(IObserver* pObserver) override;
+		void DetachObserver(IObserver* pObserver) override;
 
 	protected:
-		void NotifyObservers(GameEvent event) const override;
+		void NotifyObservers(GameEvent event) override;
 
 	private:
 		std::vector<IObserver*> m_pObservers;
+		std::vector<IObserver*> m_pPendingObservers;
+		mutable bool m_isNotifying{ false };
 	};
 }
 #endif

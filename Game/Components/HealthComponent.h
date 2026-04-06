@@ -26,7 +26,7 @@ namespace bvi
 	private:
 		int m_lives;
 
-		void NotifyPlayerDied() const;
+		void NotifyPlayerDied();
 	};
 }
 #endif

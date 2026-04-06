@@ -25,7 +25,7 @@ namespace bvi
 		return m_score;
 	}
 
-	void ScoreComponent::NotifyScoreChanged() const
+	void ScoreComponent::NotifyScoreChanged()
 	{
 		dae::events::GameEvent event{ dae::core::make_sdbm_hash("ScoreChanged") };
 		event.PushArg(m_score);

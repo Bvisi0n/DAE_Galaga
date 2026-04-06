@@ -19,12 +19,12 @@ namespace dae::events
 		ISubject(ISubject&&)                    = delete;
 		ISubject& operator=(ISubject&&)         = delete;
 		
-		virtual void AttachObserver(IObserver* observer) = 0;
-		virtual void DetachObserver(IObserver* observer) = 0;
+		virtual void AttachObserver(IObserver* pObserver) = 0;
+		virtual void DetachObserver(IObserver* pObserver) = 0;
 
 	protected:
 		ISubject() = default;
-		virtual void NotifyObservers(GameEvent event) const = 0;
+		virtual void NotifyObservers(GameEvent event) = 0;
 	};
 }
 #endif

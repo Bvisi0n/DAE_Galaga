@@ -21,7 +21,7 @@ namespace bvi
 	private:
 		int m_score{};
 
-		void NotifyScoreChanged() const;
+		void NotifyScoreChanged();
 	};
 }
 #endif

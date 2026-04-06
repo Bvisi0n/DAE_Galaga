@@ -28,7 +28,7 @@ namespace bvi
 		}
 	}
 
-	void HealthComponent::NotifyPlayerDied() const
+	void HealthComponent::NotifyPlayerDied()
 	{
 		dae::events::GameEvent event{ dae::core::make_sdbm_hash("PlayerDied") };
 		event.PushArg(m_lives);

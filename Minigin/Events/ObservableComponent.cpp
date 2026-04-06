@@ -7,30 +7,54 @@
 
 namespace dae::events
 {
-	void ObservableComponent::AttachObserver(IObserver* observer)
+	void ObservableComponent::AttachObserver(IObserver* pObserver)
 	{
-		if (observer == nullptr)
+		if (m_isNotifying)
 		{
-			return;
+			m_pPendingObservers.push_back(pObserver);
 		}
-		else if (std::ranges::find(m_pObservers, observer) == m_pObservers.end())
+		else
 		{
-			m_pObservers.push_back(observer);
+			m_pObservers.push_back(pObserver);
 		}
 	}
 
-	void ObservableComponent::DetachObserver(IObserver * observer)
+	void ObservableComponent::DetachObserver(IObserver * pObserver)
 	{
-		std::erase(m_pObservers, observer);
+		auto it = std::ranges::find(m_pObservers, pObserver);
+		if (it != m_pObservers.end())
+		{
+			if (m_isNotifying)
+			{
+				*it = nullptr;
+			}
+			else
+			{
+				m_pObservers.erase(it);
+			}
+		}
 	}
 
-	void ObservableComponent::NotifyObservers(GameEvent event) const
+	void ObservableComponent::NotifyObservers(GameEvent event)
 	{
-		// Prevents iterator invalidation if an observer detaches itself during notification.
-		auto observersCopy = m_pObservers;
-		for (auto observer : observersCopy)
+		m_isNotifying = true;
+
+		for (IObserver* p_observer : m_pObservers)
 		{
-			observer->OnNotify(event);
+			if (p_observer != nullptr)
+			{
+				p_observer->OnNotify(event);
+			}
+		}
+
+		m_isNotifying = false;
+
+		std::erase(m_pObservers, nullptr);
+
+		if (!m_pPendingObservers.empty())
+		{
+			m_pObservers.insert(m_pObservers.end(), m_pPendingObservers.begin(), m_pPendingObservers.end());
+			m_pPendingObservers.clear();
 		}
 	}
 }
