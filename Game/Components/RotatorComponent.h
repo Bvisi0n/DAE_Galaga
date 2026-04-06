@@ -1,8 +1,6 @@
 #ifndef ROTATORCOMPONENT_H
 #define ROTATORCOMPONENT_H
 
-#include <glm/glm.hpp>
-
 #include "Minigin/Core/Component.h"
 
 namespace dae::core
@@ -16,12 +14,16 @@ namespace bvi
 	class RotatorComponent final : public dae::core::Component
 	{
 	public:
-		RotatorComponent(dae::core::GameObject* pOwner, float range, float speed);
+		RotatorComponent( dae::core::GameObject* pOwner, float range, float speed );
 		~RotatorComponent() override = default;
 
-		void InitializeLinkage() override {}
-		void InitializeState() override {}
-		void Update(const float deltaTime) override;
+		void InitializeLinkage() override
+		{}
+
+		void InitializeState() override
+		{}
+
+		void Update( const float deltaTime ) override;
 
 	private:
 		float m_angle{ 0.0f };

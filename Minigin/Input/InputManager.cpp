@@ -1,87 +1,120 @@
-#include <SDL3/SDL.h>
+#include <memory>
+
+#include <SDL3/SDL_events.h>
+
 #include <backends/imgui_impl_sdl3.h>
 
+#include "Minigin/Input/Gamepad.h"
 #include "Minigin/Input/InputManager.h"
+#include "Minigin/Input/Keyboard.h"
 
 namespace dae::input
 {
 	InputManager::InputManager() noexcept
-		: m_pKeyboard(std::make_unique<Keyboard>())
+		: m_keyboard( std::make_unique<Keyboard>() )
 	{
-		for (unsigned int i = 0; i < 4; ++i)
+		constexpr int c_maxControllers = 4;
+		m_gamepads.reserve( c_maxControllers );
+		for ( unsigned int index = 0; index < c_maxControllers; ++index )
 		{
-			m_pGamepads.push_back(std::make_unique<Gamepad>(i));
+			m_gamepads.push_back( std::make_unique<Gamepad>( index ) );
 		}
 	}
 
-	bool InputManager::ProcessInput(const float deltaTime)
+	bool InputManager::ProcessInput( const float deltaTime )
 	{
-		SDL_Event e;
-		while (SDL_PollEvent(&e))
+		SDL_Event event;
+		while ( SDL_PollEvent( &event ) )
 		{
-			if (e.type == SDL_EVENT_QUIT)
+			if ( event.type == SDL_EVENT_QUIT )
 			{
 				return false;
 			}
 
-			ImGui_ImplSDL3_ProcessEvent(&e);
+			ImGui_ImplSDL3_ProcessEvent( &event );
 		}
 
-		// Careful when moving these around, it's dependent on SDL_PollEvent(). Check Emscripten build if you do!
+		// SDL_PollEvent() must come first.
 		// See https://youtu.be/TSlJ3dX5GCI?si=_Nb7xtJYRhaWbBvI&t=339 for info.
 
-		m_pKeyboard->Update();
-		for (auto& gamepad : m_pGamepads)
+		if ( m_keyboard )
 		{
-			gamepad->Update();
+			m_keyboard->Update();
 		}
 
-		auto checkState = [](KeyState state, auto isDown, auto isUp, auto isPressed) -> bool
+		for ( auto& gamepad : m_gamepads )
+		{
+			if ( gamepad )
 			{
-				switch (state)
+				gamepad->Update();
+			}
+		}
+
+		auto checkState = [] ( KeyState state, auto isDown, auto isUp, auto isPressed ) -> bool
+			{
+				switch ( state )
 				{
-				case KeyState::Down:
-					return isDown();
-				case KeyState::Up:
-					return isUp();
-				case KeyState::Pressed:
-					return isPressed();
-				default:
-					return false;
+					case KeyState::Down:
+						return isDown();
+					case KeyState::Up:
+						return isUp();
+					case KeyState::Pressed:
+						return isPressed();
+					default:
+						return false;
 				}
 			};
 
-		for (auto& [binding, command] : m_pKeyboardCommands)
+		for ( auto& [binding, command] : m_keyboardCommands )
 		{
-			const auto& [key, state] = binding;
-			if (checkState(state, [&] { return m_pKeyboard->IsDown(key); },
-				[&] { return m_pKeyboard->IsUp(key); },
-				[&] { return m_pKeyboard->IsPressed(key); }))
+			if ( command == nullptr )
 			{
-				command->Execute(deltaTime);
+				continue;
+			}
+
+			const auto& [key, state] = binding;
+			if ( checkState( state,
+							 [ & ] { return m_keyboard->IsDown( key ); },
+							 [ & ] { return m_keyboard->IsUp( key ); },
+							 [ & ] { return m_keyboard->IsPressed( key ); } ) )
+			{
+				command->Execute( deltaTime );
 			}
 		}
-		for (auto& [binding, command] : m_pGamepadCommands)
+
+		for ( auto& [binding, command] : m_gamepadCommands )
 		{
-			const auto& [idx, btn, state] = binding;
-			if (checkState(state, [&] { return m_pGamepads[idx]->IsDown(btn); },
-				[&] { return m_pGamepads[idx]->IsUp(btn); },
-				[&] { return m_pGamepads[idx]->IsPressed(btn); }))
+			if ( command == nullptr )
 			{
-				command->Execute(deltaTime);
+				continue;
+			}
+
+			const auto& [index, button, state] = binding;
+
+			if ( index >= m_gamepads.size() || m_gamepads[ index ] == nullptr )
+			{
+				continue;
+			}
+
+			if ( checkState( state,
+							 [ & ] { return m_gamepads[ index ]->IsDown( button ); },
+							 [ & ] { return m_gamepads[ index ]->IsUp( button ); },
+							 [ & ] { return m_gamepads[ index ]->IsPressed( button ); } ) )
+			{
+				command->Execute( deltaTime );
 			}
 		}
 
 		return true;
 	}
 
-	bool InputManager::IsControllerConnected(unsigned int controllerIndex) const
+	bool InputManager::IsControllerConnected( unsigned int controllerIndex ) const
 	{
-		if (controllerIndex >= m_pGamepads.size())
+		if ( controllerIndex >= m_gamepads.size() )
 		{
 			return false;
 		}
 
-		return m_pGamepads[controllerIndex]->IsConnected();
+		return m_gamepads[ controllerIndex ]->IsConnected();
 	}
 }

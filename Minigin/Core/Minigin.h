@@ -26,22 +26,22 @@ namespace dae::core
 	class Minigin final
 	{
 	public:
-		explicit Minigin(const MiniginConfig& config);
+		explicit Minigin( const MiniginConfig& config );
 		~Minigin();
 
-		Minigin(const Minigin& other)			 = delete;
-		Minigin(Minigin&& other)				 = delete;
-		Minigin& operator=(const Minigin& other) = delete;
-		Minigin& operator=(Minigin&& other)		 = delete;
+		Minigin( const Minigin& other ) = delete;
+		Minigin( Minigin&& other ) = delete;
+		Minigin& operator=( const Minigin& other ) = delete;
+		Minigin& operator=( Minigin&& other ) = delete;
 
-		void Run(const std::function<void()>& load);
+		void Run( const std::function<void()>& load );
 		void RunOneFrame();
 
 	private:
 		std::chrono::steady_clock::time_point m_lastTime{};
 		const std::chrono::nanoseconds m_nsPerFrame;
 		const float m_maxDeltaTime;
-		bool  m_quit{};
+		bool m_quit{};
 	};
 }
 #endif

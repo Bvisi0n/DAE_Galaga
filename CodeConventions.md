@@ -1,14 +1,22 @@
 # Naming Conventions
 
 ## Types & Functions
-- **Class/Struct**: PascalCase
-- **Function names**: PascalCase
+- **Class / Struct / Enum**: PascalCase
+- **Function()**: PascalCase
 
-## Variables
+## Scope Variables
+- **Local variables**: camelCase
 - **Function parameters**: camelCase
+
+## Member Variables
 - **Member variables**: m_camelCase
-- **Local variables**: snake_case
-- **global variables**: g_camelCase
+
+## Static / Global / Constant Variables
+- **Compile-time Constants (constexpr)**: c_PascalCase
+- **Static Class Members**: s_camelCase
+- **Global variables**: g_camelCase
+
+## Namespaces
 - **Namespaces**: snake_case
 
 
@@ -26,7 +34,7 @@ else
     // code
 }
 ```
-- **Variable initialization**: Uniform Initialization
+- **Variable initialization**: Enforced Uniform Initialization where possible
 ```
 int x{ 0 };
 ```
@@ -34,6 +42,7 @@ int x{ 0 };
 ```
 class MyClass
 {
+    // friend classes
 public:
     // public members
     // public functions
@@ -41,7 +50,6 @@ protected:
     // protected members
     // protected functions
 private:
-    // friends
     // private members
     // private functions
 };

@@ -3,6 +3,7 @@
 
 #include <cassert>
 #include <cstdint>
+#include <utility>
 #include <variant>
 
 // Inspired by DAE/Prog4/observer_eventqueue.pdf
@@ -21,7 +22,11 @@
 
 namespace dae::events
 {
-	struct Vector2D { float x, y; };
+	struct Vector2D
+	{
+		float x, y;
+	};
+
 	using EventId = uint32_t;
 	using EntityId = uint32_t;
 	using EventArg = std::variant<int32_t, float, bool, Vector2D, EntityId>;
@@ -30,25 +35,26 @@ namespace dae::events
 	{
 		const EventId id;
 
-		// Should pack nicely within 64 Bytes
+		// Should pack nicely within 64 Bytes if less or equal to 4
 		static constexpr uint8_t MAX_ARGS{ 4 };
-		
-		uint8_t argumentCount{ 0 };
-		EventArg args[MAX_ARGS]{};
 
-		explicit GameEvent(EventId _id) noexcept
-			: id{ _id } {}
+		uint8_t argumentCount{ 0 };
+		EventArg args[ MAX_ARGS ]{};
+
+		explicit GameEvent( EventId _id ) noexcept
+			: id{ _id }
+		{}
 
 		template <typename T>
-		void PushArg(T&& argument)
+		void PushArg( T&& argument )
 		{
-			if (argumentCount >= MAX_ARGS)
+			if ( argumentCount >= MAX_ARGS )
 			{
-				assert(false && "GameEvent: Maximum arguments exceeded.");
+				assert( false && "GameEvent: Maximum arguments exceeded." );
 				return;
 			}
 
-			args[argumentCount++] = std::forward<T>(argument);
+			args[ argumentCount++ ] = std::forward<T>( argument );
 		}
 	};
 }

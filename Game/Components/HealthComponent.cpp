@@ -5,9 +5,10 @@
 
 namespace bvi
 {
-	HealthComponent::HealthComponent(dae::core::GameObject* pOwner, int lives)
-		: ObservableComponent(pOwner)
-		, m_lives(lives) {}
+	HealthComponent::HealthComponent( dae::core::GameObject* pOwner, int lives )
+		: ObservableComponent( pOwner )
+		, m_lives( lives )
+	{}
 
 	void HealthComponent::InitializeState()
 	{
@@ -21,7 +22,7 @@ namespace bvi
 
 	void HealthComponent::Die()
 	{
-		if (m_lives > 0)
+		if ( m_lives > 0 )
 		{
 			--m_lives;
 			NotifyPlayerDied();
@@ -30,8 +31,8 @@ namespace bvi
 
 	void HealthComponent::NotifyPlayerDied()
 	{
-		dae::events::GameEvent event{ dae::core::make_sdbm_hash("PlayerDied") };
-		event.PushArg(m_lives);
-		NotifyObservers(event);
+		dae::events::GameEvent event{ dae::core::make_sdbm_hash( "PlayerDied" ) };
+		event.PushArg( m_lives );
+		NotifyObservers( event );
 	}
 }

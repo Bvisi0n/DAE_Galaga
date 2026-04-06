@@ -181,14 +181,24 @@ if(WIN32)
 endif()
 
 if(MSVC)
+  string(REPLACE "/EHsc" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+  string(REPLACE "/EHsc" "" CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG}")
+  string(REPLACE "/EHsc" "" CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE}")
+  string(REPLACE "/EHsc" "" CMAKE_CXX_FLAGS_MINSIZEREL "${CMAKE_CXX_FLAGS_MINSIZEREL}")
+  string(REPLACE "/EHsc" "" CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO}")
   # compile at warning level 4 + treat warnings as errors
   target_compile_options(${TARGET_NAME} PRIVATE
    /W4
    /WX
-   /permissive-
+   /permissive- # No extensions, enforcing standard compliance
+   /EHs-c- # Disable exception handling
+   # analyze is an alternative to clang-tidy
    #/analyze
    #/analyze:plugin EspXEngine.dll
    #/analyze:external-
+  )
+  target_compile_definitions(${TARGET_NAME} PRIVATE
+    _HAS_EXCEPTIONS=0 # Disable exceptions in STL
   )
 else()
   target_compile_options(${TARGET_NAME} PRIVATE
@@ -196,7 +206,26 @@ else()
    -Wextra
    -Werror
    -Winconsistent-missing-override
+   -fno-exceptions    # Disables C++ exceptions
+   -fno-unwind-tables # Removes stack unwinding lookup tables
   )
+endif()
+
+# Static Analysis: Clang-Tidy Integration
+option(ENABLE_CLANG_TIDY "Enable static analysis with clang-tidy" ON)
+
+if(ENABLE_CLANG_TIDY AND NOT EMSCRIPTEN)
+    find_program(CLANG_TIDY_EXE NAMES "clang-tidy" "clang-tidy.exe")
+    
+    if(CLANG_TIDY_EXE)
+        message(STATUS "Static Analysis: clang-tidy found at ${CLANG_TIDY_EXE}")
+        
+        set_target_properties(${TARGET_NAME} PROPERTIES
+            CXX_CLANG_TIDY "${CLANG_TIDY_EXE}"
+        )
+    else()
+        message(WARNING "Static Analysis: clang-tidy not found. Code conventions will not be enforced at compile time.")
+    endif()
 endif()
 
 if(EMSCRIPTEN)

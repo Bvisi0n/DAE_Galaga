@@ -5,16 +5,17 @@
 
 namespace bvi
 {
-	ScoreComponent::ScoreComponent(dae::core::GameObject* pOwner)
-		: ObservableComponent(pOwner)
-		, m_score(0) {}
+	ScoreComponent::ScoreComponent( dae::core::GameObject* pOwner )
+		: ObservableComponent( pOwner )
+		, m_score( 0 )
+	{}
 
 	void ScoreComponent::InitializeState() noexcept
 	{
 		NotifyScoreChanged();
 	}
 
-	void ScoreComponent::AddScore(const int score)
+	void ScoreComponent::AddScore( const int score )
 	{
 		m_score += score;
 		NotifyScoreChanged();
@@ -27,8 +28,8 @@ namespace bvi
 
 	void ScoreComponent::NotifyScoreChanged()
 	{
-		dae::events::GameEvent event{ dae::core::make_sdbm_hash("ScoreChanged") };
-		event.PushArg(m_score);
-		NotifyObservers(event);
+		dae::events::GameEvent event{ dae::core::make_sdbm_hash( "ScoreChanged" ) };
+		event.PushArg( m_score );
+		NotifyObservers( event );
 	}
 }

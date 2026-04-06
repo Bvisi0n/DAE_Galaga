@@ -1,39 +1,48 @@
-#include <stdexcept>
+#include <cassert>
+#include <string>
 
-#include <SDL3/SDL.h>
+#include <glm/ext/vector_float2.hpp>
+
+#include <SDL3/SDL_render.h>
+#include <SDL3/SDL_surface.h>
 
 #include "Minigin/Graphics/Renderer.h"
 #include "Minigin/Graphics/Texture2D.h"
 
 namespace dae::graphics
 {
-	Texture2D::Texture2D(SDL_Texture* pTexture)
+	Texture2D::Texture2D( SDL_Texture* pTexture )
 		: m_pTexture{ pTexture }
 	{
-		assert(m_pTexture != nullptr);
+		assert( m_pTexture != nullptr );
 	}
 
-	Texture2D::Texture2D(const std::string& fullPath)
+	Texture2D::Texture2D( const std::string& fullPath )
 	{
-		SDL_Surface* surface = SDL_LoadPNG(fullPath.c_str());
-		if (!surface)
+		SDL_Surface* surface = SDL_LoadPNG( fullPath.c_str() );
+
+		if ( surface == nullptr )
 		{
-			throw std::runtime_error(std::string("Failed to load PNG: ") + SDL_GetError());
+			m_pTexture = nullptr;
+
+			assert( surface != nullptr && "Failed to load PNG" );
+			return;
 		}
 
-		m_pTexture = SDL_CreateTextureFromSurface(Renderer::GetInstance().GetSDLRenderer(), surface);
+		m_pTexture = SDL_CreateTextureFromSurface( Renderer::GetInstance().GetSDLRenderer(), surface );
 
-		SDL_DestroySurface(surface);
+		SDL_DestroySurface( surface );
 
-		if (!m_pTexture)
+		if ( m_pTexture == nullptr )
 		{
-			throw std::runtime_error(std::string("Failed to create texture from surface: ") + SDL_GetError());
+			assert( m_pTexture != nullptr && "Failed to create texture from surface" );
+			return;
 		}
 	}
 
 	Texture2D::~Texture2D()
 	{
-		SDL_DestroyTexture(m_pTexture);
+		SDL_DestroyTexture( m_pTexture );
 	}
 
 	SDL_Texture* Texture2D::GetSDLTexture() const
@@ -43,8 +52,9 @@ namespace dae::graphics
 
 	glm::vec2 Texture2D::GetSize() const
 	{
-		float w{}, h{};
-		SDL_GetTextureSize(m_pTexture, &w, &h);
-		return { w, h };
+		float width{};
+		float height{};
+		SDL_GetTextureSize( m_pTexture, &width, &height );
+		return glm::vec2{ width, height };
 	}
 }

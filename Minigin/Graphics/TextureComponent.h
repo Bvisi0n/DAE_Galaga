@@ -18,16 +18,19 @@ namespace dae::graphics
 		using Component::Component;
 		~TextureComponent() = default;
 
-		TextureComponent(const TextureComponent& other)				   = delete;
-		TextureComponent(TextureComponent&& other) noexcept			   = delete;
-		TextureComponent& operator=(const TextureComponent& other)	   = delete;
-		TextureComponent& operator=(TextureComponent&& other) noexcept = delete;
+		TextureComponent( const TextureComponent& other ) = delete;
+		TextureComponent( TextureComponent&& other ) noexcept = delete;
+		TextureComponent& operator=( const TextureComponent& other ) = delete;
+		TextureComponent& operator=( TextureComponent&& other ) noexcept = delete;
 
-		void InitializeLinkage() override {}
-		void InitializeState() override {}
-		void Update(const float) override {}
+		void InitializeLinkage() override
+		{}
+		void InitializeState() override
+		{}
+		void Update( const float ) override
+		{}
 		void Render() const override;
-		void SetTexture(const std::string& filename);
+		void SetTexture( const std::string& filename );
 
 	private:
 		std::string m_filename{};

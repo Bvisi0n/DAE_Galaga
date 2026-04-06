@@ -19,19 +19,19 @@ namespace dae::resources
 	class ResourceManager final : public utils::Singleton<ResourceManager>
 	{
 	public:
-		void Init(const std::filesystem::path& data);
+		void Init( const std::filesystem::path& data );
 		void Destroy();
-		
-		[[nodiscard]] std::shared_ptr<graphics::Texture2D> LoadTexture(const std::string& file);
-		[[nodiscard]] std::shared_ptr<graphics::Font> LoadFont(const std::string& file, uint8_t size);
+
+		[[nodiscard]] std::shared_ptr<graphics::Texture2D> LoadTexture( const std::string& file );
+		[[nodiscard]] std::shared_ptr<graphics::Font> LoadFont( const std::string& file, uint8_t size );
 
 	private:
 		friend class utils::Singleton<ResourceManager>;
-		
+
 		std::filesystem::path m_dataPath;
 		std::map<std::string, std::shared_ptr<graphics::Texture2D>> m_pLoadedTextures;
 		std::map<std::pair<std::string, uint8_t>, std::shared_ptr<graphics::Font>> m_pLoadedFonts;
-		
+
 		ResourceManager() = default;
 		virtual ~ResourceManager() = default;
 		void UnloadUnusedResources();

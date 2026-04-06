@@ -1,6 +1,11 @@
-#include <algorithm>
 #include <cassert>
+#include <memory>
+#include <utility>
+#include <vector>
 
+#include <glm/ext/matrix_float4x4.hpp>
+
+#include <Minigin/Core/GameObject.h>
 #include "Minigin/Core/Transform.h"
 #include "Minigin/Scene/Scene.h"
 
@@ -8,9 +13,9 @@ namespace dae::scene
 {
 	void Scene::Initialize()
 	{
-		if (m_isInitialized)
+		if ( m_isInitialized )
 		{
-			assert(!m_isInitialized && "Scene is already initialized.");
+			assert( !m_isInitialized && "Scene is already initialized." );
 			return;
 		}
 
@@ -19,27 +24,26 @@ namespace dae::scene
 		m_isInitialized = true;
 	}
 
-	void Scene::Update(const float deltaTime)
+	void Scene::Update( const float deltaTime )
 	{
-		assert(m_isInitialized && "Scene isn't initialized.");
+		assert( m_isInitialized && "Scene isn't initialized." );
 		FlushPendingObjects();
 
-		// Don't change to ranged based for loop:
 		// std::vector iterator invalidation
-		const size_t objectCount = m_pObjects.size();
-		for (size_t i = 0; i < objectCount; ++i)
+		const size_t object_count = m_pObjects.size();
+		for ( size_t i = 0; i < object_count; ++i )
 		{
-			if (!m_pObjects[i]->IsPendingDeletion())
+			if ( !m_pObjects[ i ]->IsPendingDeletion() )
 			{
-				m_pObjects[i]->Update(deltaTime);
+				m_pObjects[ i ]->Update( deltaTime );
 			}
 		}
 
-		for (auto& object : m_pObjects)
+		for ( auto& p_object : m_pObjects )
 		{
-			if (!object->IsPendingDeletion() && !object->GetParent())
+			if ( !p_object->IsPendingDeletion() && !p_object->GetParent() )
 			{
-				object->GetTransform().UpdateWorldMatrix(glm::mat4(1.0f));
+				p_object->GetTransform().UpdateWorldMatrix( glm::mat4( 1.0f ) );
 			}
 		}
 
@@ -48,31 +52,31 @@ namespace dae::scene
 
 	void Scene::Render() const
 	{
-		for (const auto& object : m_pObjects)
+		for ( const auto& p_object : m_pObjects )
 		{
-			object->Render();
+			p_object->Render();
 		}
 	}
 
-	void Scene::AddGameObject(std::unique_ptr<core::GameObject> pObject)
+	void Scene::AddGameObject( std::unique_ptr<core::GameObject> pObject )
 	{
-		assert(pObject != nullptr && "Cannot add a null GameObject to the scene.");
+		assert( pObject != nullptr && "Cannot add a null GameObject to the scene." );
 
-		m_pPendingObjects.emplace_back(std::move(pObject));
+		m_pPendingObjects.emplace_back( std::move( pObject ) );
 	}
 
-	void Scene::RemoveGameObject(core::GameObject& object)
+	void Scene::RemoveGameObject( core::GameObject& object )
 	{
 		object.MarkForDeletion();
 	}
 
 	void Scene::CleanupGameObjects()
 	{
-		std::erase_if(m_pObjects,
-			[](const auto& pObj)
+		std::erase_if( m_pObjects,
+			[] ( const auto& pObj )
 			{
 				return pObj->IsPendingDeletion();
-			});
+			} );
 	}
 
 	void Scene::RemoveAllGameObjects()
@@ -82,30 +86,32 @@ namespace dae::scene
 
 	void Scene::FlushPendingObjects()
 	{
-		if (m_pPendingObjects.empty())
+		if ( m_pPendingObjects.empty() )
 		{
 			return;
 		}
 
 		// Allows adding new objects during the flush without iterator invalidation issues, they will be flushed in the next frame.
-		auto p_new_objects = std::move(m_pPendingObjects);
+		auto p_new_objects = std::move( m_pPendingObjects );
 		m_pPendingObjects.clear();
 
 		const size_t new_index_start = m_pObjects.size();
 
-		m_pObjects.reserve(m_pObjects.size() + p_new_objects.size());
-		for (auto& object : p_new_objects)
+		m_pObjects.reserve( m_pObjects.size() + p_new_objects.size() );
+		for ( auto& p_object : p_new_objects )
 		{
-			m_pObjects.emplace_back(std::move(object));
+			m_pObjects.emplace_back( std::move( p_object ) );
 		}
 
 		constexpr size_t required_initialization_passes = 2;
 
-		for (size_t phase = 0; phase < required_initialization_passes; ++phase)
+		for ( size_t phase = 0; phase < required_initialization_passes; ++phase )
 		{
-			for (size_t index = new_index_start; index < m_pObjects.size(); ++index)
+			const size_t object_count = m_pObjects.size();
+			for ( size_t index = new_index_start; index < object_count; ++index )
 			{
-				m_pObjects[index]->AdvanceComponentStates();
+				// 2 States: Link -> Ready (set initial values)
+				m_pObjects[ index ]->AdvanceComponentStates();
 			}
 		}
 	}

@@ -4,8 +4,7 @@
 #include <memory>
 #include <string>
 
-#include <SDL3/SDL.h>
-#include <SDL3_ttf/SDL_ttf.h>
+#include <SDL3/SDL_pixels.h>
 
 #include "Minigin/Core/Component.h"
 #include "Minigin/Graphics/IRenderable.h"
@@ -24,21 +23,25 @@ namespace dae::graphics
 	class TextComponent final : public core::Component, public IRenderable
 	{
 	public:
-		TextComponent(core::GameObject* pOwner, const std::string& text, std::shared_ptr<Font> pFont, const SDL_Color& color = { 255, 255, 255, 255 });
+		TextComponent( core::GameObject* pOwner, const std::string& text, std::shared_ptr<Font> pFont, const SDL_Color& color = { 255, 255, 255, 255 } );
 		~TextComponent() = default;
 
-		TextComponent(const TextComponent&)			   = delete;
-		TextComponent(TextComponent&&)				   = delete;
-		TextComponent& operator=(const TextComponent&) = delete;
-		TextComponent& operator=(TextComponent&&)	   = delete;
+		TextComponent( const TextComponent& ) = delete;
+		TextComponent( TextComponent&& ) = delete;
+		TextComponent& operator=( const TextComponent& ) = delete;
+		TextComponent& operator=( TextComponent&& ) = delete;
 
-		void InitializeLinkage() override {}
-		void InitializeState() override {}
-		void Update(const float deltaTime) override;
+		void InitializeLinkage() override
+		{}
+
+		void InitializeState() override
+		{}
+
+		void Update( const float deltaTime ) override;
 		void Render() const override;
 
-		void SetColor(const SDL_Color& color);
-		void SetText(const std::string& text);
+		void SetColor( const SDL_Color& color );
+		void SetText( const std::string& text );
 
 	private:
 		std::string m_text;

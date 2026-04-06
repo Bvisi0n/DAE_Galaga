@@ -2,7 +2,6 @@
 #define SCENEMANAGER_H
 
 #include <memory>
-#include <string>
 #include <vector>
 
 #include "Minigin/Scene/Scene.h"
@@ -10,19 +9,17 @@
 
 namespace dae::scene
 {
-	class Scene;
-
 	class SceneManager final : public utils::Singleton<SceneManager>
 	{
 	public:
 		Scene& CreateScene();
 
-		void Update(const float deltaTime);
+		void Update( const float deltaTime );
 		void Render();
 
 	private:
 		friend class utils::Singleton<SceneManager>;
-		
+
 		std::vector<std::unique_ptr<Scene>> m_pScenes{};
 
 		SceneManager() = default;

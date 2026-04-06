@@ -3,7 +3,6 @@
 
 #include <functional>
 #include <string>
-#include <vector>
 
 #include "Minigin/Core/Component.h"
 #include "Minigin/Events/GameEvent.h"
@@ -24,16 +23,18 @@ namespace bvi
 	class UIValueObserver final : public dae::core::Component, public dae::events::IObserver
 	{
 	public:
-		using Formatter = std::function<std::string(int)>;
+		using Formatter = std::function<std::string( int )>;
 
-		UIValueObserver(dae::core::GameObject* pOwner, dae::events::GameEvent observedEvent, Formatter formatter);
+		UIValueObserver( dae::core::GameObject* pOwner, dae::events::GameEvent observedEvent, Formatter formatter );
 
 		void InitializeLinkage() override;
-		void InitializeState() override {}
+		void InitializeState() override
+		{}
 
-		void OnNotify(const dae::events::GameEvent event) override;
+		void OnNotify( const dae::events::GameEvent event ) override;
 
-		void Update(const float) override {}
+		void Update( const float ) override
+		{}
 
 	private:
 		Formatter m_Formatter;

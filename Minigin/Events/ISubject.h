@@ -13,18 +13,18 @@ namespace dae::events
 		// https://refactoring.guru/design-patterns/observer/cpp/example
 	public:
 		virtual ~ISubject() = default;
-		
-		ISubject(const ISubject&)               = delete;
-		ISubject& operator=(const ISubject&)    = delete;
-		ISubject(ISubject&&)                    = delete;
-		ISubject& operator=(ISubject&&)         = delete;
-		
-		virtual void AttachObserver(IObserver* pObserver) = 0;
-		virtual void DetachObserver(IObserver* pObserver) = 0;
+
+		ISubject( const ISubject& ) = delete;
+		ISubject& operator=( const ISubject& ) = delete;
+		ISubject( ISubject&& ) = delete;
+		ISubject& operator=( ISubject&& ) = delete;
+
+		virtual void AttachObserver( IObserver* pObserver ) = 0;
+		virtual void DetachObserver( IObserver* pObserver ) = 0;
 
 	protected:
 		ISubject() = default;
-		virtual void NotifyObservers(GameEvent event) = 0;
+		virtual void NotifyObservers( GameEvent event ) = 0;
 	};
 }
 #endif

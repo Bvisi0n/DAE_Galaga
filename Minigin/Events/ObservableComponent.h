@@ -19,19 +19,20 @@ namespace dae::events
 	class ObservableComponent : public core::Component, public ISubject
 	{
 	public:
-		ObservableComponent(core::GameObject* pOwner) noexcept
-			: Component(pOwner) {};
+		ObservableComponent( core::GameObject* pOwner ) noexcept
+			: Component( pOwner )
+		{};
 		virtual ~ObservableComponent() = default;
 
 		virtual void InitializeLinkage() override = 0;
 		virtual void InitializeState() override = 0;
-		virtual void Update(const float deltaTime) override = 0;
+		virtual void Update( const float deltaTime ) override = 0;
 
-		void AttachObserver(IObserver* pObserver) override;
-		void DetachObserver(IObserver* pObserver) override;
+		void AttachObserver( IObserver* pObserver ) override;
+		void DetachObserver( IObserver* pObserver ) override;
 
 	protected:
-		void NotifyObservers(GameEvent event) override;
+		void NotifyObservers( GameEvent event ) override;
 
 	private:
 		std::vector<IObserver*> m_pObservers;

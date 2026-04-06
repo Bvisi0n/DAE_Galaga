@@ -1,10 +1,9 @@
 #ifndef RENDERER_H
 #define RENDERER_H
 
-#include <string>
-#include <vector>
-
-#include <SDL3/SDL.h>
+#include <SDL3/SDL_pixels.h>
+#include <SDL3/SDL_render.h>
+#include <SDL3/SDL_video.h>
 
 #include "Minigin/Utilities/Singleton.h"
 
@@ -16,23 +15,21 @@ namespace dae::graphics
 	class Renderer final : public utils::Singleton<Renderer>
 	{
 	public:
-		void Init(SDL_Window* pWindow);
+		void Init( SDL_Window* pWindow );
 		void Render() const;
 		void Destroy();
 
-		void RenderTexture(const Texture2D& texture, float x, float y) const;
-		void RenderTexture(const Texture2D& texture, float x, float y, float width, float height) const;
+		[[nodiscard]] bool IsValid() const noexcept;
 
-		void SetBackgroundColor(const SDL_Color& color) noexcept
-		{
-			m_clearColor = color;
-		}
+		void RenderTexture( const Texture2D& texture, float x, float y ) const;
+		void RenderTexture( const Texture2D& texture, float x, float y, float width, float height ) const;
+
+		void SetBackgroundColor( const SDL_Color& color ) noexcept;
+
 
 		[[nodiscard]] SDL_Renderer* GetSDLRenderer() const;
-		[[nodiscard]] const SDL_Color& GetBackgroundColor() const
-		{
-			return m_clearColor;
-		}
+		[[nodiscard]] const SDL_Color& GetBackgroundColor() const;
+
 
 	private:
 		SDL_Renderer* m_pRenderer{};

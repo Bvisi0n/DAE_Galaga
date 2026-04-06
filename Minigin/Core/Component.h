@@ -1,39 +1,42 @@
 #ifndef COMPONENT_H
 #define COMPONENT_H
 
+#include <cstdint>
+
 namespace dae::core
 {
 	class GameObject;
 
 	enum class ComponentState : uint8_t
 	{
-		Constructed	= 0,
-		Linked		= 1,
-		Ready		= 2,
-		Dead		= 3
+		Constructed = 0,
+		Linked = 1,
+		Ready = 2,
+		Dead = 3
 	};
 
 	class Component
 	{
 	public:
-		explicit Component(GameObject* pOwner) noexcept
-			: m_pOwner(pOwner) {}
+		explicit Component( GameObject* pOwner ) noexcept
+			: m_pOwner( pOwner )
+		{}
 
 		virtual ~Component() = default;
 
-		Component(const Component&)            = delete;
-		Component(Component&&)                 = delete;
-		Component& operator=(const Component&) = delete;
-		Component& operator=(Component&&)      = delete;
+		Component( const Component& ) = delete;
+		Component( Component&& ) = delete;
+		Component& operator=( const Component& ) = delete;
+		Component& operator=( Component&& ) = delete;
 
 		ComponentState AdvanceState() noexcept
 		{
-			if (m_state == ComponentState::Constructed)
+			if ( m_state == ComponentState::Constructed )
 			{
 				InitializeLinkage();
 				m_state = ComponentState::Linked;
 			}
-			else if (m_state == ComponentState::Linked)
+			else if ( m_state == ComponentState::Linked )
 			{
 				InitializeState();
 				m_state = ComponentState::Ready;
@@ -42,7 +45,7 @@ namespace dae::core
 			return m_state;
 		}
 
-		virtual void Update(const float deltaTime) = 0;
+		virtual void Update( const float deltaTime ) = 0;
 
 		void MarkForDeletion() noexcept
 		{

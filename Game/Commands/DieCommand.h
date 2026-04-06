@@ -10,10 +10,11 @@ namespace bvi
 	class DieCommand final : public dae::input::Command
 	{
 	public:
-		DieCommand(HealthComponent* healthComponent) noexcept
-			: m_pHealthComponent(healthComponent) {}
+		DieCommand( HealthComponent* healthComponent ) noexcept
+			: m_pHealthComponent( healthComponent )
+		{}
 
-		void Execute(const float) override
+		void Execute( const float ) override
 		{
 			m_pHealthComponent->Die();
 		}

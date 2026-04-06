@@ -19,9 +19,9 @@ namespace dae::input
 		~Keyboard();
 
 		void Update();
-		[[nodiscard]] bool IsDown(const Key key) const;
-		[[nodiscard]] bool IsUp(const Key key) const;
-		[[nodiscard]] bool IsPressed(const Key key) const;
+		[[nodiscard]] bool IsDown( const Key key ) const;
+		[[nodiscard]] bool IsUp( const Key key ) const;
+		[[nodiscard]] bool IsPressed( const Key key ) const;
 
 	private:
 		class KeyboardImpl;

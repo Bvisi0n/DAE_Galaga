@@ -6,7 +6,9 @@ namespace dae::graphics
 	class IRenderable
 	{
 	public:
-		virtual ~IRenderable() {};
+		virtual ~IRenderable()
+		{};
+
 		virtual void Render() const = 0;
 	};
 }

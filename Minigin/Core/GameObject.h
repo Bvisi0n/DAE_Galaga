@@ -5,7 +5,7 @@
 #include <cassert>
 #include <concepts>
 #include <memory>
-#include <string>
+#include <utility>
 #include <vector>
 
 #include "Minigin/Core/Component.h"
@@ -24,59 +24,59 @@ namespace dae::core
 	concept IsComponent = std::derived_from<T, Component>;
 
 	template<typename T>
-	concept IsRenderable = std::derived_from<T, Component> && std::derived_from<T, graphics::IRenderable>;
+	concept IsRenderable = std::derived_from<T, Component>&& std::derived_from<T, graphics::IRenderable>;
 
 	class GameObject final
 	{
 	public:
-		GameObject(const float x = 0.f, const float y = 0.f);
+		GameObject( const float x = 0.f, const float y = 0.f );
 		~GameObject();
 
-		GameObject(const GameObject& other)			   = delete;
-		GameObject(GameObject&& other)				   = delete;
-		GameObject& operator=(const GameObject& other) = delete;
-		GameObject& operator=(GameObject&& other)	   = delete;
+		GameObject( const GameObject& other ) = delete;
+		GameObject( GameObject&& other ) = delete;
+		GameObject& operator=( const GameObject& other ) = delete;
+		GameObject& operator=( GameObject&& other ) = delete;
 
 		void MarkForDeletion();
 		[[nodiscard]] bool IsPendingDeletion() const noexcept;
 
 		void AdvanceComponentStates() noexcept;
-		void Update(const float deltaTime);
+		void Update( const float deltaTime );
 		void Render() const;
 
 		template <IsComponent T, typename... Args>
-			requires (!IsRenderable<T>)
-		T* AddComponent(Args&&... args)
+			requires ( !IsRenderable<T> )
+		T* AddComponent( Args&&... args )
 		{
-			if (HasComponent<T>())
+			if ( HasComponent<T>() )
 			{
-				assert(!HasComponent<T>() && "GameObject already has a component of this type.");
+				assert( !HasComponent<T>() && "GameObject already has a component of this type." );
 				return GetComponent<T>();
 			}
 			else
 			{
-				auto component = std::make_unique<T>(this, std::forward<Args>(args)...);
+				auto component = std::make_unique<T>( this, std::forward<Args>( args )... );
 				T* ptr = component.get();
-				m_pComponents.push_back(std::move(component));
+				m_pComponents.push_back( std::move( component ) );
 				return ptr;
 			}
 		}
 
 		template <IsRenderable T, typename... Args>
-		T* AddComponent(Args&&... args)
+		T* AddComponent( Args&&... args )
 		{
-			if (m_pRenderable)
+			if ( m_pRenderable )
 			{
-				assert(!m_pRenderable && "GameObject can only have one IRenderable.");
+				assert( !m_pRenderable && "GameObject can only have one IRenderable." );
 				return nullptr;
 			}
 			else
 			{
-				auto component = std::make_unique<T>(this, std::forward<Args>(args)...);
+				auto component = std::make_unique<T>( this, std::forward<Args>( args )... );
 				T* ptr = component.get();
 
 				m_pRenderable = ptr;
-				m_pComponents.push_back(std::move(component));
+				m_pComponents.push_back( std::move( component ) );
 				return ptr;
 			}
 		}
@@ -88,13 +88,13 @@ namespace dae::core
 		}
 
 		template <IsComponent T>
-			requires (!IsRenderable<T>)
+			requires ( !IsRenderable<T> )
 		[[nodiscard]] T* GetComponent() const
 		{
-			for (const auto& comp : m_pComponents)
+			for ( const auto& comp : m_pComponents )
 			{
-				T* ptr = dynamic_cast<T*>(comp.get());
-				if (ptr && !ptr->IsPendingDeletion())
+				T* ptr = dynamic_cast<T*>( comp.get() );
+				if ( ptr && !ptr->IsPendingDeletion() )
 				{
 					return ptr;
 				}
@@ -105,15 +105,15 @@ namespace dae::core
 		template <IsRenderable T>
 		[[nodiscard]] T* GetComponent() const
 		{
-			if (!m_pRenderable)
+			if ( !m_pRenderable )
 			{
 				return nullptr;
 			}
 			else
 			{
-				T* pCastedRenderable = dynamic_cast<T*>(m_pRenderable);
+				T* pCastedRenderable = dynamic_cast<T*>( m_pRenderable );
 
-				if (pCastedRenderable && !pCastedRenderable->IsPendingDeletion())
+				if ( pCastedRenderable && !pCastedRenderable->IsPendingDeletion() )
 				{
 					return pCastedRenderable;
 				}
@@ -125,12 +125,12 @@ namespace dae::core
 		}
 
 		template <IsComponent T>
-			requires (!IsRenderable<T>)
+			requires ( !IsRenderable<T> )
 		void RemoveComponent()
 		{
-			for (auto& comp : m_pComponents)
+			for ( auto& comp : m_pComponents )
 			{
-				if (dynamic_cast<T*>(comp.get()))
+				if ( dynamic_cast<T*>( comp.get() ) )
 				{
 					comp->MarkForDeletion();
 					return;
@@ -141,9 +141,9 @@ namespace dae::core
 		template <IsRenderable T>
 		void RemoveComponent()
 		{
-			if (m_pRenderable)
+			if ( m_pRenderable )
 			{
-				if (auto casted = dynamic_cast<T*>(m_pRenderable))
+				if ( auto casted = dynamic_cast<T*>( m_pRenderable ) )
 				{
 					casted->MarkForDeletion();
 					m_pRenderable = nullptr;
@@ -151,7 +151,7 @@ namespace dae::core
 			}
 		}
 
-		void SetParent(GameObject* pParent, bool keepWorldPosition);
+		void SetParent( GameObject* pParent, bool keepWorldPosition );
 		[[nodiscard]] GameObject* GetParent() const;
 		[[nodiscard]] const std::vector<GameObject*>& GetChildren() const;
 
@@ -168,9 +168,9 @@ namespace dae::core
 		Transform m_transform;
 		bool m_isPendingDeletion{ false };
 
-		bool IsChild(GameObject* pCandidate);
-		void AddChild(GameObject* pChild);
-		void RemoveChild(GameObject* pChild);
+		bool IsChild( GameObject* pCandidate );
+		void AddChild( GameObject* pChild );
+		void RemoveChild( GameObject* pChild );
 
 		void CleanupComponents();
 	};

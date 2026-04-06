@@ -10,32 +10,33 @@
 
 namespace bvi
 {
-	FPSComponent::FPSComponent(dae::core::GameObject* pOwner)
-		: Component(pOwner) {}
+	FPSComponent::FPSComponent( dae::core::GameObject* pOwner )
+		: Component( pOwner )
+	{}
 
 	void FPSComponent::InitializeLinkage()
 	{
 		m_pText = GetOwner()->GetComponent<dae::graphics::TextComponent>();
-		if (!m_pText)
+		if ( !m_pText )
 		{
-			assert(m_pText && "requires a TextComponent on the same GameObject.");
+			assert( m_pText && "requires a TextComponent on the same GameObject." );
 		}
 	}
 
-	void FPSComponent::Update(const float deltaTime)
+	void FPSComponent::Update( const float deltaTime )
 	{
-		if (!m_pText)
+		if ( !m_pText )
 		{
-			assert(m_pText && "requires a TextComponent on the same GameObject.");
+			assert( m_pText && "requires a TextComponent on the same GameObject." );
 			return;
 		}
 
-		const float fps{ (deltaTime > 0.f) ? (1.f / deltaTime) : 0.f };
+		const float fps{ ( deltaTime > 0.f ) ? ( 1.f / deltaTime ) : 0.f };
 
 		std::ostringstream oss;
-		oss << std::fixed << std::setprecision(1) << fps << " FPS";
+		oss << std::fixed << std::setprecision( 1 ) << fps << " FPS";
 		std::string frame_string{ oss.str() };
 
-		m_pText->SetText(frame_string);
+		m_pText->SetText( frame_string );
 	}
 }

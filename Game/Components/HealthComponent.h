@@ -13,11 +13,15 @@ namespace bvi
 	class HealthComponent final : public dae::events::ObservableComponent
 	{
 	public:
-		HealthComponent(dae::core::GameObject* pOwner, int lives);
+		HealthComponent( dae::core::GameObject* pOwner, int lives );
 
-		void InitializeLinkage() override {}
+		void InitializeLinkage() override
+		{}
+
 		void InitializeState() override;
-		void Update(const float) noexcept override {}
+
+		void Update( const float ) noexcept override
+		{}
 
 		[[nodiscard]] int GetLives() const;
 

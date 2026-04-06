@@ -11,8 +11,10 @@ namespace dae::events
 		// https://refactoring.guru/design-patterns/observer
 		// https://refactoring.guru/design-patterns/observer/cpp/example
 	public:
-		virtual ~IObserver() {};
-		virtual void OnNotify(const GameEvent event) = 0;
+		virtual ~IObserver()
+		{};
+
+		virtual void OnNotify( const GameEvent event ) = 0;
 	};
 }
 #endif

@@ -1,8 +1,6 @@
 #ifndef FPSComponent_H
 #define FPSComponent_H
 
-#include <memory>
-
 #include "Minigin/Core/Component.h"
 
 namespace dae::core
@@ -22,18 +20,19 @@ namespace bvi
 	class FPSComponent final : public dae::core::Component
 	{
 	public:
-		FPSComponent(dae::core::GameObject* pOwner);
+		FPSComponent( dae::core::GameObject* pOwner );
 		~FPSComponent() = default;
 
-		FPSComponent(const FPSComponent&)            = delete;
-		FPSComponent(FPSComponent&&)                 = delete;
-		FPSComponent& operator=(const FPSComponent&) = delete;
-		FPSComponent& operator=(FPSComponent&&)      = delete;
+		FPSComponent( const FPSComponent& ) = delete;
+		FPSComponent( FPSComponent&& ) = delete;
+		FPSComponent& operator=( const FPSComponent& ) = delete;
+		FPSComponent& operator=( FPSComponent&& ) = delete;
 
 		void InitializeLinkage() override;
-		void InitializeState() override {}
+		void InitializeState() override
+		{}
 
-		void Update(const float deltaTime) override;
+		void Update( const float deltaTime ) override;
 
 	private:
 		dae::graphics::TextComponent* m_pText{ nullptr };

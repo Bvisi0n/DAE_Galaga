@@ -3,7 +3,7 @@
 
 #include <string>
 
-#include <glm/vec2.hpp>
+#include <glm/ext/vector_float2.hpp>
 
 struct SDL_Texture;
 
@@ -13,14 +13,14 @@ namespace dae::graphics
 	class Texture2D final
 	{
 	public:
-		explicit Texture2D(SDL_Texture* pTexture);
-		explicit Texture2D(const std::string& fullPath);
+		explicit Texture2D( SDL_Texture* pTexture );
+		explicit Texture2D( const std::string& fullPath );
 		~Texture2D();
 
-		Texture2D(const Texture2D &)			   = delete;
-		Texture2D(Texture2D &&)					   = delete;
-		Texture2D & operator= (const Texture2D &)  = delete;
-		Texture2D & operator= (const Texture2D &&) = delete;
+		Texture2D( const Texture2D& ) = delete;
+		Texture2D( Texture2D&& ) = delete;
+		Texture2D& operator= ( const Texture2D& ) = delete;
+		Texture2D& operator= ( const Texture2D&& ) = delete;
 
 		[[nodiscard]] SDL_Texture* GetSDLTexture() const;
 		[[nodiscard]] glm::vec2 GetSize() const;

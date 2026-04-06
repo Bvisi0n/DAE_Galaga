@@ -1,21 +1,29 @@
-﻿#include <stdexcept>
+﻿#include <cassert>
+#include <cstdint>
+#include <filesystem>
+#include <map>
+#include <memory>
+#include <string>
+#include <utility>
 
 #include <SDL3_ttf/SDL_ttf.h>
 
 #include "Minigin/Graphics/Font.h"
-#include "Minigin/Graphics/Renderer.h"
 #include "Minigin/Graphics/Texture2D.h"
 #include "Minigin/Resources/ResourceManager.h"
 
 namespace dae::resources
 {
-	void ResourceManager::Init(const std::filesystem::path& dataPath)
+	void ResourceManager::Init( const std::filesystem::path& dataPath )
 	{
 		m_dataPath = dataPath;
 
-		if (!TTF_Init())
+		const bool ttfInitialized = TTF_Init();
+
+		if ( ttfInitialized == false )
 		{
-			throw std::runtime_error(std::string("Failed to load support for fonts: ") + SDL_GetError());
+			assert( ttfInitialized == true && "Failed to load support for fonts" );
+			return;
 		}
 	}
 
@@ -25,43 +33,49 @@ namespace dae::resources
 		m_pLoadedTextures.clear();
 	}
 
-	std::shared_ptr<graphics::Texture2D> ResourceManager::LoadTexture(const std::string& file)
+	std::shared_ptr<graphics::Texture2D> ResourceManager::LoadTexture( const std::string& file )
 	{
 		const auto full_path = m_dataPath / file;
-		const auto filename = std::filesystem::path(full_path).filename().string();
+		const auto filename = std::filesystem::path( full_path ).filename().string();
 
-		if (m_pLoadedTextures.find(filename) == m_pLoadedTextures.end())
+		if ( m_pLoadedTextures.find( filename ) == m_pLoadedTextures.end() )
 		{
-			m_pLoadedTextures.insert(std::pair(filename, std::make_shared<graphics::Texture2D>(full_path.string())));
+			m_pLoadedTextures.insert( std::pair( filename, std::make_shared<graphics::Texture2D>( full_path.string() ) ) );
 		}
 
-		return m_pLoadedTextures.at(filename);
+		return m_pLoadedTextures.at( filename );
 	}
 
-	std::shared_ptr<graphics::Font> ResourceManager::LoadFont(const std::string& file, uint8_t size)
+	std::shared_ptr<graphics::Font> ResourceManager::LoadFont( const std::string& file, uint8_t size )
 	{
-		const auto full_path = m_dataPath / file;
-		const auto filename = std::filesystem::path(full_path).filename().string();
-		const auto key = std::pair<std::string, uint8_t>(filename, size);
+		const std::filesystem::path fullPath = m_dataPath / file;
 
-		if (m_pLoadedFonts.find(key) == m_pLoadedFonts.end())
+		const std::string fileName = fullPath.filename().string();
+		const auto fontKey = std::pair<std::string, uint8_t>( fileName, size );
+
+		auto it = m_pLoadedFonts.find( fontKey );
+
+		if ( it == m_pLoadedFonts.end() )
 		{
-			m_pLoadedFonts.insert(std::pair(key, std::make_shared<graphics::Font>(full_path.string(), size)));
+			auto font = std::make_shared<graphics::Font>( fullPath.string(), size );
+
+			auto emplaceResult = m_pLoadedFonts.emplace( fontKey, std::move( font ) );
+			it = emplaceResult.first;
 		}
 
-		return m_pLoadedFonts.at(key);
+		return it->second;
 	}
 
 	void ResourceManager::UnloadUnusedResources()
 	{
-		std::erase_if(m_pLoadedTextures, [](const auto& item)
+		std::erase_if( m_pLoadedTextures, [] ( const auto& item )
 			{
-			return item.second.use_count() == 1;
-			});
+				return item.second.use_count() == 1;
+			} );
 
-		std::erase_if(m_pLoadedFonts, [](const auto& item)
+		std::erase_if( m_pLoadedFonts, [] ( const auto& item )
 			{
-			return item.second.use_count() == 1;
-			});
+				return item.second.use_count() == 1;
+			} );
 	}
 }

@@ -1,34 +1,35 @@
 #ifndef TRANSFORMCOMPONENT_H
 #define TRANSFORMCOMPONENT_H
 
-#include <glm/glm.hpp>
-
-#include "Minigin/Core/Component.h"
+#include <glm/ext/matrix_double4x4.hpp> // glm::mat4
+#include <glm/ext/vector_float3.hpp> // glm::vec3
 
 namespace dae::core
 {
 	class GameObject;
 
+	// TODO L: Use a struct to bundle ctor parameters together.
+
 	class Transform final
 	{
 	public:
-		Transform(GameObject* pOwner, float xPos, float yPos, float xScale = 1.f, float yScale = 1.f);
+		Transform( GameObject* pOwner, float xPos, float yPos, float xScale = 1.f, float yScale = 1.f );
 
-		void SetLocalPosition(const glm::vec3& pos);
-		void SetLocalPosition(float x, float y, float z = 0.f);
+		void SetLocalPosition( const glm::vec3& pos );
+		void SetLocalPosition( float x, float y, float z = 0.f );
 		[[nodiscard]] const glm::vec3& GetLocalPosition() const;
 
-		void SetLocalRotation(float angleInRadians);
+		void SetLocalRotation( float angleInRadians );
 		[[nodiscard]] float GetLocalRotation() const;
 
-		void SetLocalScale(const glm::vec3& scale);
-		void SetLocalScale(float x, float y, float z = 1.f);
+		void SetLocalScale( const glm::vec3& scale );
+		void SetLocalScale( float x, float y, float z = 1.f );
 		[[nodiscard]] const glm::vec3& GetLocalScale() const;
 
 		[[nodiscard]] const glm::mat4& GetWorldMatrix() const;
 		[[nodiscard]] const glm::vec3& GetWorldPosition() const;
 
-		void UpdateWorldMatrix(const glm::mat4& parentWorldMatrix);
+		void UpdateWorldMatrix( const glm::mat4& parentWorldMatrix );
 		void SetDirty();
 
 	private:
