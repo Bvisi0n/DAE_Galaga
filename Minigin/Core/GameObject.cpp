@@ -22,7 +22,7 @@ namespace dae::core
 			}
 		}
 
-		if (m_pParent && !m_pParent->IsPendingDeletion())
+		if (m_pParent)
 		{
 			m_pParent->RemoveChild(this);
 		}
