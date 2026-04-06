@@ -40,8 +40,7 @@ namespace dae::core
 		void MarkForDeletion();
 		[[nodiscard]] bool IsPendingDeletion() const noexcept;
 
-		void InitializeLinkage();
-		void InitializeState();
+		void AdvanceComponentStates() noexcept;
 		void Update(const float deltaTime);
 		void Render() const;
 

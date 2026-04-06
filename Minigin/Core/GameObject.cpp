@@ -46,19 +46,12 @@ namespace dae::core
 		return m_isPendingDeletion;
 	}
 
-	void GameObject::InitializeLinkage()
+	void GameObject::AdvanceComponentStates() noexcept
 	{
-		for (auto& comp : m_pComponents)
+		const size_t component_count = m_pComponents.size();
+		for (size_t i = 0; i < component_count; ++i)
 		{
-			comp->InitializeLinkage();
-		}
-	}
-
-	void GameObject::InitializeState()
-	{
-		for (auto& comp : m_pComponents)
-		{
-			comp->InitializeState();
+			m_pComponents[i]->AdvanceState();
 		}
 	}
 
@@ -74,10 +67,22 @@ namespace dae::core
 		const size_t component_count = m_pComponents.size();
 		for (size_t i = 0; i < component_count; ++i)
 		{
-			if (!m_pComponents[i]->IsPendingDeletion())
+			auto* p_component = m_pComponents[i].get();
+
+			if (p_component->IsPendingDeletion())
 			{
-				m_pComponents[i]->Update(deltaTime);
+				continue;
 			}
+
+			if (p_component->GetExecutionState() != ComponentState::Ready)
+			{
+				if (p_component->AdvanceState() != ComponentState::Ready)
+				{
+					continue;
+				}
+			}
+
+			p_component->Update(deltaTime);
 		}
 
 		CleanupComponents();

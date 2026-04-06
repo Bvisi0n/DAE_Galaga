@@ -99,14 +99,14 @@ namespace dae::scene
 			m_pObjects.emplace_back(std::move(object));
 		}
 
-		for (size_t index = new_index_start; index < m_pObjects.size(); ++index)
-		{
-			m_pObjects[index]->InitializeLinkage();
-		}
+		constexpr size_t required_initialization_passes = 2;
 
-		for (size_t index = new_index_start; index < m_pObjects.size(); ++index)
+		for (size_t phase = 0; phase < required_initialization_passes; ++phase)
 		{
-			m_pObjects[index]->InitializeState();
+			for (size_t index = new_index_start; index < m_pObjects.size(); ++index)
+			{
+				m_pObjects[index]->AdvanceComponentStates();
+			}
 		}
 	}
 }
