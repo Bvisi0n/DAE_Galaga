@@ -4,6 +4,7 @@
 #include <memory>
 #include <vector>
 
+#include "Minigin/Core/CollisionSystem.h"
 #include "Minigin/Core/GameObject.h"
 
 namespace dae::scene
@@ -27,6 +28,8 @@ namespace dae::scene
 		void CleanupGameObjects();
 		void RemoveAllGameObjects();
 
+		[[nodiscard]] core::CollisionSystem& GetCollisionSystem();
+
 	private:
 		friend class SceneManager;
 
@@ -36,6 +39,7 @@ namespace dae::scene
 
 		std::vector <std::unique_ptr<core::GameObject>> m_objects{};
 		std::vector<std::unique_ptr<core::GameObject>> m_pendingObjects{};
+		core::CollisionSystem m_collisionSystem{};
 		bool m_isInitialized{ false };
 	};
 }

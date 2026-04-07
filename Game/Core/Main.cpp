@@ -8,7 +8,7 @@
 #include <SDL3/SDL_main.h> // Required
 
 #if _DEBUG && __has_include(<vld.h>)
-#include <vld.h>
+#include <vld.h> // Required
 #endif
 
 #include "Game/Commands/DieCommand.h"
@@ -21,6 +21,7 @@
 #include "Game/Components/ScoreComponent.h"
 #include "Game/Components/UIValueObserver.h"
 
+#include "Minigin/Core/ColliderComponent.h"
 #include "Minigin/Core/GameObject.h"
 #include "Minigin/Core/Minigin.h"
 #include "Minigin/Core/SDBMHash.h"
@@ -79,6 +80,7 @@ static void LoadMainMenu()
 
 
 	auto player1{ std::make_unique<core::GameObject>( 400.f, 350.f ) };
+	player1->AddComponent<core::ColliderComponent>( 32.f, 32.f, 0 );
 	player1->AddComponent<graphics::TextureComponent>()->SetTexture( "starfighter.png" );
 	auto player1Health = player1->AddComponent<HealthComponent>( 3 );
 	auto player1Score = player1->AddComponent<ScoreComponent>();
@@ -86,12 +88,14 @@ static void LoadMainMenu()
 	scene.AddGameObject( std::move( player1 ) );
 
 	auto player2{ std::make_unique<core::GameObject>( 600.f, 350.f ) };
+	player2->AddComponent<core::ColliderComponent>( 32.f, 32.f, 0 );
 	player2->AddComponent<graphics::TextureComponent>()->SetTexture( "starfighter_captured.png" );
 	auto player2Health = player2->AddComponent<HealthComponent>( 3 );
 	auto player2Score = player2->AddComponent<ScoreComponent>();
 	auto* player2Ptr = player2.get();
 	scene.AddGameObject( std::move( player2 ) );
 
+	scene.GetCollisionSystem().RegisterCallback( [] ( dae::core::GameObject* actorA, dae::core::GameObject* actorB ) { actorA->MarkForDeletion(); actorB->MarkForDeletion(); } );
 
 	font = resources::ResourceManager::GetInstance().LoadFont( "Lingua.otf", 16 );
 	auto player1LivesUI{ std::make_unique<core::GameObject>( 20.f, 125.f ) };
@@ -126,7 +130,7 @@ static void LoadMainMenu()
 
 	auto rotator{ std::make_unique<core::GameObject>() };
 	rotator->AddComponent<graphics::TextureComponent>()->SetTexture( "starfighter.png" );
-	rotator->AddComponent<RotatorComponent>( 20.0f, 2.5f );
+	rotator->AddComponent<RotatorComponent>( 40.0f, 5.f );
 	rotator->SetParent( player1Ptr, true );
 	scene.AddGameObject( std::move( rotator ) );
 

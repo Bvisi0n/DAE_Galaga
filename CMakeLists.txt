@@ -25,6 +25,8 @@ add_executable(${TARGET_NAME} ${TARGET_PARAM}
   "Game/Components/UIValueObserver.cpp"
   "Game/Core/Main.cpp"
 
+  "Minigin/Core/ColliderComponent.cpp"
+  "Minigin/Core/CollisionSystem.cpp"
   "Minigin/Core/GameObject.cpp"
   "Minigin/Core/Minigin.cpp"
   "Minigin/Core/Transform.cpp"

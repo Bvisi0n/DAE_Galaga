@@ -62,14 +62,14 @@ namespace dae::core
 			return m_state;
 		}
 
-	protected:
-		virtual void InitializeLinkage() = 0;
-		virtual void InitializeState() = 0;
-
 		[[nodiscard]] GameObject* GetOwner() const noexcept
 		{
 			return m_owner;
 		}
+
+	protected:
+		virtual void InitializeLinkage() = 0;
+		virtual void InitializeState() = 0;
 
 	private:
 		GameObject* m_owner;

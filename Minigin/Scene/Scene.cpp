@@ -5,6 +5,7 @@
 
 #include <glm/ext/matrix_float4x4.hpp>
 
+#include <Minigin/Core/CollisionSystem.h>
 #include <Minigin/Core/GameObject.h>
 #include "Minigin/Core/Transform.h"
 #include "Minigin/Scene/Scene.h"
@@ -47,6 +48,8 @@ namespace dae::scene
 			}
 		}
 
+		m_collisionSystem.Update( m_objects );
+
 		CleanupGameObjects();
 	}
 
@@ -82,6 +85,11 @@ namespace dae::scene
 	void Scene::RemoveAllGameObjects()
 	{
 		m_objects.clear();
+	}
+
+	core::CollisionSystem& Scene::GetCollisionSystem()
+	{
+		return m_collisionSystem;
 	}
 
 	void Scene::FlushPendingObjects()
