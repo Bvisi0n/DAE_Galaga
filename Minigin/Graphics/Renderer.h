@@ -15,7 +15,7 @@ namespace dae::graphics
 	class Renderer final : public utils::Singleton<Renderer>
 	{
 	public:
-		void Init( SDL_Window* pWindow );
+		void Init( SDL_Window* window );
 		void Render() const;
 		void Destroy();
 
@@ -32,8 +32,8 @@ namespace dae::graphics
 
 
 	private:
-		SDL_Renderer* m_pRenderer{};
-		SDL_Window* m_pWindow{};
+		SDL_Renderer* m_renderer{};
+		SDL_Window* m_window{};
 		SDL_Color m_clearColor{};
 
 		friend class utils::Singleton<Renderer>;

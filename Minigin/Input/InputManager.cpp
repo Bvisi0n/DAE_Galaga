@@ -13,9 +13,9 @@ namespace dae::input
 	InputManager::InputManager() noexcept
 		: m_keyboard( std::make_unique<Keyboard>() )
 	{
-		constexpr int c_maxControllers = 4;
-		m_gamepads.reserve( c_maxControllers );
-		for ( unsigned int index = 0; index < c_maxControllers; ++index )
+		constexpr int maxControllers = 4;
+		m_gamepads.reserve( maxControllers );
+		for ( unsigned int index = 0; index < maxControllers; ++index )
 		{
 			m_gamepads.push_back( std::make_unique<Gamepad>( index ) );
 		}

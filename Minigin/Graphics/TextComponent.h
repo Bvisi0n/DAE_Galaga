@@ -23,7 +23,7 @@ namespace dae::graphics
 	class TextComponent final : public core::Component, public IRenderable
 	{
 	public:
-		TextComponent( core::GameObject* pOwner, const std::string& text, std::shared_ptr<Font> pFont, const SDL_Color& color = { 255, 255, 255, 255 } );
+		TextComponent( core::GameObject* owner, const std::string& text, std::shared_ptr<Font> font, const SDL_Color& color = { 255, 255, 255, 255 } );
 		~TextComponent() = default;
 
 		TextComponent( const TextComponent& ) = delete;
@@ -45,7 +45,7 @@ namespace dae::graphics
 
 	private:
 		std::string m_text;
-		std::shared_ptr<Font>	   m_pFont{ nullptr };
+		std::shared_ptr<Font> m_pFont{ nullptr };
 		std::shared_ptr<Texture2D> m_pTexture{ nullptr };
 		SDL_Color m_color{ 255, 255, 255, 255 };
 		bool m_needsUpdate{ true };

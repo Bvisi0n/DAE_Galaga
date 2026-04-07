@@ -22,7 +22,7 @@ namespace dae::scene
 		void Update( const float deltaTime );
 		void Render() const;
 
-		void AddGameObject( std::unique_ptr<core::GameObject> pObject );
+		void AddGameObject( std::unique_ptr<core::GameObject> object );
 		void RemoveGameObject( core::GameObject& object );
 		void CleanupGameObjects();
 		void RemoveAllGameObjects();
@@ -34,8 +34,8 @@ namespace dae::scene
 
 		void FlushPendingObjects();
 
-		std::vector <std::unique_ptr<core::GameObject>> m_pObjects{};
-		std::vector<std::unique_ptr<core::GameObject>> m_pPendingObjects{};
+		std::vector <std::unique_ptr<core::GameObject>> m_objects{};
+		std::vector<std::unique_ptr<core::GameObject>> m_pendingObjects{};
 		bool m_isInitialized{ false };
 	};
 }

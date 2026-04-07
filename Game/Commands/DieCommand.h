@@ -11,16 +11,16 @@ namespace bvi
 	{
 	public:
 		DieCommand( HealthComponent* healthComponent ) noexcept
-			: m_pHealthComponent( healthComponent )
+			: m_healthComponent( healthComponent )
 		{}
 
 		void Execute( const float ) override
 		{
-			m_pHealthComponent->Die();
+			m_healthComponent->Die();
 		}
 
 	private:
-		HealthComponent* m_pHealthComponent;
+		HealthComponent* m_healthComponent;
 	};
 }
 #endif

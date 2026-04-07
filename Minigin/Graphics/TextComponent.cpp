@@ -19,9 +19,9 @@
 
 namespace dae::graphics
 {
-	TextComponent::TextComponent( core::GameObject* pOwner, const std::string& text, std::shared_ptr<Font> pFont, const SDL_Color& color )
-		: Component( pOwner )
-		, m_text( text ), m_pFont( std::move( pFont ) ), m_pTexture( nullptr ), m_color( color ), m_needsUpdate( true )
+	TextComponent::TextComponent( core::GameObject* owner, const std::string& text, std::shared_ptr<Font> font, const SDL_Color& color )
+		: Component( owner )
+		, m_text( text ), m_pFont( std::move( font ) ), m_pTexture( nullptr ), m_color( color ), m_needsUpdate( true )
 	{
 		assert( text.length() > 0 && "TextComponent requires non-empty text." );
 	}
@@ -83,7 +83,7 @@ namespace dae::graphics
 	{
 		if ( m_text != text )
 		{
-			m_text = std::move( text );
+			m_text = text;
 			m_needsUpdate = true;
 		}
 	}

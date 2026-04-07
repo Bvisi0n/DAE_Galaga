@@ -14,9 +14,7 @@ else()
 endif()
 
 # I have no clue on how to split this up into library and executable targets without breaking the Emscripten build.
-# Since I haven't seen anyone else do it either, I'm postponing it and hoping it will be covered in class.
 # For now, I'm already splitting the folder structure up to make that transition easier in the future.
-# I also hope it will show the lecturers that I know what should be engine and what should be game code despite my lacking understanding of CMake & Emscripten.
 
 # list source files here
 add_executable(${TARGET_NAME} ${TARGET_PARAM}
@@ -212,6 +210,7 @@ else()
 endif()
 
 # Static Analysis: Clang-Tidy Integration
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 option(ENABLE_CLANG_TIDY "Enable static analysis with clang-tidy" ON)
 
 if(ENABLE_CLANG_TIDY AND NOT EMSCRIPTEN)
@@ -221,7 +220,7 @@ if(ENABLE_CLANG_TIDY AND NOT EMSCRIPTEN)
         message(STATUS "Static Analysis: clang-tidy found at ${CLANG_TIDY_EXE}")
         
         set_target_properties(${TARGET_NAME} PROPERTIES
-            CXX_CLANG_TIDY "${CLANG_TIDY_EXE}"
+            CXX_CLANG_TIDY "${CLANG_TIDY_EXE};--config-file=${CMAKE_SOURCE_DIR}/.clang-tidy"
         )
     else()
         message(WARNING "Static Analysis: clang-tidy not found. Code conventions will not be enforced at compile time.")

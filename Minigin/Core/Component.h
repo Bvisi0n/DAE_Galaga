@@ -18,8 +18,8 @@ namespace dae::core
 	class Component
 	{
 	public:
-		explicit Component( GameObject* pOwner ) noexcept
-			: m_pOwner( pOwner )
+		explicit Component( GameObject* owner ) noexcept
+			: m_owner( owner )
 		{}
 
 		virtual ~Component() = default;
@@ -68,11 +68,11 @@ namespace dae::core
 
 		[[nodiscard]] GameObject* GetOwner() const noexcept
 		{
-			return m_pOwner;
+			return m_owner;
 		}
 
 	private:
-		GameObject* m_pOwner;
+		GameObject* m_owner;
 		ComponentState m_state{ ComponentState::Constructed };
 	};
 }

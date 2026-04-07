@@ -11,36 +11,36 @@
 
 namespace bvi
 {
-	UIValueObserver::UIValueObserver( dae::core::GameObject* pOwner, dae::events::GameEvent observedEvent, Formatter formatter )
-		: Component( pOwner )
-		, m_Formatter( std::move( formatter ) )
+	UIValueObserver::UIValueObserver( dae::core::GameObject* owner, dae::events::GameEvent observedEvent, Formatter formatter )
+		: Component( owner )
+		, m_formatter( std::move( formatter ) )
 		, m_observedEvent( observedEvent )
 	{}
 
 	void UIValueObserver::InitializeLinkage()
 	{
-		m_pText = GetOwner()->GetComponent<dae::graphics::TextComponent>();
-		if ( !m_pText )
+		m_text = GetOwner()->GetComponent<dae::graphics::TextComponent>();
+		if ( !m_text )
 		{
-			assert( m_pText && "requires a TextComponent on the same GameObject." );
+			assert( m_text && "requires a TextComponent on the same GameObject." );
 		}
 	}
 
 	void UIValueObserver::OnNotify( const dae::events::GameEvent event )
 	{
-		if ( !m_pText )
+		if ( !m_text )
 		{
-			assert( m_pText && "requires a TextComponent on the same GameObject." );
+			assert( m_text && "requires a TextComponent on the same GameObject." );
 			return;
 		}
 
 		if ( event.id == m_observedEvent.id )
 		{
-			if ( m_pText && m_Formatter )
+			if ( m_text && m_formatter )
 			{
 				int value = std::get<int>( event.args[ 0 ] );
 
-				m_pText->SetText( m_Formatter( value ) );
+				m_text->SetText( m_formatter( value ) );
 			}
 		}
 	}

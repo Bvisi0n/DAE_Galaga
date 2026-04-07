@@ -22,7 +22,7 @@ namespace dae::graphics
 		[[nodiscard]] TTF_Font* GetFont() const noexcept;
 
 	private:
-		TTF_Font* m_pFont;
+		TTF_Font* m_font;
 	};
 }
 #endif

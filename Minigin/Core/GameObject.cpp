@@ -15,17 +15,17 @@ namespace dae::core
 	GameObject::~GameObject()
 	{
 		// TODO L: Works but doesn't feel right, research is required. Who owns what, use smart pointers?
-		for ( auto* p_child : m_pChildren )
+		for ( auto* child : m_children )
 		{
-			if ( p_child )
+			if ( child )
 			{
-				p_child->m_pParent = nullptr;
+				child->m_parent = nullptr;
 			}
 		}
 
-		if ( m_pParent )
+		if ( m_parent )
 		{
-			m_pParent->RemoveChild( this );
+			m_parent->RemoveChild( this );
 		}
 	}
 
@@ -33,11 +33,11 @@ namespace dae::core
 	{
 		m_isPendingDeletion = true;
 
-		for ( auto* p_child : m_pChildren )
+		for ( auto* child : m_children )
 		{
-			if ( p_child )
+			if ( child )
 			{
-				p_child->MarkForDeletion();
+				child->MarkForDeletion();
 			}
 		}
 	}
@@ -50,10 +50,10 @@ namespace dae::core
 	void GameObject::AdvanceComponentStates() noexcept
 	{
 		// std::vector iterator invalidation
-		const size_t component_count = m_pComponents.size();
-		for ( size_t i = 0; i < component_count; ++i )
+		const size_t componentCount = m_components.size();
+		for ( size_t i = 0; i < componentCount; ++i )
 		{
-			m_pComponents[ i ]->AdvanceState();
+			m_components[ i ]->AdvanceState();
 		}
 	}
 
@@ -65,25 +65,25 @@ namespace dae::core
 		}
 
 		// std::vector iterator invalidation
-		const size_t component_count = m_pComponents.size();
-		for ( size_t i = 0; i < component_count; ++i )
+		const size_t componentCount = m_components.size();
+		for ( size_t i = 0; i < componentCount; ++i )
 		{
-			auto* p_component = m_pComponents[ i ].get();
+			auto* component = m_components[ i ].get();
 
-			if ( p_component->IsPendingDeletion() )
+			if ( component->IsPendingDeletion() )
 			{
 				continue;
 			}
 
-			if ( p_component->GetExecutionState() != ComponentState::Ready )
+			if ( component->GetExecutionState() != ComponentState::Ready )
 			{
-				if ( p_component->AdvanceState() != ComponentState::Ready )
+				if ( component->AdvanceState() != ComponentState::Ready )
 				{
 					continue;
 				}
 			}
 
-			p_component->Update( deltaTime );
+			component->Update( deltaTime );
 		}
 
 		CleanupComponents();
@@ -91,15 +91,15 @@ namespace dae::core
 
 	void GameObject::Render() const
 	{
-		if ( m_pRenderable )
+		if ( m_renderable )
 		{
-			m_pRenderable->Render();
+			m_renderable->Render();
 		}
 	}
 
 	void GameObject::SetParent( GameObject* parent, bool keepWorldPosition )
 	{
-		if ( IsChild( parent ) || parent == this || m_pParent == parent )
+		if ( IsChild( parent ) || parent == this || m_parent == parent )
 		{
 			return;
 		}
@@ -117,27 +117,27 @@ namespace dae::core
 		}
 		//else if (!keepWorldPosition) the current LocalPosition is preserved as is
 
-		if ( m_pParent )
+		if ( m_parent )
 		{
-			m_pParent->RemoveChild( this );
+			m_parent->RemoveChild( this );
 		}
 
-		m_pParent = parent;
+		m_parent = parent;
 
-		if ( m_pParent )
+		if ( m_parent )
 		{
-			m_pParent->AddChild( this );
+			m_parent->AddChild( this );
 		}
 	}
 
 	GameObject* GameObject::GetParent() const
 	{
-		return m_pParent;
+		return m_parent;
 	}
 
 	const std::vector<GameObject*>& GameObject::GetChildren() const
 	{
-		return m_pChildren;
+		return m_children;
 	}
 
 	Transform& GameObject::GetTransform()
@@ -150,56 +150,56 @@ namespace dae::core
 		return m_transform;
 	}
 
-	bool GameObject::IsChild( GameObject* pCandidate )
+	bool GameObject::IsChild( GameObject* candidate )
 	{
-		if ( pCandidate == nullptr ) return false;
+		if ( candidate == nullptr ) return false;
 
-		for ( auto p_child : m_pChildren )
+		for ( auto child : m_children )
 		{
-			if ( p_child == pCandidate ) return true;
-			if ( p_child->IsChild( pCandidate ) ) return true;
+			if ( child == candidate ) return true;
+			if ( child->IsChild( candidate ) ) return true;
 		}
 		return false;
 	}
 
-	void GameObject::AddChild( GameObject* pChild )
+	void GameObject::AddChild( GameObject* child )
 	{
-		if ( pChild == nullptr )
+		if ( child == nullptr )
 		{
 			return;
 		}
 		else
 		{
-			if ( std::ranges::find( m_pChildren, pChild ) == m_pChildren.end() )
+			if ( std::ranges::find( m_children, child ) == m_children.end() )
 			{
-				m_pChildren.emplace_back( pChild );
+				m_children.emplace_back( child );
 			}
 		}
 	}
 
-	void GameObject::RemoveChild( GameObject* pChild )
+	void GameObject::RemoveChild( GameObject* child )
 	{
-		if ( pChild == nullptr )
+		if ( child == nullptr )
 		{
 			return;
 		}
 		else
 		{
-			std::erase( m_pChildren, pChild );
+			std::erase( m_children, child );
 
-			if ( pChild->GetParent() == this )
+			if ( child->GetParent() == this )
 			{
-				pChild->m_pParent = nullptr;
+				child->m_parent = nullptr;
 			}
 		}
 	}
 
 	void GameObject::CleanupComponents()
 	{
-		std::erase_if( m_pComponents,
-			[] ( const auto& pComponent )
+		std::erase_if( m_components,
+			[] ( const auto& component )
 			{
-				return pComponent->IsPendingDeletion();
+				return component->IsPendingDeletion();
 			} );
 	}
 }

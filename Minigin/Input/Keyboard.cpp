@@ -1,12 +1,13 @@
+#include <memory>
+#include <unordered_map>
+#include <vector>
+
 #if WIN32
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #else
 #include <SDL3/SDL.h>
 #endif
-
-#include <unordered_map>
-#include <vector>
 
 #include "Minigin/Input/Keyboard.h"
 
@@ -20,33 +21,33 @@ namespace dae::input
 
 		void Update()
 		{
-			m_PreviousState = m_CurrentState;
+			m_previousState = m_currentState;
 
 		#if WIN32
 			BYTE state[ 256 ];
 			if ( GetKeyboardState( state ) )
 			{
-				m_CurrentState.assign( state, state + 256 );
+				m_currentState.assign( state, state + 256 );
 			}
 		#else
-			int numKeys;
+			int numKeys{};
 			const bool* state = SDL_GetKeyboardState( &numKeys );
-			m_CurrentState.assign( state, state + numKeys );
+			m_currentState.assign( state, state + numKeys );
 		#endif
 
-			if ( m_PreviousState.empty() )
+			if ( m_previousState.empty() )
 			{
-				m_PreviousState = m_CurrentState;
+				m_previousState = m_currentState;
 			}
 		}
 
 		bool IsPressed( const Key key ) const
 		{
-			int platform_key = GetPlatformKey( key );
+			int platformKey = GetPlatformKey( key );
 		#if WIN32
-			return m_CurrentState[ platform_key ] & 0x80;
+			return m_currentState[ platformKey ] & 0x80;
 		#else
-			return m_CurrentState[ platform_key ];
+			return m_currentState[ platformKey ];
 		#endif
 		}
 
@@ -63,11 +64,11 @@ namespace dae::input
 	private:
 		bool WasPressed( const Key key ) const
 		{
-			int platform_key = GetPlatformKey( key );
+			int platformKey = GetPlatformKey( key );
 		#if WIN32
-			return m_PreviousState[ platform_key ] & 0x80;
+			return m_previousState[ platformKey ] & 0x80;
 		#else
-			return m_PreviousState[ platform_key ];
+			return m_previousState[ platformKey ];
 		#endif
 		}
 
@@ -75,7 +76,7 @@ namespace dae::input
 		{
 		#if WIN32
 			// https://learn.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
-			static const std::unordered_map<Key, int> key_map =
+			static const std::unordered_map<Key, int> keyMap =
 			{
 				{Key::W,        'W'},
 				{Key::A,        'A'},
@@ -87,7 +88,7 @@ namespace dae::input
 			};
 		#else
 			// https://wiki.libsdl.org/SDL3/SDL_Scancode
-			static const std::unordered_map<Key, int> key_map =
+			static const std::unordered_map<Key, int> keyMap =
 			{
 				{Key::W,        SDL_SCANCODE_W},
 				{Key::A,        SDL_SCANCODE_A},
@@ -98,15 +99,15 @@ namespace dae::input
 				{Key::E,        SDL_SCANCODE_E},
 			};
 		#endif
-			return key_map.at( key );
+			return keyMap.at( key );
 		}
 
-		std::vector<unsigned char> m_CurrentState;
-		std::vector<unsigned char> m_PreviousState;
+		std::vector<unsigned char> m_currentState;
+		std::vector<unsigned char> m_previousState;
 	};
 
 	Keyboard::Keyboard()
-		: m_pImpl( std::make_unique<KeyboardImpl>() )
+		: m_pimpl( std::make_unique<KeyboardImpl>() )
 	{}
 
 	// Don't remove, needs to be here for definition of KeyboardImpl.
@@ -114,21 +115,21 @@ namespace dae::input
 
 	void Keyboard::Update()
 	{
-		m_pImpl->Update();
+		m_pimpl->Update();
 	}
 
 	bool Keyboard::IsDown( const Key key ) const
 	{
-		return m_pImpl->IsDown( key );
+		return m_pimpl->IsDown( key );
 	}
 
 	bool Keyboard::IsUp( const Key key ) const
 	{
-		return m_pImpl->IsUp( key );
+		return m_pimpl->IsUp( key );
 	}
 
 	bool Keyboard::IsPressed( const Key key ) const
 	{
-		return m_pImpl->IsPressed( key );
+		return m_pimpl->IsPressed( key );
 	}
 }

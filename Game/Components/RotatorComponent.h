@@ -14,7 +14,7 @@ namespace bvi
 	class RotatorComponent final : public dae::core::Component
 	{
 	public:
-		RotatorComponent( dae::core::GameObject* pOwner, float range, float speed );
+		RotatorComponent( dae::core::GameObject* owner, float range, float speed );
 		~RotatorComponent() override = default;
 
 		void InitializeLinkage() override

@@ -19,8 +19,8 @@ namespace dae::events
 	class ObservableComponent : public core::Component, public ISubject
 	{
 	public:
-		ObservableComponent( core::GameObject* pOwner ) noexcept
-			: Component( pOwner )
+		ObservableComponent( core::GameObject* owner ) noexcept
+			: Component( owner )
 		{};
 		virtual ~ObservableComponent() = default;
 
@@ -28,8 +28,8 @@ namespace dae::events
 		virtual void InitializeState() override = 0;
 		virtual void Update( const float deltaTime ) override = 0;
 
-		void AttachObserver( IObserver* pObserver ) override;
-		void DetachObserver( IObserver* pObserver ) override;
+		void AttachObserver( IObserver* observer ) override;
+		void DetachObserver( IObserver* observer ) override;
 
 	protected:
 		void NotifyObservers( GameEvent event ) override;

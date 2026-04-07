@@ -1,0 +1,77 @@
+---
+Checks: >
+  -*,
+  readability-identifier-naming,
+  readability-inconsistent-declaration-parameter-name,
+  cppcoreguidelines-init-variables
+
+WarningsAsErrors: >
+  readability-identifier-naming*,
+  readability-inconsistent-declaration-parameter-name*,
+  cppcoreguidelines-init-variables*
+
+CheckOptions:
+# --- Interface Consistency ---
+  - key:             readability-inconsistent-declaration-parameter-name.Strict
+    value:           true
+
+  # --- Types & Namespaces ---
+  - key:             readability-identifier-naming.NamespaceCase
+    value:           lower_case
+  - key:             readability-identifier-naming.ClassCase
+    value:           CamelCase
+  - key:             readability-identifier-naming.StructCase
+    value:           CamelCase
+  - key:             readability-identifier-naming.EnumCase
+    value:           CamelCase
+  - key:             readability-identifier-naming.TemplateParameterCase
+    value:           CamelCase
+  - key:             readability-identifier-naming.TemplateParameterPrefix
+    value:           T
+
+  # --- Functions ---
+  - key:             readability-identifier-naming.FunctionCase
+    value:           CamelCase
+
+  # --- Member Variables ---
+  - key:             readability-identifier-naming.PrivateMemberCase
+    value:           camelBack
+  - key:             readability-identifier-naming.PrivateMemberPrefix
+    value:           m_
+  - key:             readability-identifier-naming.ProtectedMemberCase
+    value:           camelBack
+  - key:             readability-identifier-naming.ProtectedMemberPrefix
+    value:           m_
+  - key:             readability-identifier-naming.PublicMemberCase
+    value:           camelBack
+  - key:             readability-identifier-naming.PublicMemberPrefix
+    value:           ''
+
+  # --- Static & Global Variables ---
+  - key:             readability-identifier-naming.ClassMemberCase
+    value:           camelBack
+  - key:             readability-identifier-naming.ClassMemberPrefix
+    value:           s_
+  - key:             readability-identifier-naming.GlobalVariableCase
+    value:           camelBack
+  - key:             readability-identifier-naming.GlobalVariablePrefix
+    value:           g_
+  - key:             readability-identifier-naming.GlobalConstantCase
+    value:           CamelCase
+  - key:             readability-identifier-naming.GlobalConstantPrefix
+    value:           c_
+
+  # --- Local Variables & Parameters ---
+  - key:             readability-identifier-naming.ParameterCase
+    value:           camelBack
+  - key:             readability-identifier-naming.ParameterPrefix
+    value:           ''
+  - key:             readability-identifier-naming.ConstantParameterCase
+    value:           camelBack
+  - key:             readability-identifier-naming.ConstantParameterPrefix
+    value:           ''
+  - key:             readability-identifier-naming.VariableCase
+    value:           camelBack
+  - key:             readability-identifier-naming.VariablePrefix
+    value:           ''
+...

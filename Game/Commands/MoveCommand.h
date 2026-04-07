@@ -12,8 +12,8 @@ namespace bvi
 	class MoveCommand final : public dae::input::Command
 	{
 	public:
-		MoveCommand( dae::core::GameObject* pGameObject, const glm::vec2& direction, float speed )
-			: m_pGameObject( pGameObject )
+		MoveCommand( dae::core::GameObject* gameObject, const glm::vec2& direction, float speed )
+			: m_gameObject( gameObject )
 			, m_direction( direction )
 			, m_speed( speed )
 		{}
@@ -21,7 +21,7 @@ namespace bvi
 		void Execute( const float deltaTime ) override
 		{
 			// TODO L: Diagonal movement is currently double speed.
-			auto& transform = m_pGameObject->GetTransform();
+			auto& transform = m_gameObject->GetTransform();
 			auto position = transform.GetLocalPosition();
 
 			// TODO L: Use vector math.
@@ -32,7 +32,7 @@ namespace bvi
 		}
 
 	private:
-		dae::core::GameObject* m_pGameObject;
+		dae::core::GameObject* m_gameObject;
 		glm::vec2 m_direction;
 		float m_speed;
 	};

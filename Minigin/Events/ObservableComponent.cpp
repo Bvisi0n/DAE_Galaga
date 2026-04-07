@@ -7,21 +7,21 @@
 
 namespace dae::events
 {
-	void ObservableComponent::AttachObserver( IObserver* pObserver )
+	void ObservableComponent::AttachObserver( IObserver* observer )
 	{
 		if ( m_isNotifying )
 		{
-			m_pPendingObservers.push_back( pObserver );
+			m_pPendingObservers.push_back( observer );
 		}
 		else
 		{
-			m_pObservers.push_back( pObserver );
+			m_pObservers.push_back( observer );
 		}
 	}
 
-	void ObservableComponent::DetachObserver( IObserver* pObserver )
+	void ObservableComponent::DetachObserver( IObserver* observer )
 	{
-		auto it = std::ranges::find( m_pObservers, pObserver );
+		auto it = std::ranges::find( m_pObservers, observer );
 		if ( it != m_pObservers.end() )
 		{
 			if ( m_isNotifying )
@@ -39,11 +39,11 @@ namespace dae::events
 	{
 		m_isNotifying = true;
 
-		for ( IObserver* p_observer : m_pObservers )
+		for ( IObserver* observer : m_pObservers )
 		{
-			if ( p_observer != nullptr )
+			if ( observer != nullptr )
 			{
-				p_observer->OnNotify( event );
+				observer->OnNotify( event );
 			}
 		}
 

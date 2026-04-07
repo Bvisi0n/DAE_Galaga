@@ -35,7 +35,7 @@
 #include "Minigin/Resources/ResourceManager.h"
 #include "Minigin/Scene/SceneManager.h"
 
-SDL_Window* g_window{};
+SDL_Window * g_window{};
 
 static void LogSDLVersion( const std::string& message, int major, int minor, int patch )
 {
@@ -154,25 +154,25 @@ namespace dae::core
 	void Minigin::RunOneFrame()
 	{
 		using clock = std::chrono::steady_clock; // Steady clock is guaranteed to be monotonic
-		const auto frame_start_time{ clock::now() };
-		const float delta_time{ std::chrono::duration<float>( frame_start_time - m_lastTime ).count() };
-		const float clamped_delta_time = std::min( delta_time, m_maxDeltaTime );
-		m_lastTime = frame_start_time;
+		const auto frameStartTime{ clock::now() };
+		const float deltaTime{ std::chrono::duration<float>( frameStartTime - m_lastTime ).count() };
+		const float clampedDeltaTime = std::min( deltaTime, m_maxDeltaTime );
+		m_lastTime = frameStartTime;
 
-		m_quit = !input::InputManager::GetInstance().ProcessInput( clamped_delta_time );
+		m_quit = !input::InputManager::GetInstance().ProcessInput( clampedDeltaTime );
 
-		scene::SceneManager::GetInstance().Update( clamped_delta_time );
+		scene::SceneManager::GetInstance().Update( clampedDeltaTime );
 		graphics::Renderer::GetInstance().Render();
 
-		const auto frame_end_time{ clock::now() };
-		const auto execution_time{ frame_end_time - frame_start_time };
+		const auto frameEndTime{ clock::now() };
+		const auto executionTime{ frameEndTime - frameStartTime };
 
-		if ( execution_time < m_nsPerFrame )
+		if ( executionTime < m_nsPerFrame )
 		{
-			const auto wait_duration = m_nsPerFrame - execution_time;
+			const auto waitDuration = m_nsPerFrame - executionTime;
 			// I opted for SDL_DelayPrecise, the last function in this file (line 664)
 				// https://github.com/libsdl-org/SDL/blob/main/src/timer/SDL_timer.c
-			SDL_DelayPrecise( static_cast<Uint64>( wait_duration.count() ) );
+			SDL_DelayPrecise( static_cast<Uint64>( waitDuration.count() ) );
 		}
 	}
 }

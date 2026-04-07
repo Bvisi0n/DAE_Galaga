@@ -30,20 +30,20 @@ namespace dae::scene
 		FlushPendingObjects();
 
 		// std::vector iterator invalidation
-		const size_t object_count = m_pObjects.size();
-		for ( size_t i = 0; i < object_count; ++i )
+		const size_t objectCount = m_objects.size();
+		for ( size_t i = 0; i < objectCount; ++i )
 		{
-			if ( !m_pObjects[ i ]->IsPendingDeletion() )
+			if ( !m_objects[ i ]->IsPendingDeletion() )
 			{
-				m_pObjects[ i ]->Update( deltaTime );
+				m_objects[ i ]->Update( deltaTime );
 			}
 		}
 
-		for ( auto& p_object : m_pObjects )
+		for ( auto& object : m_objects )
 		{
-			if ( !p_object->IsPendingDeletion() && !p_object->GetParent() )
+			if ( !object->IsPendingDeletion() && !object->GetParent() )
 			{
-				p_object->GetTransform().UpdateWorldMatrix( glm::mat4( 1.0f ) );
+				object->GetTransform().UpdateWorldMatrix( glm::mat4( 1.0f ) );
 			}
 		}
 
@@ -52,17 +52,17 @@ namespace dae::scene
 
 	void Scene::Render() const
 	{
-		for ( const auto& p_object : m_pObjects )
+		for ( const auto& object : m_objects )
 		{
-			p_object->Render();
+			object->Render();
 		}
 	}
 
-	void Scene::AddGameObject( std::unique_ptr<core::GameObject> pObject )
+	void Scene::AddGameObject( std::unique_ptr<core::GameObject> object )
 	{
-		assert( pObject != nullptr && "Cannot add a null GameObject to the scene." );
+		assert( object != nullptr && "Cannot add a null GameObject to the scene." );
 
-		m_pPendingObjects.emplace_back( std::move( pObject ) );
+		m_pendingObjects.emplace_back( std::move( object ) );
 	}
 
 	void Scene::RemoveGameObject( core::GameObject& object )
@@ -72,46 +72,46 @@ namespace dae::scene
 
 	void Scene::CleanupGameObjects()
 	{
-		std::erase_if( m_pObjects,
-			[] ( const auto& pObj )
+		std::erase_if( m_objects,
+			[] ( const auto& object )
 			{
-				return pObj->IsPendingDeletion();
+				return object->IsPendingDeletion();
 			} );
 	}
 
 	void Scene::RemoveAllGameObjects()
 	{
-		m_pObjects.clear();
+		m_objects.clear();
 	}
 
 	void Scene::FlushPendingObjects()
 	{
-		if ( m_pPendingObjects.empty() )
+		if ( m_pendingObjects.empty() )
 		{
 			return;
 		}
 
 		// Allows adding new objects during the flush without iterator invalidation issues, they will be flushed in the next frame.
-		auto p_new_objects = std::move( m_pPendingObjects );
-		m_pPendingObjects.clear();
+		auto newObjects = std::move( m_pendingObjects );
+		m_pendingObjects.clear();
 
-		const size_t new_index_start = m_pObjects.size();
+		const size_t newIndexStart = m_objects.size();
 
-		m_pObjects.reserve( m_pObjects.size() + p_new_objects.size() );
-		for ( auto& p_object : p_new_objects )
+		m_objects.reserve( m_objects.size() + newObjects.size() );
+		for ( auto& object : newObjects )
 		{
-			m_pObjects.emplace_back( std::move( p_object ) );
+			m_objects.emplace_back( std::move( object ) );
 		}
 
-		constexpr size_t required_initialization_passes = 2;
+		constexpr size_t requiredInitPasses = 2;
 
-		for ( size_t phase = 0; phase < required_initialization_passes; ++phase )
+		for ( size_t phase = 0; phase < requiredInitPasses; ++phase )
 		{
-			const size_t object_count = m_pObjects.size();
-			for ( size_t index = new_index_start; index < object_count; ++index )
+			const size_t objectCount = m_objects.size();
+			for ( size_t index = newIndexStart; index < objectCount; ++index )
 			{
 				// 2 States: Link -> Ready (set initial values)
-				m_pObjects[ index ]->AdvanceComponentStates();
+				m_objects[ index ]->AdvanceComponentStates();
 			}
 		}
 	}

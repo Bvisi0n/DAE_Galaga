@@ -11,17 +11,17 @@ namespace bvi
 	{
 	public:
 		ScoreCommand( ScoreComponent* scoreComponent, int valueOfChange )
-			: m_pScoreComponent( scoreComponent )
+			: m_scoreComponent( scoreComponent )
 			, m_valueOfChange( valueOfChange )
 		{}
 
 		void Execute( const float ) override
 		{
-			m_pScoreComponent->AddScore( m_valueOfChange );
+			m_scoreComponent->AddScore( m_valueOfChange );
 		}
 
 	private:
-		ScoreComponent* m_pScoreComponent;
+		ScoreComponent* m_scoreComponent;
 		int m_valueOfChange{};
 	};
 }

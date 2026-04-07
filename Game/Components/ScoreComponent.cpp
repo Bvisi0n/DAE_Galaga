@@ -1,12 +1,14 @@
 #include "Game/Components/ScoreComponent.h"
 
+#include "Minigin/Core/GameObject.h"
 #include "Minigin/Core/SDBMHash.h"
 #include "Minigin/Events/GameEvent.h"
+#include "Minigin/Events/ObservableComponent.h"
 
 namespace bvi
 {
-	ScoreComponent::ScoreComponent( dae::core::GameObject* pOwner )
-		: ObservableComponent( pOwner )
+	ScoreComponent::ScoreComponent( dae::core::GameObject* owner )
+		: ObservableComponent( owner )
 		, m_score( 0 )
 	{}
 

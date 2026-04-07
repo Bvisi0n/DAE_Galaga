@@ -13,7 +13,7 @@ namespace bvi
 	class HealthComponent final : public dae::events::ObservableComponent
 	{
 	public:
-		HealthComponent( dae::core::GameObject* pOwner, int lives );
+		HealthComponent( dae::core::GameObject* owner, int lives );
 
 		void InitializeLinkage() override
 		{}

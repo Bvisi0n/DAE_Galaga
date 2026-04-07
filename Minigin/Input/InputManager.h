@@ -1,10 +1,12 @@
 #ifndef INPUTMANAGER_H
 #define INPUTMANAGER_H
 
+#include <algorithm>
 #include <concepts>
 #include <map>
 #include <memory>
 #include <type_traits>
+#include <utility>
 #include <vector>
 
 #include "Minigin/Input/Command.h"
@@ -30,15 +32,15 @@ namespace dae::input
 		bool ProcessInput( const float deltaTime );
 
 		template <IsInputType T>
-		void BindCommand( T inputType, KeyState state, std::unique_ptr<Command> pCommand, unsigned int controllerIndex = 0 )
+		void BindCommand( T inputType, KeyState state, std::unique_ptr<Command> command, unsigned int controllerIndex = 0 )
 		{
 			if constexpr ( std::is_same_v<T, Keyboard::Key> )
 			{
-				m_keyboardCommands[ {inputType, state} ] = std::move( pCommand );
+				m_keyboardCommands[ {inputType, state} ] = std::move( command );
 			}
 			else if constexpr ( std::is_same_v<T, Gamepad::Button> )
 			{
-				m_gamepadCommands[ {controllerIndex, inputType, state} ] = std::move( pCommand );
+				m_gamepadCommands[ {controllerIndex, inputType, state} ] = std::move( command );
 			}
 		}
 

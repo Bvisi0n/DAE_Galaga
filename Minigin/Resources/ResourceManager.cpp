@@ -1,4 +1,4 @@
-﻿#include <cassert>
+#include <cassert>
 #include <cstdint>
 #include <filesystem>
 #include <map>
@@ -29,21 +29,21 @@ namespace dae::resources
 
 	void ResourceManager::Destroy()
 	{
-		m_pLoadedFonts.clear();
-		m_pLoadedTextures.clear();
+		m_loadedFonts.clear();
+		m_loadedTextures.clear();
 	}
 
 	std::shared_ptr<graphics::Texture2D> ResourceManager::LoadTexture( const std::string& file )
 	{
-		const auto full_path = m_dataPath / file;
-		const auto filename = std::filesystem::path( full_path ).filename().string();
+		const auto fullPath = m_dataPath / file;
+		const auto filename = std::filesystem::path( fullPath ).filename().string();
 
-		if ( m_pLoadedTextures.find( filename ) == m_pLoadedTextures.end() )
+		if ( m_loadedTextures.find( filename ) == m_loadedTextures.end() )
 		{
-			m_pLoadedTextures.insert( std::pair( filename, std::make_shared<graphics::Texture2D>( full_path.string() ) ) );
+			m_loadedTextures.insert( std::pair( filename, std::make_shared<graphics::Texture2D>( fullPath.string() ) ) );
 		}
 
-		return m_pLoadedTextures.at( filename );
+		return m_loadedTextures.at( filename );
 	}
 
 	std::shared_ptr<graphics::Font> ResourceManager::LoadFont( const std::string& file, uint8_t size )
@@ -53,13 +53,13 @@ namespace dae::resources
 		const std::string fileName = fullPath.filename().string();
 		const auto fontKey = std::pair<std::string, uint8_t>( fileName, size );
 
-		auto it = m_pLoadedFonts.find( fontKey );
+		auto it = m_loadedFonts.find( fontKey );
 
-		if ( it == m_pLoadedFonts.end() )
+		if ( it == m_loadedFonts.end() )
 		{
 			auto font = std::make_shared<graphics::Font>( fullPath.string(), size );
 
-			auto emplaceResult = m_pLoadedFonts.emplace( fontKey, std::move( font ) );
+			auto emplaceResult = m_loadedFonts.emplace( fontKey, std::move( font ) );
 			it = emplaceResult.first;
 		}
 
@@ -68,14 +68,14 @@ namespace dae::resources
 
 	void ResourceManager::UnloadUnusedResources()
 	{
-		std::erase_if( m_pLoadedTextures, [] ( const auto& item )
-			{
-				return item.second.use_count() == 1;
-			} );
+		std::erase_if( m_loadedTextures, [] ( const auto& item )
+			 {
+				  return item.second.use_count() == 1;
+			 } );
 
-		std::erase_if( m_pLoadedFonts, [] ( const auto& item )
-			{
-				return item.second.use_count() == 1;
-			} );
+		std::erase_if( m_loadedFonts, [] ( const auto& item )
+			  {
+					return item.second.use_count() == 1;
+			  } );
 	}
 }

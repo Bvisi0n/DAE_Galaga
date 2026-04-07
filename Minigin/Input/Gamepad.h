@@ -42,7 +42,7 @@ namespace dae::input
 
 	private:
 		class GamepadImpl;
-		std::unique_ptr<GamepadImpl> m_pImpl;
+		std::unique_ptr<GamepadImpl> m_pimpl;
 	};
 }
 #endif

@@ -1,12 +1,14 @@
 #include "Game/Components/HealthComponent.h"
 
+#include "Minigin/Core/Component.h"
 #include "Minigin/Core/SDBMHash.h"
 #include "Minigin/Events/GameEvent.h"
+#include "Minigin/Events/ObservableComponent.h"
 
 namespace bvi
 {
-	HealthComponent::HealthComponent( dae::core::GameObject* pOwner, int lives )
-		: ObservableComponent( pOwner )
+	HealthComponent::HealthComponent( dae::core::GameObject* owner, int lives )
+		: ObservableComponent( owner )
 		, m_lives( lives )
 	{}
 

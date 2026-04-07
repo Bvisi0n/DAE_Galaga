@@ -1,4 +1,4 @@
-﻿#include <cassert>
+#include <cassert>
 
 #include <backends/imgui_impl_sdl3.h>
 #include <backends/imgui_impl_sdlrenderer3.h>
@@ -15,15 +15,15 @@
 
 namespace dae::graphics
 {
-	void Renderer::Init( SDL_Window* pWindow )
+	void Renderer::Init( SDL_Window* window )
 	{
-		m_pWindow = pWindow;
+		m_window = window;
 		SDL_SetHint( SDL_HINT_RENDER_VSYNC, "1" );
-		m_pRenderer = SDL_CreateRenderer( pWindow, nullptr );
+		m_renderer = SDL_CreateRenderer( window, nullptr );
 
-		if ( m_pRenderer == nullptr )
+		if ( m_renderer == nullptr )
 		{
-			assert( m_pRenderer != nullptr && "SDL_CreateRenderer Error" );
+			assert( m_renderer != nullptr && "SDL_CreateRenderer Error" );
 			return;
 		}
 
@@ -42,8 +42,8 @@ namespace dae::graphics
 		io.IniFilename = nullptr;
 	#endif
 
-		ImGui_ImplSDL3_InitForSDLRenderer( pWindow, m_pRenderer );
-		ImGui_ImplSDLRenderer3_Init( m_pRenderer );
+		ImGui_ImplSDL3_InitForSDLRenderer( window, m_renderer );
+		ImGui_ImplSDLRenderer3_Init( m_renderer );
 	}
 
 	void Renderer::Render() const
@@ -53,15 +53,15 @@ namespace dae::graphics
 		ImGui::NewFrame();
 
 		const auto& color = GetBackgroundColor();
-		SDL_SetRenderDrawColor( m_pRenderer, color.r, color.g, color.b, color.a );
+		SDL_SetRenderDrawColor( m_renderer, color.r, color.g, color.b, color.a );
 
-		SDL_RenderClear( m_pRenderer );
+		SDL_RenderClear( m_renderer );
 
 		scene::SceneManager::GetInstance().Render();
 
 		ImGui::Render();
-		ImGui_ImplSDLRenderer3_RenderDrawData( ImGui::GetDrawData(), m_pRenderer );
-		SDL_RenderPresent( m_pRenderer );
+		ImGui_ImplSDLRenderer3_RenderDrawData( ImGui::GetDrawData(), m_renderer );
+		SDL_RenderPresent( m_renderer );
 	}
 
 	void Renderer::Destroy()
@@ -70,16 +70,16 @@ namespace dae::graphics
 		ImGui_ImplSDL3_Shutdown();
 		ImGui::DestroyContext();
 
-		if ( m_pRenderer != nullptr )
+		if ( m_renderer != nullptr )
 		{
-			SDL_DestroyRenderer( m_pRenderer );
-			m_pRenderer = nullptr;
+			SDL_DestroyRenderer( m_renderer );
+			m_renderer = nullptr;
 		}
 	}
 
 	bool Renderer::IsValid() const noexcept
 	{
-		return m_pRenderer != nullptr;
+		return m_renderer != nullptr;
 	}
 
 	void Renderer::RenderTexture( const Texture2D& texture, const float x, const float y ) const
@@ -108,7 +108,7 @@ namespace dae::graphics
 
 	SDL_Renderer* Renderer::GetSDLRenderer() const
 	{
-		return m_pRenderer;
+		return m_renderer;
 	}
 
 	const SDL_Color& Renderer::GetBackgroundColor() const

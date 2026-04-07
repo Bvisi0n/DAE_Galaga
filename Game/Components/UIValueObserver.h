@@ -25,7 +25,7 @@ namespace bvi
 	public:
 		using Formatter = std::function<std::string( int )>;
 
-		UIValueObserver( dae::core::GameObject* pOwner, dae::events::GameEvent observedEvent, Formatter formatter );
+		UIValueObserver( dae::core::GameObject* owner, dae::events::GameEvent observedEvent, Formatter formatter );
 
 		void InitializeLinkage() override;
 		void InitializeState() override
@@ -37,8 +37,8 @@ namespace bvi
 		{}
 
 	private:
-		Formatter m_Formatter;
-		dae::graphics::TextComponent* m_pText{ nullptr };
+		Formatter m_formatter;
+		dae::graphics::TextComponent* m_text{ nullptr };
 		dae::events::GameEvent m_observedEvent; // TODO L: Does it have to be a whole GameEvent object?
 	};
 }

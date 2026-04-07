@@ -13,7 +13,7 @@ namespace dae::core
 	class Transform final
 	{
 	public:
-		Transform( GameObject* pOwner, float xPos, float yPos, float xScale = 1.f, float yScale = 1.f );
+		Transform( GameObject* owner, float xPos, float yPos, float xScale = 1.f, float yScale = 1.f );
 
 		void SetLocalPosition( const glm::vec3& pos );
 		void SetLocalPosition( float x, float y, float z = 0.f );
@@ -33,7 +33,7 @@ namespace dae::core
 		void SetDirty();
 
 	private:
-		GameObject* m_pOwner;
+		GameObject* m_owner;
 
 		glm::mat4 m_localMatrix;
 		glm::mat4 m_worldMatrix;

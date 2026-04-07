@@ -1,6 +1,7 @@
 #ifndef SCORECOMPONENT_H
 #define SCORECOMPONENT_H
 
+#include "Minigin/Core/GameObject.h"
 #include "Minigin/Events/ObservableComponent.h"
 
 namespace bvi
@@ -8,7 +9,7 @@ namespace bvi
 	class ScoreComponent final : public dae::events::ObservableComponent
 	{
 	public:
-		ScoreComponent( dae::core::GameObject* pOwner );
+		ScoreComponent( dae::core::GameObject* owner );
 		virtual ~ScoreComponent() = default;
 
 		void InitializeLinkage() noexcept override

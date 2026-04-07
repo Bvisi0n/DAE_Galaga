@@ -13,17 +13,17 @@ namespace dae::graphics
 {
 	void TextureComponent::Render() const
 	{
-		if ( m_pTexture != nullptr && GetOwner() != nullptr )
+		if ( m_texture != nullptr && GetOwner() != nullptr )
 		{
 			const auto& transform = GetOwner()->GetTransform();
 			const auto& position = transform.GetWorldPosition();
 			const auto& scale = transform.GetLocalScale();
 
-			auto texture_size = m_pTexture->GetSize();
-			float final_width = texture_size.x * scale.x;
-			float final_height = texture_size.y * scale.y;
+			auto textureSize = m_texture->GetSize();
+			float finalWidth = textureSize.x * scale.x;
+			float finalHeight = textureSize.y * scale.y;
 
-			Renderer::GetInstance().RenderTexture( *m_pTexture, position.x, position.y, final_width, final_height );
+			Renderer::GetInstance().RenderTexture( *m_texture, position.x, position.y, finalWidth, finalHeight );
 		}
 	}
 
@@ -31,7 +31,7 @@ namespace dae::graphics
 	{
 		if ( m_filename != filename )
 		{
-			m_pTexture = resources::ResourceManager::GetInstance().LoadTexture( filename );
+			m_texture = resources::ResourceManager::GetInstance().LoadTexture( filename );
 			m_filename = filename;
 		}
 	}

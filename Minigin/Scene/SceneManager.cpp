@@ -5,23 +5,23 @@ namespace dae::scene
 {
 	Scene& SceneManager::CreateScene()
 	{
-		m_pScenes.emplace_back( new Scene() );
-		return *m_pScenes.back();
+		m_scenes.emplace_back( new Scene() );
+		return *m_scenes.back();
 	}
 
 	void SceneManager::Update( const float deltaTime )
 	{
-		for ( auto& p_scene : m_pScenes )
+		for ( auto& scene : m_scenes )
 		{
-			p_scene->Update( deltaTime );
+			scene->Update( deltaTime );
 		}
 	}
 
 	void SceneManager::Render()
 	{
-		for ( const auto& p_scene : m_pScenes )
+		for ( const auto& scene : m_scenes )
 		{
-			p_scene->Render();
+			scene->Render();
 		}
 	}
 }

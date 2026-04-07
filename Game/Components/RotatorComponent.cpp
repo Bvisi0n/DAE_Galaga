@@ -1,29 +1,31 @@
+#include <cmath>
 #include <numbers>
 
 #include "Game/Components/RotatorComponent.h"
 
+#include "Minigin/Core/Component.h"
 #include "Minigin/Core/GameObject.h"
 #include "Minigin/Core/Transform.h"
 
 namespace bvi
 {
-	RotatorComponent::RotatorComponent( dae::core::GameObject* pOwner, float range, float speed )
-		: Component( pOwner ), m_range( range ), m_rotationSpeed( speed )
+	RotatorComponent::RotatorComponent( dae::core::GameObject* owner, float range, float speed )
+		: Component( owner ), m_range( range ), m_rotationSpeed( speed )
 	{}
 
 	void RotatorComponent::Update( const float deltaTime )
 	{
 		m_angle += m_rotationSpeed * deltaTime;
 
-		const float double_pi{ std::numbers::pi_v<float> *2.0f };
+		const float doublePi{ std::numbers::pi_v<float> *2.0f };
 
-		if ( m_angle > double_pi )
+		if ( m_angle > doublePi )
 		{
-			m_angle -= double_pi;
+			m_angle -= doublePi;
 		}
 		else if ( m_angle < 0.f )
 		{
-			m_angle += double_pi;
+			m_angle += doublePi;
 		}
 
 		// TODO L: RotatorComponent should support ellipses.

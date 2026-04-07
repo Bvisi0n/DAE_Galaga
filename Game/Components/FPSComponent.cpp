@@ -1,33 +1,35 @@
 #include <cassert>
 #include <iomanip>
+#include <ios>
 #include <sstream>
 #include <string>
 
 #include "Game/Components/FPSComponent.h"
 
+#include "Minigin/Core/Component.h"
 #include "Minigin/Core/GameObject.h"
 #include "Minigin/Graphics/TextComponent.h"
 
 namespace bvi
 {
-	FPSComponent::FPSComponent( dae::core::GameObject* pOwner )
-		: Component( pOwner )
+	FPSComponent::FPSComponent( dae::core::GameObject* owner )
+		: Component( owner )
 	{}
 
 	void FPSComponent::InitializeLinkage()
 	{
-		m_pText = GetOwner()->GetComponent<dae::graphics::TextComponent>();
-		if ( !m_pText )
+		m_text = GetOwner()->GetComponent<dae::graphics::TextComponent>();
+		if ( !m_text )
 		{
-			assert( m_pText && "requires a TextComponent on the same GameObject." );
+			assert( m_text && "requires a TextComponent on the same GameObject." );
 		}
 	}
 
 	void FPSComponent::Update( const float deltaTime )
 	{
-		if ( !m_pText )
+		if ( !m_text )
 		{
-			assert( m_pText && "requires a TextComponent on the same GameObject." );
+			assert( m_text && "requires a TextComponent on the same GameObject." );
 			return;
 		}
 
@@ -35,8 +37,8 @@ namespace bvi
 
 		std::ostringstream oss;
 		oss << std::fixed << std::setprecision( 1 ) << fps << " FPS";
-		std::string frame_string{ oss.str() };
+		std::string frameString{ oss.str() };
 
-		m_pText->SetText( frame_string );
+		m_text->SetText( frameString );
 	}
 }

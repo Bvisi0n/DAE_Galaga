@@ -25,7 +25,7 @@ namespace dae::input
 
 	private:
 		class KeyboardImpl;
-		std::unique_ptr<KeyboardImpl> m_pImpl;
+		std::unique_ptr<KeyboardImpl> m_pimpl;
 	};
 }
 

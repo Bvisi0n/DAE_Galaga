@@ -19,8 +19,8 @@ namespace dae::events
 		ISubject( ISubject&& ) = delete;
 		ISubject& operator=( ISubject&& ) = delete;
 
-		virtual void AttachObserver( IObserver* pObserver ) = 0;
-		virtual void DetachObserver( IObserver* pObserver ) = 0;
+		virtual void AttachObserver( IObserver* observer ) = 0;
+		virtual void DetachObserver( IObserver* observer ) = 0;
 
 	protected:
 		ISubject() = default;

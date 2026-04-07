@@ -20,7 +20,7 @@ namespace dae::scene
 	private:
 		friend class utils::Singleton<SceneManager>;
 
-		std::vector<std::unique_ptr<Scene>> m_pScenes{};
+		std::vector<std::unique_ptr<Scene>> m_scenes{};
 
 		SceneManager() = default;
 		virtual ~SceneManager() = default;

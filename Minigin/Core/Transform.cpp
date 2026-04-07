@@ -1,12 +1,15 @@
-#include <glm/gtc/matrix_transform.hpp>
+
+#include <glm/ext/matrix_float4x4.hpp>
+#include <glm/ext/matrix_transform.inl>
+#include <glm/ext/vector_float3.hpp>
 
 #include "Minigin/Core/GameObject.h"
 #include "Minigin/Core/Transform.h"
 
 namespace dae::core
 {
-	Transform::Transform( GameObject* pOwner, float xPos, float yPos, float xScale, float yScale )
-		: m_pOwner( pOwner )
+	Transform::Transform( GameObject* owner, float xPos, float yPos, float xScale, float yScale )
+		: m_owner( owner )
 		, m_localMatrix( 1.f )
 		, m_worldMatrix( 1.f )
 		, m_worldPosition( xPos, yPos, 0.f )
@@ -31,9 +34,9 @@ namespace dae::core
 		return m_localPosition;
 	}
 
-	void Transform::SetLocalRotation( float angle )
+	void Transform::SetLocalRotation( float angleInRadians )
 	{
-		m_localRotation = angle;
+		m_localRotation = angleInRadians;
 		SetDirty();
 	}
 
@@ -74,7 +77,7 @@ namespace dae::core
 		m_worldMatrix = parentWorldMatrix * m_localMatrix;
 		m_worldPosition = glm::vec3( m_worldMatrix[ 3 ] );
 
-		for ( const auto& child : m_pOwner->GetChildren() )
+		for ( const auto& child : m_owner->GetChildren() )
 		{
 			child->GetTransform().UpdateWorldMatrix( m_worldMatrix );
 		}
@@ -89,9 +92,9 @@ namespace dae::core
 		else
 		{
 			m_isDirty = true;
-			for ( const auto& p_child : m_pOwner->GetChildren() )
+			for ( const auto& child : m_owner->GetChildren() )
 			{
-				p_child->GetTransform().SetDirty();
+				child->GetTransform().SetDirty();
 			}
 		}
 	}

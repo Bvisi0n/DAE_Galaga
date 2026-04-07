@@ -7,23 +7,23 @@
 
 namespace dae::graphics
 {
-	Font::Font( const std::string& fullPath, float size ) : m_pFont( nullptr )
+	Font::Font( const std::string& fullPath, float size ) : m_font( nullptr )
 	{
-		m_pFont = TTF_OpenFont( fullPath.c_str(), size );
-		assert( m_pFont != nullptr && "Failed to load font" );
+		m_font = TTF_OpenFont( fullPath.c_str(), size );
+		assert( m_font != nullptr && "Failed to load font" );
 	}
 
 	Font::~Font()
 	{
-		if ( m_pFont )
+		if ( m_font )
 		{
-			TTF_CloseFont( m_pFont );
-			m_pFont = nullptr;
+			TTF_CloseFont( m_font );
+			m_font = nullptr;
 		}
 	}
 
 	TTF_Font* Font::GetFont() const noexcept
 	{
-		return m_pFont;
+		return m_font;
 	}
 }
