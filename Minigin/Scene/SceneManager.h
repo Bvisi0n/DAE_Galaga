@@ -7,7 +7,7 @@
 #include "Minigin/Scene/Scene.h"
 #include "Minigin/Utilities/Singleton.h"
 
-namespace dae::scene
+namespace dae::scenes
 {
 	class SceneManager final : public utils::Singleton<SceneManager>
 	{

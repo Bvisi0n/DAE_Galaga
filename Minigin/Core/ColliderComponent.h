@@ -37,7 +37,7 @@ namespace dae::core
 
 	private:
 		Rect m_localBounds;
-		int m_Layer; // TODO N: Optimize layers.
+		int m_Layer; // TODO L: Optimize layers.
 	};
 }
 

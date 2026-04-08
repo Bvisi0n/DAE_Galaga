@@ -57,7 +57,7 @@ namespace dae::graphics
 
 		SDL_RenderClear( m_renderer );
 
-		scene::SceneManager::GetInstance().Render();
+		scenes::SceneManager::GetInstance().Render();
 
 		ImGui::Render();
 		ImGui_ImplSDLRenderer3_RenderDrawData( ImGui::GetDrawData(), m_renderer );

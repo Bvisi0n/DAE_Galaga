@@ -1,7 +1,7 @@
 #include "Minigin/Scene/Scene.h"
 #include "Minigin/Scene/SceneManager.h"
 
-namespace dae::scene
+namespace dae::scenes
 {
 	Scene& SceneManager::CreateScene()
 	{

@@ -10,7 +10,7 @@
 #include "Minigin/Core/Transform.h"
 #include "Minigin/Scene/Scene.h"
 
-namespace dae::scene
+namespace dae::scenes
 {
 	void Scene::Initialize()
 	{

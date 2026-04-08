@@ -47,7 +47,7 @@ static void LoadMainMenu()
 	using namespace dae;
 	using namespace bvi;
 
-	auto& scene{ scene::SceneManager::GetInstance().CreateScene() };
+	auto& scene{ scenes::SceneManager::GetInstance().CreateScene() };
 
 	auto background{ std::make_unique<core::GameObject>() };
 	background->AddComponent<graphics::TextureComponent>()->SetTexture( "background.png" );

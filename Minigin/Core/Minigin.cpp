@@ -161,7 +161,7 @@ namespace dae::core
 
 		m_quit = !input::InputManager::GetInstance().ProcessInput( clampedDeltaTime );
 
-		scene::SceneManager::GetInstance().Update( clampedDeltaTime );
+		scenes::SceneManager::GetInstance().Update( clampedDeltaTime );
 		graphics::Renderer::GetInstance().Render();
 
 		const auto frameEndTime{ clock::now() };

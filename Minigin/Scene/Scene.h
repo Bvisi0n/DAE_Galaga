@@ -7,7 +7,7 @@
 #include "Minigin/Core/CollisionSystem.h"
 #include "Minigin/Core/GameObject.h"
 
-namespace dae::scene
+namespace dae::scenes
 {
 	class Scene final
 	{
