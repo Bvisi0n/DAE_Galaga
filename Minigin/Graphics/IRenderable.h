@@ -6,8 +6,13 @@ namespace dae::graphics
 	class IRenderable
 	{
 	public:
-		virtual ~IRenderable()
-		{};
+		IRenderable() = default;
+		virtual ~IRenderable() = default;
+
+		IRenderable( const IRenderable& ) = delete;
+		IRenderable( IRenderable&& ) = delete;
+		IRenderable& operator=( const IRenderable& ) = delete;
+		IRenderable& operator=( IRenderable&& ) = delete;
 
 		virtual void Render() const = 0;
 	};

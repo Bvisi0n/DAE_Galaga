@@ -24,6 +24,11 @@ namespace dae::events
 		{};
 		virtual ~ObservableComponent() = default;
 
+		ObservableComponent( const ObservableComponent& ) = delete;
+		ObservableComponent( ObservableComponent&& ) = delete;
+		ObservableComponent& operator=( const ObservableComponent& ) = delete;
+		ObservableComponent& operator=( ObservableComponent&& ) = delete;
+
 		virtual void InitializeLinkage() override = 0;
 		virtual void InitializeState() override = 0;
 		virtual void Update( const float deltaTime ) override = 0;
