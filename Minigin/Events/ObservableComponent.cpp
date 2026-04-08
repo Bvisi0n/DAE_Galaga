@@ -21,7 +21,8 @@ namespace dae::events
 
 	void ObservableComponent::DetachObserver( IObserver* observer )
 	{
-		auto it = std::ranges::find( m_pObservers, observer );
+		// std::ranges::find not supported by local emscripten. (works on web...?)
+		auto it = std::find( m_pObservers.begin(), m_pObservers.end(), observer );
 		if ( it != m_pObservers.end() )
 		{
 			if ( m_isNotifying )

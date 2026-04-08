@@ -95,8 +95,6 @@ static void LoadMainMenu()
 	auto* player2Ptr = player2.get();
 	scene.AddGameObject( std::move( player2 ) );
 
-	scene.GetCollisionSystem().RegisterCallback( [] ( dae::core::GameObject* actorA, dae::core::GameObject* actorB ) { actorA->MarkForDeletion(); actorB->MarkForDeletion(); } );
-
 	font = resources::ResourceManager::GetInstance().LoadFont( "Lingua.otf", 16 );
 	auto player1LivesUI{ std::make_unique<core::GameObject>( 20.f, 125.f ) };
 	player1LivesUI->AddComponent<graphics::TextComponent>( "Lives:", font );
@@ -166,6 +164,27 @@ static void LoadMainMenu()
 	input.BindCommand( input::Gamepad::Button::X, input::InputManager::KeyState::Up, std::make_unique<ScoreCommand>( player2Score, 10 ) );
 
 	input.BindCommand( input::Gamepad::Button::Y, input::InputManager::KeyState::Up, std::make_unique<ScoreCommand>( player2Score, 100 ) );
+
+	scene.GetCollisionSystem().RegisterCallback(
+		[ &input ] ( dae::core::GameObject* actorA, dae::core::GameObject* actorB )
+		{
+			input.UnbindCommand( input::Keyboard::Key::W, input::InputManager::KeyState::Pressed );
+			input.UnbindCommand( input::Keyboard::Key::S, input::InputManager::KeyState::Pressed );
+			input.UnbindCommand( input::Keyboard::Key::A, input::InputManager::KeyState::Pressed );
+			input.UnbindCommand( input::Keyboard::Key::D, input::InputManager::KeyState::Pressed );
+			input.UnbindCommand( input::Keyboard::Key::Space, input::InputManager::KeyState::Up );
+			input.UnbindCommand( input::Keyboard::Key::Q, input::InputManager::KeyState::Up );
+			input.UnbindCommand( input::Keyboard::Key::E, input::InputManager::KeyState::Up );
+			input.UnbindCommand( input::Gamepad::Button::DPadUp, input::InputManager::KeyState::Pressed, 0 );
+			input.UnbindCommand( input::Gamepad::Button::DPadDown, input::InputManager::KeyState::Pressed, 0 );
+			input.UnbindCommand( input::Gamepad::Button::DPadLeft, input::InputManager::KeyState::Pressed, 0 );
+			input.UnbindCommand( input::Gamepad::Button::DPadRight, input::InputManager::KeyState::Pressed, 0 );
+			input.UnbindCommand( input::Gamepad::Button::LeftShoulder, input::InputManager::KeyState::Up );
+			input.UnbindCommand( input::Gamepad::Button::X, input::InputManager::KeyState::Up );
+			input.UnbindCommand( input::Gamepad::Button::Y, input::InputManager::KeyState::Up );
+			actorA->MarkForDeletion();
+			actorB->MarkForDeletion();
+		} );
 
 	scene.Initialize();
 }

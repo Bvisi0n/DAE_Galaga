@@ -170,7 +170,8 @@ namespace dae::core
 		}
 		else
 		{
-			if ( std::ranges::find( m_children, child ) == m_children.end() )
+			// std::ranges::find not supported by local emscripten. (works on web...?)
+			if ( std::find( m_children.begin(), m_children.end(), child ) == m_children.end() )
 			{
 				m_children.emplace_back( child );
 			}
