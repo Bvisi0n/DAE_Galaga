@@ -9,8 +9,9 @@
 #include <vld.h> // Required
 #endif
 
+#include "Game/States/MainMenuState.h"
+
 #include "Minigin/Core/AppStateManager.h"
-#include "Minigin/Core/MainMenuState.h"
 #include "Minigin/Core/Minigin.h"
 
 // TODO L: Split engine and game into dll & exe.
@@ -33,7 +34,7 @@ int main( int, char* [] )
 			.windowHeight = 576
 		} );
 
-	dae::core::AppStateManager::GetInstance().PushState( std::make_unique<dae::core::MainMenuState>() );
+	dae::core::AppStateManager::GetInstance().PushState( std::make_unique<bvi::states::MainMenuState>() );
 
 	engine.Run();
 
