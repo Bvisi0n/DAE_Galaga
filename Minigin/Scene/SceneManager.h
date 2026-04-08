@@ -13,6 +13,7 @@ namespace dae::scenes
 	{
 	public:
 		Scene& CreateScene();
+		void RemoveAllScenes();
 
 		void Update( const float deltaTime );
 		void Render();

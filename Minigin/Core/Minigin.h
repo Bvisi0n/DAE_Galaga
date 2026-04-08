@@ -34,7 +34,7 @@ namespace dae::core
 		Minigin& operator=( const Minigin& other ) = delete;
 		Minigin& operator=( Minigin&& other ) = delete;
 
-		void Run( const std::function<void()>& load );
+		void Run();
 		void RunOneFrame();
 
 	private:

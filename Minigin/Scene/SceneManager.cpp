@@ -9,6 +9,11 @@ namespace dae::scenes
 		return *m_scenes.back();
 	}
 
+	void SceneManager::RemoveAllScenes()
+	{
+		m_scenes.clear();
+	}
+
 	void SceneManager::Update( const float deltaTime )
 	{
 		for ( auto& scene : m_scenes )

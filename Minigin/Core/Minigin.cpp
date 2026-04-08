@@ -29,13 +29,14 @@
 #include <SDL3/SDL_video.h>
 #include <SDL3_ttf/SDL_ttf.h>
 
+#include "Minigin/Core/AppStateManager.h"
 #include "Minigin/Core/Minigin.h"
 #include "Minigin/Graphics/Renderer.h"
 #include "Minigin/Input/InputManager.h"
 #include "Minigin/Resources/ResourceManager.h"
 #include "Minigin/Scene/SceneManager.h"
 
-SDL_Window * g_window{};
+SDL_Window* g_window{};
 
 static void LogSDLVersion( const std::string& message, int major, int minor, int patch )
 {
@@ -125,15 +126,13 @@ namespace dae::core
 	#endif
 	}
 
-	void Minigin::Run( const std::function<void()>& load )
+	void Minigin::Run()
 	{
 		if ( g_window == nullptr || !graphics::Renderer::GetInstance().IsValid() )
 		{
 			SDL_Log( "Engine failed to initialize successfully. Aborting Run loop." );
 			return;
 		}
-
-		load();
 
 		m_lastTime = std::chrono::steady_clock::now();
 		m_quit = false;
@@ -159,8 +158,8 @@ namespace dae::core
 		const float clampedDeltaTime = std::min( deltaTime, m_maxDeltaTime );
 		m_lastTime = frameStartTime;
 
+		AppStateManager::GetInstance().ProcessStateChange();
 		m_quit = !input::InputManager::GetInstance().ProcessInput( clampedDeltaTime );
-
 		scenes::SceneManager::GetInstance().Update( clampedDeltaTime );
 		graphics::Renderer::GetInstance().Render();
 
