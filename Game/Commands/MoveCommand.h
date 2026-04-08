@@ -7,7 +7,7 @@
 #include "Minigin/Core/Transform.h"
 #include "Minigin/Input/Command.h"
 
-namespace bvi
+namespace bvi::commands
 {
 	class MoveCommand final : public dae::input::Command
 	{

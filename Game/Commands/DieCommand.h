@@ -5,7 +5,7 @@
 
 #include "Minigin/Input/Command.h"
 
-namespace bvi
+namespace bvi::commands
 {
 	class DieCommand final : public dae::input::Command
 	{

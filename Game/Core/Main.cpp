@@ -137,33 +137,33 @@ static void LoadMainMenu()
 	const float keyboardSpeed = 100.0f;
 	const float gamepadSpeed = 200.0f;
 
-	input.BindCommand( input::Keyboard::Key::W, input::InputManager::KeyState::Pressed, std::make_unique<MoveCommand>( player1Ptr, glm::vec2{ 0, -1 }, keyboardSpeed ) );
+	input.BindCommand( input::Keyboard::Key::W, input::InputManager::KeyState::Pressed, std::make_unique<commands::MoveCommand>( player1Ptr, glm::vec2{ 0, -1 }, keyboardSpeed ) );
 
-	input.BindCommand( input::Keyboard::Key::S, input::InputManager::KeyState::Pressed, std::make_unique<MoveCommand>( player1Ptr, glm::vec2{ 0, 1 }, keyboardSpeed ) );
+	input.BindCommand( input::Keyboard::Key::S, input::InputManager::KeyState::Pressed, std::make_unique<commands::MoveCommand>( player1Ptr, glm::vec2{ 0, 1 }, keyboardSpeed ) );
 
-	input.BindCommand( input::Keyboard::Key::A, input::InputManager::KeyState::Pressed, std::make_unique<MoveCommand>( player1Ptr, glm::vec2{ -1, 0 }, keyboardSpeed ) );
+	input.BindCommand( input::Keyboard::Key::A, input::InputManager::KeyState::Pressed, std::make_unique<commands::MoveCommand>( player1Ptr, glm::vec2{ -1, 0 }, keyboardSpeed ) );
 
-	input.BindCommand( input::Keyboard::Key::D, input::InputManager::KeyState::Pressed, std::make_unique<MoveCommand>( player1Ptr, glm::vec2{ 1, 0 }, keyboardSpeed ) );
+	input.BindCommand( input::Keyboard::Key::D, input::InputManager::KeyState::Pressed, std::make_unique<commands::MoveCommand>( player1Ptr, glm::vec2{ 1, 0 }, keyboardSpeed ) );
 
-	input.BindCommand( input::Keyboard::Key::Space, input::InputManager::KeyState::Up, std::make_unique<DieCommand>( player1Health ) );
+	input.BindCommand( input::Keyboard::Key::Space, input::InputManager::KeyState::Up, std::make_unique<commands::DieCommand>( player1Health ) );
 
-	input.BindCommand( input::Keyboard::Key::Q, input::InputManager::KeyState::Up, std::make_unique<ScoreCommand>( player1Score, 10 ) );
+	input.BindCommand( input::Keyboard::Key::Q, input::InputManager::KeyState::Up, std::make_unique<commands::ScoreCommand>( player1Score, 10 ) );
 
-	input.BindCommand( input::Keyboard::Key::E, input::InputManager::KeyState::Up, std::make_unique<ScoreCommand>( player1Score, 100 ) );
+	input.BindCommand( input::Keyboard::Key::E, input::InputManager::KeyState::Up, std::make_unique<commands::ScoreCommand>( player1Score, 100 ) );
 
-	input.BindCommand( input::Gamepad::Button::DPadUp, input::InputManager::KeyState::Pressed, std::make_unique<MoveCommand>( player2Ptr, glm::vec2{ 0, -1 }, gamepadSpeed ), 0 );
+	input.BindCommand( input::Gamepad::Button::DPadUp, input::InputManager::KeyState::Pressed, std::make_unique<commands::MoveCommand>( player2Ptr, glm::vec2{ 0, -1 }, gamepadSpeed ), 0 );
 
-	input.BindCommand( input::Gamepad::Button::DPadDown, input::InputManager::KeyState::Pressed, std::make_unique<MoveCommand>( player2Ptr, glm::vec2{ 0, 1 }, gamepadSpeed ), 0 );
+	input.BindCommand( input::Gamepad::Button::DPadDown, input::InputManager::KeyState::Pressed, std::make_unique<commands::MoveCommand>( player2Ptr, glm::vec2{ 0, 1 }, gamepadSpeed ), 0 );
 
-	input.BindCommand( input::Gamepad::Button::DPadLeft, input::InputManager::KeyState::Pressed, std::make_unique<MoveCommand>( player2Ptr, glm::vec2{ -1, 0 }, gamepadSpeed ), 0 );
+	input.BindCommand( input::Gamepad::Button::DPadLeft, input::InputManager::KeyState::Pressed, std::make_unique<commands::MoveCommand>( player2Ptr, glm::vec2{ -1, 0 }, gamepadSpeed ), 0 );
 
-	input.BindCommand( input::Gamepad::Button::DPadRight, input::InputManager::KeyState::Pressed, std::make_unique<MoveCommand>( player2Ptr, glm::vec2{ 1, 0 }, gamepadSpeed ), 0 );
+	input.BindCommand( input::Gamepad::Button::DPadRight, input::InputManager::KeyState::Pressed, std::make_unique<commands::MoveCommand>( player2Ptr, glm::vec2{ 1, 0 }, gamepadSpeed ), 0 );
 
-	input.BindCommand( input::Gamepad::Button::LeftShoulder, input::InputManager::KeyState::Up, std::make_unique<DieCommand>( player2Health ) );
+	input.BindCommand( input::Gamepad::Button::LeftShoulder, input::InputManager::KeyState::Up, std::make_unique<commands::DieCommand>( player2Health ) );
 
-	input.BindCommand( input::Gamepad::Button::X, input::InputManager::KeyState::Up, std::make_unique<ScoreCommand>( player2Score, 10 ) );
+	input.BindCommand( input::Gamepad::Button::X, input::InputManager::KeyState::Up, std::make_unique<commands::ScoreCommand>( player2Score, 10 ) );
 
-	input.BindCommand( input::Gamepad::Button::Y, input::InputManager::KeyState::Up, std::make_unique<ScoreCommand>( player2Score, 100 ) );
+	input.BindCommand( input::Gamepad::Button::Y, input::InputManager::KeyState::Up, std::make_unique<commands::ScoreCommand>( player2Score, 100 ) );
 
 	scene.GetCollisionSystem().RegisterCallback(
 		[ &input ] ( dae::core::GameObject* actorA, dae::core::GameObject* actorB )
