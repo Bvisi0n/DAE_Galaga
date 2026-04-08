@@ -8,7 +8,7 @@ namespace dae::core
 	class GameObject;
 }
 
-namespace bvi
+namespace bvi::components
 {
 	class HealthComponent final : public dae::events::ObservableComponent
 	{

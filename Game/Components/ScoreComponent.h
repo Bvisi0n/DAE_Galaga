@@ -4,7 +4,7 @@
 #include "Minigin/Core/GameObject.h"
 #include "Minigin/Events/ObservableComponent.h"
 
-namespace bvi
+namespace bvi::components
 {
 	class ScoreComponent final : public dae::events::ObservableComponent
 	{

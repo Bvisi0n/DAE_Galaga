@@ -7,7 +7,7 @@
 #include "Minigin/Core/GameObject.h"
 #include "Minigin/Core/Transform.h"
 
-namespace bvi
+namespace bvi::components
 {
 	RotatorComponent::RotatorComponent( dae::core::GameObject* owner, float range, float speed )
 		: Component( owner ), m_range( range ), m_rotationSpeed( speed )

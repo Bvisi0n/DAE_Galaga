@@ -6,7 +6,7 @@
 #include "Minigin/Events/ObservableComponent.h"
 #include "Minigin/Input/InputManager.h"
 
-namespace bvi
+namespace bvi::components
 {
 	HealthComponent::HealthComponent( dae::core::GameObject* owner, int lives )
 		: ObservableComponent( owner )

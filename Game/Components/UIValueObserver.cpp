@@ -9,7 +9,7 @@
 #include "Minigin/Events/GameEvent.h"
 #include "Minigin/Graphics/TextComponent.h"
 
-namespace bvi
+namespace bvi::components
 {
 	UIValueObserver::UIValueObserver( dae::core::GameObject* owner, dae::events::GameEvent observedEvent, Formatter formatter )
 		: Component( owner )

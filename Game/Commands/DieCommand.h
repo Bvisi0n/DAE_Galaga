@@ -10,7 +10,7 @@ namespace bvi::commands
 	class DieCommand final : public dae::input::Command
 	{
 	public:
-		DieCommand( HealthComponent* healthComponent ) noexcept
+		DieCommand( components::HealthComponent* healthComponent ) noexcept
 			: m_healthComponent( healthComponent )
 		{}
 
@@ -25,7 +25,7 @@ namespace bvi::commands
 		}
 
 	private:
-		HealthComponent* m_healthComponent;
+		components::HealthComponent* m_healthComponent;
 	};
 }
 #endif

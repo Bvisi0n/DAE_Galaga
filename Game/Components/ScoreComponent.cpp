@@ -6,7 +6,7 @@
 #include "Minigin/Events/ObservableComponent.h"
 #include "Minigin/Input/InputManager.h"
 
-namespace bvi
+namespace bvi::components
 {
 	ScoreComponent::ScoreComponent( dae::core::GameObject* owner )
 		: ObservableComponent( owner )

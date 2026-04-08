@@ -10,7 +10,7 @@ namespace bvi::commands
 	class ScoreCommand final : public dae::input::Command
 	{
 	public:
-		ScoreCommand( ScoreComponent* scoreComponent, int valueOfChange )
+		ScoreCommand( components::ScoreComponent* scoreComponent, int valueOfChange )
 			: m_scoreComponent( scoreComponent )
 			, m_valueOfChange( valueOfChange )
 		{}
@@ -26,7 +26,7 @@ namespace bvi::commands
 		}
 
 	private:
-		ScoreComponent* m_scoreComponent;
+		components::ScoreComponent* m_scoreComponent;
 		int m_valueOfChange{};
 	};
 }

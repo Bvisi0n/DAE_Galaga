@@ -10,7 +10,7 @@
 #include "Minigin/Core/GameObject.h"
 #include "Minigin/Graphics/TextComponent.h"
 
-namespace bvi
+namespace bvi::components
 {
 	FPSComponent::FPSComponent( dae::core::GameObject* owner )
 		: Component( owner )

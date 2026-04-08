@@ -65,7 +65,7 @@ static void LoadMainMenu()
 	font = resources::ResourceManager::GetInstance().LoadFont( "Lingua.otf", 24 );
 	auto fps{ std::make_unique<core::GameObject>( 20.f, 20.f ) };
 	fps->AddComponent<graphics::TextComponent>( "FPS", font );
-	fps->AddComponent<FPSComponent>();
+	fps->AddComponent<components::FPSComponent>();
 	scene.AddGameObject( std::move( fps ) );
 
 
@@ -82,23 +82,23 @@ static void LoadMainMenu()
 	auto player1{ std::make_unique<core::GameObject>( 400.f, 350.f ) };
 	player1->AddComponent<core::ColliderComponent>( 32.f, 32.f, 0 );
 	player1->AddComponent<graphics::TextureComponent>()->SetTexture( "starfighter.png" );
-	auto player1Health = player1->AddComponent<HealthComponent>( 3 );
-	auto player1Score = player1->AddComponent<ScoreComponent>();
+	auto player1Health = player1->AddComponent<components::HealthComponent>( 3 );
+	auto player1Score = player1->AddComponent<components::ScoreComponent>();
 	auto* player1Ptr = player1.get();
 	scene.AddGameObject( std::move( player1 ) );
 
 	auto player2{ std::make_unique<core::GameObject>( 600.f, 350.f ) };
 	player2->AddComponent<core::ColliderComponent>( 32.f, 32.f, 0 );
 	player2->AddComponent<graphics::TextureComponent>()->SetTexture( "starfighter_captured.png" );
-	auto player2Health = player2->AddComponent<HealthComponent>( 3 );
-	auto player2Score = player2->AddComponent<ScoreComponent>();
+	auto player2Health = player2->AddComponent<components::HealthComponent>( 3 );
+	auto player2Score = player2->AddComponent<components::ScoreComponent>();
 	auto* player2Ptr = player2.get();
 	scene.AddGameObject( std::move( player2 ) );
 
 	font = resources::ResourceManager::GetInstance().LoadFont( "Lingua.otf", 16 );
 	auto player1LivesUI{ std::make_unique<core::GameObject>( 20.f, 125.f ) };
 	player1LivesUI->AddComponent<graphics::TextComponent>( "Lives:", font );
-	auto playerObserver = player1LivesUI->AddComponent<UIValueObserver>( events::GameEvent{ core::make_sdbm_hash( "PlayerDied" ) }, [] ( int v ) {
+	auto playerObserver = player1LivesUI->AddComponent<components::UIValueObserver>( events::GameEvent{ core::make_sdbm_hash( "PlayerDied" ) }, [] ( int v ) {
 		return "White Lives:  " + std::to_string( v ) + " (spacebar)";
  } );
 	player1Health->AttachObserver( playerObserver );
@@ -106,7 +106,7 @@ static void LoadMainMenu()
 
 	auto player2LivesUI{ std::make_unique<core::GameObject>( 20.f, 175.f ) };
 	player2LivesUI->AddComponent<graphics::TextComponent>( "Lives:", font );
-	playerObserver = player2LivesUI->AddComponent<UIValueObserver>( events::GameEvent{ core::make_sdbm_hash( "PlayerDied" ) }, [] ( int v ) {
+	playerObserver = player2LivesUI->AddComponent<components::UIValueObserver>( events::GameEvent{ core::make_sdbm_hash( "PlayerDied" ) }, [] ( int v ) {
 		return "Red Lives:     " + std::to_string( v ) + " (left shoulder)";
  } );
 	player2Health->AttachObserver( playerObserver );
@@ -114,13 +114,13 @@ static void LoadMainMenu()
 
 	auto player1ScoreUI{ std::make_unique<core::GameObject>( 20.f, 150.f ) };
 	player1ScoreUI->AddComponent<graphics::TextComponent>( "Lives:", font );
-	playerObserver = player1ScoreUI->AddComponent<UIValueObserver>( events::GameEvent{ core::make_sdbm_hash( "ScoreChanged" ) }, [] ( int v ) { return "White Score: " + std::to_string( v ) + " (Q & E)"; } );
+	playerObserver = player1ScoreUI->AddComponent<components::UIValueObserver>( events::GameEvent{ core::make_sdbm_hash( "ScoreChanged" ) }, [] ( int v ) { return "White Score: " + std::to_string( v ) + " (Q & E)"; } );
 	player1Score->AttachObserver( playerObserver );
 	scene.AddGameObject( std::move( player1ScoreUI ) );
 
 	auto player2ScoreUI{ std::make_unique<core::GameObject>( 20.f, 200.f ) };
 	player2ScoreUI->AddComponent<graphics::TextComponent>( "Lives:", font );
-	playerObserver = player2ScoreUI->AddComponent<UIValueObserver>( events::GameEvent{ core::make_sdbm_hash( "ScoreChanged" ) }, [] ( int v ) {
+	playerObserver = player2ScoreUI->AddComponent<components::UIValueObserver>( events::GameEvent{ core::make_sdbm_hash( "ScoreChanged" ) }, [] ( int v ) {
 		return "Red Score:    " + std::to_string( v ) + " (X & Y)";
 } );
 	player2Score->AttachObserver( playerObserver );
@@ -128,7 +128,7 @@ static void LoadMainMenu()
 
 	auto rotator{ std::make_unique<core::GameObject>() };
 	rotator->AddComponent<graphics::TextureComponent>()->SetTexture( "starfighter.png" );
-	rotator->AddComponent<RotatorComponent>( 40.0f, 5.f );
+	rotator->AddComponent<components::RotatorComponent>( 40.0f, 5.f );
 	rotator->SetParent( player1Ptr, true );
 	scene.AddGameObject( std::move( rotator ) );
 
