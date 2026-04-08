@@ -20,6 +20,11 @@ namespace bvi
 			m_scoreComponent->AddScore( m_valueOfChange );
 		}
 
+		[[nodiscard]] const void* GetTargetContext() const override
+		{
+			return m_scoreComponent;
+		}
+
 	private:
 		ScoreComponent* m_scoreComponent;
 		int m_valueOfChange{};

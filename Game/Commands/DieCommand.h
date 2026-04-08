@@ -19,6 +19,11 @@ namespace bvi
 			m_healthComponent->Die();
 		}
 
+		[[nodiscard]] const void* GetTargetContext() const override
+		{
+			return m_healthComponent;
+		}
+
 	private:
 		HealthComponent* m_healthComponent;
 	};

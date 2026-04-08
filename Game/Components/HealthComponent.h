@@ -14,6 +14,7 @@ namespace bvi
 	{
 	public:
 		HealthComponent( dae::core::GameObject* owner, int lives );
+		~HealthComponent();
 
 		void InitializeLinkage() override
 		{}

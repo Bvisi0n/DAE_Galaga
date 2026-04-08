@@ -1,9 +1,12 @@
+#include <cassert>
+#include <map>
 #include <memory>
 
 #include <SDL3/SDL_events.h>
 
 #include <backends/imgui_impl_sdl3.h>
 
+#include "Minigin/Input/Command.h"
 #include "Minigin/Input/Gamepad.h"
 #include "Minigin/Input/InputManager.h"
 #include "Minigin/Input/Keyboard.h"
@@ -106,6 +109,28 @@ namespace dae::input
 		}
 
 		return true;
+	}
+
+	void InputManager::AssertAndRemoveBindings( const void* targetContext )
+	{
+		if ( !targetContext )
+		{
+			return;
+		}
+
+		auto isDangling = [ targetContext ] ( const auto& pair )
+			{
+				const std::unique_ptr<Command>& cmd = pair.second;
+				if ( cmd && cmd->GetTargetContext() == targetContext )
+				{
+					assert( false && "Dangling Pointer! Command was not explicitly unbound before target destruction." );
+					return true;
+				}
+				return false;
+			};
+
+		std::erase_if( m_gamepadCommands, isDangling );
+		std::erase_if( m_keyboardCommands, isDangling );
 	}
 
 	bool InputManager::IsControllerConnected( unsigned int controllerIndex ) const

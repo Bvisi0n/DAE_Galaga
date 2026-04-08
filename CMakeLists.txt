@@ -36,6 +36,7 @@ add_executable(${TARGET_NAME} ${TARGET_PARAM}
   "Minigin/Graphics/TextComponent.cpp"
   "Minigin/Graphics/TextureComponent.cpp"
   "Minigin/Graphics/Texture2D.cpp"
+  
   "Minigin/Input/Gamepad.cpp"
   "Minigin/Input/InputManager.cpp"
   "Minigin/Input/Keyboard.cpp"

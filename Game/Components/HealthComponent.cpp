@@ -4,6 +4,7 @@
 #include "Minigin/Core/SDBMHash.h"
 #include "Minigin/Events/GameEvent.h"
 #include "Minigin/Events/ObservableComponent.h"
+#include "Minigin/Input/InputManager.h"
 
 namespace bvi
 {
@@ -11,6 +12,11 @@ namespace bvi
 		: ObservableComponent( owner )
 		, m_lives( lives )
 	{}
+
+	HealthComponent::~HealthComponent()
+	{
+		dae::input::InputManager::GetInstance().AssertAndRemoveBindings( this );
+	}
 
 	void HealthComponent::InitializeState()
 	{

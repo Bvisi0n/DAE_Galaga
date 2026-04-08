@@ -31,6 +31,8 @@ namespace dae::input
 
 		bool ProcessInput( const float deltaTime );
 
+		void AssertAndRemoveBindings( const void* targetContext );
+
 		template <IsInputType T>
 		void BindCommand( T inputType, KeyState state, std::unique_ptr<Command> command, unsigned int controllerIndex = 0 )
 		{

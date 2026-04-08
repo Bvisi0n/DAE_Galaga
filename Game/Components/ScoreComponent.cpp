@@ -4,6 +4,7 @@
 #include "Minigin/Core/SDBMHash.h"
 #include "Minigin/Events/GameEvent.h"
 #include "Minigin/Events/ObservableComponent.h"
+#include "Minigin/Input/InputManager.h"
 
 namespace bvi
 {
@@ -11,6 +12,12 @@ namespace bvi
 		: ObservableComponent( owner )
 		, m_score( 0 )
 	{}
+
+	ScoreComponent::~ScoreComponent()
+	{
+		dae::input::InputManager::GetInstance().AssertAndRemoveBindings( this );
+	}
+
 
 	void ScoreComponent::InitializeState() noexcept
 	{

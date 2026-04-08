@@ -31,6 +31,11 @@ namespace bvi
 			transform.SetLocalPosition( position );
 		}
 
+		[[nodiscard]] const void* GetTargetContext() const override
+		{
+			return m_gameObject;
+		}
+
 	private:
 		dae::core::GameObject* m_gameObject;
 		glm::vec2 m_direction;

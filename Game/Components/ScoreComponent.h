@@ -10,7 +10,7 @@ namespace bvi
 	{
 	public:
 		ScoreComponent( dae::core::GameObject* owner );
-		virtual ~ScoreComponent() = default;
+		virtual ~ScoreComponent();
 
 		void InitializeLinkage() noexcept override
 		{}
