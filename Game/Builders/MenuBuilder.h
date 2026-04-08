@@ -27,6 +27,7 @@ namespace bvi::builders
 			BuildLogo( scene );
 			BuildTitle( scene );
 			BuildFPS( scene );
+			BuildMenu( scene );
 			scene.Initialize();
 		}
 
@@ -57,8 +58,16 @@ namespace bvi::builders
 		{
 			auto font{ dae::resources::ResourceManager::GetInstance().LoadFont( "Lingua.otf", 24 ) };
 			auto fps{ std::make_unique<dae::core::GameObject>( 20.f, 20.f ) };
-			fps->AddComponent<dae::graphics::TextComponent>( "FPS", font );
+			fps->AddComponent<dae::graphics::TextComponent>( "00.0 FPS", font );
 			fps->AddComponent<components::FPSComponent>();
+			scene.AddGameObject( std::move( fps ) );
+		}
+
+		static void BuildMenu( dae::scenes::Scene& scene )
+		{
+			auto font{ dae::resources::ResourceManager::GetInstance().LoadFont( "Lingua.otf", 24 ) };
+			auto fps{ std::make_unique<dae::core::GameObject>( 425.f, 375.f ) };
+			fps->AddComponent<dae::graphics::TextComponent>( "Press F to start", font );
 			scene.AddGameObject( std::move( fps ) );
 		}
 	};

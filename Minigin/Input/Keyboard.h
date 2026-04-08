@@ -12,7 +12,7 @@ namespace dae::input
 		enum class Key
 		{
 			W, A, S, D,
-			Space, Q, E
+			Space, Q, E, F,
 		};
 
 		Keyboard();
