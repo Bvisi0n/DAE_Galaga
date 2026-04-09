@@ -1,11 +1,11 @@
 #ifndef PRIMITIVERENDERCOMPONENT_H
 #define PRIMITIVERENDERCOMPONENT_H
 
-#include <vector>
-
+#include <SDL3/SDL_pixels.h>
+#include <SDL3/SDL_rect.h>
 #include <SDL3/SDL_render.h>
-#include "SDL3/SDL.h"
 
+#include <Minigin/Core/GameObject.h>
 #include "Minigin/Core/Component.h"
 #include "Minigin/Graphics/IRenderable.h"
 #include "Minigin/Graphics/Renderer.h"
