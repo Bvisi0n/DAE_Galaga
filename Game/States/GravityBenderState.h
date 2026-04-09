@@ -49,7 +49,7 @@ namespace bvi::states
 
 			auto font{ dae::resources::ResourceManager::GetInstance().LoadFont( "Lingua.otf", 18 ) };
 
-			fpsEntity->AddComponent<dae::graphics::TextComponent>( "00.0 FPS", font );
+			fpsEntity->AddComponent<dae::graphics::TextComponent>( "00.0 FPS", font )->SetColor( SDL_Color{ 255, 0, 0, 255 } );
 			fpsEntity->AddComponent<bvi::components::FPSComponent>();
 
 			scene.AddGameObject( std::move( fpsEntity ) );
