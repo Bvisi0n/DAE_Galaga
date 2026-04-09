@@ -26,6 +26,12 @@ namespace bvi::components
 		}
 	}
 
+	void UIValueObserver::InitializeState()
+	{}
+
+	void UIValueObserver::Update( const float )
+	{}
+
 	void UIValueObserver::OnNotify( const dae::events::GameEvent event )
 	{
 		if ( !m_text )

@@ -26,6 +26,12 @@ namespace dae::graphics
 		assert( text.length() > 0 && "TextComponent requires non-empty text." );
 	}
 
+	void TextComponent::InitializeLinkage()
+	{}
+
+	void TextComponent::InitializeState()
+	{}
+
 	void TextComponent::Update( const float )
 	{
 		if ( !m_needsUpdate )

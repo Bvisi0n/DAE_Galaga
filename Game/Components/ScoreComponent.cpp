@@ -19,10 +19,16 @@ namespace bvi::components
 		dae::input::InputManager::GetInstance().AssertAndRemoveBindings( this );
 	}
 
+	void ScoreComponent::InitializeLinkage() noexcept
+	{}
+
 	void ScoreComponent::InitializeState() noexcept
 	{
 		NotifyScoreChanged();
 	}
+
+	void ScoreComponent::Update( const float ) noexcept
+	{}
 
 	void ScoreComponent::AddScore( const int score )
 	{

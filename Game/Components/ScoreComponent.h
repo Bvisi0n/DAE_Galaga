@@ -12,13 +12,10 @@ namespace bvi::components
 		ScoreComponent( dae::core::GameObject* owner );
 		virtual ~ScoreComponent();
 
-		void InitializeLinkage() noexcept override
-		{}
-
+		void InitializeLinkage() noexcept override;
 		void InitializeState() noexcept override;
 
-		void Update( const float ) noexcept override
-		{}
+		void Update( const float ) noexcept override;
 
 		void AddScore( const int score );
 		[[nodiscard]] int GetScore() const;

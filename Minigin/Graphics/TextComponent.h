@@ -31,11 +31,8 @@ namespace dae::graphics
 		TextComponent& operator=( const TextComponent& ) = delete;
 		TextComponent& operator=( TextComponent&& ) = delete;
 
-		void InitializeLinkage() override
-		{}
-
-		void InitializeState() override
-		{}
+		void InitializeLinkage() override;
+		void InitializeState() override;
 
 		void Update( const float deltaTime ) override;
 		void Render() const override;

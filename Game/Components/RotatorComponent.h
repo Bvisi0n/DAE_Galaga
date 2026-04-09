@@ -17,11 +17,8 @@ namespace bvi::components
 		RotatorComponent( dae::core::GameObject* owner, float range, float speed );
 		~RotatorComponent() override = default;
 
-		void InitializeLinkage() override
-		{}
-
-		void InitializeState() override
-		{}
+		void InitializeLinkage() override;
+		void InitializeState() override;
 
 		void Update( const float deltaTime ) override;
 

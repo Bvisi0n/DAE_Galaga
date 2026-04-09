@@ -18,10 +18,16 @@ namespace bvi::components
 		dae::input::InputManager::GetInstance().AssertAndRemoveBindings( this );
 	}
 
+	void HealthComponent::InitializeLinkage()
+	{}
+
 	void HealthComponent::InitializeState()
 	{
 		NotifyPlayerDied();
 	}
+
+	void HealthComponent::Update( const float ) noexcept
+	{}
 
 	int HealthComponent::GetLives() const
 	{

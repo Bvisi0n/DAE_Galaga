@@ -28,13 +28,11 @@ namespace bvi::components
 		UIValueObserver( dae::core::GameObject* owner, dae::events::GameEvent observedEvent, Formatter formatter );
 
 		void InitializeLinkage() override;
-		void InitializeState() override
-		{}
+		void InitializeState() override;
+
+		void Update( const float deltaTime ) override;
 
 		void OnNotify( const dae::events::GameEvent event ) override;
-
-		void Update( const float ) override
-		{}
 
 	private:
 		Formatter m_formatter;

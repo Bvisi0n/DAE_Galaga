@@ -22,18 +22,12 @@ namespace dae::core
 	public:
 		ColliderComponent( GameObject* owner, float width, float height, int layer );
 
+		void InitializeLinkage() override;
+		void InitializeState() override;
+		void Update( const float deltaTime ) override;
+
 		[[nodiscard]] Rect GetWorldBounds() const;
 		[[nodiscard]] int GetLayer() const noexcept;
-
-	protected:
-		void InitializeLinkage() override
-		{}
-
-		void InitializeState() override
-		{}
-
-		void Update( const float ) override
-		{}
 
 	private:
 		Rect m_localBounds;

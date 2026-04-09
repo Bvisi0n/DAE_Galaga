@@ -10,6 +10,15 @@ namespace dae::core
 		, m_Layer( layer )
 	{}
 
+	void ColliderComponent::InitializeLinkage()
+	{}
+
+	void ColliderComponent::InitializeState()
+	{}
+
+	void ColliderComponent::Update( const float )
+	{}
+
 	Rect ColliderComponent::GetWorldBounds() const
 	{
 		const auto& pos = GetOwner()->GetTransform().GetWorldPosition();

@@ -11,6 +11,15 @@
 
 namespace dae::graphics
 {
+	void TextureComponent::InitializeLinkage()
+	{}
+
+	void TextureComponent::InitializeState()
+	{}
+
+	void TextureComponent::Update( const float )
+	{}
+
 	void TextureComponent::Render() const
 	{
 		if ( m_texture != nullptr && GetOwner() != nullptr )

@@ -13,6 +13,12 @@ namespace bvi::components
 		: Component( owner ), m_range( range ), m_rotationSpeed( speed )
 	{}
 
+	void RotatorComponent::InitializeLinkage()
+	{}
+
+	void RotatorComponent::InitializeState()
+	{}
+
 	void RotatorComponent::Update( const float deltaTime )
 	{
 		m_angle += m_rotationSpeed * deltaTime;

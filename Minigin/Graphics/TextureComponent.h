@@ -23,16 +23,12 @@ namespace dae::graphics
 		TextureComponent& operator=( const TextureComponent& other ) = delete;
 		TextureComponent& operator=( TextureComponent&& other ) noexcept = delete;
 
-		void InitializeLinkage() override
-		{}
+		void InitializeLinkage() override;
+		void InitializeState() override;
 
-		void InitializeState() override
-		{}
-
-		void Update( const float ) override
-		{}
-
+		void Update( const float ) override;
 		void Render() const override;
+
 		void SetTexture( const std::string& filename );
 
 	private:

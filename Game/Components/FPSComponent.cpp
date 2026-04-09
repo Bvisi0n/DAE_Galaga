@@ -25,6 +25,9 @@ namespace bvi::components
 		}
 	}
 
+	void FPSComponent::InitializeState()
+	{}
+
 	void FPSComponent::Update( const float deltaTime )
 	{
 		if ( !m_text )

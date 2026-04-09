@@ -16,13 +16,10 @@ namespace bvi::components
 		HealthComponent( dae::core::GameObject* owner, int lives );
 		~HealthComponent();
 
-		void InitializeLinkage() override
-		{}
-
+		void InitializeLinkage() override;
 		void InitializeState() override;
 
-		void Update( const float ) noexcept override
-		{}
+		void Update( const float ) noexcept override;
 
 		[[nodiscard]] int GetLives() const;
 
