@@ -9,6 +9,7 @@
 
 #include "Game/Commands/MoveCommand.h"
 #include "Game/Components/FPSComponent.h"
+#include "Game/Components/ScreenWrapComponent.h"
 
 #include "Minigin/Core/GameObject.h"
 #include "Minigin/Graphics/PrimitiveRenderComponent.h"
@@ -68,6 +69,7 @@ namespace bvi::builders
 		{
 			auto player{ std::make_unique<dae::core::GameObject>( 400.f, 350.f ) };
 			player->AddComponent<dae::graphics::TextureComponent>()->SetTexture( "starfighter.png" );
+			player->AddComponent<bvi::components::ScreenWrapComponent>( 1024.f, 576.f );
 			auto* playerPtr = player.get();
 
 			auto& input = dae::input::InputManager::GetInstance();
