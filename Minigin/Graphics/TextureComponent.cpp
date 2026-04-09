@@ -11,6 +11,14 @@
 
 namespace dae::graphics
 {
+    TextureComponent::TextureComponent( core::GameObject* owner, const std::string& filename )
+		: core::Component( owner )
+		, m_filename{}
+		, m_texture( nullptr )
+	{
+		SetTexture( filename );
+	}
+
 	void TextureComponent::InitializeLinkage()
 	{}
 
