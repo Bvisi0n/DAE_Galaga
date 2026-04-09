@@ -168,7 +168,7 @@ namespace dae::core
 		Transform m_transform;
 		bool m_isPendingDeletion{ false };
 
-		bool IsChild( GameObject* candidate );
+		[[nodiscard]] bool IsChild( GameObject* candidate ) const;
 		void AddChild( GameObject* child );
 		void RemoveChild( GameObject* child );
 

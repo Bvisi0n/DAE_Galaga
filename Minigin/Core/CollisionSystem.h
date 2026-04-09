@@ -29,7 +29,7 @@ namespace dae::core
 	private:
 		std::vector<CollisionCallback> m_Callbacks;
 
-		bool Intersects( const Rect& a, const Rect& b ) const noexcept;
+		[[nodiscard]] bool Intersects( const Rect& a, const Rect& b ) const noexcept;
 	};
 }
 

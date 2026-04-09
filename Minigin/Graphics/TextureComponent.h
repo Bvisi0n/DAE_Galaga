@@ -25,10 +25,13 @@ namespace dae::graphics
 
 		void InitializeLinkage() override
 		{}
+
 		void InitializeState() override
 		{}
+
 		void Update( const float ) override
 		{}
+
 		void Render() const override;
 		void SetTexture( const std::string& filename );
 

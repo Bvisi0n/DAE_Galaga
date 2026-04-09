@@ -34,11 +34,11 @@ namespace dae::input
 
 		void Update();
 
-		bool IsDown( Button button ) const;
-		bool IsUp( Button button ) const;
-		bool IsPressed( Button button ) const;
+		[[nodiscard]] bool IsDown( Button button ) const;
+		[[nodiscard]] bool IsUp( Button button ) const;
+		[[nodiscard]] bool IsPressed( Button button ) const;
 
-		bool IsConnected() const;
+		[[nodiscard]] bool IsConnected() const;
 
 	private:
 		class GamepadImpl;

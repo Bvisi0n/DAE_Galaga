@@ -29,7 +29,7 @@ namespace dae::input
 		InputManager() noexcept;
 		~InputManager() = default;
 
-		bool ProcessInput( const float deltaTime );
+		[[nodiscard]] bool ProcessInput( const float deltaTime );
 
 		void AssertAndRemoveBindings( const void* targetContext );
 
@@ -59,7 +59,7 @@ namespace dae::input
 			}
 		}
 
-		bool IsControllerConnected( unsigned int controllerIndex ) const;
+		[[nodiscard]] bool IsControllerConnected( unsigned int controllerIndex ) const;
 
 	private:
 		struct ControllerKey

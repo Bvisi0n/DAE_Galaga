@@ -150,7 +150,7 @@ namespace dae::core
 		return m_transform;
 	}
 
-	bool GameObject::IsChild( GameObject* candidate )
+	bool GameObject::IsChild( GameObject* candidate ) const
 	{
 		if ( candidate == nullptr ) return false;
 
