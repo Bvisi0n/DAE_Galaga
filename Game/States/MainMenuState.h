@@ -28,15 +28,15 @@ namespace bvi::states
 			bvi::builders::MenuBuilder::Build( scene );
 			dae::input::InputManager::GetInstance().BindCommand( dae::input::Keyboard::Key::F, dae::input::InputManager::KeyState::Down, std::make_unique<bvi::commands::PushStateCommand<GravityBenderState>>( this ) );
 		}
+
 		void OnExit() override
 		{
 			dae::scenes::SceneManager::GetInstance().RemoveAllScenes();
 			dae::input::InputManager::GetInstance().UnbindCommand( dae::input::Keyboard::Key::F, dae::input::InputManager::KeyState::Down );
 		}
+
 		void Update() override
-		{
-			// TODO N: Listen for input to switch to other states.
-		}
+		{}
 	};
 }
 #endif

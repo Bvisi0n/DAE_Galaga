@@ -5,12 +5,17 @@
 
 #include "SDL3/SDL.h"
 
+#include <glm/ext/vector_float2.hpp>
+
+#include "Game/Commands/MoveCommand.h"
 #include "Game/Components/FPSComponent.h"
 
 #include "Minigin/Core/GameObject.h"
 #include "Minigin/Graphics/PrimitiveRenderComponent.h"
 #include "Minigin/Graphics/TextComponent.h"
 #include "Minigin/Graphics/TextureComponent.h"
+#include "Minigin/Input/InputManager.h"
+#include "Minigin/Input/Keyboard.h"
 #include "Minigin/Resources/ResourceManager.h"
 #include "Minigin/Scene/Scene.h"
 
@@ -26,6 +31,7 @@ namespace bvi::builders
 			BuildBackground( scene );
 			BuildViewportBorder( scene );
 			BuildFPSCounter( scene );
+			BuildPlayer( scene );
 			scene.Initialize();
 		}
 
@@ -39,7 +45,7 @@ namespace bvi::builders
 
 		static void BuildViewportBorder( dae::scenes::Scene& scene )
 		{
-			// TODO H: Fetch screen dimensions and use them.
+			// TODO L: Fetch screen dimensions and use them.
 			constexpr SDL_FRect screenBounds{ 0.f, 0.f, 1024.f, 576.f };
 			constexpr SDL_Color neonPurple{ 128, 0, 128, 255 };
 
@@ -56,6 +62,26 @@ namespace bvi::builders
 			fpsCounter->AddComponent<dae::graphics::TextComponent>( "00.0 FPS", font )->SetColor( SDL_Color{ 255, 0, 0, 255 } );
 			fpsCounter->AddComponent<components::FPSComponent>();
 			scene.AddGameObject( std::move( fpsCounter ) );
+		}
+
+		static void BuildPlayer( dae::scenes::Scene& scene )
+		{
+			auto player{ std::make_unique<dae::core::GameObject>( 400.f, 350.f ) };
+			player->AddComponent<dae::graphics::TextureComponent>()->SetTexture( "starfighter.png" );
+			auto* playerPtr = player.get();
+
+			auto& input = dae::input::InputManager::GetInstance();
+			constexpr float keyboardSpeed = 200.0f;
+
+			input.BindCommand( dae::input::Keyboard::Key::W, dae::input::InputManager::KeyState::Pressed, std::make_unique<commands::MoveCommand>( playerPtr, glm::vec2{ 0, -1 }, keyboardSpeed ) );
+
+			input.BindCommand( dae::input::Keyboard::Key::S, dae::input::InputManager::KeyState::Pressed, std::make_unique<commands::MoveCommand>( playerPtr, glm::vec2{ 0, 1 }, keyboardSpeed ) );
+
+			input.BindCommand( dae::input::Keyboard::Key::A, dae::input::InputManager::KeyState::Pressed, std::make_unique<commands::MoveCommand>( playerPtr, glm::vec2{ -1, 0 }, keyboardSpeed ) );
+
+			input.BindCommand( dae::input::Keyboard::Key::D, dae::input::InputManager::KeyState::Pressed, std::make_unique<commands::MoveCommand>( playerPtr, glm::vec2{ 1, 0 }, keyboardSpeed ) );
+
+			scene.AddGameObject( std::move( player ) );
 		}
 	};
 }

@@ -35,7 +35,8 @@ namespace bvi::states
 		void OnExit() override
 		{
 			dae::scenes::SceneManager::GetInstance().RemoveAllScenes();
-			// Don't forget to unbind the commands!
+			// TODO N: Don't forget to unbind the commands!
+				// Maybe Commands should be wrapped in a RAII object that unbinds them when the scene gets destroyed? Ownership questions arise.
 		}
 
 		void Update() override
