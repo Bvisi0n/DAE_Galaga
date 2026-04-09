@@ -2,8 +2,9 @@
 #define IGAMESTATE_H
 
 // TODO L: Review state pattern properly.
-	// https://gameprogrammingpatterns.com/state.html
+	// https://gameprogrammingpatterns.com/state.html [DONE]
 	// https://refactoring.guru/design-patterns/state
+	// Youtube video
 
 namespace dae::core
 {

@@ -3,6 +3,7 @@
 
 #include <memory>
 
+#include "Game/Builders/GravityBenderBuilder.h"
 #include "Game/Components/FPSComponent.h"
 
 #include "Minigin/Core/GameObject.h"
@@ -28,32 +29,17 @@ namespace bvi::states
 		void OnEnter() override
 		{
 			auto& scene = dae::scenes::SceneManager::GetInstance().CreateScene();
-
-			//TODO N: Use a builder instead of doing it here.
-			ConstructDebugUI( scene );
-			scene.Initialize();
+			bvi::builders::GravityBenderBuilder::Build( scene );
 		}
 
 		void OnExit() override
 		{
 			dae::scenes::SceneManager::GetInstance().RemoveAllScenes();
+			// Don't forget to unbind the commands!
 		}
 
 		void Update() override
 		{}
-
-	private:
-		void ConstructDebugUI( dae::scenes::Scene& scene )
-		{
-			auto fpsEntity{ std::make_unique<dae::core::GameObject>() };
-
-			auto font{ dae::resources::ResourceManager::GetInstance().LoadFont( "Lingua.otf", 18 ) };
-
-			fpsEntity->AddComponent<dae::graphics::TextComponent>( "00.0 FPS", font )->SetColor( SDL_Color{ 255, 0, 0, 255 } );
-			fpsEntity->AddComponent<bvi::components::FPSComponent>();
-
-			scene.AddGameObject( std::move( fpsEntity ) );
-		}
 	};
 }
 #endif

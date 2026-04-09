@@ -13,6 +13,7 @@
 
 // TODO L: Review builder pattern properly.
 	// https://refactoring.guru/design-patterns/builder
+	// Youtube video
 
 namespace bvi::builders
 {
@@ -26,7 +27,7 @@ namespace bvi::builders
 			BuildBackground( scene );
 			BuildLogo( scene );
 			BuildTitle( scene );
-			BuildFPS( scene );
+			BuildFPSCounter( scene );
 			BuildMenu( scene );
 			scene.Initialize();
 		}
@@ -54,21 +55,21 @@ namespace bvi::builders
 			scene.AddGameObject( std::move( title ) );
 		}
 
-		static void BuildFPS( dae::scenes::Scene& scene )
+		static void BuildFPSCounter( dae::scenes::Scene& scene )
 		{
 			auto font{ dae::resources::ResourceManager::GetInstance().LoadFont( "Lingua.otf", 24 ) };
-			auto fps{ std::make_unique<dae::core::GameObject>( 20.f, 20.f ) };
-			fps->AddComponent<dae::graphics::TextComponent>( "00.0 FPS", font );
-			fps->AddComponent<components::FPSComponent>();
-			scene.AddGameObject( std::move( fps ) );
+			auto fpsCounter{ std::make_unique<dae::core::GameObject>( 20.f, 20.f ) };
+			fpsCounter->AddComponent<dae::graphics::TextComponent>( "00.0 FPS", font );
+			fpsCounter->AddComponent<components::FPSComponent>();
+			scene.AddGameObject( std::move( fpsCounter ) );
 		}
 
 		static void BuildMenu( dae::scenes::Scene& scene )
 		{
 			auto font{ dae::resources::ResourceManager::GetInstance().LoadFont( "Lingua.otf", 24 ) };
-			auto fps{ std::make_unique<dae::core::GameObject>( 425.f, 375.f ) };
-			fps->AddComponent<dae::graphics::TextComponent>( "Press F to start", font );
-			scene.AddGameObject( std::move( fps ) );
+			auto instructions{ std::make_unique<dae::core::GameObject>( 425.f, 375.f ) };
+			instructions->AddComponent<dae::graphics::TextComponent>( "Press F to start", font );
+			scene.AddGameObject( std::move( instructions ) );
 		}
 	};
 }
