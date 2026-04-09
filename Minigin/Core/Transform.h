@@ -1,8 +1,8 @@
 #ifndef TRANSFORMCOMPONENT_H
 #define TRANSFORMCOMPONENT_H
 
-#include <glm/ext/matrix_double4x4.hpp> // glm::mat4
-#include <glm/ext/vector_float3.hpp> // glm::vec3
+#include <glm/ext/matrix_float4x4.hpp>
+#include <glm/ext/vector_float3.hpp>
 
 namespace dae::core
 {
