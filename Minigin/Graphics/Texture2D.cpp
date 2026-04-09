@@ -1,4 +1,5 @@
 #include <cassert>
+#include <memory>
 #include <string>
 
 #include <glm/ext/vector_float2.hpp>
@@ -12,9 +13,9 @@
 namespace dae::graphics
 {
 	Texture2D::Texture2D( SDL_Texture* texture )
-		: m_texture{ texture }
 	{
-		assert( m_texture != nullptr );
+		assert( texture != nullptr );
+		m_texture.reset( texture );
 	}
 
 	Texture2D::Texture2D( const std::string& fullPath )
@@ -23,38 +24,33 @@ namespace dae::graphics
 
 		if ( surface == nullptr )
 		{
-			m_texture = nullptr;
-
 			assert( surface != nullptr && "Failed to load PNG" );
 			return;
 		}
 
-		m_texture = SDL_CreateTextureFromSurface( Renderer::GetInstance().GetSDLRenderer(), surface );
+		SDL_Texture* raw = SDL_CreateTextureFromSurface( Renderer::GetInstance().GetSDLRenderer(), surface );
 
 		SDL_DestroySurface( surface );
 
-		if ( m_texture == nullptr )
+		if ( raw == nullptr )
 		{
-			assert( m_texture != nullptr && "Failed to create texture from surface" );
+			assert( raw != nullptr && "Failed to create texture from surface" );
 			return;
 		}
-	}
 
-	Texture2D::~Texture2D()
-	{
-		SDL_DestroyTexture( m_texture );
+		m_texture = std::unique_ptr<SDL_Texture, void( * )( SDL_Texture* )>( raw, SDL_DestroyTexture );
 	}
 
 	SDL_Texture* Texture2D::GetSDLTexture() const
 	{
-		return m_texture;
+		return m_texture.get();
 	}
 
 	glm::vec2 Texture2D::GetSize() const
 	{
 		float width{};
 		float height{};
-		SDL_GetTextureSize( m_texture, &width, &height );
+		SDL_GetTextureSize( m_texture.get(), &width, &height );
 		return glm::vec2{ width, height };
 	}
 }
