@@ -24,7 +24,8 @@ namespace dae::events
 {
 	struct Vector2D
 	{
-		float x, y;
+		float x;
+		float y;
 	};
 
 	using EventId = uint32_t;

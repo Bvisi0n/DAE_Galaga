@@ -8,7 +8,6 @@ struct TTF_Font;
 
 namespace dae::graphics
 {
-	// Simple RAII wrapper for a TTF_Font
 	class Font final
 	{
 	public:

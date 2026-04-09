@@ -12,7 +12,6 @@ struct SDL_Texture;
 
 namespace dae::graphics
 {
-	// Simple RAII wrapper for an SDL_Texture
 	class Texture2D final
 	{
 	public:

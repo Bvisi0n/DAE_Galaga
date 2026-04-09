@@ -11,7 +11,6 @@ namespace dae::graphics
 {
 	class Texture2D;
 
-	// Simple RAII wrapper for the SDL renderer
 	class Renderer final : public utils::Singleton<Renderer>
 	{
 	public:

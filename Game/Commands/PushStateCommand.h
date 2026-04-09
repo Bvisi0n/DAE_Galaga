@@ -20,7 +20,7 @@ namespace bvi::commands
 	{
 	public:
 		explicit PushStateCommand( const void* targetContext ) noexcept
-			: m_TargetContext{ targetContext }
+			: m_targetContext{ targetContext }
 		{}
 
 		void Execute( const float ) override
@@ -30,11 +30,11 @@ namespace bvi::commands
 
 		[[nodiscard]] const void* GetTargetContext() const override
 		{
-			return m_TargetContext;
+			return m_targetContext;
 		}
 
 	private:
-		const void* m_TargetContext;
+		const void* m_targetContext;
 	};
 }
 #endif

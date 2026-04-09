@@ -19,7 +19,6 @@ namespace dae::graphics
 	class Font;
 	class Texture2D;
 
-	// Renders text using a Font and a Texture2D.
 	class TextComponent final : public core::Component, public IRenderable
 	{
 	public:
