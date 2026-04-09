@@ -1,6 +1,7 @@
 #ifndef FONT_H
 #define FONT_H
 
+#include <memory>
 #include <string>
 
 struct TTF_Font;
@@ -12,7 +13,7 @@ namespace dae::graphics
 	{
 	public:
 		explicit Font( const std::string& fullPath, float size );
-		~Font();
+		~Font() = default;
 
 		Font( const Font& ) = delete;
 		Font( Font&& ) = delete;
@@ -22,7 +23,7 @@ namespace dae::graphics
 		[[nodiscard]] TTF_Font* GetFont() const noexcept;
 
 	private:
-		TTF_Font* m_font;
+		std::unique_ptr<TTF_Font, void( * )( TTF_Font* )> m_font{ nullptr, nullptr };
 	};
 }
 #endif

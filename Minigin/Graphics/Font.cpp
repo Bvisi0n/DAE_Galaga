@@ -1,4 +1,5 @@
 #include <cassert>
+#include <memory>
 #include <string>
 
 #include <SDL3_ttf/SDL_ttf.h>
@@ -7,23 +8,15 @@
 
 namespace dae::graphics
 {
-	Font::Font( const std::string& fullPath, float size ) : m_font( nullptr )
+	Font::Font( const std::string& fullPath, float size )
 	{
-		m_font = TTF_OpenFont( fullPath.c_str(), size );
-		assert( m_font != nullptr && "Failed to load font" );
-	}
-
-	Font::~Font()
-	{
-		if ( m_font )
-		{
-			TTF_CloseFont( m_font );
-			m_font = nullptr;
-		}
+		TTF_Font* raw = TTF_OpenFont( fullPath.c_str(), size );
+		assert( raw != nullptr && "Failed to load font" );
+		m_font = std::unique_ptr<TTF_Font, void( * )( TTF_Font* )>( raw, TTF_CloseFont );
 	}
 
 	TTF_Font* Font::GetFont() const noexcept
 	{
-		return m_font;
+		return m_font.get();
 	}
 }
