@@ -20,6 +20,7 @@ endif()
 add_executable(${TARGET_NAME} ${TARGET_PARAM}
   "Game/Components/FPSComponent.cpp"
   "Game/Components/HealthComponent.cpp"
+  "Game/Components/SpawnerPortalComponent.cpp"
   "Game/Components/RotatorComponent.cpp"
   "Game/Components/ScoreComponent.cpp"
   "Game/Components/UIValueObserver.cpp"
@@ -29,6 +30,7 @@ add_executable(${TARGET_NAME} ${TARGET_PARAM}
   "Minigin/Core/CollisionSystem.cpp"
   "Minigin/Core/GameObject.cpp"
   "Minigin/Core/Minigin.cpp"
+  "Minigin/Core/MoveComponent.cpp"
   "Minigin/Core/Transform.cpp"
   "Minigin/Events/ObservableComponent.cpp"
   "Minigin/Graphics/Font.cpp"
@@ -36,7 +38,6 @@ add_executable(${TARGET_NAME} ${TARGET_PARAM}
   "Minigin/Graphics/TextComponent.cpp"
   "Minigin/Graphics/TextureComponent.cpp"
   "Minigin/Graphics/Texture2D.cpp"
-  
   "Minigin/Input/Gamepad.cpp"
   "Minigin/Input/InputManager.cpp"
   "Minigin/Input/Keyboard.cpp"

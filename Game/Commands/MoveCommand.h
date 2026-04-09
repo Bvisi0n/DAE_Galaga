@@ -3,8 +3,7 @@
 
 #include <glm/glm.hpp>
 
-#include "Minigin/Core/GameObject.h"
-#include "Minigin/Core/Transform.h"
+#include "Minigin/Core/MoveComponent.h"
 #include "Minigin/Input/Command.h"
 
 namespace bvi::commands
@@ -12,34 +11,27 @@ namespace bvi::commands
 	class MoveCommand final : public dae::input::Command
 	{
 	public:
-		MoveCommand( dae::core::GameObject* gameObject, const glm::vec2& direction, float speed )
-			: m_gameObject( gameObject )
-			, m_direction( direction )
-			, m_speed( speed )
+		MoveCommand( dae::core::MoveComponent* moveComponent, const glm::vec3& direction )
+			: m_moveComponent{ moveComponent }
+			, m_direction{ direction }
 		{}
 
-		void Execute( const float deltaTime ) override
+		void Execute( const float ) override
 		{
-			// TODO L: Diagonal movement is currently double speed.
-			auto& transform = m_gameObject->GetTransform();
-			auto position = transform.GetLocalPosition();
-
-			// TODO L: Use vector math.
-			position.x += m_direction.x * m_speed * deltaTime;
-			position.y += m_direction.y * m_speed * deltaTime;
-
-			transform.SetLocalPosition( position );
+			if ( m_moveComponent )
+			{
+				m_moveComponent->AddDirection( m_direction );
+			}
 		}
 
 		[[nodiscard]] const void* GetTargetContext() const override
 		{
-			return m_gameObject;
+			return m_moveComponent;
 		}
 
 	private:
-		dae::core::GameObject* m_gameObject;
-		glm::vec2 m_direction;
-		float m_speed;
+		dae::core::MoveComponent* m_moveComponent;
+		glm::vec3 m_direction;
 	};
 }
 #endif

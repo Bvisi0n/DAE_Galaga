@@ -9,6 +9,7 @@
 
 #include "Game/Commands/MoveCommand.h"
 #include "Game/Components/FPSComponent.h"
+#include "Game/Components/SpawnerPortalComponent.h"
 #include "Game/Components/ScreenWrapComponent.h"
 
 #include "Minigin/Core/GameObject.h"
@@ -33,6 +34,7 @@ namespace bvi::builders
 			BuildViewportBorder( scene );
 			BuildFPSCounter( scene );
 			BuildPlayer( scene );
+			BuildZakoSpawner( scene );
 			scene.Initialize();
 		}
 
@@ -69,21 +71,27 @@ namespace bvi::builders
 		{
 			auto player{ std::make_unique<dae::core::GameObject>( 400.f, 350.f ) };
 			player->AddComponent<dae::graphics::TextureComponent>()->SetTexture( "starfighter.png" );
+			auto* moveComp = player->AddComponent<dae::core::MoveComponent>( 200.f );
 			player->AddComponent<bvi::components::ScreenWrapComponent>( 1024.f, 576.f );
-			auto* playerPtr = player.get();
 
 			auto& input = dae::input::InputManager::GetInstance();
-			constexpr float keyboardSpeed = 200.0f;
 
-			input.BindCommand( dae::input::Keyboard::Key::W, dae::input::InputManager::KeyState::Pressed, std::make_unique<commands::MoveCommand>( playerPtr, glm::vec2{ 0, -1 }, keyboardSpeed ) );
+			input.BindCommand( dae::input::Keyboard::Key::W, dae::input::InputManager::KeyState::Pressed, std::make_unique<commands::MoveCommand>( moveComp, glm::vec3{ 0.0f, -1.0f, 0.0f } ) );
 
-			input.BindCommand( dae::input::Keyboard::Key::S, dae::input::InputManager::KeyState::Pressed, std::make_unique<commands::MoveCommand>( playerPtr, glm::vec2{ 0, 1 }, keyboardSpeed ) );
+			input.BindCommand( dae::input::Keyboard::Key::S, dae::input::InputManager::KeyState::Pressed, std::make_unique<commands::MoveCommand>( moveComp, glm::vec3{ 0.0f, 1.0f, 0.0f } ) );
 
-			input.BindCommand( dae::input::Keyboard::Key::A, dae::input::InputManager::KeyState::Pressed, std::make_unique<commands::MoveCommand>( playerPtr, glm::vec2{ -1, 0 }, keyboardSpeed ) );
+			input.BindCommand( dae::input::Keyboard::Key::A, dae::input::InputManager::KeyState::Pressed, std::make_unique<commands::MoveCommand>( moveComp, glm::vec3{ -1.0f, 0.0f, 0.0f } ) );
 
-			input.BindCommand( dae::input::Keyboard::Key::D, dae::input::InputManager::KeyState::Pressed, std::make_unique<commands::MoveCommand>( playerPtr, glm::vec2{ 1, 0 }, keyboardSpeed ) );
+			input.BindCommand( dae::input::Keyboard::Key::D, dae::input::InputManager::KeyState::Pressed, std::make_unique<commands::MoveCommand>( moveComp, glm::vec3{ 1.0f, 0.0f, 0.0f } ) );
 
 			scene.AddGameObject( std::move( player ) );
+		}
+
+		static void BuildZakoSpawner( dae::scenes::Scene& scene )
+		{
+			auto zakoSpawner{ std::make_unique<dae::core::GameObject>( 800.f, 550.f ) };
+			zakoSpawner->AddComponent<components::SpawnerPortalComponent>( blueprints::ZakoData{} );
+			scene.AddGameObject( std::move( zakoSpawner ) );
 		}
 	};
 }
