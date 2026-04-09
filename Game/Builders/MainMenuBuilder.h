@@ -11,16 +11,18 @@
 #include "Minigin/Resources/ResourceManager.h"
 #include "Minigin/Scene/Scene.h"
 
-// TODO L: Review builder pattern properly.
+// TODO L: Review builder pattern.
 	// https://refactoring.guru/design-patterns/builder
-	// Youtube video
+	// https://www.geeksforgeeks.org/system-design/builder-pattern-c-design-patterns/
+	// Both sources show a director and don't use static methods. This seems better for my needs tho. 
+	// More research is needed. Maybe this is another pattern? Feels a bit like it's director and builder mashed in a single class.
 
 namespace bvi::builders
 {
-	class MenuBuilder final
+	class MainMenuBuilder final
 	{
 	public:
-		MenuBuilder() = delete;
+		MainMenuBuilder() = delete;
 
 		static void Build( dae::scenes::Scene& scene )
 		{

@@ -1,7 +1,7 @@
 #ifndef MAINMENUSTATE_H
 #define MAINMENUSTATE_H
 
-#include "Game/Builders/MenuBuilder.h"
+#include "Game/Builders/MainMenuBuilder.h"
 #include "Game/Commands/PushStateCommand.h"
 #include "Game/States/GravityBenderState.h"
 
@@ -25,7 +25,7 @@ namespace bvi::states
 		void OnEnter() override
 		{
 			auto& scene = dae::scenes::SceneManager::GetInstance().CreateScene();
-			bvi::builders::MenuBuilder::Build( scene );
+			bvi::builders::MainMenuBuilder::Build( scene );
 			dae::input::InputManager::GetInstance().BindCommand( dae::input::Keyboard::Key::F, dae::input::InputManager::KeyState::Down, std::make_unique<bvi::commands::PushStateCommand<GravityBenderState>>( this ) );
 		}
 
