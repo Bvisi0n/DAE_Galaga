@@ -27,7 +27,7 @@ namespace dae::core
 		void Update( const std::vector<std::unique_ptr<GameObject>>& objects );
 
 	private:
-		std::vector<CollisionCallback> m_Callbacks;
+		std::vector<CollisionCallback> m_callbacks;
 
 		[[nodiscard]] bool Intersects( const Rect& a, const Rect& b ) const noexcept;
 	};

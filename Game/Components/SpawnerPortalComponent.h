@@ -30,12 +30,12 @@ namespace bvi::components
 			Anticipation, Spawning, Exhausted
 		};
 
-		PortalState m_CurrentState{ PortalState::Anticipation };
-		blueprints::ZakoData m_Blueprint;
+		PortalState m_currentState{ PortalState::Anticipation };
+		blueprints::ZakoData m_blueprint;
 
-		float m_Timer{ 0.0f };
-		int m_SpawnedCount{ 0 };
-		const float m_AnticipationDuration{ 3.0f };
+		float m_timer{ 0.0f };
+		int m_spawnedCount{ 0 };
+		const float m_anticipationDuration{ 3.0f };
 
 		void EmitZako();
 	};

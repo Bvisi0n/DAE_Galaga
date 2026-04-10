@@ -17,7 +17,7 @@ namespace bvi::components
 {
 	SpawnerPortalComponent::SpawnerPortalComponent( dae::core::GameObject* owner, const bvi::blueprints::ZakoData& blueprint )
 		:Component( owner )
-		, m_Blueprint( blueprint )
+		, m_blueprint( blueprint )
 	{}
 
 	void SpawnerPortalComponent::InitializeLinkage()
@@ -28,32 +28,32 @@ namespace bvi::components
 
 	void SpawnerPortalComponent::Update( const float deltaTime )
 	{
-		if ( m_CurrentState == PortalState::Exhausted )
+		if ( m_currentState == PortalState::Exhausted )
 		{
 			// TODO H: Flag for delete.
 			return;
 		}
 
-		m_Timer += deltaTime;
+		m_timer += deltaTime;
 
-		if ( m_CurrentState == PortalState::Anticipation )
+		if ( m_currentState == PortalState::Anticipation )
 		{
-			if ( m_Timer >= m_AnticipationDuration )
+			if ( m_timer >= m_anticipationDuration )
 			{
-				m_CurrentState = PortalState::Spawning;
-				m_Timer = 0.0f;
+				m_currentState = PortalState::Spawning;
+				m_timer = 0.0f;
 			}
 		}
-		else if ( m_CurrentState == PortalState::Spawning )
+		else if ( m_currentState == PortalState::Spawning )
 		{
-			if ( m_Timer >= m_Blueprint.spawnDelay )
+			if ( m_timer >= m_blueprint.spawnDelay )
 			{
 				EmitZako();
-				m_Timer -= m_Blueprint.spawnDelay;
+				m_timer -= m_blueprint.spawnDelay;
 
-				if ( ++m_SpawnedCount >= m_Blueprint.spawnCount )
+				if ( ++m_spawnedCount >= m_blueprint.spawnCount )
 				{
-					m_CurrentState = PortalState::Exhausted;
+					m_currentState = PortalState::Exhausted;
 				}
 			}
 		}
@@ -65,7 +65,7 @@ namespace bvi::components
 		auto zako = std::make_unique<dae::core::GameObject>();
 
 		zako->GetTransform().SetLocalPosition( GetOwner()->GetTransform().GetWorldPosition() );
-		zako->AddComponent<dae::graphics::TextureComponent>()->SetTexture( m_Blueprint.filename.c_str() );
+		zako->AddComponent<dae::graphics::TextureComponent>()->SetTexture( m_blueprint.filename.c_str() );
 		zako->AddComponent<components::ScreenWrapComponent>( 1024.f, 576.f );
 		zako->AddComponent<dae::core::MoveComponent>( 200.f, false )->AddDirection( glm::vec3{ 1.0f, 1.0f, 0.0f } );
 

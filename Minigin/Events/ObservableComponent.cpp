@@ -11,19 +11,19 @@ namespace dae::events
 	{
 		if ( m_isNotifying )
 		{
-			m_pPendingObservers.push_back( observer );
+			m_pendingObservers.push_back( observer );
 		}
 		else
 		{
-			m_pObservers.push_back( observer );
+			m_observers.push_back( observer );
 		}
 	}
 
 	void ObservableComponent::DetachObserver( IObserver* observer )
 	{
 		// std::ranges::find not supported by local emscripten. (works on web...?)
-		auto it = std::find( m_pObservers.begin(), m_pObservers.end(), observer );
-		if ( it != m_pObservers.end() )
+		auto it = std::find( m_observers.begin(), m_observers.end(), observer );
+		if ( it != m_observers.end() )
 		{
 			if ( m_isNotifying )
 			{
@@ -31,7 +31,7 @@ namespace dae::events
 			}
 			else
 			{
-				m_pObservers.erase( it );
+				m_observers.erase( it );
 			}
 		}
 	}
@@ -40,7 +40,7 @@ namespace dae::events
 	{
 		m_isNotifying = true;
 
-		for ( IObserver* observer : m_pObservers )
+		for ( IObserver* observer : m_observers )
 		{
 			if ( observer != nullptr )
 			{
@@ -50,12 +50,12 @@ namespace dae::events
 
 		m_isNotifying = false;
 
-		std::erase( m_pObservers, nullptr );
+		std::erase( m_observers, nullptr );
 
-		if ( !m_pPendingObservers.empty() )
+		if ( !m_pendingObservers.empty() )
 		{
-			m_pObservers.insert( m_pObservers.end(), m_pPendingObservers.begin(), m_pPendingObservers.end() );
-			m_pPendingObservers.clear();
+			m_observers.insert( m_observers.end(), m_pendingObservers.begin(), m_pendingObservers.end() );
+			m_pendingObservers.clear();
 		}
 	}
 }

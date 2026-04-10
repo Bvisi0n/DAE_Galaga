@@ -21,7 +21,7 @@ namespace dae::graphics
 {
 	TextComponent::TextComponent( core::GameObject* owner, const std::string& text, std::shared_ptr<Font> font, const SDL_Color& color )
 		: Component( owner )
-		, m_text( text ), m_pFont( std::move( font ) ), m_pTexture( nullptr ), m_color( color ), m_needsUpdate( true )
+		, m_text( text ), m_font( std::move( font ) ), m_texture( nullptr ), m_color( color ), m_needsUpdate( true )
 	{
 		assert( text.length() > 0 && "TextComponent requires non-empty text." );
 	}
@@ -39,12 +39,12 @@ namespace dae::graphics
 			return;
 		}
 
-		if ( m_pFont == nullptr || m_pFont->GetFont() == nullptr )
+		if ( m_font == nullptr || m_font->GetFont() == nullptr )
 		{
 			return;
 		}
 
-		SDL_Surface* surface = TTF_RenderText_Blended( m_pFont->GetFont(), m_text.c_str(), static_cast<int>( m_text.length() ), m_color );
+		SDL_Surface* surface = TTF_RenderText_Blended( m_font->GetFont(), m_text.c_str(), static_cast<int>( m_text.length() ), m_color );
 
 		if ( surface == nullptr )
 		{
@@ -62,16 +62,16 @@ namespace dae::graphics
 			return;
 		}
 
-		m_pTexture = std::make_shared<Texture2D>( texture );
+		m_texture = std::make_shared<Texture2D>( texture );
 		m_needsUpdate = false;
 	}
 
 	void TextComponent::Render() const
 	{
-		if ( m_pTexture != nullptr && GetOwner() != nullptr )
+		if ( m_texture != nullptr && GetOwner() != nullptr )
 		{
 			const auto& position = GetOwner()->GetTransform().GetWorldPosition();
-			Renderer::GetInstance().RenderTexture( *m_pTexture, position.x, position.y );
+			Renderer::GetInstance().RenderTexture( *m_texture, position.x, position.y );
 		}
 	}
 

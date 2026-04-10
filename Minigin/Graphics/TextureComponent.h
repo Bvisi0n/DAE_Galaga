@@ -5,6 +5,7 @@
 #include <string>
 
 #include "Minigin/Core/Component.h"
+#include "Minigin/Core/GameObject.h"
 #include "Minigin/Graphics/IRenderable.h"
 
 namespace dae::graphics
@@ -14,9 +15,8 @@ namespace dae::graphics
 	class TextureComponent final : public core::Component, public IRenderable
 	{
 	public:
-     using Component::Component;
+		using Component::Component;
 
-		// Allow constructing with an initial texture filename
 		TextureComponent( core::GameObject* owner, const std::string& filename );
 		~TextureComponent() = default;
 

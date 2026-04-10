@@ -14,34 +14,34 @@ namespace dae::core
 	public:
 		void PushState( std::unique_ptr<IGameState> newState )
 		{
-			m_NextState = std::move( newState );
+			m_nextState = std::move( newState );
 		}
 
 		void ProcessStateChange()
 		{
-			if ( m_NextState != nullptr )
+			if ( m_nextState != nullptr )
 			{
-				if ( m_CurrentState != nullptr )
+				if ( m_currentState != nullptr )
 				{
-					m_CurrentState->OnExit();
+					m_currentState->OnExit();
 				}
 
-				m_CurrentState = std::move( m_NextState );
-				m_CurrentState->OnEnter();
+				m_currentState = std::move( m_nextState );
+				m_currentState->OnEnter();
 			}
 		}
 
 		void Update()
 		{
-			if ( m_CurrentState != nullptr )
+			if ( m_currentState != nullptr )
 			{
-				m_CurrentState->Update();
+				m_currentState->Update();
 			}
 		}
 
 	private:
-		std::unique_ptr<IGameState> m_CurrentState{ nullptr };
-		std::unique_ptr<IGameState> m_NextState{ nullptr };
+		std::unique_ptr<IGameState> m_currentState{ nullptr };
+		std::unique_ptr<IGameState> m_nextState{ nullptr };
 	};
 }
 #endif

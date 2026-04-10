@@ -10,7 +10,7 @@ namespace dae::core
 {
 	void CollisionSystem::RegisterCallback( CollisionCallback callback )
 	{
-		m_Callbacks.push_back( callback );
+		m_callbacks.push_back( callback );
 	}
 
 	void CollisionSystem::Update( const std::vector<std::unique_ptr<GameObject>>& objects )
@@ -33,7 +33,7 @@ namespace dae::core
 
 				if ( Intersects( colA->GetWorldBounds(), colB->GetWorldBounds() ) )
 				{
-					for ( auto& cb : m_Callbacks )
+					for ( auto& cb : m_callbacks )
 					{
 						cb( colA->GetOwner(), colB->GetOwner() );
 					}

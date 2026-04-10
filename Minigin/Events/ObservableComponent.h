@@ -40,8 +40,8 @@ namespace dae::events
 		void NotifyObservers( GameEvent event ) override;
 
 	private:
-		std::vector<IObserver*> m_pObservers;
-		std::vector<IObserver*> m_pPendingObservers;
+		std::vector<IObserver*> m_observers;
+		std::vector<IObserver*> m_pendingObservers;
 		mutable bool m_isNotifying{ false };
 	};
 }

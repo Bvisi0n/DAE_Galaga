@@ -7,7 +7,7 @@ namespace dae::core
 	ColliderComponent::ColliderComponent( GameObject* owner, float width, float height, int layer )
 		: Component( owner )
 		, m_localBounds{ 0, 0, width, height }
-		, m_Layer( layer )
+		, m_layer( layer )
 	{}
 
 	void ColliderComponent::InitializeLinkage()
@@ -27,6 +27,6 @@ namespace dae::core
 
 	int ColliderComponent::GetLayer() const noexcept
 	{
-		return m_Layer;
+		return m_layer;
 	}
 }
