@@ -5,13 +5,15 @@
 
 #include<glm/ext/vector_float2.hpp>
 
+// Inspired by Type Object.
+
 namespace bvi::blueprints
 {
 	struct ZakoData
 	{
 		std::string filename{ "zako.png" };
-		glm::vec2 initialVelocity{ 0.0f, 150.0f };
-		float spawnDelay{ 0.2f };
+		float speed{ 200.0f };
+		float spawnDelay{ 0.15f };
 		int spawnCount{ 10 };
 	};
 }

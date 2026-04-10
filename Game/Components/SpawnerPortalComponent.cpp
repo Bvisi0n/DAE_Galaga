@@ -1,4 +1,7 @@
+#include <cmath>
 #include <memory>
+#include <numbers>
+#include <random>
 #include <utility>
 
 #include <glm/ext/vector_float3.hpp>
@@ -24,19 +27,26 @@ namespace bvi::components
 	{}
 
 	void SpawnerPortalComponent::InitializeState()
-	{}
+	{
+		SetRandomDirection();
+		SetRandomPosition();
+	}
 
 	void SpawnerPortalComponent::Update( const float deltaTime )
 	{
-		if ( m_currentState == PortalState::Exhausted )
-		{
-			// TODO H: Flag for delete.
-			return;
-		}
-
 		m_timer += deltaTime;
 
-		if ( m_currentState == PortalState::Anticipation )
+		// TODO L: Use switch instead.
+
+		if ( m_currentState == PortalState::Exhausted )
+		{
+			if ( m_timer >= m_CooldownDuration )
+			{
+				m_currentState = PortalState::Anticipation;
+				m_timer = 0.0f;
+			}
+		}
+		else if ( m_currentState == PortalState::Anticipation )
 		{
 			if ( m_timer >= m_anticipationDuration )
 			{
@@ -48,27 +58,65 @@ namespace bvi::components
 		{
 			if ( m_timer >= m_blueprint.spawnDelay )
 			{
-				EmitZako();
+				EmitUnit();
 				m_timer -= m_blueprint.spawnDelay;
 
 				if ( ++m_spawnedCount >= m_blueprint.spawnCount )
 				{
 					m_currentState = PortalState::Exhausted;
+					SetRandomDirection();
+					SetRandomPosition();
+					m_timer = 0.0f;
+					m_spawnedCount = 0;
 				}
 			}
 		}
 	}
 
-	void SpawnerPortalComponent::EmitZako()
+	void SpawnerPortalComponent::EmitUnit()
 	{
 		auto& scene = dae::scenes::SceneManager::GetInstance().GetActiveScene();
-		auto zako = std::make_unique<dae::core::GameObject>();
+		auto unit = std::make_unique<dae::core::GameObject>();
 
-		zako->GetTransform().SetLocalPosition( GetOwner()->GetTransform().GetWorldPosition() );
-		zako->AddComponent<dae::graphics::TextureComponent>()->SetTexture( m_blueprint.filename.c_str() );
-		zako->AddComponent<components::ScreenWrapComponent>( 1024.f, 576.f );
-		zako->AddComponent<dae::core::MoveComponent>( 200.f, false )->AddDirection( glm::vec3{ 1.0f, 1.0f, 0.0f } );
+		unit->GetTransform().SetLocalPosition( GetOwner()->GetTransform().GetWorldPosition() );
+		unit->AddComponent<dae::graphics::TextureComponent>()->SetTexture( m_blueprint.filename.c_str() );
+		unit->AddComponent<components::ScreenWrapComponent>( 1024.f, 576.f );
+		unit->AddComponent<dae::core::MoveComponent>( m_blueprint.speed, false )->AddDirection( m_direction );
 
-		scene.AddGameObject( std::move( zako ) );
+		scene.AddGameObject( std::move( unit ) );
+	}
+
+	void SpawnerPortalComponent::SetRandomDirection()
+	{
+		std::random_device rd;
+		std::mt19937 gen( rd() );
+		std::uniform_real_distribution<float> dist( 0.0f, 2.0f * std::numbers::pi_v<float> );
+
+		const float angle = dist( gen );
+		m_direction = glm::vec3{ std::cos( angle ), std::sin( angle ), 0.0f };
+	}
+
+	void SpawnerPortalComponent::SetRandomPosition()
+	{
+		// TODO L: Fetch viewport dimensions.
+
+		constexpr float viewportWidth = 1024.f;
+		constexpr float viewportHeight = 576.f;
+		constexpr float margin = 50.f;
+
+		const float minX = margin;
+		const float maxX = viewportWidth - margin;
+		const float minY = margin;
+		const float maxY = viewportHeight - margin;
+
+		std::random_device rd;
+		std::mt19937 gen( rd() );
+		std::uniform_real_distribution<float> distX( minX, maxX );
+		std::uniform_real_distribution<float> distY( minY, maxY );
+
+		const float x = distX( gen );
+		const float y = distY( gen );
+
+		GetOwner()->GetTransform().SetLocalPosition( glm::vec3{ x, y, 0.0f } );
 	}
 }

@@ -1,6 +1,8 @@
 #ifndef PORTALSPAWNERCOMPONENT_H
 #define PORTALSPAWNERCOMPONENT_H
 
+#include <glm/ext/vector_float3.hpp>
+
 #include "Game/Blueprints/GravityBenderBlueprints.h"
 
 #include "Minigin/Core/Component.h"
@@ -30,14 +32,17 @@ namespace bvi::components
 			Anticipation, Spawning, Exhausted
 		};
 
-		PortalState m_currentState{ PortalState::Anticipation };
 		blueprints::ZakoData m_blueprint;
-
+		glm::vec3 m_direction{};
+		PortalState m_currentState{ PortalState::Anticipation };
 		float m_timer{ 0.0f };
 		int m_spawnedCount{ 0 };
+		const float m_CooldownDuration{ 15.0f };
 		const float m_anticipationDuration{ 3.0f };
 
-		void EmitZako();
+		void EmitUnit();
+		void SetRandomDirection();
+		void SetRandomPosition();
 	};
 }
 #endif

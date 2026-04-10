@@ -89,7 +89,7 @@ namespace bvi::builders
 
 		static void BuildZakoSpawner( dae::scenes::Scene& scene )
 		{
-			auto zakoSpawner{ std::make_unique<dae::core::GameObject>( 800.f, 550.f ) };
+			auto zakoSpawner{ std::make_unique<dae::core::GameObject>() };
 			zakoSpawner->AddComponent<components::SpawnerPortalComponent>( blueprints::ZakoData{} );
 			scene.AddGameObject( std::move( zakoSpawner ) );
 		}
