@@ -1,5 +1,6 @@
 #include <string>
 
+#include <Minigin/Core/Component.h>
 #include "Minigin/Core/GameObject.h"
 #include "Minigin/Core/Transform.h"
 
@@ -11,7 +12,7 @@
 
 namespace dae::graphics
 {
-    TextureComponent::TextureComponent( core::GameObject* owner, const std::string& filename )
+	TextureComponent::TextureComponent( core::GameObject* owner, const std::string& filename )
 		: core::Component( owner )
 		, m_filename{}
 		, m_texture( nullptr )
