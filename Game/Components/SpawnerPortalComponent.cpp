@@ -1,18 +1,22 @@
+#include <cassert>
 #include <cmath>
 #include <memory>
 #include <numbers>
 #include <random>
 #include <utility>
 
+#include <SDL3/SDL_rect.h>
+
 #include <glm/ext/vector_float3.hpp>
 
 #include "Game/Blueprints/GravityBenderBlueprints.h"
-#include "Game/Components/SpawnerPortalComponent.h"
 #include "Game/Components/ScreenWrapComponent.h"
+#include "Game/Components/SpawnerPortalComponent.h"
 
 #include "Minigin/Core/Component.h"
 #include "Minigin/Core/GameObject.h"
 #include "Minigin/Core/MoveComponent.h"
+#include "Minigin/Graphics/PrimitiveRenderComponent.h"
 #include "Minigin/Graphics/TextureComponent.h"
 #include "Minigin/Scene/SceneManager.h"
 
@@ -24,7 +28,20 @@ namespace bvi::components
 	{}
 
 	void SpawnerPortalComponent::InitializeLinkage()
-	{}
+	{
+		m_primitiveRenderer = GetOwner()->GetComponent<dae::graphics::PrimitiveRenderComponent>();
+		if ( !m_primitiveRenderer )
+		{
+			assert( m_primitiveRenderer && "requires a PrimitiveRenderComponent on the same GameObject." );
+		}
+
+		const auto pos = GetOwner()->GetTransform().GetWorldPosition();
+		if ( m_primitiveRenderer )
+		{
+			SDL_FRect bounds{ pos.x, pos.y, 32.0f, 32.0f };
+			m_primitiveRenderer->SetBounds( bounds );
+		}
+	}
 
 	void SpawnerPortalComponent::InitializeState()
 	{
@@ -44,6 +61,10 @@ namespace bvi::components
 			{
 				m_currentState = PortalState::Anticipation;
 				m_timer = 0.0f;
+				if ( m_primitiveRenderer )
+				{
+					m_primitiveRenderer->SetEnabled( true );
+				}
 			}
 		}
 		else if ( m_currentState == PortalState::Anticipation )
@@ -52,6 +73,10 @@ namespace bvi::components
 			{
 				m_currentState = PortalState::Spawning;
 				m_timer = 0.0f;
+				if ( m_primitiveRenderer )
+				{
+					m_primitiveRenderer->SetEnabled( true );
+				}
 			}
 		}
 		else if ( m_currentState == PortalState::Spawning )
@@ -68,6 +93,10 @@ namespace bvi::components
 					SetRandomPosition();
 					m_timer = 0.0f;
 					m_spawnedCount = 0;
+					if ( m_primitiveRenderer )
+					{
+						m_primitiveRenderer->SetEnabled( false );
+					}
 				}
 			}
 		}
@@ -118,5 +147,11 @@ namespace bvi::components
 		const float y = distY( gen );
 
 		GetOwner()->GetTransform().SetLocalPosition( glm::vec3{ x, y, 0.0f } );
+
+		if ( m_primitiveRenderer )
+		{
+			SDL_FRect bounds{ x - 8.0f, y - 8.0f, 32.0f, 32.0f };
+			m_primitiveRenderer->SetBounds( bounds );
+		}
 	}
 }

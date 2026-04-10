@@ -8,6 +8,11 @@
 #include "Minigin/Core/Component.h"
 #include "Minigin/Core/GameObject.h"
 
+namespace dae::graphics
+{
+	class PrimitiveRenderComponent;
+}
+
 namespace bvi::components
 {
 	class SpawnerPortalComponent final : public dae::core::Component
@@ -33,6 +38,8 @@ namespace bvi::components
 		};
 
 		blueprints::ZakoData m_blueprint;
+		dae::graphics::PrimitiveRenderComponent* m_primitiveRenderer{ nullptr };
+
 		glm::vec3 m_direction{};
 		PortalState m_currentState{ PortalState::Anticipation };
 		float m_timer{ 0.0f };
@@ -43,6 +50,7 @@ namespace bvi::components
 		void EmitUnit();
 		void SetRandomDirection();
 		void SetRandomPosition();
+
 	};
 }
 #endif
