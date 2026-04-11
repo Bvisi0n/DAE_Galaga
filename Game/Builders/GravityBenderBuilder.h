@@ -8,9 +8,10 @@
 #include <glm/ext/vector_float2.hpp>
 
 #include "Game/Commands/MoveCommand.h"
+#include "Game/Commands/SpawnGravityFieldCommand.h"
 #include "Game/Components/FPSComponent.h"
-#include "Game/Components/SpawnerPortalComponent.h"
 #include "Game/Components/ScreenWrapComponent.h"
+#include "Game/Components/SpawnerPortalComponent.h"
 
 #include "Minigin/Core/GameObject.h"
 #include "Minigin/Graphics/PrimitiveRenderComponent.h"
@@ -83,6 +84,8 @@ namespace bvi::builders
 			input.BindCommand( dae::input::Keyboard::Key::A, dae::input::InputManager::KeyState::Pressed, std::make_unique<commands::MoveCommand>( moveComp, glm::vec3{ -1.0f, 0.0f, 0.0f } ) );
 
 			input.BindCommand( dae::input::Keyboard::Key::D, dae::input::InputManager::KeyState::Pressed, std::make_unique<commands::MoveCommand>( moveComp, glm::vec3{ 1.0f, 0.0f, 0.0f } ) );
+
+			input.BindCommand( dae::input::Keyboard::Key::Space, dae::input::InputManager::KeyState::Pressed, std::make_unique<commands::SpawnGravityFieldCommand>( player.get() ) );
 
 			scene.AddGameObject( std::move( player ) );
 		}

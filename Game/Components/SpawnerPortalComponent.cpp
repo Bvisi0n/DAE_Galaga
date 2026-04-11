@@ -10,6 +10,7 @@
 #include <glm/ext/vector_float3.hpp>
 
 #include "Game/Blueprints/GravityBenderBlueprints.h"
+#include "Game/Components/GravityReceiverComponent.h"
 #include "Game/Components/ScreenWrapComponent.h"
 #include "Game/Components/SpawnerPortalComponent.h"
 
@@ -110,6 +111,7 @@ namespace bvi::components
 		unit->GetTransform().SetLocalPosition( GetOwner()->GetTransform().GetWorldPosition() );
 		unit->AddComponent<dae::graphics::TextureComponent>()->SetTexture( m_blueprint.filename.c_str() );
 		unit->AddComponent<components::ScreenWrapComponent>( 1024.f, 576.f );
+		unit->AddComponent<components::GravityReceiverComponent>();
 		unit->AddComponent<dae::core::MoveComponent>( m_blueprint.speed, false )->AddDirection( m_direction );
 
 		scene.AddGameObject( std::move( unit ) );
