@@ -15,7 +15,7 @@ namespace bvi::components
 
 	ScoreComponent::~ScoreComponent()
 	{
-		// TODO L: Should we bake this in to a base class or rely on the dev placing this wherever required?
+		// TODO L: Find another way to check for dangling binding pointers.
 		dae::input::InputManager::GetInstance().AssertAndRemoveBindings( this );
 	}
 

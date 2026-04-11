@@ -15,6 +15,7 @@ namespace bvi::components
 
 	HealthComponent::~HealthComponent()
 	{
+		// TODO L: Find another way to check for dangling binding pointers.
 		dae::input::InputManager::GetInstance().AssertAndRemoveBindings( this );
 	}
 
