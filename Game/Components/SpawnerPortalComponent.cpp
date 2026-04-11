@@ -112,7 +112,7 @@ namespace bvi::components
 		unit->AddComponent<dae::graphics::TextureComponent>()->SetTexture( m_blueprint.filename.c_str() );
 		unit->AddComponent<components::ScreenWrapComponent>( 1024.f, 576.f );
 		unit->AddComponent<components::GravityReceiverComponent>();
-		unit->AddComponent<dae::core::MoveComponent>( m_blueprint.speed );
+		unit->AddComponent<dae::core::MoveComponent>( m_blueprint.speed )->SetVelocity( m_direction );
 
 		scene.AddGameObject( std::move( unit ) );
 	}
