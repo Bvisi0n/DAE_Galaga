@@ -5,13 +5,13 @@
 - [ ] Level layout/setup is read from a file, you decide which format.
 - [x] Make sure the project builds for all build targets at warning level 4 and warnings flagged as errors.
 - [ ] Some functionality in your game or engine must make use of threading.
-- [ ] Apply design patterns:
+- [x] Apply design patterns:
     - [x] Game Loop.
     - [x] Update method.
     - [x] Command.
     - [x] Observer and/or EventQueue.
     - [x] Component.
-    - [ ] State.
+    - [x] State.
 
 ## Game Requirements (Galaga)
 Galaga is a fixed shooter. The player mans a lone starfighter at the bottom of the screen, which must prevent the Galaga forces from destroying all of mankind. The following is a description of the gameplay elements you must implement, inspired by the original game.
