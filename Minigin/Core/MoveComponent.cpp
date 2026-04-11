@@ -1,6 +1,7 @@
-#include <cassert>
+#include <cmath>
 
 #include <glm/ext/vector_float3.hpp>
+#include <glm/geometric.hpp>
 
 #include "Minigin/Core/Component.h"
 #include "Minigin/Core/GameObject.h"
@@ -9,11 +10,11 @@
 
 namespace dae::core
 {
-	MoveComponent::MoveComponent( GameObject* owner, const float maxSpeed, const bool resetDirectionPerFrame )
+	MoveComponent::MoveComponent( GameObject* owner, const float maxSpeed )
 		: Component( owner )
-		, m_maxSpeed( maxSpeed )
-		, m_resetDirectionPerFrame( resetDirectionPerFrame )
-	{}
+	{
+		SetMaxSpeed( maxSpeed );
+	}
 
 	void MoveComponent::InitializeLinkage()
 	{}
@@ -23,43 +24,44 @@ namespace dae::core
 
 	void MoveComponent::Update( const float deltaTime )
 	{
+		m_velocity += m_accumulatedForces * deltaTime;
+
+		m_accumulatedForces = { 0.0f, 0.0f, 0.0f };
+
+		const float currentSpeedSq = glm::dot( m_velocity, m_velocity );
 		constexpr float epsilon = 0.0001f;
-		if ( glm::dot( m_accumulatedDirection, m_accumulatedDirection ) < epsilon )
+
+		if ( currentSpeedSq > epsilon )
 		{
-			return;
-		}
+			if ( currentSpeedSq > m_maxSpeedSq )
+			{
+				const float currentSpeed = std::sqrt( currentSpeedSq );
+				const float maxSpeed = std::sqrt( m_maxSpeedSq );
+				m_velocity = ( m_velocity / currentSpeed ) * maxSpeed;
+			}
 
-		const glm::vec3 normalizedDirection = glm::normalize( m_accumulatedDirection );
-
-		const glm::vec3 velocity = normalizedDirection * m_maxSpeed * deltaTime;
-
-		auto& transform = GetOwner()->GetTransform();
-		transform.SetLocalPosition( transform.GetLocalPosition() + velocity );
-
-		if ( m_resetDirectionPerFrame )
-		{
-			m_accumulatedDirection = glm::vec3{ 0.0f, 0.0f, 0.0f };
+			auto& transform = GetOwner()->GetTransform();
+			transform.SetLocalPosition( transform.GetLocalPosition() + ( m_velocity * deltaTime ) );
 		}
 	}
 
-	void MoveComponent::AddDirection( const glm::vec3& direction )
+	void MoveComponent::AddForce( const glm::vec3& force )
 	{
-		m_accumulatedDirection += direction;
+		m_accumulatedForces += force;
 	}
 
-	void MoveComponent::SetSpeed( const float speed )
+	void MoveComponent::SetVelocity( const glm::vec3& velocity )
 	{
-		if ( speed <= 0 )
-		{
-			assert( false && "Speed must be positive." );
-			return;
-		}
-
-		m_maxSpeed = speed;
+		m_velocity = velocity;
 	}
 
-	float MoveComponent::GetSpeed() const
+	const glm::vec3& MoveComponent::GetVelocity() const
 	{
-		return m_maxSpeed;
+		return m_velocity;
+	}
+
+	void MoveComponent::SetMaxSpeed( const float speed )
+	{
+		m_maxSpeedSq = speed * speed;
 	}
 }

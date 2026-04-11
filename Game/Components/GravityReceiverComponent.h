@@ -35,12 +35,15 @@ namespace bvi::components
 		void InitializeState() override
 		{}
 
-		void Update( const float deltaTime ) override
+		void Update( const float ) override
 		{
-			if ( !m_moveComponent ) return;
+			if ( !m_moveComponent )
+			{
+				return;
+			}
 
 			const glm::vec3 currentPos = GetOwner()->GetTransform().GetWorldPosition();
-			glm::vec3 accumulatedForce{ 0.0f, 0.0f, 0.0f };
+			glm::vec3 totalGravityForce{ 0.0f, 0.0f, 0.0f };
 
 			for ( const auto& node : physics::GravityRegistry::GetActiveNodes() )
 			{
@@ -52,11 +55,11 @@ namespace bvi::components
 					const float distance = std::sqrt( distanceSq );
 					const glm::vec3 direction = diff / distance;
 
-					accumulatedForce += direction * ( node.strength / distanceSq );
+					totalGravityForce += direction * ( node.strength / distanceSq );
 				}
 			}
 
-			m_moveComponent->AddDirection( accumulatedForce * deltaTime );
+			m_moveComponent->AddForce( totalGravityForce );
 		}
 
 	private:

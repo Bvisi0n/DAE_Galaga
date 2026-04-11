@@ -112,7 +112,7 @@ namespace bvi::components
 		unit->AddComponent<dae::graphics::TextureComponent>()->SetTexture( m_blueprint.filename.c_str() );
 		unit->AddComponent<components::ScreenWrapComponent>( 1024.f, 576.f );
 		unit->AddComponent<components::GravityReceiverComponent>();
-		unit->AddComponent<dae::core::MoveComponent>( m_blueprint.speed, false )->AddDirection( m_direction );
+		unit->AddComponent<dae::core::MoveComponent>( m_blueprint.speed );
 
 		scene.AddGameObject( std::move( unit ) );
 	}
@@ -124,7 +124,8 @@ namespace bvi::components
 		std::uniform_real_distribution<float> dist( 0.0f, 2.0f * std::numbers::pi_v<float> );
 
 		const float angle = dist( gen );
-		m_direction = glm::vec3{ std::cos( angle ), std::sin( angle ), 0.0f };
+		constexpr float maxSpeed = 200.0f;
+		m_direction = glm::vec3{ std::cos( angle ), std::sin( angle ), 0.0f } * maxSpeed;
 	}
 
 	void SpawnerPortalComponent::SetRandomPosition()

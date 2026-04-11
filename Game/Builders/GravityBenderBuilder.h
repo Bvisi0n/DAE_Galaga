@@ -77,13 +77,13 @@ namespace bvi::builders
 
 			auto& input = dae::input::InputManager::GetInstance();
 
-			input.BindCommand( dae::input::Keyboard::Key::W, dae::input::InputManager::KeyState::Pressed, std::make_unique<commands::MoveCommand>( moveComp, glm::vec3{ 0.0f, -1.0f, 0.0f } ) );
+			input.BindCommand( dae::input::Keyboard::Key::W, dae::input::InputManager::KeyState::Pressed, std::make_unique<commands::MoveCommand>( moveComp, glm::vec3{ 0.0f, -200.0f, 0.0f } ) );
 
-			input.BindCommand( dae::input::Keyboard::Key::S, dae::input::InputManager::KeyState::Pressed, std::make_unique<commands::MoveCommand>( moveComp, glm::vec3{ 0.0f, 1.0f, 0.0f } ) );
+			input.BindCommand( dae::input::Keyboard::Key::S, dae::input::InputManager::KeyState::Pressed, std::make_unique<commands::MoveCommand>( moveComp, glm::vec3{ 0.0f, 200.0f, 0.0f } ) );
 
-			input.BindCommand( dae::input::Keyboard::Key::A, dae::input::InputManager::KeyState::Pressed, std::make_unique<commands::MoveCommand>( moveComp, glm::vec3{ -1.0f, 0.0f, 0.0f } ) );
+			input.BindCommand( dae::input::Keyboard::Key::A, dae::input::InputManager::KeyState::Pressed, std::make_unique<commands::MoveCommand>( moveComp, glm::vec3{ -200.0f, 0.0f, 0.0f } ) );
 
-			input.BindCommand( dae::input::Keyboard::Key::D, dae::input::InputManager::KeyState::Pressed, std::make_unique<commands::MoveCommand>( moveComp, glm::vec3{ 1.0f, 0.0f, 0.0f } ) );
+			input.BindCommand( dae::input::Keyboard::Key::D, dae::input::InputManager::KeyState::Pressed, std::make_unique<commands::MoveCommand>( moveComp, glm::vec3{ 200.0f, 0.0f, 0.0f } ) );
 
 			input.BindCommand( dae::input::Keyboard::Key::Space, dae::input::InputManager::KeyState::Pressed, std::make_unique<commands::SpawnGravityFieldCommand>( player.get() ) );
 
