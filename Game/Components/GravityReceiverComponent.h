@@ -45,17 +45,21 @@ namespace bvi::components
 			const glm::vec3 currentPos = GetOwner()->GetTransform().GetWorldPosition();
 			glm::vec3 totalGravityForce{ 0.0f, 0.0f, 0.0f };
 
+			constexpr float epsilonSq = 2500.0f;
+
 			for ( const auto& node : physics::GravityRegistry::GetActiveNodes() )
 			{
 				const glm::vec3 diff = node.position - currentPos;
 				const float distanceSq = glm::dot( diff, diff );
 
-				if ( distanceSq < node.radiusSquared && distanceSq > 0.001f )
+				if ( distanceSq < node.radiusSquared )
 				{
-					const float distance = std::sqrt( distanceSq );
-					const glm::vec3 direction = diff / distance;
+					const float smoothedDistSq = distanceSq + epsilonSq;
 
-					totalGravityForce += direction * ( node.strength / distanceSq );
+					const float invSmoothedDist = 1.0f / std::sqrt( smoothedDistSq );
+					const float invDistCube = ( 1.0f / smoothedDistSq ) * invSmoothedDist;
+
+					totalGravityForce += diff * ( node.strength * invDistCube );
 				}
 			}
 
