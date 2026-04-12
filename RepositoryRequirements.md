@@ -1,7 +1,7 @@
 # Repository Requirements
 
 ## Engine Requirements
-- [ ] There are two projects in your repository: the game engine (static/dynamic library) and the game (executable).
+- [x] There are two projects in your repository: the game engine (static/dynamic library) and the game (executable).
 - [ ] Level layout/setup is read from a file, you decide which format.
 - [x] Make sure the project builds for all build targets at warning level 4 and warnings flagged as errors.
 - [ ] Some functionality in your game or engine must make use of threading.
