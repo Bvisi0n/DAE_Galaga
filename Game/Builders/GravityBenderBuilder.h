@@ -33,6 +33,7 @@ namespace bvi::builders
 		{
 			BuildBackground( scene );
 			BuildViewportBorder( scene );
+			BuildInstructions( scene );
 			BuildFPSCounter( scene );
 			BuildPlayer( scene );
 			BuildSpawner( scene );
@@ -59,6 +60,27 @@ namespace bvi::builders
 			borderObject->AddComponent<dae::graphics::PrimitiveRenderComponent>( dae::graphics::PrimitiveShape{ dae::graphics::RectShape{ screenBounds, false } }, neonPurple, 2 );
 
 			scene.AddGameObject( std::move( borderObject ) );
+		}
+
+		static void BuildInstructions( dae::scenes::Scene& scene )
+		{
+			SDL_Color fontColor{ 255, 150, 150, 255 };
+			auto font{ dae::resources::ResourceManager::GetInstance().LoadFont( "Lingua.otf", 16 ) };
+			auto line{ std::make_unique<dae::core::GameObject>( 90.f, 10.f ) };
+			line->AddComponent<dae::graphics::TextComponent>( "Welcome Commander, you're just in time! (for training)", font )->SetColor( fontColor );
+			scene.AddGameObject( std::move( line ) );
+
+			line = std::make_unique<dae::core::GameObject>( 10.f, 30.f );
+			line->AddComponent<dae::graphics::TextComponent>( "Place Gravity wells to make the red rectangles crash into eachother before they overwhelm the system!", font )->SetColor( fontColor );
+			scene.AddGameObject( std::move( line ) );
+
+			line = std::make_unique<dae::core::GameObject>( 10.f, 50.f );
+			line->AddComponent<dae::graphics::TextComponent>( "Use WASD to move", font )->SetColor( fontColor );
+			scene.AddGameObject( std::move( line ) );
+
+			line = std::make_unique<dae::core::GameObject>( 10.f, 70.f );
+			line->AddComponent<dae::graphics::TextComponent>( "Use SPACE to place a gravity well", font )->SetColor( fontColor );
+			scene.AddGameObject( std::move( line ) );
 		}
 
 		static void BuildFPSCounter( dae::scenes::Scene& scene )
