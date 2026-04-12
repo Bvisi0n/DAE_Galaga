@@ -16,7 +16,7 @@ namespace dae::core
 	void ColliderComponent::InitializeState()
 	{}
 
-	void ColliderComponent::Update( const float )
+	void ColliderComponent::Update( const float /*deltaTime*/ )
 	{}
 
 	Rect ColliderComponent::GetWorldBounds() const

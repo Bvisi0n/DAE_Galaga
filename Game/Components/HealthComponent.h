@@ -19,7 +19,7 @@ namespace bvi::components
 		void InitializeLinkage() override;
 		void InitializeState() override;
 
-		void Update( const float ) noexcept override;
+		void Update( const float deltaTime ) noexcept override;
 
 		[[nodiscard]] int GetLives() const;
 

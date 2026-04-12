@@ -27,7 +27,7 @@ namespace bvi::components
 		NotifyScoreChanged();
 	}
 
-	void ScoreComponent::Update( const float ) noexcept
+	void ScoreComponent::Update( const float /*deltaTime*/ ) noexcept
 	{}
 
 	void ScoreComponent::AddScore( const int score )

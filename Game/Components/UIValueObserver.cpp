@@ -29,7 +29,7 @@ namespace bvi::components
 	void UIValueObserver::InitializeState()
 	{}
 
-	void UIValueObserver::Update( const float )
+	void UIValueObserver::Update( const float /*deltaTime*/ )
 	{}
 
 	void UIValueObserver::OnNotify( const dae::events::GameEvent event )

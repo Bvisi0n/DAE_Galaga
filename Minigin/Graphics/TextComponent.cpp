@@ -32,7 +32,7 @@ namespace dae::graphics
 	void TextComponent::InitializeState()
 	{}
 
-	void TextComponent::Update( const float )
+	void TextComponent::Update( const float /*deltaTime*/ )
 	{
 		if ( !m_needsUpdate )
 		{

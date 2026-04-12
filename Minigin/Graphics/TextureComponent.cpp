@@ -26,7 +26,7 @@ namespace dae::graphics
 	void TextureComponent::InitializeState()
 	{}
 
-	void TextureComponent::Update( const float )
+	void TextureComponent::Update( const float /*deltaTime*/ )
 	{}
 
 	void TextureComponent::Render() const

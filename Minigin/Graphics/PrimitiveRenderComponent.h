@@ -38,7 +38,7 @@ namespace dae::graphics
 		void InitializeState() override
 		{}
 
-		void Update( const float ) override
+		void Update( const float /*deltaTime*/ ) override
 		{}
 
 		void Render() const override

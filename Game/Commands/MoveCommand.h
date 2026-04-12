@@ -16,7 +16,7 @@ namespace bvi::commands
 			, m_thrustVector{ thrustVector }
 		{}
 
-		void Execute( const float ) override
+		void Execute( const float /*deltaTime*/ ) override
 		{
 			if ( m_moveComponent )
 			{

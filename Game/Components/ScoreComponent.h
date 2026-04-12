@@ -15,7 +15,7 @@ namespace bvi::components
 		void InitializeLinkage() noexcept override;
 		void InitializeState() noexcept override;
 
-		void Update( const float ) noexcept override;
+		void Update( const float deltaTime ) noexcept override;
 
 		void AddScore( const int score );
 		[[nodiscard]] int GetScore() const;

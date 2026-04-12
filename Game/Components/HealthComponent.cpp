@@ -27,7 +27,7 @@ namespace bvi::components
 		NotifyPlayerDied();
 	}
 
-	void HealthComponent::Update( const float ) noexcept
+	void HealthComponent::Update( const float /*deltaTime*/ ) noexcept
 	{}
 
 	int HealthComponent::GetLives() const

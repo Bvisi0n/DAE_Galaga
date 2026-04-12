@@ -23,7 +23,7 @@ namespace bvi::commands
 			: m_targetContext{ targetContext }
 		{}
 
-		void Execute( const float ) override
+		void Execute( const float /*deltaTime*/ ) override
 		{
 			dae::core::AppStateManager::GetInstance().PushState( std::make_unique<StateType>() );
 		}

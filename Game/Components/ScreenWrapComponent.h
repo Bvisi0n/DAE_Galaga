@@ -34,7 +34,7 @@ namespace bvi::components
 		void InitializeState() override
 		{}
 
-		void Update( const float ) override
+		void Update( const float /*deltaTime*/ ) override
 		{
 			auto& transform = GetOwner()->GetTransform();
 
