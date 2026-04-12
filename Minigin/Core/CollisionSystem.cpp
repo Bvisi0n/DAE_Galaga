@@ -24,6 +24,8 @@ namespace dae::core
 			}
 		}
 
+		// TODO L: Are these old for loops because iterator invalidation?
+			// I think they can be range-based... Testing required.
 		for ( size_t i = 0; i < activeColliders.size(); ++i )
 		{
 			for ( size_t j = i + 1; j < activeColliders.size(); ++j )

@@ -36,6 +36,7 @@ namespace bvi::builders
 			BuildFPSCounter( scene );
 			BuildPlayer( scene );
 			BuildSpawner( scene );
+			EnableCollisions( scene );
 			scene.Initialize();
 		}
 
@@ -96,6 +97,19 @@ namespace bvi::builders
 			spawner->AddComponent<components::SpawnerPortalComponent>( blueprints::UnitData{} );
 			spawner->AddComponent<dae::graphics::PrimitiveRenderComponent>( SDL_FRect{ 0.f, 0.f, 32.f, 32.f }, SDL_Color{ 255, 0, 0, 255 }, 2 );
 			scene.AddGameObject( std::move( spawner ) );
+		}
+
+		static void EnableCollisions( dae::scenes::Scene& scene )
+		{
+			auto& input = dae::input::InputManager::GetInstance();
+
+			scene.GetCollisionSystem().RegisterCallback(
+		[ &input ] ( dae::core::GameObject* actorA, dae::core::GameObject* actorB )
+		{
+			actorA->MarkForDeletion();
+			actorB->MarkForDeletion();
+		} );
+
 		}
 	};
 }
