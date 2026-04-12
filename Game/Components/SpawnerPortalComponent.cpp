@@ -23,7 +23,7 @@
 
 namespace bvi::components
 {
-	SpawnerPortalComponent::SpawnerPortalComponent( dae::core::GameObject* owner, const bvi::blueprints::ZakoData& blueprint )
+	SpawnerPortalComponent::SpawnerPortalComponent( dae::core::GameObject* owner, const bvi::blueprints::UnitData& blueprint )
 		:Component( owner )
 		, m_blueprint( blueprint )
 	{}

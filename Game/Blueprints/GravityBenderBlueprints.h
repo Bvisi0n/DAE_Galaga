@@ -9,7 +9,7 @@
 
 namespace bvi::blueprints
 {
-	struct ZakoData
+	struct UnitData
 	{
 		std::string filename{ "zako.png" };
 		float speed{ 200.0f };

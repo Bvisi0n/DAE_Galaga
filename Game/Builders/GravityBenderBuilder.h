@@ -35,7 +35,7 @@ namespace bvi::builders
 			BuildViewportBorder( scene );
 			BuildFPSCounter( scene );
 			BuildPlayer( scene );
-			BuildZakoSpawner( scene );
+			BuildSpawner( scene );
 			scene.Initialize();
 		}
 
@@ -90,12 +90,12 @@ namespace bvi::builders
 			scene.AddGameObject( std::move( player ) );
 		}
 
-		static void BuildZakoSpawner( dae::scenes::Scene& scene )
+		static void BuildSpawner( dae::scenes::Scene& scene )
 		{
-			auto zakoSpawner{ std::make_unique<dae::core::GameObject>() };
-			zakoSpawner->AddComponent<components::SpawnerPortalComponent>( blueprints::ZakoData{} );
-			zakoSpawner->AddComponent<dae::graphics::PrimitiveRenderComponent>( SDL_FRect{ 0.f, 0.f, 32.f, 32.f }, SDL_Color{ 255, 0, 0, 255 }, 2 );
-			scene.AddGameObject( std::move( zakoSpawner ) );
+			auto spawner{ std::make_unique<dae::core::GameObject>() };
+			spawner->AddComponent<components::SpawnerPortalComponent>( blueprints::UnitData{} );
+			spawner->AddComponent<dae::graphics::PrimitiveRenderComponent>( SDL_FRect{ 0.f, 0.f, 32.f, 32.f }, SDL_Color{ 255, 0, 0, 255 }, 2 );
+			scene.AddGameObject( std::move( spawner ) );
 		}
 	};
 }

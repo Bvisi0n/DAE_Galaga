@@ -18,7 +18,7 @@ namespace bvi::components
 	class SpawnerPortalComponent final : public dae::core::Component
 	{
 	public:
-		SpawnerPortalComponent( dae::core::GameObject* owner, const blueprints::ZakoData& blueprint );
+		SpawnerPortalComponent( dae::core::GameObject* owner, const blueprints::UnitData& blueprint );
 		virtual ~SpawnerPortalComponent() = default;
 
 		SpawnerPortalComponent( const SpawnerPortalComponent& ) = delete;
@@ -37,7 +37,7 @@ namespace bvi::components
 			Anticipation, Spawning, Exhausted
 		};
 
-		blueprints::ZakoData m_blueprint;
+		blueprints::UnitData m_blueprint;
 		dae::graphics::PrimitiveRenderComponent* m_primitiveRenderer{ nullptr };
 
 		glm::vec3 m_direction{};
