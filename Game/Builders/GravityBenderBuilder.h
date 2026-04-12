@@ -88,7 +88,7 @@ namespace bvi::builders
 
 			input.BindCommand( dae::input::Keyboard::Key::D, dae::input::InputManager::KeyState::Pressed, std::make_unique<commands::MoveCommand>( moveComp, glm::vec3{ 400.0f, 0.0f, 0.0f } ) );
 
-			input.BindCommand( dae::input::Keyboard::Key::Space, dae::input::InputManager::KeyState::Pressed, std::make_unique<commands::SpawnGravityFieldCommand>( player.get() ) );
+			input.BindCommand( dae::input::Keyboard::Key::Space, dae::input::InputManager::KeyState::Up, std::make_unique<commands::SpawnGravityFieldCommand>( player.get() ) );
 
 			scene.AddGameObject( std::move( player ) );
 		}

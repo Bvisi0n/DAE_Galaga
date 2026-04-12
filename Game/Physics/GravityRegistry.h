@@ -5,6 +5,7 @@
 #include <span>
 #include <utility>
 #include <vector>
+#include <deque>
 
 #include <SDL3/SDL_pixels.h>
 #include <SDL3/SDL_rect.h>
@@ -42,7 +43,7 @@ namespace bvi::physics
 			visualInner->AddComponent<dae::graphics::PrimitiveRenderComponent>( dae::graphics::PrimitiveShape{ dae::graphics::CircleShape{ 5.0f, true } }, SDL_Color{ 255, 165, 0, 255 } );
 
 			// TODO L: Hardcoded the radius here.
-			VisualOuter->AddComponent<dae::graphics::PrimitiveRenderComponent>( dae::graphics::PrimitiveShape{ dae::graphics::CircleShape{ 150.0f, false } }, SDL_Color{ 255, 165, 0, 128 } );
+			VisualOuter->AddComponent<dae::graphics::PrimitiveRenderComponent>( dae::graphics::PrimitiveShape{ dae::graphics::CircleShape{ 100.0f, false } }, SDL_Color{ 255, 165, 0, 128 } );
 
 			auto* rawInnerPtr = visualInner.get();
 			auto* rawOuterPtr = VisualOuter.get();
@@ -50,6 +51,15 @@ namespace bvi::physics
 
 			scene.AddGameObject( std::move( visualInner ) );
 			scene.AddGameObject( std::move( VisualOuter ) );
+
+			if ( s_nodes.size() > 3 )
+			{
+				const auto& [oldInner, oldOuter] = s_visualObjects.front();
+				if ( oldInner ) scene.RemoveGameObject( *oldInner );
+				if ( oldOuter ) scene.RemoveGameObject( *oldOuter );
+				s_visualObjects.pop_front();
+				s_nodes.pop_front();
+			}
 		}
 
 		static void ClearNodes()
@@ -68,14 +78,14 @@ namespace bvi::physics
 			}
 		}
 
-		[[nodiscard]] static std::span<const GravityNode> GetActiveNodes() noexcept
+		[[nodiscard]] static const std::deque<GravityNode>& GetActiveNodes() noexcept
 		{
 			return s_nodes;
 		}
 
 	private:
-		static inline std::vector<GravityNode> s_nodes{};
-		static inline std::vector<std::pair<dae::core::GameObject*, dae::core::GameObject*>> s_visualObjects{};
+		static inline std::deque<GravityNode> s_nodes{};
+		static inline std::deque<std::pair<dae::core::GameObject*, dae::core::GameObject*>> s_visualObjects{};
 	};
 }
 #endif
