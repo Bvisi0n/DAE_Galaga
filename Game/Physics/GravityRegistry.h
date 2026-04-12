@@ -7,9 +7,10 @@
 #include <vector>
 #include <deque>
 
+#include <glm/vec3.hpp>
+
 #include <SDL3/SDL_pixels.h>
 #include <SDL3/SDL_rect.h>
-#include <glm/ext/vector_float3.hpp>
 
 #include "Minigin/Core/GameObject.h"
 #include "Minigin/Graphics/PrimitiveRenderComponent.h"

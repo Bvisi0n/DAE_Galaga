@@ -1,6 +1,6 @@
 #include <string>
 
-#include <Minigin/Core/Component.h>
+#include "Minigin/Core/Component.h"
 #include "Minigin/Core/GameObject.h"
 #include "Minigin/Core/Transform.h"
 

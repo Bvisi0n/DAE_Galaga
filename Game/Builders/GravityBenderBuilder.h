@@ -5,7 +5,7 @@
 
 #include "SDL3/SDL.h"
 
-#include <glm/ext/vector_float2.hpp>
+#include <glm/vec2.hpp>
 
 #include "Game/Commands/MoveCommand.h"
 #include "Game/Commands/SpawnGravityFieldCommand.h"

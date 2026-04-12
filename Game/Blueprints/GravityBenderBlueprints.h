@@ -3,7 +3,7 @@
 
 #include <string>
 
-#include<glm/ext/vector_float2.hpp>
+#include <glm/vec2.hpp>
 
 // Inspired by Type Object.
 

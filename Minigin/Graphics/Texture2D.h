@@ -4,9 +4,9 @@
 #include <memory>
 #include <string>
 
-#include <SDL3/SDL_render.h>
+#include <glm/vec2.hpp>
 
-#include <glm/ext/vector_float2.hpp>
+#include <SDL3/SDL_render.h>
 
 struct SDL_Texture;
 

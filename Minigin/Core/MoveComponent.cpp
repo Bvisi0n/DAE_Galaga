@@ -1,8 +1,8 @@
 #include <algorithm>
 #include <cmath>
 
-#include <glm/ext/vector_float3.hpp>
 #include <glm/geometric.hpp>
+#include <glm/vec3.hpp>
 
 #include "Minigin/Core/Component.h"
 #include "Minigin/Core/GameObject.h"

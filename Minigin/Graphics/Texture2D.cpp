@@ -2,7 +2,7 @@
 #include <memory>
 #include <string>
 
-#include <glm/ext/vector_float2.hpp>
+#include <glm/vec2.hpp>
 
 #include <SDL3/SDL_render.h>
 #include <SDL3/SDL_surface.h>

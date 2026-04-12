@@ -1,7 +1,7 @@
 #ifndef MOVECOMPONENT_H
 #define MOVECOMPONENT_H
 
-#include <glm/ext/vector_float3.hpp>
+#include <glm/vec3.hpp>
 
 #include "Minigin/Core/Component.h"
 #include "Minigin/Core/GameObject.h"
