@@ -55,7 +55,8 @@ namespace bvi::builders
 			constexpr SDL_Color neonPurple{ 128, 0, 128, 255 };
 
 			auto borderObject{ std::make_unique<dae::core::GameObject>() };
-			borderObject->AddComponent<dae::graphics::PrimitiveRenderComponent>( screenBounds, neonPurple );
+
+			borderObject->AddComponent<dae::graphics::PrimitiveRenderComponent>( dae::graphics::PrimitiveShape{ dae::graphics::RectShape{ screenBounds, false } }, neonPurple, 2 );
 
 			scene.AddGameObject( std::move( borderObject ) );
 		}
@@ -72,7 +73,8 @@ namespace bvi::builders
 		static void BuildPlayer( dae::scenes::Scene& scene )
 		{
 			auto player{ std::make_unique<dae::core::GameObject>( 400.f, 350.f ) };
-			player->AddComponent<dae::graphics::TextureComponent>()->SetTexture( "starfighter.png" );
+			player->AddComponent<dae::graphics::PrimitiveRenderComponent>( dae::graphics::PrimitiveShape{ dae::graphics::CircleShape{ 10.0f, true } }, SDL_Color{ 255, 255, 0, 255 } );
+
 			auto* moveComp = player->AddComponent<dae::core::MoveComponent>( 250.f, 2.f );
 			player->AddComponent<bvi::components::ScreenWrapComponent>( 1024.f, 576.f );
 
@@ -95,7 +97,8 @@ namespace bvi::builders
 		{
 			auto spawner{ std::make_unique<dae::core::GameObject>() };
 			spawner->AddComponent<components::SpawnerPortalComponent>( blueprints::UnitData{} );
-			spawner->AddComponent<dae::graphics::PrimitiveRenderComponent>( SDL_FRect{ 0.f, 0.f, 32.f, 32.f }, SDL_Color{ 255, 0, 0, 255 }, 2 );
+			spawner->AddComponent<dae::graphics::PrimitiveRenderComponent>( dae::graphics::PrimitiveShape{ dae::graphics::RectShape{ SDL_FRect{ -10.f, -10.f, 20.f, 20.f }, false } }, SDL_Color{ 255, 0, 0, 255 }, 3 );
+
 			scene.AddGameObject( std::move( spawner ) );
 		}
 
