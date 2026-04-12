@@ -30,7 +30,11 @@ namespace bvi::builders
 			BuildLogo( scene );
 			BuildTitle( scene );
 			BuildFPSCounter( scene );
-			BuildMenu( scene );
+
+		#ifdef ENABLE_GRAVITY_BENDER
+			BuildGravityBenderUI( scene );
+		#endif
+
 			scene.Initialize();
 		}
 
@@ -66,7 +70,7 @@ namespace bvi::builders
 			scene.AddGameObject( std::move( fpsCounter ) );
 		}
 
-		static void BuildMenu( dae::scenes::Scene& scene )
+		static void BuildGravityBenderUI( dae::scenes::Scene& scene )
 		{
 			auto font{ dae::resources::ResourceManager::GetInstance().LoadFont( "Lingua.otf", 24 ) };
 			auto instructions{ std::make_unique<dae::core::GameObject>( 425.f, 375.f ) };

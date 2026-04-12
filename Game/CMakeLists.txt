@@ -6,7 +6,11 @@ else()
   set(TARGET_PARAM WIN32)
 endif()
 
-add_executable(${TARGET_NAME} ${TARGET_PARAM}
+# Flag to control inclusion of Gravity Bender prototype
+option(BUILD_GRAVITY_BENDER "Include Gravity Bender prototype" ON)
+
+# Define Common and Galaga Sources (Always Built)
+set(GAME_SOURCES
   "Components/FPSComponent.cpp"
   "Components/HealthComponent.cpp"
   "Components/SpawnerPortalComponent.cpp"
@@ -15,6 +19,24 @@ add_executable(${TARGET_NAME} ${TARGET_PARAM}
   "Components/UIValueObserver.cpp"
   "Core/Main.cpp"
 )
+
+# Add all Gravity Bender files here
+if(BUILD_GRAVITY_BENDER)
+    message(STATUS "Game Module: Gravity Bender ENABLED")
+    list(APPEND GAME_SOURCES
+        # here
+    )
+else()
+    message(STATUS "Game Module: Gravity Bender DISABLED (Strict Galaga Build)")
+endif()
+
+# Generate Executable
+add_executable(${TARGET_NAME} ${TARGET_PARAM} ${GAME_SOURCES})
+
+# Inject the preprocessor macro
+if(BUILD_GRAVITY_BENDER)
+    target_compile_definitions(${TARGET_NAME} PRIVATE ENABLE_GRAVITY_BENDER)
+endif()
 
 target_compile_features(${TARGET_NAME} PUBLIC cxx_std_20)
 

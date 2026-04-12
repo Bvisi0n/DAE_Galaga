@@ -26,13 +26,20 @@ namespace bvi::states
 		{
 			auto& scene = dae::scenes::SceneManager::GetInstance().CreateScene();
 			bvi::builders::MainMenuBuilder::Build( scene );
+
+			//TODO L: ENABLE_GRAVITY_BENDER doesn't work as it should.
+		#ifdef ENABLE_GRAVITY_BENDER
 			dae::input::InputManager::GetInstance().BindCommand( dae::input::Keyboard::Key::F, dae::input::InputManager::KeyState::Down, std::make_unique<bvi::commands::PushStateCommand<GravityBenderState>>( this ) );
+		#endif
 		}
 
 		void OnExit() override
 		{
 			dae::scenes::SceneManager::GetInstance().RemoveAllScenes();
+
+		#ifdef ENABLE_GRAVITY_BENDER
 			dae::input::InputManager::GetInstance().UnbindCommand( dae::input::Keyboard::Key::F, dae::input::InputManager::KeyState::Down );
+		#endif
 		}
 
 		void Update() override

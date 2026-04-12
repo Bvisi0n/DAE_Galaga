@@ -20,8 +20,8 @@
     },
     {
       "name": "x64-debug",
-      "displayName": "x64 Debug",
-      "description": "Target Windows (64-bit) with the Visual Studio development environment. (Debug)",
+      "displayName": "x64 Debug (Strict Galaga)",
+      "description": "Target Windows (64-bit) evaluation build. (Debug)",
       "inherits": "windows-base",
       "condition": {
         "type": "equals",
@@ -33,13 +33,14 @@
         "strategy": "external"
       },
       "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug"
+        "CMAKE_BUILD_TYPE": "Debug",
+        "BUILD_GRAVITY_BENDER": "OFF"
       }
     },
     {
       "name": "x64-release",
-      "displayName": "x64 Release",
-      "description": "Target Windows (64-bit) with the Visual Studio development environment. (RelWithDebInfo)",
+      "displayName": "x64 Release (Strict Galaga)",
+      "description": "Target Windows (64-bit) evaluation build. (Release)",
       "inherits": "x64-debug",
       "condition": {
         "type": "equals",
@@ -47,12 +48,31 @@
         "rhs": "Windows"
       },
       "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Release"
+        "CMAKE_BUILD_TYPE": "Release",
+        "BUILD_GRAVITY_BENDER": "OFF"
+      }
+    },
+    {
+      "name": "x64-debug-prototype",
+      "displayName": "x64 Debug (Gravity Bender)",
+      "description": "Target Windows (64-bit) rapid prototyping environment. (Debug)",
+      "inherits": "x64-debug",
+      "cacheVariables": {
+        "BUILD_GRAVITY_BENDER": "ON"
+      }
+    },
+    {
+      "name": "x64-release-prototype",
+      "displayName": "x64 Release (Gravity Bender)",
+      "description": "Target Windows (64-bit) rapid prototyping environment. (Release)",
+      "inherits": "x64-release",
+      "cacheVariables": {
+        "BUILD_GRAVITY_BENDER": "ON"
       }
     },
     {
       "name": "clang-debug",
-      "displayName": "clang Debug",
+      "displayName": "clang Debug (Strict Galaga)",
       "description": "Using compilers: C = /usr/bin/clang, CXX = /usr/bin/clang++",
       "binaryDir": "${sourceDir}/out/build/${presetName}",
       "condition": {
@@ -64,12 +84,13 @@
         "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
         "CMAKE_C_COMPILER": "/usr/bin/clang",
         "CMAKE_CXX_COMPILER": "/usr/bin/clang++",
-        "CMAKE_BUILD_TYPE": "Debug"
+        "CMAKE_BUILD_TYPE": "Debug",
+        "BUILD_GRAVITY_BENDER": "OFF"
       }
     },
     {
       "name": "clang-release",
-      "displayName": "clang Release",
+      "displayName": "clang Release (Strict Galaga)",
       "description": "Using compilers: C = /usr/bin/clang, CXX = /usr/bin/clang++",
       "binaryDir": "${sourceDir}/out/build/${presetName}",
       "condition": {
@@ -81,7 +102,17 @@
         "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
         "CMAKE_C_COMPILER": "/usr/bin/clang",
         "CMAKE_CXX_COMPILER": "/usr/bin/clang++",
-        "CMAKE_BUILD_TYPE": "Release"
+        "CMAKE_BUILD_TYPE": "Release",
+        "BUILD_GRAVITY_BENDER": "OFF"
+      }
+    },
+    {
+      "name": "clang-debug-prototype",
+      "displayName": "clang Debug (Gravity Bender)",
+      "description": "Rapid prototyping environment for clang.",
+      "inherits": "clang-debug",
+      "cacheVariables": {
+        "BUILD_GRAVITY_BENDER": "ON"
       }
     }
   ]
