@@ -20,7 +20,7 @@ namespace bvi::commands
 		{
 			const auto origin = m_playerContext->GetTransform().GetWorldPosition();
 
-			constexpr float radius = 200.0f;
+			constexpr float radius = 150.0f;
 			constexpr float strength = 200000.0f;
 			physics::GravityRegistry::AddNode( { origin, strength, radius * radius } );
 		}

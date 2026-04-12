@@ -101,15 +101,12 @@ namespace bvi::builders
 
 		static void EnableCollisions( dae::scenes::Scene& scene )
 		{
-			auto& input = dae::input::InputManager::GetInstance();
-
 			scene.GetCollisionSystem().RegisterCallback(
-		[ &input ] ( dae::core::GameObject* actorA, dae::core::GameObject* actorB )
+		[] ( dae::core::GameObject* actorA, dae::core::GameObject* actorB )
 		{
 			actorA->MarkForDeletion();
 			actorB->MarkForDeletion();
 		} );
-
 		}
 	};
 }
