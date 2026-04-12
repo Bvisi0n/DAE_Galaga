@@ -72,18 +72,18 @@ namespace bvi::builders
 		{
 			auto player{ std::make_unique<dae::core::GameObject>( 400.f, 350.f ) };
 			player->AddComponent<dae::graphics::TextureComponent>()->SetTexture( "starfighter.png" );
-			auto* moveComp = player->AddComponent<dae::core::MoveComponent>( 200.f );
+			auto* moveComp = player->AddComponent<dae::core::MoveComponent>( 250.f, 2.f );
 			player->AddComponent<bvi::components::ScreenWrapComponent>( 1024.f, 576.f );
 
 			auto& input = dae::input::InputManager::GetInstance();
 
-			input.BindCommand( dae::input::Keyboard::Key::W, dae::input::InputManager::KeyState::Pressed, std::make_unique<commands::MoveCommand>( moveComp, glm::vec3{ 0.0f, -200.0f, 0.0f } ) );
+			input.BindCommand( dae::input::Keyboard::Key::W, dae::input::InputManager::KeyState::Pressed, std::make_unique<commands::MoveCommand>( moveComp, glm::vec3{ 0.0f, -400.0f, 0.0f } ) );
 
-			input.BindCommand( dae::input::Keyboard::Key::S, dae::input::InputManager::KeyState::Pressed, std::make_unique<commands::MoveCommand>( moveComp, glm::vec3{ 0.0f, 200.0f, 0.0f } ) );
+			input.BindCommand( dae::input::Keyboard::Key::S, dae::input::InputManager::KeyState::Pressed, std::make_unique<commands::MoveCommand>( moveComp, glm::vec3{ 0.0f, 400.0f, 0.0f } ) );
 
-			input.BindCommand( dae::input::Keyboard::Key::A, dae::input::InputManager::KeyState::Pressed, std::make_unique<commands::MoveCommand>( moveComp, glm::vec3{ -200.0f, 0.0f, 0.0f } ) );
+			input.BindCommand( dae::input::Keyboard::Key::A, dae::input::InputManager::KeyState::Pressed, std::make_unique<commands::MoveCommand>( moveComp, glm::vec3{ -400.0f, 0.0f, 0.0f } ) );
 
-			input.BindCommand( dae::input::Keyboard::Key::D, dae::input::InputManager::KeyState::Pressed, std::make_unique<commands::MoveCommand>( moveComp, glm::vec3{ 200.0f, 0.0f, 0.0f } ) );
+			input.BindCommand( dae::input::Keyboard::Key::D, dae::input::InputManager::KeyState::Pressed, std::make_unique<commands::MoveCommand>( moveComp, glm::vec3{ 400.0f, 0.0f, 0.0f } ) );
 
 			input.BindCommand( dae::input::Keyboard::Key::Space, dae::input::InputManager::KeyState::Pressed, std::make_unique<commands::SpawnGravityFieldCommand>( player.get() ) );
 

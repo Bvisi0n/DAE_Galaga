@@ -11,7 +11,7 @@ namespace dae::core
 	class MoveComponent final : public Component
 	{
 	public:
-		MoveComponent( GameObject* owner, const float maxSpeed = 200.f );
+		MoveComponent( GameObject* owner, const float maxSpeed = 200.f, const float drag = 0.0f );
 		virtual ~MoveComponent() = default;
 
 		MoveComponent( const MoveComponent& ) = delete;
@@ -23,17 +23,20 @@ namespace dae::core
 		void InitializeState() override;
 
 		void Update( const float deltaTime ) override;
-
 		void AddForce( const glm::vec3& force );
+
+		void SetDragCoefficient( const float drag );
+		[[nodiscard]] float GetDragCoefficient() const noexcept;
+
+		void SetMaxSpeed( const float speed );
 
 		void SetVelocity( const glm::vec3& velocity );
 		[[nodiscard]] const glm::vec3& GetVelocity() const;
 
-		void SetMaxSpeed( const float speed );
-
 	private:
-		glm::vec3 m_velocity{ 0.0f, 0.0f, 0.0f };
 		glm::vec3 m_accumulatedForces{ 0.0f, 0.0f, 0.0f };
+		glm::vec3 m_velocity{ 0.0f, 0.0f, 0.0f };
+		float m_dragCoefficient{ 0.0f };
 		float m_maxSpeedSq{ 20000.0f };
 	};
 }

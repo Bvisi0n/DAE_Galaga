@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <cmath>
 
 #include <glm/ext/vector_float3.hpp>
@@ -10,9 +11,10 @@
 
 namespace dae::core
 {
-	MoveComponent::MoveComponent( GameObject* owner, const float maxSpeed )
+	MoveComponent::MoveComponent( GameObject* owner, const float maxSpeed, const float drag )
 		: Component( owner )
 	{
+		SetDragCoefficient( drag );
 		SetMaxSpeed( maxSpeed );
 	}
 
@@ -25,8 +27,10 @@ namespace dae::core
 	void MoveComponent::Update( const float deltaTime )
 	{
 		m_velocity += m_accumulatedForces * deltaTime;
-
 		m_accumulatedForces = { 0.0f, 0.0f, 0.0f };
+
+		const float dragMultiplier = std::max( 0.0f, 1.0f - ( m_dragCoefficient * deltaTime ) );
+		m_velocity *= dragMultiplier;
 
 		const float currentSpeedSq = glm::dot( m_velocity, m_velocity );
 		constexpr float epsilon = 0.0001f;
@@ -43,11 +47,30 @@ namespace dae::core
 			auto& transform = GetOwner()->GetTransform();
 			transform.SetLocalPosition( transform.GetLocalPosition() + ( m_velocity * deltaTime ) );
 		}
+		else
+		{
+			m_velocity = { 0.0f, 0.0f, 0.0f };
+		}
 	}
 
 	void MoveComponent::AddForce( const glm::vec3& force )
 	{
 		m_accumulatedForces += force;
+	}
+
+	void MoveComponent::SetDragCoefficient( const float drag )
+	{
+		m_dragCoefficient = std::max( 0.0f, drag );
+	}
+
+	float MoveComponent::GetDragCoefficient() const noexcept
+	{
+		return m_dragCoefficient;
+	}
+
+	void MoveComponent::SetMaxSpeed( const float speed )
+	{
+		m_maxSpeedSq = speed * speed;
 	}
 
 	void MoveComponent::SetVelocity( const glm::vec3& velocity )
@@ -58,10 +81,5 @@ namespace dae::core
 	const glm::vec3& MoveComponent::GetVelocity() const
 	{
 		return m_velocity;
-	}
-
-	void MoveComponent::SetMaxSpeed( const float speed )
-	{
-		m_maxSpeedSq = speed * speed;
 	}
 }
