@@ -1,4 +1,4 @@
-#include "Game/Components/ScoreComponent.h"
+#include "Game/Galaga/ScoreComponent.h"
 
 #include "Minigin/Core/GameObject.h"
 #include "Minigin/Core/SDBMHash.h"
@@ -6,7 +6,7 @@
 #include "Minigin/Events/ObservableComponent.h"
 #include "Minigin/Input/InputManager.h"
 
-namespace bvi::components
+namespace bvi::galaga
 {
 	ScoreComponent::ScoreComponent( dae::core::GameObject* owner )
 		: ObservableComponent( owner )

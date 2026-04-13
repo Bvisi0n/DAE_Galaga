@@ -1,11 +1,11 @@
 #ifndef GRAVITYREGISTRY_H
 #define GRAVITYREGISTRY_H
 
+#include <deque>
 #include <memory>
 #include <span>
 #include <utility>
 #include <vector>
-#include <deque>
 
 #include <glm/vec3.hpp>
 
@@ -16,7 +16,7 @@
 #include "Minigin/Graphics/PrimitiveRenderComponent.h"
 #include "Minigin/Scene/SceneManager.h"
 
-namespace bvi::physics
+namespace bvi::gravity_bender
 {
 	struct GravityNode
 	{

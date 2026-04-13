@@ -3,7 +3,7 @@
 
 #include <glm/vec3.hpp>
 
-#include "Game/Blueprints/GravityBenderBlueprints.h"
+#include "Game/GravityBender/GravityBenderBlueprints.h"
 
 #include "Minigin/Core/Component.h"
 #include "Minigin/Core/GameObject.h"
@@ -13,12 +13,12 @@ namespace dae::graphics
 	class PrimitiveRenderComponent;
 }
 
-namespace bvi::components
+namespace bvi::gravity_bender
 {
 	class SpawnerPortalComponent final : public dae::core::Component
 	{
 	public:
-		SpawnerPortalComponent( dae::core::GameObject* owner, const blueprints::UnitData& blueprint );
+		SpawnerPortalComponent( dae::core::GameObject* owner, const UnitData& blueprint );
 		virtual ~SpawnerPortalComponent() = default;
 
 		SpawnerPortalComponent( const SpawnerPortalComponent& ) = delete;
@@ -37,7 +37,7 @@ namespace bvi::components
 			Anticipation, Spawning, Exhausted
 		};
 
-		blueprints::UnitData m_blueprint;
+		UnitData m_blueprint;
 		dae::graphics::PrimitiveRenderComponent* m_primitiveRenderer{ nullptr };
 
 		glm::vec3 m_direction{};

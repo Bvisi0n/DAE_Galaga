@@ -4,13 +4,13 @@
 #include <sstream>
 #include <string>
 
-#include "Game/Components/FPSComponent.h"
+#include "Game/Common/FPSComponent.h"
 
 #include "Minigin/Core/Component.h"
 #include "Minigin/Core/GameObject.h"
 #include "Minigin/Graphics/TextComponent.h"
 
-namespace bvi::components
+namespace bvi::common
 {
 	FPSComponent::FPSComponent( dae::core::GameObject* owner )
 		: Component( owner )

@@ -14,9 +14,8 @@ namespace dae::graphics
 	class TextComponent;
 }
 
-namespace bvi::components
+namespace bvi::common
 {
-	// Displays the FPS in a given TextComponent.
 	class FPSComponent final : public dae::core::Component
 	{
 	public:

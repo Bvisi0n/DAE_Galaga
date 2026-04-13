@@ -1,13 +1,13 @@
 #ifndef SPAWNGRAVITYFIELDCOMMAND_H
 #define SPAWNGRAVITYFIELDCOMMAND_H
 
-#include "Game/Physics/GravityRegistry.h"
+#include "Game/GravityBender/GravityRegistry.h"
 
 #include "Minigin/Core/GameObject.h"
 #include "Minigin/Input/Command.h"
 #include "Minigin/Scene/SceneManager.h"
 
-namespace bvi::commands
+namespace bvi::gravity_bender
 {
 	class SpawnGravityFieldCommand final : public dae::input::Command
 	{
@@ -22,7 +22,7 @@ namespace bvi::commands
 
 			constexpr float radius = 100.0f;
 			constexpr float strength = 1'500'000.0f;
-			physics::GravityRegistry::AddNode( { origin, strength, radius * radius } );
+			GravityRegistry::AddNode( { origin, strength, radius * radius } );
 		}
 
 		[[nodiscard]] const void* GetTargetContext() const override

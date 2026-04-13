@@ -7,7 +7,7 @@
 
 // Inspired by Type Object.
 
-namespace bvi::blueprints
+namespace bvi::gravity_bender
 {
 	struct UnitData
 	{

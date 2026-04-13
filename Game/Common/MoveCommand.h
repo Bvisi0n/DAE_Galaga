@@ -6,7 +6,7 @@
 #include "Minigin/Core/MoveComponent.h"
 #include "Minigin/Input/Command.h"
 
-namespace bvi::commands
+namespace bvi::common
 {
 	class MoveCommand final : public dae::input::Command
 	{

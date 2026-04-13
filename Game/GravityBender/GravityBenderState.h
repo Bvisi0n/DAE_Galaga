@@ -1,19 +1,12 @@
 #ifndef GRAVITYBENDERSTATE_H
 #define GRAVITYBENDERSTATE_H
 
-#include <memory>
+#include "Game/GravityBender/GravityBenderBuilder.h"
 
-#include "Game/Builders/GravityBenderBuilder.h"
-#include "Game/Components/FPSComponent.h"
-
-#include "Minigin/Core/GameObject.h"
 #include "Minigin/Core/IGameState.h"
-#include "Minigin/Graphics/TextComponent.h"
-#include "Minigin/Resources/ResourceManager.h"
-#include "Minigin/Scene/Scene.h"
 #include "Minigin/Scene/SceneManager.h"
 
-namespace bvi::states
+namespace bvi::gravity_bender
 {
 	class GravityBenderState final : public dae::core::IGameState
 	{
@@ -29,7 +22,7 @@ namespace bvi::states
 		void OnEnter() override
 		{
 			auto& scene = dae::scenes::SceneManager::GetInstance().CreateScene();
-			bvi::builders::GravityBenderBuilder::Build( scene );
+			GravityBenderBuilder::Build( scene );
 		}
 
 		void OnExit() override

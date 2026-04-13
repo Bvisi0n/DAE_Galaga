@@ -3,7 +3,7 @@
 
 #include <memory>
 
-#include "Game/Components/FPSComponent.h"
+#include "Game/Common/FPSComponent.h"
 
 #include "Minigin/Core/GameObject.h"
 #include "Minigin/Graphics/TextComponent.h"
@@ -17,7 +17,7 @@
 	// Both sources show a director and don't use static methods. This seems better for my needs tho. 
 	// More research is needed. Maybe this is another pattern? Feels a bit like it's director and builder mashed in a single class.
 
-namespace bvi::builders
+namespace bvi::main_menu
 {
 	class MainMenuBuilder final
 	{
@@ -66,7 +66,7 @@ namespace bvi::builders
 			auto font{ dae::resources::ResourceManager::GetInstance().LoadFont( "Lingua.otf", 24 ) };
 			auto fpsCounter{ std::make_unique<dae::core::GameObject>( 20.f, 20.f ) };
 			fpsCounter->AddComponent<dae::graphics::TextComponent>( "00.0 FPS", font );
-			fpsCounter->AddComponent<components::FPSComponent>();
+			fpsCounter->AddComponent<common::FPSComponent>();
 			scene.AddGameObject( std::move( fpsCounter ) );
 		}
 

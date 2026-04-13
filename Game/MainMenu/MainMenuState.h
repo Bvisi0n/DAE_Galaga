@@ -1,15 +1,15 @@
 #ifndef MAINMENUSTATE_H
 #define MAINMENUSTATE_H
 
-#include "Game/Builders/MainMenuBuilder.h"
-#include "Game/Commands/PushStateCommand.h"
-#include "Game/States/GravityBenderState.h"
+#include "Game/Common/PushStateCommand.h"
+#include "Game/GravityBender/GravityBenderState.h"
+#include "Game/MainMenu/MainMenuBuilder.h"
 
 #include "Minigin/Core/IGameState.h"
 #include "Minigin/Input/InputManager.h"
 #include "Minigin/Scene/SceneManager.h"
 
-namespace bvi::states
+namespace bvi::main_menu
 {
 	class MainMenuState final : public dae::core::IGameState
 	{
@@ -25,11 +25,11 @@ namespace bvi::states
 		void OnEnter() override
 		{
 			auto& scene = dae::scenes::SceneManager::GetInstance().CreateScene();
-			bvi::builders::MainMenuBuilder::Build( scene );
+			MainMenuBuilder::Build( scene );
 
 			//TODO L: ENABLE_GRAVITY_BENDER doesn't work as it should.
 		#ifdef ENABLE_GRAVITY_BENDER
-			dae::input::InputManager::GetInstance().BindCommand( dae::input::Keyboard::Key::F, dae::input::InputManager::KeyState::Down, std::make_unique<bvi::commands::PushStateCommand<GravityBenderState>>( this ) );
+			dae::input::InputManager::GetInstance().BindCommand( dae::input::Keyboard::Key::F, dae::input::InputManager::KeyState::Down, std::make_unique<common::PushStateCommand<gravity_bender::GravityBenderState>>( this ) );
 		#endif
 		}
 

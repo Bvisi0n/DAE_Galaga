@@ -8,7 +8,7 @@ namespace dae::core
 	class GameObject;
 }
 
-namespace bvi::components
+namespace bvi::galaga
 {
 	// Allows a GameObject to rotate around a parent in a circular path.
 	class RotatorComponent final : public dae::core::Component

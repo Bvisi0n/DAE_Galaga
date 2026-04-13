@@ -9,7 +9,7 @@
 
 // TODO L: Fetch viewport dimensions instead of receiving them as parameters.
 
-namespace bvi::components
+namespace bvi::gravity_bender
 {
 	class ScreenWrapComponent final : public dae::core::Component
 	{

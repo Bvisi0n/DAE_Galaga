@@ -6,13 +6,13 @@
 #include <glm/geometric.hpp>
 #include <glm/vec3.hpp>
 
-#include "Game/Physics/GravityRegistry.h"
+#include "Game/GravityBender/GravityRegistry.h"
 
 #include <Minigin/Core/GameObject.h>
 #include "Minigin/Core/Component.h"
 #include "Minigin/Core/MoveComponent.h"
 
-namespace bvi::components
+namespace bvi::gravity_bender
 {
 	class GravityReceiverComponent final : public dae::core::Component
 	{
@@ -47,7 +47,7 @@ namespace bvi::components
 
 			constexpr float epsilonSq = 2500.0f;
 
-			for ( const auto& node : physics::GravityRegistry::GetActiveNodes() )
+			for ( const auto& node : GravityRegistry::GetActiveNodes() )
 			{
 				const glm::vec3 diff = node.position - currentPos;
 				const float distanceSq = glm::dot( diff, diff );

@@ -2,14 +2,14 @@
 #include <utility>
 #include <variant>
 
-#include "Game/Components/UIValueObserver.h"
+#include "Game/Galaga/UIValueObserver.h"
 
 #include "Minigin/Core/Component.h"
 #include "Minigin/Core/GameObject.h"
 #include "Minigin/Events/GameEvent.h"
 #include "Minigin/Graphics/TextComponent.h"
 
-namespace bvi::components
+namespace bvi::galaga
 {
 	UIValueObserver::UIValueObserver( dae::core::GameObject* owner, dae::events::GameEvent observedEvent, Formatter formatter )
 		: Component( owner )

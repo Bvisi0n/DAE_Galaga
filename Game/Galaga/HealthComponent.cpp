@@ -1,4 +1,4 @@
-#include "Game/Components/HealthComponent.h"
+#include "Game/Galaga/HealthComponent.h"
 
 #include "Minigin/Core/Component.h"
 #include "Minigin/Core/SDBMHash.h"
@@ -6,7 +6,7 @@
 #include "Minigin/Events/ObservableComponent.h"
 #include "Minigin/Input/InputManager.h"
 
-namespace bvi::components
+namespace bvi::galaga
 {
 	HealthComponent::HealthComponent( dae::core::GameObject* owner, int lives )
 		: ObservableComponent( owner )

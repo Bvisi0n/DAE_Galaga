@@ -10,10 +10,10 @@
 
 #include <glm/vec3.hpp>
 
-#include "Game/Blueprints/GravityBenderBlueprints.h"
-#include "Game/Components/GravityReceiverComponent.h"
-#include "Game/Components/ScreenWrapComponent.h"
-#include "Game/Components/SpawnerPortalComponent.h"
+#include "Game/GravityBender/GravityBenderBlueprints.h"
+#include "Game/GravityBender/GravityReceiverComponent.h"
+#include "Game/GravityBender/ScreenWrapComponent.h"
+#include "Game/GravityBender/SpawnerPortalComponent.h"
 
 #include <Minigin/Core/ColliderComponent.h>
 #include "Minigin/Core/Component.h"
@@ -22,9 +22,9 @@
 #include "Minigin/Graphics/PrimitiveRenderComponent.h"
 #include "Minigin/Scene/SceneManager.h"
 
-namespace bvi::components
+namespace bvi::gravity_bender
 {
-	SpawnerPortalComponent::SpawnerPortalComponent( dae::core::GameObject* owner, const bvi::blueprints::UnitData& blueprint )
+	SpawnerPortalComponent::SpawnerPortalComponent( dae::core::GameObject* owner, const UnitData& blueprint )
 		:Component( owner )
 		, m_blueprint( blueprint )
 	{}
@@ -102,8 +102,8 @@ namespace bvi::components
 
 		unit->AddComponent<dae::core::MoveComponent>( m_blueprint.speed )->SetVelocity( m_direction );
 		unit->AddComponent<dae::core::ColliderComponent>( 5.f, 5.f, 1 );
-		unit->AddComponent<components::ScreenWrapComponent>( 1024.f, 576.f );
-		unit->AddComponent<components::GravityReceiverComponent>();
+		unit->AddComponent<ScreenWrapComponent>( 1024.f, 576.f );
+		unit->AddComponent<GravityReceiverComponent>();
 
 		scene.AddGameObject( std::move( unit ) );
 	}

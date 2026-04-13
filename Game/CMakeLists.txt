@@ -11,20 +11,21 @@ option(BUILD_GRAVITY_BENDER "Include Gravity Bender prototype" ON)
 
 # Define Common and Galaga Sources (Always Built)
 set(GAME_SOURCES
-  "Components/FPSComponent.cpp"
-  "Components/HealthComponent.cpp"
-  "Components/SpawnerPortalComponent.cpp"
-  "Components/RotatorComponent.cpp"
-  "Components/ScoreComponent.cpp"
-  "Components/UIValueObserver.cpp"
   "Core/Main.cpp"
+
+  "Common/FPSComponent.cpp"
+  
+  "Galaga/HealthComponent.cpp"
+  "Galaga/RotatorComponent.cpp"
+  "Galaga/ScoreComponent.cpp"
+  "Galaga/UIValueObserver.cpp"
 )
 
 # Add all Gravity Bender files here
 if(BUILD_GRAVITY_BENDER)
     message(STATUS "Game Module: Gravity Bender ENABLED")
     list(APPEND GAME_SOURCES
-        # here
+        "GravityBender/SpawnerPortalComponent.cpp"
     )
 else()
     message(STATUS "Game Module: Gravity Bender DISABLED (Strict Galaga Build)")

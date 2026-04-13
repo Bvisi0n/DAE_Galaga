@@ -1,13 +1,13 @@
 #include <cmath>
 #include <numbers>
 
-#include "Game/Components/RotatorComponent.h"
+#include "Game/Galaga/RotatorComponent.h"
 
 #include "Minigin/Core/Component.h"
 #include "Minigin/Core/GameObject.h"
 #include "Minigin/Core/Transform.h"
 
-namespace bvi::components
+namespace bvi::galaga
 {
 	RotatorComponent::RotatorComponent( dae::core::GameObject* owner, float range, float speed )
 		: Component( owner ), m_range( range ), m_rotationSpeed( speed )

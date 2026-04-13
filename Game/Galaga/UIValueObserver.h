@@ -18,7 +18,7 @@ namespace dae::graphics
 	class TextComponent;
 }
 
-namespace bvi::components
+namespace bvi::galaga
 {
 	class UIValueObserver final : public dae::core::Component, public dae::events::IObserver
 	{
