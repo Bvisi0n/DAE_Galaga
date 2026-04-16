@@ -15,25 +15,29 @@ namespace dae::core
 
 	void CollisionSystem::Update( const std::vector<std::unique_ptr<GameObject>>& objects )
 	{
-		std::vector<ColliderComponent*> activeColliders;
+		m_activeColliders.clear();
+
 		for ( const auto& obj : objects )
 		{
-			if ( auto col = obj->GetComponent<ColliderComponent>() )
+			// TODO L: This is an expensive operation, ColliderComponent should register themselves instead of being polled every frame.
+			if ( auto* col = obj->GetComponent<ColliderComponent>() )
 			{
-				activeColliders.push_back( col );
+				m_activeColliders.push_back( col );
 			}
 		}
 
-		// TODO L: Are these old for loops because iterator invalidation?
-			// I think they can be range-based... Testing required.
-		for ( size_t i = 0; i < activeColliders.size(); ++i )
-		{
-			for ( size_t j = i + 1; j < activeColliders.size(); ++j )
-			{
-				auto* colA = activeColliders[ i ];
-				auto* colB = activeColliders[ j ];
+		const size_t count = m_activeColliders.size();
 
-				if ( Intersects( colA->GetWorldBounds(), colB->GetWorldBounds() ) )
+		for ( size_t i = 0; i < count; ++i )
+		{
+			auto* colA = m_activeColliders[ i ];
+			const auto boundsA = colA->GetWorldBounds();
+
+			for ( size_t j = i + 1; j < count; ++j )
+			{
+				auto* colB = m_activeColliders[ j ];
+
+				if ( Intersects( boundsA, colB->GetWorldBounds() ) )
 				{
 					for ( auto& cb : m_callbacks )
 					{
