@@ -2,6 +2,7 @@
 #define GRAVITYBENDERSTATE_H
 
 #include "Game/GravityBender/GravityBenderBuilder.h"
+#include "Game/GravityBender/GravityRegistry.h"
 
 #include "Minigin/Core/IGameState.h"
 #include "Minigin/Scene/SceneManager.h"
@@ -34,8 +35,10 @@ namespace bvi::gravity_bender
 				// A case of shared pointers like with textures and fonts?
 		}
 
-		void Update() override
-		{}
+		void Update( float deltaTime ) override
+		{
+			GravityRegistry::Update( deltaTime );
+		}
 	};
 }
 #endif

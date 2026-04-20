@@ -7,6 +7,8 @@
 
 // Inspired by Type Object.
 
+// TODO GRAV: Move all tweakable properties to this file.
+
 namespace bvi::gravity_bender
 {
 	struct UnitData

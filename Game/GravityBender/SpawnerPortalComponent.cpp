@@ -98,7 +98,7 @@ namespace bvi::gravity_bender
 
 		unit->GetTransform().SetLocalPosition( GetOwner()->GetTransform().GetWorldPosition() );
 		unit->AddComponent<dae::graphics::PrimitiveRenderComponent>(
-	dae::graphics::PrimitiveShape{ dae::graphics::RectShape{ SDL_FRect{ -2.5f, -2.5f, 5.f, 5.f }, true } }, SDL_Color{ 255, 0, 0, 255 } );
+	dae::graphics::PrimitiveShape{ dae::graphics::RectShape{ SDL_FRect{ -2.5f, -2.5f, 5.f, 5.f }, true } }, SDL_Color{ 255, 50, 50, 255 } );
 
 		unit->AddComponent<dae::core::MoveComponent>( m_blueprint.speed )->SetVelocity( m_direction );
 		unit->AddComponent<dae::core::ColliderComponent>( 5.f, 5.f, 1 );

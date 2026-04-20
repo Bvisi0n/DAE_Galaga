@@ -158,6 +158,8 @@ namespace dae::core
 		m_lastTime = frameStartTime;
 
 		AppStateManager::GetInstance().ProcessStateChange();
+		AppStateManager::GetInstance().Update( clampedDeltaTime );
+
 		m_quit = !input::InputManager::GetInstance().ProcessInput( clampedDeltaTime );
 		scenes::SceneManager::GetInstance().Update( clampedDeltaTime );
 		graphics::Renderer::GetInstance().Render();

@@ -41,7 +41,7 @@ namespace bvi::main_menu
 		#endif
 		}
 
-		void Update() override
+		void Update( float /*deltaTime*/ ) override
 		{}
 	};
 }

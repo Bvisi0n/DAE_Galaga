@@ -31,11 +31,11 @@ namespace dae::core
 			}
 		}
 
-		void Update()
+		void Update( float deltaTime )
 		{
 			if ( m_currentState != nullptr )
 			{
-				m_currentState->Update();
+				m_currentState->Update( deltaTime );
 			}
 		}
 
