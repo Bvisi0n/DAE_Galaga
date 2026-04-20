@@ -7,7 +7,7 @@
 #include "Minigin/Core/GameObject.h"
 #include "Minigin/Core/Transform.h"
 
-// TODO L: Fetch viewport dimensions instead of receiving them as parameters.
+// TODO GRAV: Fetch viewport dimensions instead of receiving them as parameters.
 
 namespace bvi::gravity_bender
 {

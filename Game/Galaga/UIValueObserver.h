@@ -37,7 +37,7 @@ namespace bvi::galaga
 	private:
 		Formatter m_formatter;
 		dae::graphics::TextComponent* m_text{ nullptr };
-		dae::events::GameEvent m_observedEvent; // TODO L: Does it have to be a whole GameEvent object?
+		dae::events::GameEvent m_observedEvent; // TODO GALA: Does it have to be a whole GameEvent object?
 	};
 }
 #endif

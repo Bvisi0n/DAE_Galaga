@@ -8,7 +8,7 @@ namespace dae::core
 {
 	class GameObject;
 
-	// TODO L: Use a struct to bundle ctor parameters together.
+	// TODO MINI: Use a struct to bundle ctor parameters together.
 
 	class Transform final
 	{

@@ -28,7 +28,7 @@ namespace bvi::gravity_bender
 		void OnExit() override
 		{
 			dae::scenes::SceneManager::GetInstance().RemoveAllScenes();
-			// TODO N: Don't forget to unbind the commands!
+			// TODO GRAV: Don't forget to unbind the commands!
 				// Maybe Commands should be wrapped in a RAII object that unbinds them when the scene gets destroyed? Ownership questions arise.
 				// Or is the MainMenu approach better? (bind and unbind in the state class) but then how do we create the binds?
 				// A case of shared pointers like with textures and fonts?

@@ -10,7 +10,6 @@ namespace dae::core
 
 namespace bvi::galaga
 {
-	// Allows a GameObject to rotate around a parent in a circular path.
 	class RotatorComponent final : public dae::core::Component
 	{
 	public:

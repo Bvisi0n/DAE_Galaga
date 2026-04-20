@@ -3,14 +3,11 @@
 
 #include <deque>
 #include <memory>
-#include <span>
 #include <utility>
-#include <vector>
 
-#include <glm/vec3.hpp>
+#include <glm/ext/vector_float3.hpp>
 
 #include <SDL3/SDL_pixels.h>
-#include <SDL3/SDL_rect.h>
 
 #include "Minigin/Core/GameObject.h"
 #include "Minigin/Graphics/PrimitiveRenderComponent.h"
@@ -43,9 +40,10 @@ namespace bvi::gravity_bender
 
 			visualInner->AddComponent<dae::graphics::PrimitiveRenderComponent>( dae::graphics::PrimitiveShape{ dae::graphics::CircleShape{ 5.0f, true } }, SDL_Color{ 255, 165, 0, 255 } );
 
-			// TODO L: Hardcoded the radius here.
+			// TODO GRAV: Hardcoded the radius here.
 			VisualOuter->AddComponent<dae::graphics::PrimitiveRenderComponent>( dae::graphics::PrimitiveShape{ dae::graphics::CircleShape{ 100.0f, false } }, SDL_Color{ 255, 165, 0, 128 } );
 
+			// TODO GRAV: Use the scene graph to parent these.
 			auto* rawInnerPtr = visualInner.get();
 			auto* rawOuterPtr = VisualOuter.get();
 			s_visualObjects.emplace_back( rawInnerPtr, rawOuterPtr );

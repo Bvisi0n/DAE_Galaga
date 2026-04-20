@@ -11,7 +11,7 @@
 #include "Minigin/Resources/ResourceManager.h"
 #include "Minigin/Scene/Scene.h"
 
-// TODO L: Review builder pattern.
+// TODO MENU: Review builder pattern.
 	// https://refactoring.guru/design-patterns/builder
 	// https://www.geeksforgeeks.org/system-design/builder-pattern-c-design-patterns/
 	// Both sources show a director and don't use static methods. This seems better for my needs tho. 

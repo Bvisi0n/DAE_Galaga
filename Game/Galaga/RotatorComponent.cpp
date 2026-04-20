@@ -34,10 +34,7 @@ namespace bvi::galaga
 			m_angle += doublePi;
 		}
 
-		// TODO L: RotatorComponent should support ellipses.
-
 		auto& transform = GetOwner()->GetTransform();
-		// x = cos(a) * r, y = sin(a) * r
 		transform.SetLocalPosition( cos( m_angle ) * m_range, sin( m_angle ) * m_range );
 	}
 }

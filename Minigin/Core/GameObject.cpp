@@ -14,7 +14,7 @@ namespace dae::core
 
 	GameObject::~GameObject()
 	{
-		// TODO L: Works but doesn't feel right, research is required. Who owns what, use smart pointers?
+		// TODO MINI: Works but doesn't feel right, research is required. Who owns what, use smart pointers?
 		for ( auto* child : m_children )
 		{
 			if ( child )

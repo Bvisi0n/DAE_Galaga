@@ -23,6 +23,13 @@
 #include "Minigin/Resources/ResourceManager.h"
 #include "Minigin/Scene/Scene.h"
 
+// TODO GRAV: Change the color of all game elements to provide better contrast.
+// TODO GRAV: Placing gravity well should use a key down event.
+// TODO GRAV: Gravity wells should no longer last indefinitely, they should be removed after 3 seconds.
+// TODO GRAV: Spawning a gravity well should have a 1 second cooldown instead of having a maximum limit.
+// TODO GRAV: The player should be a gravity well that is controlled.
+// TODO GRAV: Update instructions.
+
 namespace bvi::gravity_bender
 {
 	class GravityBenderBuilder final
@@ -52,7 +59,7 @@ namespace bvi::gravity_bender
 
 		static void BuildViewportBorder( dae::scenes::Scene& scene )
 		{
-			// TODO L: Fetch screen dimensions and use them.
+			// TODO GRAV: Fetch screen dimensions and use them.
 			constexpr SDL_FRect screenBounds{ 0.f, 0.f, 1024.f, 576.f };
 			constexpr SDL_Color neonPurple{ 128, 0, 128, 255 };
 

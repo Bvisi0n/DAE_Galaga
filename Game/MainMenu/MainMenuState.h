@@ -27,7 +27,6 @@ namespace bvi::main_menu
 			auto& scene = dae::scenes::SceneManager::GetInstance().CreateScene();
 			MainMenuBuilder::Build( scene );
 
-			//TODO L: ENABLE_GRAVITY_BENDER doesn't work as it should.
 		#ifdef ENABLE_GRAVITY_BENDER
 			dae::input::InputManager::GetInstance().BindCommand( dae::input::Keyboard::Key::F, dae::input::InputManager::KeyState::Down, std::make_unique<common::PushStateCommand<gravity_bender::GravityBenderState>>( this ) );
 		#endif
