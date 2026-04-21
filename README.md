@@ -23,6 +23,8 @@ I also use this project for the course [Gameplay Prototyping](https://digitalart
 In this prototype I explore whether I can make playing with gravity fun.
 Can it be fun to influence the trajectory of projectiles?
 
+I have chosen to do this because it challenges the game engine and helps me learn to identify where the lines lies between game and engine code.
+
 ## Noteworthy Patterns, Idioms, Techniques & Libraries
 This section is still under construction... For now I list everything with potential even if not yet adopted, I will add details and trim this list as I finish up the project.
 
