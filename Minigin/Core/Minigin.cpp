@@ -147,6 +147,7 @@ namespace dae::core
 	#else
 		emscripten_set_main_loop_arg( &LoopCallback, this, 0, true );
 	#endif
+		dae::scenes::SceneManager::GetInstance().RemoveAllScenes();
 	}
 
 	void Minigin::RunOneFrame()
