@@ -28,7 +28,7 @@ namespace bvi::main_menu
 		{
 			BuildBackground( scene );
 			BuildLogo( scene );
-			BuildTitle( scene );
+			//BuildTitle( scene );
 			BuildFPSCounter( scene );
 
 		#ifdef ENABLE_GRAVITY_BENDER
