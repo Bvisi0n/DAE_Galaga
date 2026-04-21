@@ -14,9 +14,7 @@ namespace bvi::galaga
 	{}
 
 	ScoreComponent::~ScoreComponent()
-	{
-		dae::input::InputManager::GetInstance().AssertAndRemoveBindings( this );
-	}
+	{}
 
 	void ScoreComponent::InitializeLinkage() noexcept
 	{}

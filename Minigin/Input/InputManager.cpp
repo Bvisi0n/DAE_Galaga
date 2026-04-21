@@ -111,28 +111,6 @@ namespace dae::input
 		return true;
 	}
 
-	void InputManager::AssertAndRemoveBindings( const void* targetContext )
-	{
-		if ( !targetContext )
-		{
-			return;
-		}
-
-		auto isDangling = [ targetContext ] ( const auto& pair )
-			{
-				const std::unique_ptr<Command>& cmd = pair.second;
-				if ( cmd && cmd->GetTargetContext() == targetContext )
-				{
-					assert( false && "Dangling Pointer! Command was not explicitly unbound before target destruction." );
-					return true;
-				}
-				return false;
-			};
-
-		std::erase_if( m_gamepadCommands, isDangling );
-		std::erase_if( m_keyboardCommands, isDangling );
-	}
-
 	bool InputManager::IsControllerConnected( unsigned int controllerIndex ) const
 	{
 		if ( controllerIndex >= m_gamepads.size() )

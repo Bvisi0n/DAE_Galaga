@@ -14,9 +14,7 @@ namespace bvi::galaga
 	{}
 
 	HealthComponent::~HealthComponent()
-	{
-		dae::input::InputManager::GetInstance().AssertAndRemoveBindings( this );
-	}
+	{}
 
 	void HealthComponent::InitializeLinkage()
 	{}
