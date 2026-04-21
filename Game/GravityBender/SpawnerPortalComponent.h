@@ -1,7 +1,7 @@
 #ifndef PORTALSPAWNERCOMPONENT_H
 #define PORTALSPAWNERCOMPONENT_H
 
-#include <glm/vec3.hpp>
+#include <glm/ext/vector_float3.hpp>
 
 #include "Game/GravityBender/GravityBenderBlueprints.h"
 

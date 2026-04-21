@@ -8,7 +8,7 @@
 #include <SDL3/SDL_pixels.h>
 #include <SDL3/SDL_rect.h>
 
-#include <glm/vec3.hpp>
+#include <glm/ext/vector_float3.hpp>
 
 #include "Game/GravityBender/GravityBenderBlueprints.h"
 #include "Game/GravityBender/GravityReceiverComponent.h"
