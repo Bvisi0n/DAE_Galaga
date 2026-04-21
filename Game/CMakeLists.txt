@@ -32,7 +32,7 @@ else()
 endif()
 
 # Generate Executable
-add_executable(${TARGET_NAME} ${TARGET_PARAM} ${GAME_SOURCES})
+add_executable(${TARGET_NAME} ${TARGET_PARAM} ${GAME_SOURCES} "GravityBender/PlayerComponent.cpp")
 
 # Inject the preprocessor macro
 if(BUILD_GRAVITY_BENDER)

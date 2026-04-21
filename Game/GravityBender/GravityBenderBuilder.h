@@ -12,13 +12,14 @@
 #include "Game/Common/FPSComponent.h"
 #include "Game/Common/MoveCommand.h"
 #include "Game/GravityBender/GravityBenderBlueprints.h"
-#include "Game/GravityBender/PlayerGravityComponent.h"
+#include "Game/GravityBender/PlayerComponent.h"
 #include "Game/GravityBender/ScreenWrapComponent.h"
 #include "Game/GravityBender/SpawnGravityFieldCommand.h"
 #include "Game/GravityBender/SpawnerPortalComponent.h"
 
-#include <Minigin/Core/MoveComponent.h>
+#include "Minigin/Core/ColliderComponent.h"
 #include "Minigin/Core/GameObject.h"
+#include "Minigin/Core/MoveComponent.h"
 #include "Minigin/Graphics/PrimitiveRenderComponent.h"
 #include "Minigin/Graphics/TextComponent.h"
 #include "Minigin/Graphics/TextureComponent.h"
@@ -101,7 +102,8 @@ namespace bvi::gravity_bender
 		{
 			auto player{ std::make_unique<dae::core::GameObject>( 400.f, 350.f ) };
 			player->AddComponent<dae::graphics::PrimitiveRenderComponent>( dae::graphics::PrimitiveShape{ dae::graphics::CircleShape{ 10.0f, true } }, SDL_Color{ 255, 204, 0, 255 } );
-			player->AddComponent<PlayerGravityComponent>();
+			player->AddComponent<PlayerComponent>();
+			player->AddComponent<dae::core::ColliderComponent>( 5.f, 5.f, 1 );
 
 			auto* moveComp = player->AddComponent<dae::core::MoveComponent>( 250.f, 2.f );
 			player->AddComponent<ScreenWrapComponent>( 1024.f, 576.f );
