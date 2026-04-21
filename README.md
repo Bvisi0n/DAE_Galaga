@@ -15,7 +15,7 @@ I was assigned to recreate the arcade game [Galaga](https://en.wikipedia.org/wik
 
 It is a fixed shooter game where the player controls a spaceship at the bottom of the screen and has to shoot down waves of alien ships that fly in from the top of the screen. The player can move left and right and shoot bullets upwards to destroy the aliens. The aliens have different movement patterns and can also shoot back at the player. The goal is to score as many points as possible by destroying the aliens while avoiding getting hit by their bullets.
 
-You can find the requirements for the [Programming 4](https://youtu.be/j96Oh6vzhmg) course in the [Repository Requirements](RepositoryRequirements.md) document.
+You can find this project's requirements for the [Programming 4](https://youtu.be/j96Oh6vzhmg) course in the [Repository Requirements](RepositoryRequirements.md) document which also functions as my checklist.
 
 ## Gameplay Prototyping
 I also use this project for the course [Gameplay Prototyping](https://digitalartsandentertainment.be/page/349/Gameplay+Prototyping) where the goal is to iterate on a concept based on feedback gathered through playtesting sessions. For this course code quality is of zero importance so don't expect a high standard in it's branch although I will do my best given the limited time available for this course.
@@ -23,14 +23,52 @@ I also use this project for the course [Gameplay Prototyping](https://digitalart
 In this prototype I explore whether I can make playing with gravity fun.
 Can it be fun to influence the trajectory of projectiles?
 
-## Patterns & Techniques
-Under construction...
+## Noteworthy Patterns, Idioms, Techniques & Libraries
+This section is still under construction... For now I list everything with potential even if not yet adopted, I will add details and trim this list as I finish up the project.
+
+### Behavioral Patterns
+#### Command
+#### Observer
+#### State
+#### Type Object
+#### Bytecode
+#### Subclass Sandbox
+
+### Creational Patterns
+#### Singleton
+#### Prototype
+
+### Decoupling Patterns
+#### Component
+#### Event Queue
+#### Service Locator
+
+### Optimization Patterns
+#### Dirty Flag
+#### Data Locality
+#### Object Pool
+#### Flyweight
+#### Spatial Partition
+
+### Sequencing Patterns
+#### Game Loop
+#### Update Method
+#### Double Buffer
+
+### Idioms, Techniques & Libraries
+#### Scenegraph
+#### Imgui
+#### Pimpl
+#### Concurrency
+#### Dependency Injection
+#### Curiously Recurring Template Pattern (CRTP)
+
 
 ## Minigin
 
 The students are provided with [Minigin](https://github.com/avadae/minigin), a very small project using [SDL3](https://www.libsdl.org/) and [glm](https://github.com/g-truc/glm) for 2D C++ game projects. It is in no way a game engine, only a barebone start project where everything SDL related has been set up. It contains glm for vector math, to aleviate the need to write custom vector and matrix classes.
 
-### Windows version
+### Windows Version
 
 Either
 - Open the root folder in Visual Studio 2026; this will be recognized as a cmake project.
@@ -43,9 +81,9 @@ Or
 Or
 - Use whatever editor you like :)
 
-### Emscripten (web) version
+### Emscripten (web) Version
 
-#### On windows
+#### On Windows
 
 For installing all of the needed tools on Windows I recommend using [Chocolatey](https://chocolatey.org/). You can then run the following in a terminal to install what is needed:
 
