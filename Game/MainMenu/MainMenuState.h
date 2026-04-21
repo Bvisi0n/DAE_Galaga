@@ -35,10 +35,7 @@ namespace bvi::main_menu
 		void OnExit() override
 		{
 			dae::scenes::SceneManager::GetInstance().RemoveAllScenes();
-
-		#ifdef ENABLE_GRAVITY_BENDER
-			dae::input::InputManager::GetInstance().UnbindCommand( dae::input::Keyboard::Key::F, dae::input::InputManager::KeyState::Down );
-		#endif
+			dae::input::InputManager::GetInstance().ClearAllBinds();
 		}
 
 		void Update( float /*deltaTime*/ ) override

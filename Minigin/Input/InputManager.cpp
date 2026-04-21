@@ -111,6 +111,12 @@ namespace dae::input
 		return true;
 	}
 
+	void InputManager::ClearAllBinds() noexcept
+	{
+		m_keyboardCommands.clear();
+		m_gamepadCommands.clear();
+	}
+
 	bool InputManager::IsControllerConnected( unsigned int controllerIndex ) const
 	{
 		if ( controllerIndex >= m_gamepads.size() )

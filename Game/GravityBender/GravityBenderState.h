@@ -5,6 +5,7 @@
 #include "Game/GravityBender/GravityRegistry.h"
 
 #include "Minigin/Core/IGameState.h"
+#include "Minigin/Input/InputManager.h"
 #include "Minigin/Scene/SceneManager.h"
 
 namespace bvi::gravity_bender
@@ -29,10 +30,7 @@ namespace bvi::gravity_bender
 		void OnExit() override
 		{
 			dae::scenes::SceneManager::GetInstance().RemoveAllScenes();
-			// TODO GRAV: Don't forget to unbind the commands!
-				// Maybe Commands should be wrapped in a RAII object that unbinds them when the scene gets destroyed? Ownership questions arise.
-				// Or is the MainMenu approach better? (bind and unbind in the state class) but then how do we create the binds?
-				// A case of shared pointers like with textures and fonts?
+			dae::input::InputManager::GetInstance().ClearAllBinds();
 		}
 
 		void Update( float deltaTime ) override

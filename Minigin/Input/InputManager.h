@@ -57,6 +57,8 @@ namespace dae::input
 			}
 		}
 
+		void ClearAllBinds() noexcept;
+
 		[[nodiscard]] bool IsControllerConnected( unsigned int controllerIndex ) const;
 
 	private:
