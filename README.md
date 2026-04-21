@@ -30,6 +30,7 @@ This section is still under construction... For now I list everything with poten
 
 ### Behavioral Patterns
 #### Command
+In the course we were challenged to implement a command pattern for the player input, which I did. The pattern could also be used to control game ai or to implement an undo system but these areas currently left unexplored.
 #### Observer
 #### State
 #### Type Object
