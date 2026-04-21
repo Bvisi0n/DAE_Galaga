@@ -7,6 +7,7 @@
 
 #include "Minigin/Core/IGameState.h"
 #include "Minigin/Input/InputManager.h"
+#include "Minigin/Input/ScopedInputBinding.h"
 #include "Minigin/Scene/SceneManager.h"
 
 namespace bvi::main_menu
@@ -28,18 +29,22 @@ namespace bvi::main_menu
 			MainMenuBuilder::Build( scene );
 
 		#ifdef ENABLE_GRAVITY_BENDER
-			dae::input::InputManager::GetInstance().BindCommand( dae::input::Keyboard::Key::F, dae::input::InputManager::KeyState::Down, std::make_unique<common::PushStateCommand<gravity_bender::GravityBenderState>>( this ) );
+			auto pushStateCommand = std::make_unique<common::PushStateCommand<gravity_bender::GravityBenderState>>( this );
+			m_bindings.emplace_back( dae::input::Keyboard::Key::F, dae::input::InputManager::KeyState::Down, std::move( pushStateCommand ) );
 		#endif
 		}
 
 		void OnExit() override
 		{
 			dae::scenes::SceneManager::GetInstance().RemoveAllScenes();
-			dae::input::InputManager::GetInstance().ClearAllBinds();
+			dae::input::InputManager::GetInstance().ClearAllBinds(); // Safety measure.
 		}
 
 		void Update( float /*deltaTime*/ ) override
 		{}
+
+	private:
+		std::vector<dae::input::ScopedInputBinding> m_bindings{};
 	};
 }
 #endif

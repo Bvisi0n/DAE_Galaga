@@ -1,7 +1,7 @@
 #ifndef MOVECOMMAND_H
 #define MOVECOMMAND_H
 
-#include <glm/vec3.hpp>
+#include <glm/ext/vector_float3.hpp>
 
 #include "Minigin/Core/MoveComponent.h"
 #include "Minigin/Input/Command.h"

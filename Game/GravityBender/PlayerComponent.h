@@ -1,8 +1,11 @@
 #ifndef PLAYERGRAVITYCOMPONENT_H
 #define PLAYERGRAVITYCOMPONENT_H
 
+#include <vector>
+
 #include "Minigin/Core/Component.h"
 #include "Minigin/Core/GameObject.h"
+#include "Minigin/Input/ScopedInputBinding.h"
 
 namespace bvi::gravity_bender
 {
@@ -18,6 +21,8 @@ namespace bvi::gravity_bender
 
 		void Update( const float /*deltaTime*/ ) override;
 
+	private:
+		std::vector<dae::input::ScopedInputBinding> m_bindings;
 	};
 }
 #endif

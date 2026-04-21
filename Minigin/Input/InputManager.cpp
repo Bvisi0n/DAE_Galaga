@@ -1,5 +1,3 @@
-#include <cassert>
-#include <map>
 #include <memory>
 
 #include <SDL3/SDL_events.h>

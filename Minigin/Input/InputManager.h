@@ -7,6 +7,7 @@
 #include <memory>
 #include <type_traits>
 #include <utility>
+#include <variant>
 #include <vector>
 
 #include "Minigin/Input/Command.h"
@@ -26,6 +27,11 @@ namespace dae::input
 		{
 			Down, Up, Pressed
 		};
+
+		using KeyboardBinding = std::pair<Keyboard::Key, KeyState>;
+		using ControllerBinding = std::tuple<unsigned int, Gamepad::Button, KeyState>;
+		using BindingKey = std::variant<std::monostate, KeyboardBinding, ControllerBinding>;
+
 		InputManager() noexcept;
 		~InputManager() = default;
 
@@ -67,9 +73,6 @@ namespace dae::input
 			unsigned int controllerIndex;
 			Gamepad::Button button;
 		};
-
-		using ControllerBinding = std::tuple<unsigned int, Gamepad::Button, KeyState>;
-		using KeyboardBinding = std::pair<Keyboard::Key, KeyState>;
 
 		// TODO MINI: Use std::vector and Binding struct?
 			// Data locality, cache misses, 1 command per button limit.
