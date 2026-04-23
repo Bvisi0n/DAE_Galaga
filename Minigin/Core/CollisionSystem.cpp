@@ -19,7 +19,7 @@ namespace dae::core
 
 		for ( const auto& obj : objects )
 		{
-			// TODO MINI: This is an expensive operation, ColliderComponent should register themselves instead of being polled every frame.
+			// TODO dae_core - This is an expensive operation, ColliderComponent should register themselves instead of being polled every frame.
 			if ( auto* col = obj->GetComponent<ColliderComponent>() )
 			{
 				m_activeColliders.push_back( col );

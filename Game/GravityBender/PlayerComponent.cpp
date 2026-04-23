@@ -60,7 +60,7 @@ namespace bvi::gravity_bender
 
 	void PlayerComponent::Update( const float )
 	{
-		// TODO GRAV: For prototyping purposes, there are better ways to do this.
+		// TODO bvi_gravity_bender - For prototyping purposes, there are better ways to do this.
 		const auto& origin = GetOwner()->GetTransform().GetWorldPosition();
 		constexpr float radius = 100.0f;
 		constexpr float strength = 1'500'000.0f;

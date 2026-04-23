@@ -75,7 +75,7 @@ namespace bvi::gravity_bender
 			visualRoot->AddComponent<PrimitiveRenderComponent>( PrimitiveShape{ CircleShape{ 5.0f, true } }, SDL_Color{ 0, 255, 255, 255 } );
 
 			auto visualOuter = std::make_unique<dae::core::GameObject>();
-			// TODO GRAV: Hardcoded the radius here.
+			// TODO bvi_gravity_bender - Hardcoded the radius here.
 			visualOuter->AddComponent<PrimitiveRenderComponent>( PrimitiveShape{ CircleShape{ 100.0f, false } }, SDL_Color{ 0, 255, 255, 128 } );
 
 			visualOuter->SetParent( visualRoot.get(), false );

@@ -112,7 +112,7 @@ namespace dae::input
 		: m_pimpl( std::make_unique<KeyboardImpl>() )
 	{}
 
-	// Don't remove, needs to be here for definition of KeyboardImpl.
+	// Don't remove destructor, needs to be here for definition of KeyboardImpl.
 	Keyboard::~Keyboard() = default;
 
 	void Keyboard::Update()

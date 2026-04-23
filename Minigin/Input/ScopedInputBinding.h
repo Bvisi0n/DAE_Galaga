@@ -66,7 +66,7 @@ namespace dae::input
 				{
 					InputManager::GetInstance().UnbindCommand( std::get<1>( arg ), std::get<2>( arg ), std::get<0>( arg ) );
 				}
-				// If std::monostate, do nothing.
+				// If (std::monostate) do nothing;
 
 			}, m_key );
 		}

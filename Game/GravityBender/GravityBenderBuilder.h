@@ -42,7 +42,7 @@ namespace bvi::gravity_bender
 	private:
 		static void BuildViewportBorder( dae::scenes::Scene& scene )
 		{
-			// TODO GRAV: Fetch screen dimensions and use them.
+			// TODO bvi_gravity_bender - Fetch screen dimensions and use them.
 			constexpr SDL_FRect screenBounds{ 0.f, 0.f, 1024.f, 576.f };
 			constexpr SDL_Color neonPurple{ 138, 43, 226, 255 };
 

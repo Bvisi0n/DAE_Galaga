@@ -118,7 +118,6 @@ namespace dae::scenes
 			const size_t objectCount = m_objects.size();
 			for ( size_t index = newIndexStart; index < objectCount; ++index )
 			{
-				// 2 States: Link -> Ready (set initial values)
 				m_objects[ index ]->AdvanceComponentStates();
 			}
 		}

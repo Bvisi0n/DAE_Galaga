@@ -6,6 +6,8 @@
 #include "Minigin/Core/MoveComponent.h"
 #include "Minigin/Input/Command.h"
 
+// TODO bvi_common - Commands should not store a context pointer, it should be passed in as an argument to the Execute function.
+
 namespace bvi::common
 {
 	class MoveCommand final : public dae::input::Command

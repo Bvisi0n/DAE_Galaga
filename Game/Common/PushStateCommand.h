@@ -8,6 +8,8 @@
 #include "Minigin/Core/IGameState.h"
 #include "Minigin/Input/Command.h"
 
+// TODO bvi_common - Commands should not store a context pointer, it should be passed in as an argument to the Execute function.
+
 namespace bvi::common
 {
 	template <typename T>

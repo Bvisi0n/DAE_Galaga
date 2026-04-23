@@ -3,11 +3,9 @@
 
 #include <string>
 
-#include <glm/vec2.hpp>
-
 // Inspired by Type Object.
 
-// TODO GRAV: Move all tweakable properties to this file.
+// TODO bvi_gravity_bender - Move all tweakable properties to this file.
 
 namespace bvi::gravity_bender
 {

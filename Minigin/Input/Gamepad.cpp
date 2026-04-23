@@ -10,7 +10,7 @@
 
 #include "Minigin/Input/Gamepad.h"
 
-// TODO MINI: Rework the SDL implementation.
+// TODO dae_input - Rework the SDL implementation.
 	// XInput was made first and works as intended, SDL was then butchered to match it.
 	// A result of this is a flawed controller identification logic.
 	// SDL is event driven, currently burning cycles for no reason simulating XInput.

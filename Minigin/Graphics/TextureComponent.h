@@ -15,7 +15,7 @@ namespace dae::graphics
 	class TextureComponent final : public core::Component, public IRenderable
 	{
 	public:
-		using Component::Component; // TODO MINI: Why is this needed?
+		using Component::Component; // TODO dae_graphics - Why is this needed?
 
 		explicit TextureComponent( core::GameObject* owner, const std::string& filename );
 		~TextureComponent() override = default;

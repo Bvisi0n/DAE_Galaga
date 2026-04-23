@@ -74,7 +74,7 @@ namespace dae::input
 			Gamepad::Button button;
 		};
 
-		// TODO MINI: Use std::vector and Binding struct?
+		// TODO dae_input - Use std::vector and Binding struct?
 			// Data locality, cache misses, 1 command per button limit.
 		std::map<ControllerBinding, std::unique_ptr<Command>> m_gamepadCommands;
 		std::map<KeyboardBinding, std::unique_ptr<Command>> m_keyboardCommands;
