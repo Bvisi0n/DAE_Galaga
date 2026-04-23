@@ -1,15 +1,16 @@
 #ifndef GRAVITYREGISTRY_H
 #define GRAVITYREGISTRY_H
 
+#include <algorithm>
 #include <limits>
 #include <memory>
 #include <utility>
+#include <vector>
 
 #include <glm/ext/vector_float3.hpp>
 
 #include <SDL3/SDL_pixels.h>
 
-#include <vector>
 #include "Minigin/Core/GameObject.h"
 #include "Minigin/Graphics/PrimitiveRenderComponent.h"
 #include "Minigin/Scene/SceneManager.h"
@@ -22,6 +23,8 @@ namespace bvi::gravity_bender
 		float strength;
 		float radiusSquared;
 		float lifeTimeRemaining{ 3.0f };
+		dae::core::GameObject* visualRoot{ nullptr };
+		bool isPlayer{ false };
 	};
 
 	class GravityRegistry final
@@ -33,133 +36,119 @@ namespace bvi::gravity_bender
 		{
 			auto& scene = dae::scenes::SceneManager::GetInstance().GetActiveScene();
 
-			// TODO GRAV: Old for loop, why?
-			for ( size_t i = 0; i < s_nodes.size(); )
+			for ( auto& node : s_nodes )
 			{
-				s_nodes[ i ].lifeTimeRemaining -= deltaTime;
-
-				if ( s_nodes[ i ].lifeTimeRemaining <= 0.0f )
+				if ( !node.isPlayer )
 				{
-					auto& [innerObj, outerObj] = s_visualObjects[ i ];
-					if ( innerObj ) scene.RemoveGameObject( *innerObj );
-					if ( outerObj ) scene.RemoveGameObject( *outerObj );
-
-					s_visualObjects.erase( s_visualObjects.begin() + i );
-					s_nodes.erase( s_nodes.begin() + i );
-
-					if ( s_playerNodeIndex != -1 )
-					{
-						if ( static_cast<size_t>( s_playerNodeIndex ) == i )
-						{
-							s_playerNodeIndex = -1;
-						}
-						else if ( static_cast<size_t>( s_playerNodeIndex ) > i )
-						{
-							--s_playerNodeIndex;
-						}
-					}
+					node.lifeTimeRemaining -= deltaTime;
 				}
-				else
+
+				if ( node.lifeTimeRemaining <= 0.0f )
 				{
-					++i;
+					if ( node.visualRoot )
+					{
+						scene.RemoveGameObject( *node.visualRoot );
+					}
+
+					node.visualRoot = nullptr;
 				}
 			}
+
+			std::erase_if( s_nodes,
+						   [] ( const GravityNode& node )
+						   {
+							   return node.lifeTimeRemaining <= 0.0f;
+						   } );
 		}
 
 		static void AddNode( const GravityNode& node )
 		{
 			s_nodes.push_back( node );
-			auto& scene = dae::scenes::SceneManager::GetInstance().GetActiveScene();
+			auto& storedNode = s_nodes.back();
 
-			auto visualInner = std::make_unique<dae::core::GameObject>();
-			auto VisualOuter = std::make_unique<dae::core::GameObject>();
+			using PrimitiveRenderComponent = dae::graphics::PrimitiveRenderComponent;
+			using PrimitiveShape = dae::graphics::PrimitiveShape;
+			using CircleShape = dae::graphics::CircleShape;
 
-			visualInner->GetTransform().SetLocalPosition( node.position );
-			VisualOuter->GetTransform().SetLocalPosition( node.position );
+			auto visualRoot = std::make_unique<dae::core::GameObject>();
+			visualRoot->GetTransform().SetLocalPosition( node.position );
+			visualRoot->AddComponent<PrimitiveRenderComponent>( PrimitiveShape{ CircleShape{ 5.0f, true } }, SDL_Color{ 0, 255, 255, 255 } );
 
-			visualInner->AddComponent<dae::graphics::PrimitiveRenderComponent>( dae::graphics::PrimitiveShape{ dae::graphics::CircleShape{ 5.0f, true } }, SDL_Color{ 0, 255, 255, 255 } );
-
+			auto visualOuter = std::make_unique<dae::core::GameObject>();
 			// TODO GRAV: Hardcoded the radius here.
-			VisualOuter->AddComponent<dae::graphics::PrimitiveRenderComponent>( dae::graphics::PrimitiveShape{ dae::graphics::CircleShape{ 100.0f, false } }, SDL_Color{ 0, 255, 255, 128 } );
+			visualOuter->AddComponent<PrimitiveRenderComponent>( PrimitiveShape{ CircleShape{ 100.0f, false } }, SDL_Color{ 0, 255, 255, 128 } );
 
-			// TODO GRAV: Use the scene graph to parent these.
-			s_visualObjects.emplace_back( visualInner.get(), VisualOuter.get() );
+			visualOuter->SetParent( visualRoot.get(), false );
+			storedNode.visualRoot = visualRoot.get();
 
-			scene.AddGameObject( std::move( visualInner ) );
-			scene.AddGameObject( std::move( VisualOuter ) );
+			auto& scene = dae::scenes::SceneManager::GetInstance().GetActiveScene();
+			scene.AddGameObject( std::move( visualRoot ) );
+			scene.AddGameObject( std::move( visualOuter ) );
 		}
 
 		static void SetPlayerNode( const GravityNode& node )
 		{
-			auto& scene = dae::scenes::SceneManager::GetInstance().GetActiveScene();
+			auto it = std::find_if( s_nodes.begin(), s_nodes.end(),
+									[] ( const GravityNode& n )
+									{
+										return n.isPlayer;
+									} );
 
-			if ( s_playerNodeIndex == -1 )
+			if ( it == s_nodes.end() )
 			{
 				GravityNode tmp = node;
 				tmp.lifeTimeRemaining = std::numeric_limits<float>::infinity();
+				tmp.isPlayer = true;
 
-				s_nodes.push_back( tmp );
-
-				auto visualInner = std::make_unique<dae::core::GameObject>();
-				auto visualOuter = std::make_unique<dae::core::GameObject>();
-
-				visualInner->GetTransform().SetLocalPosition( node.position );
-				visualOuter->GetTransform().SetLocalPosition( node.position );
-
-				visualInner->AddComponent<dae::graphics::PrimitiveRenderComponent>( dae::graphics::PrimitiveShape{ dae::graphics::CircleShape{ 5.0f, true } }, SDL_Color{ 0, 255, 255, 255 } );
-				visualOuter->AddComponent<dae::graphics::PrimitiveRenderComponent>( dae::graphics::PrimitiveShape{ dae::graphics::CircleShape{ 100.0f, false } }, SDL_Color{ 0, 255, 255, 128 } );
-
-				s_visualObjects.emplace_back( visualInner.get(), visualOuter.get() );
-
-				s_playerNodeIndex = static_cast<int>( s_nodes.size() - 1 );
-
-				scene.AddGameObject( std::move( visualInner ) );
-				scene.AddGameObject( std::move( visualOuter ) );
+				AddNode( tmp );
 			}
 			else
 			{
-				s_nodes[ s_playerNodeIndex ].position = node.position;
-				s_nodes[ s_playerNodeIndex ].strength = node.strength;
-				s_nodes[ s_playerNodeIndex ].radiusSquared = node.radiusSquared;
-				s_nodes[ s_playerNodeIndex ].lifeTimeRemaining = std::numeric_limits<float>::infinity();
+				it->position = node.position;
+				it->strength = node.strength;
+				it->radiusSquared = node.radiusSquared;
 
-				auto& [innerObj, outerObj] = s_visualObjects[ s_playerNodeIndex ];
-				if ( innerObj ) innerObj->GetTransform().SetLocalPosition( node.position );
-				if ( outerObj ) outerObj->GetTransform().SetLocalPosition( node.position );
+				if ( it->visualRoot )
+				{
+					it->visualRoot->GetTransform().SetLocalPosition( node.position );
+				}
 			}
 		}
 
 		static void RemovePlayerNode()
 		{
-			if ( s_playerNodeIndex == -1 ) return;
-
 			auto& scene = dae::scenes::SceneManager::GetInstance().GetActiveScene();
 
-			auto& [innerObj, outerObj] = s_visualObjects[ s_playerNodeIndex ];
-			if ( innerObj ) scene.RemoveGameObject( *innerObj );
-			if ( outerObj ) scene.RemoveGameObject( *outerObj );
+			auto it = std::find_if( s_nodes.begin(), s_nodes.end(),
+									[] ( const GravityNode& n )
+									{
+										return n.isPlayer;
+									} );
 
-			s_visualObjects.erase( s_visualObjects.begin() + s_playerNodeIndex );
-			s_nodes.erase( s_nodes.begin() + s_playerNodeIndex );
+			if ( it != s_nodes.end() )
+			{
+				if ( it->visualRoot )
+				{
+					scene.RemoveGameObject( *( it->visualRoot ) );
+				}
 
-			s_playerNodeIndex = -1;
+				s_nodes.erase( it );
+			}
 		}
 
 		static void ClearNodes()
 		{
-			s_nodes.clear();
-			if ( !s_visualObjects.empty() )
-			{
-				auto& scene = dae::scenes::SceneManager::GetInstance().GetActiveScene();
+			auto& scene = dae::scenes::SceneManager::GetInstance().GetActiveScene();
 
-				for ( const auto& [innerObj, outerObj] : s_visualObjects )
+			for ( const auto& node : s_nodes )
+			{
+				if ( node.visualRoot )
 				{
-					if ( innerObj ) scene.RemoveGameObject( *innerObj );
-					if ( outerObj ) scene.RemoveGameObject( *outerObj );
+					scene.RemoveGameObject( *node.visualRoot );
 				}
-				s_visualObjects.clear();
 			}
-			s_playerNodeIndex = -1;
+
+			s_nodes.clear();
 		}
 
 		[[nodiscard]] static const std::vector<GravityNode>& GetActiveNodes() noexcept
@@ -169,8 +158,6 @@ namespace bvi::gravity_bender
 
 	private:
 		static inline std::vector<GravityNode> s_nodes{};
-		static inline std::vector<std::pair<dae::core::GameObject*, dae::core::GameObject*>> s_visualObjects{};
-		static inline int s_playerNodeIndex{ -1 };
 	};
 }
 #endif
