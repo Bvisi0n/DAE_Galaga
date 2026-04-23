@@ -18,7 +18,6 @@
 #include "Minigin/Core/MoveComponent.h"
 #include "Minigin/Graphics/PrimitiveRenderComponent.h"
 #include "Minigin/Graphics/TextComponent.h"
-#include "Minigin/Graphics/TextureComponent.h"
 #include "Minigin/Resources/ResourceManager.h"
 #include "Minigin/Scene/Scene.h"
 
@@ -31,7 +30,6 @@ namespace bvi::gravity_bender
 
 		static void Build( dae::scenes::Scene& scene )
 		{
-			BuildBackground( scene );
 			BuildViewportBorder( scene );
 			BuildInstructions( scene );
 			BuildFPSCounter( scene );
@@ -42,13 +40,6 @@ namespace bvi::gravity_bender
 		}
 
 	private:
-		static void BuildBackground( dae::scenes::Scene& scene )
-		{
-			auto background{ std::make_unique<dae::core::GameObject>() };
-			background->AddComponent<dae::graphics::TextureComponent>()->SetTexture( "background.png" );
-			scene.AddGameObject( std::move( background ) );
-		}
-
 		static void BuildViewportBorder( dae::scenes::Scene& scene )
 		{
 			// TODO GRAV: Fetch screen dimensions and use them.
