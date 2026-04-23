@@ -1,4 +1,5 @@
 add_library(Minigin STATIC
+  "Core/AppStateManager.cpp"
   "Core/ColliderComponent.cpp"
   "Core/CollisionSystem.cpp"
   "Core/GameObject.cpp"
