@@ -9,7 +9,6 @@ namespace dae::utils
 	class Singleton
 	{
 	public:
-
 		Singleton( const Singleton& other ) = delete;
 		Singleton( Singleton&& other ) = delete;
 		Singleton& operator=( const Singleton& other ) = delete;
@@ -18,7 +17,9 @@ namespace dae::utils
 		[[nodiscard]] static T& GetInstance()
 		{
 			static T instance{};
+		#ifdef _DEBUG
 			assert( !m_isDestroyed && "Accessing Singleton after destruction!" );
+		#endif
 			return instance;
 		}
 
@@ -26,11 +27,15 @@ namespace dae::utils
 		Singleton() = default;
 		virtual ~Singleton()
 		{
+		#ifdef _DEBUG
 			m_isDestroyed = true;
+		#endif
 		}
 
 	private:
+	#ifdef _DEBUG
 		inline static bool m_isDestroyed{ false };
+	#endif
 	};
 }
 #endif
