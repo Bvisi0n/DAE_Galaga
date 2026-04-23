@@ -19,7 +19,7 @@ namespace dae::events
 	class ObservableComponent : public core::Component, public ISubject
 	{
 	public:
-		ObservableComponent( core::GameObject* owner ) noexcept
+		explicit ObservableComponent( core::GameObject* owner ) noexcept
 			: Component( owner )
 		{};
 		virtual ~ObservableComponent() = default;

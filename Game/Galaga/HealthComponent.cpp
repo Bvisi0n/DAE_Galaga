@@ -4,16 +4,12 @@
 #include "Minigin/Core/SDBMHash.h"
 #include "Minigin/Events/GameEvent.h"
 #include "Minigin/Events/ObservableComponent.h"
-#include "Minigin/Input/InputManager.h"
 
 namespace bvi::galaga
 {
 	HealthComponent::HealthComponent( dae::core::GameObject* owner, int lives )
 		: ObservableComponent( owner )
 		, m_lives( lives )
-	{}
-
-	HealthComponent::~HealthComponent()
 	{}
 
 	void HealthComponent::InitializeLinkage()

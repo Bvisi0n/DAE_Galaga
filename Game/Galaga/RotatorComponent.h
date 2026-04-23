@@ -13,8 +13,13 @@ namespace bvi::galaga
 	class RotatorComponent final : public dae::core::Component
 	{
 	public:
-		RotatorComponent( dae::core::GameObject* owner, float range, float speed );
+		explicit RotatorComponent( dae::core::GameObject* owner, float range, float speed );
 		~RotatorComponent() override = default;
+
+		RotatorComponent( const RotatorComponent& other ) = delete;
+		RotatorComponent( RotatorComponent&& other ) = delete;
+		RotatorComponent& operator=( const RotatorComponent& other ) = delete;
+		RotatorComponent& operator=( RotatorComponent&& other ) = delete;
 
 		void InitializeLinkage() override;
 		void InitializeState() override;

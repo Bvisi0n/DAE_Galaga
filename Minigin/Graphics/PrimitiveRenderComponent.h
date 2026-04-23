@@ -40,14 +40,14 @@ namespace dae::graphics
 	class PrimitiveRenderComponent final : public core::Component, public IRenderable
 	{
 	public:
-		PrimitiveRenderComponent( core::GameObject* owner, PrimitiveShape shape, SDL_Color color, int thickness = 1 )
+		explicit PrimitiveRenderComponent( core::GameObject* owner, PrimitiveShape shape, SDL_Color color, int thickness = 1 )
 			: Component( owner )
 			, m_shape( std::move( shape ) )
 			, m_color{ color }
 			, m_thickness{ std::max( 1, thickness ) }
 		{}
 
-		virtual ~PrimitiveRenderComponent() = default;
+		~PrimitiveRenderComponent() override = default;
 
 		PrimitiveRenderComponent( const PrimitiveRenderComponent& ) = delete;
 		PrimitiveRenderComponent( PrimitiveRenderComponent&& ) = delete;

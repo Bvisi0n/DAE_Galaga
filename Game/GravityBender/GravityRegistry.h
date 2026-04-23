@@ -1,7 +1,6 @@
 #ifndef GRAVITYREGISTRY_H
 #define GRAVITYREGISTRY_H
 
-#include <deque>
 #include <limits>
 #include <memory>
 #include <utility>

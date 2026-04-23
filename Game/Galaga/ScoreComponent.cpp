@@ -4,16 +4,12 @@
 #include "Minigin/Core/SDBMHash.h"
 #include "Minigin/Events/GameEvent.h"
 #include "Minigin/Events/ObservableComponent.h"
-#include "Minigin/Input/InputManager.h"
 
 namespace bvi::galaga
 {
 	ScoreComponent::ScoreComponent( dae::core::GameObject* owner )
 		: ObservableComponent( owner )
 		, m_score( 0 )
-	{}
-
-	ScoreComponent::~ScoreComponent()
 	{}
 
 	void ScoreComponent::InitializeLinkage() noexcept

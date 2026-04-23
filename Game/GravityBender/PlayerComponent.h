@@ -13,8 +13,12 @@ namespace bvi::gravity_bender
 	{
 	public:
 		explicit PlayerComponent( dae::core::GameObject* owner );
-
 		~PlayerComponent() override;
+
+		PlayerComponent( const PlayerComponent& other ) = delete;
+		PlayerComponent( PlayerComponent&& other ) = delete;
+		PlayerComponent& operator=( const PlayerComponent& other ) = delete;
+		PlayerComponent& operator=( PlayerComponent&& other ) = delete;
 
 		void InitializeLinkage() override;
 		void InitializeState() override;

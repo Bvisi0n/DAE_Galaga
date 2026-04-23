@@ -22,7 +22,6 @@ namespace dae::core
 			: m_owner( owner )
 		{}
 
-		// TODO MINI: Check all component destructors & fix mistakes.
 		virtual ~Component() = default;
 
 		Component( const Component& ) = delete;

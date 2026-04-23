@@ -9,8 +9,13 @@ namespace bvi::galaga
 	class ScoreComponent final : public dae::events::ObservableComponent
 	{
 	public:
-		ScoreComponent( dae::core::GameObject* owner );
-		virtual ~ScoreComponent();
+		explicit ScoreComponent( dae::core::GameObject* owner );
+		~ScoreComponent() override = default;
+
+		ScoreComponent( const ScoreComponent& other ) = delete;
+		ScoreComponent( ScoreComponent&& other ) = delete;
+		ScoreComponent& operator=( const ScoreComponent& other ) = delete;
+		ScoreComponent& operator=( ScoreComponent&& other ) = delete;
 
 		void InitializeLinkage() noexcept override;
 		void InitializeState() noexcept override;

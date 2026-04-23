@@ -25,7 +25,13 @@ namespace bvi::galaga
 	public:
 		using Formatter = std::function<std::string( int )>;
 
-		UIValueObserver( dae::core::GameObject* owner, dae::events::GameEvent observedEvent, Formatter formatter );
+		explicit UIValueObserver( dae::core::GameObject* owner, dae::events::GameEvent observedEvent, Formatter formatter );
+		~UIValueObserver() override = default;
+
+		UIValueObserver( const UIValueObserver& other ) = delete;
+		UIValueObserver( UIValueObserver&& other ) = delete;
+		UIValueObserver& operator=( const UIValueObserver& other ) = delete;
+		UIValueObserver& operator=( UIValueObserver&& other ) = delete;
 
 		void InitializeLinkage() override;
 		void InitializeState() override;

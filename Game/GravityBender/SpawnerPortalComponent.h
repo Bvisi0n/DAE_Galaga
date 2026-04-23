@@ -18,8 +18,8 @@ namespace bvi::gravity_bender
 	class SpawnerPortalComponent final : public dae::core::Component
 	{
 	public:
-		SpawnerPortalComponent( dae::core::GameObject* owner, const UnitData& blueprint );
-		virtual ~SpawnerPortalComponent() = default;
+		explicit SpawnerPortalComponent( dae::core::GameObject* owner, const UnitData& blueprint );
+		~SpawnerPortalComponent() override = default;
 
 		SpawnerPortalComponent( const SpawnerPortalComponent& ) = delete;
 		SpawnerPortalComponent( SpawnerPortalComponent&& ) = delete;

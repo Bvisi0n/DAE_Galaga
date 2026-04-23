@@ -3,8 +3,8 @@
 
 #include <cmath>
 
+#include <glm/ext/vector_float3.hpp>
 #include <glm/geometric.hpp>
-#include <glm/vec3.hpp>
 
 #include "Game/GravityBender/GravityRegistry.h"
 
@@ -21,7 +21,8 @@ namespace bvi::gravity_bender
 			: Component( owner )
 		{}
 
-		~GravityReceiverComponent() = default;
+		~GravityReceiverComponent() override = default;
+
 		GravityReceiverComponent( const GravityReceiverComponent& ) = delete;
 		GravityReceiverComponent( GravityReceiverComponent&& ) = delete;
 		GravityReceiverComponent& operator=( const GravityReceiverComponent& ) = delete;

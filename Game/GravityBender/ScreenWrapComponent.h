@@ -1,7 +1,7 @@
 #ifndef SCREENWRAPCOMPONENT_H
 #define SCREENWRAPCOMPONENT_H
 
-#include <glm/vec2.hpp>
+#include <glm/ext/vector_float3.hpp>
 
 #include "Minigin/Core/Component.h"
 #include "Minigin/Core/GameObject.h"
@@ -14,14 +14,14 @@ namespace bvi::gravity_bender
 	class ScreenWrapComponent final : public dae::core::Component
 	{
 	public:
-		ScreenWrapComponent( dae::core::GameObject* owner, const float viewportWidth, const float viewportHeight, float spriteOffset = 0.0f )
+		explicit ScreenWrapComponent( dae::core::GameObject* owner, const float viewportWidth, const float viewportHeight, float spriteOffset = 0.0f )
 			: dae::core::Component( owner )
 			, m_viewportWidth( viewportWidth )
 			, m_viewportHeight( viewportHeight )
 			, m_spriteOffset( spriteOffset )
 		{}
 
-		virtual ~ScreenWrapComponent() = default;
+		~ScreenWrapComponent() override = default;
 
 		ScreenWrapComponent( const ScreenWrapComponent& ) = delete;
 		ScreenWrapComponent( ScreenWrapComponent&& ) = delete;

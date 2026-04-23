@@ -20,7 +20,13 @@ namespace dae::core
 	class ColliderComponent final : public Component
 	{
 	public:
-		ColliderComponent( GameObject* owner, float width, float height, int layer );
+		explicit ColliderComponent( GameObject* owner, float width, float height, int layer );
+		~ColliderComponent() override = default;
+
+		ColliderComponent( const ColliderComponent& other ) = delete;
+		ColliderComponent( ColliderComponent&& other ) = delete;
+		ColliderComponent& operator=( const ColliderComponent& other ) = delete;
+		ColliderComponent& operator=( ColliderComponent&& other ) = delete;
 
 		void InitializeLinkage() override;
 		void InitializeState() override;

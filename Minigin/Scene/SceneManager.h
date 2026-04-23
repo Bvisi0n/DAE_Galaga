@@ -28,7 +28,7 @@ namespace dae::scenes
 		size_t m_activeSceneIndex{ 0 };
 
 		SceneManager() = default;
-		virtual ~SceneManager() = default;
+		~SceneManager() = default;
 	};
 }
 #endif

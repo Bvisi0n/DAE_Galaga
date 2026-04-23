@@ -11,8 +11,8 @@ namespace dae::core
 	class MoveComponent final : public Component
 	{
 	public:
-		MoveComponent( GameObject* owner, const float maxSpeed = 200.f, const float drag = 0.0f );
-		virtual ~MoveComponent() = default;
+		explicit MoveComponent( GameObject* owner, const float maxSpeed = 200.f, const float drag = 0.0f );
+		~MoveComponent() override = default;
 
 		MoveComponent( const MoveComponent& ) = delete;
 		MoveComponent( MoveComponent&& ) = delete;

@@ -19,8 +19,8 @@ namespace bvi::common
 	class FPSComponent final : public dae::core::Component
 	{
 	public:
-		FPSComponent( dae::core::GameObject* owner );
-		~FPSComponent() = default;
+		explicit FPSComponent( dae::core::GameObject* owner );
+		~FPSComponent() override = default;
 
 		FPSComponent( const FPSComponent& ) = delete;
 		FPSComponent( FPSComponent&& ) = delete;
