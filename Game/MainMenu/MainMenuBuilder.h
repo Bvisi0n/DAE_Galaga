@@ -11,11 +11,11 @@
 #include "Minigin/Resources/ResourceManager.h"
 #include "Minigin/Scene/Scene.h"
 
-// TODO MENU: Review builder pattern.
+// TODO bvi_main_menu - Review builder pattern. (Inspired by)
 	// https://refactoring.guru/design-patterns/builder
 	// https://www.geeksforgeeks.org/system-design/builder-pattern-c-design-patterns/
-	// Both sources show a director and don't use static methods. This seems better for my needs tho. 
-	// More research is needed. Maybe this is another pattern? Feels a bit like it's director and builder mashed in a single class.
+	// Both sources show a director and don't use static methods.
+	// More research is needed. Feels a bit like it's director and builder mashed in a single class.
 
 namespace bvi::main_menu
 {
@@ -28,7 +28,6 @@ namespace bvi::main_menu
 		{
 			BuildBackground( scene );
 			BuildLogo( scene );
-			//BuildTitle( scene );
 			BuildFPSCounter( scene );
 
 		#ifdef ENABLE_GRAVITY_BENDER
@@ -51,14 +50,6 @@ namespace bvi::main_menu
 			auto logo{ std::make_unique<dae::core::GameObject>( 358.f, 180.f ) };
 			logo->AddComponent<dae::graphics::TextureComponent>()->SetTexture( "logo.png" );
 			scene.AddGameObject( std::move( logo ) );
-		}
-
-		static void BuildTitle( dae::scenes::Scene& scene )
-		{
-			auto font{ dae::resources::ResourceManager::GetInstance().LoadFont( "Lingua.otf", 36 ) };
-			auto title{ std::make_unique<dae::core::GameObject>( 292.f, 20.f ) };
-			title->AddComponent<dae::graphics::TextComponent>( "Programming 4 Assignment", font )->SetColor( { 255, 255, 0, 255 } );
-			scene.AddGameObject( std::move( title ) );
 		}
 
 		static void BuildFPSCounter( dae::scenes::Scene& scene )
