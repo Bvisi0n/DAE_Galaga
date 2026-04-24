@@ -1,26 +1,41 @@
 #ifndef PLAYERINPUTCOMPONENT_H
 #define PLAYERINPUTCOMPONENT_H
 
+#include <vector>
+
+#include "Minigin/Core/Component.h"
+#include "Minigin/Core/GameObject.h"
+#include "Minigin/Input/ScopedInputBinding.h"
+
+// TODO dae_input - Incomplete & unused class.
+
 namespace dae::input
 {
 	class PlayerInputComponent final : public Component
 	{
 	public:
-		void Start() override
-		{
-			auto* moveComponent = GetGameObject()->GetComponent<MoveComponent>();
-			if ( !moveComponent ) return;
+		explicit PlayerInputComponent( GameObject* owner )
+			: Component( owner )
+		{}
 
-			auto moveCmd = std::make_unique<MoveCommand>( moveComponent, glm::vec2{ 1.0f, 0.0f } );
+		~PlayerInputComponent() override = default;
 
-			m_bindings.emplace_back(
-				dae::input::InputId{ Gamepad::Button::DpadRight, KeyState::Pressed },
-				std::move( moveCmd )
-			);
-		}
+		PlayerInputComponent( const PlayerInputComponent& ) = delete;
+		PlayerInputComponent( PlayerInputComponent&& ) = delete;
+		PlayerInputComponent& operator=( const PlayerInputComponent& ) = delete;
+		PlayerInputComponent& operator=( PlayerInputComponent&& ) = delete;
+
+		void InitializeLinkage() override
+		{}
+
+		void InitializeState() override
+		{}
+
+		void Update( const float /*deltaTime*/ ) override
+		{}
 
 	private:
-		std::vector<dae::input::ScopedInputBinding> m_bindings;
+		std::vector<dae::input::ScopedInputBinding> m_bindings{};
 	};
 }
 #endif
