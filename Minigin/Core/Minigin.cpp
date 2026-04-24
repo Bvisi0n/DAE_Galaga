@@ -153,6 +153,8 @@ namespace dae::core
 
 	void Minigin::RunOneFrame()
 	{
+		// TODO dae_core - Make a Singleton for time.
+
 		using clock = std::chrono::steady_clock; // Steady clock is guaranteed to be monotonic
 		const auto frameStartTime{ clock::now() };
 		const float deltaTime{ std::chrono::duration<float>( frameStartTime - m_lastTime ).count() };
