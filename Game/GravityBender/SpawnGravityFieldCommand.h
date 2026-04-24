@@ -7,11 +7,11 @@
 #include "Game/GravityBender/GravityRegistry.h"
 
 #include "Minigin/Core/GameObject.h"
-#include "Minigin/Input/Command.h"
+#include "Minigin/Input/ICommand.h"
 
 namespace bvi::gravity_bender
 {
-	class SpawnGravityFieldCommand final : public dae::input::Command
+	class SpawnGravityFieldCommand final : public dae::input::ICommand
 	{
 	public:
 		explicit SpawnGravityFieldCommand( const dae::core::GameObject* contextPlayer )

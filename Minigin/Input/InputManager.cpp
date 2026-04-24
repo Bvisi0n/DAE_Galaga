@@ -4,8 +4,8 @@
 
 #include <backends/imgui_impl_sdl3.h>
 
-#include "Minigin/Input/Command.h"
 #include "Minigin/Input/Gamepad.h"
+#include "Minigin/Input/ICommand.h"
 #include "Minigin/Input/InputManager.h"
 #include "Minigin/Input/Keyboard.h"
 

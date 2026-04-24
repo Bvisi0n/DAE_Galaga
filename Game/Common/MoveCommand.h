@@ -4,13 +4,13 @@
 #include <glm/ext/vector_float3.hpp>
 
 #include "Minigin/Core/MoveComponent.h"
-#include "Minigin/Input/Command.h"
+#include "Minigin/Input/ICommand.h"
 
 // TODO bvi_common - Commands should not store a context pointer, it should be passed in as an argument to the Execute function.
 
 namespace bvi::common
 {
-	class MoveCommand final : public dae::input::Command
+	class MoveCommand final : public dae::input::ICommand
 	{
 	public:
 		MoveCommand( dae::core::MoveComponent* moveComponent, const glm::vec3& thrustVector )

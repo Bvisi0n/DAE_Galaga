@@ -15,13 +15,13 @@ namespace dae::input
 	class ScopedInputBinding final
 	{
 	public:
-		ScopedInputBinding( Keyboard::Key key, InputManager::KeyState state, std::unique_ptr<Command> cmd )
+		ScopedInputBinding( Keyboard::Key key, InputManager::KeyState state, std::unique_ptr<ICommand> cmd )
 			: m_key{ InputManager::KeyboardBinding{key, state} }
 		{
 			InputManager::GetInstance().BindCommand( key, state, std::move( cmd ) );
 		}
 
-		ScopedInputBinding( Gamepad::Button btn, InputManager::KeyState state, unsigned int controllerIndex, std::unique_ptr<Command> cmd )
+		ScopedInputBinding( Gamepad::Button btn, InputManager::KeyState state, unsigned int controllerIndex, std::unique_ptr<ICommand> cmd )
 			: m_key{ InputManager::ControllerBinding{controllerIndex, btn, state} }
 		{
 			InputManager::GetInstance().BindCommand( btn, state, std::move( cmd ), controllerIndex );

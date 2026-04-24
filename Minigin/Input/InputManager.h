@@ -10,8 +10,8 @@
 #include <variant>
 #include <vector>
 
-#include "Minigin/Input/Command.h"
 #include "Minigin/Input/Gamepad.h"
+#include "Minigin/Input/ICommand.h"
 #include "Minigin/Input/Keyboard.h"
 #include "Minigin/Utilities/Singleton.h"
 
@@ -38,7 +38,7 @@ namespace dae::input
 		[[nodiscard]] bool ProcessInput( const float deltaTime );
 
 		template <IsInputType T>
-		void BindCommand( T inputType, KeyState state, std::unique_ptr<Command> command, unsigned int controllerIndex = 0 )
+		void BindCommand( T inputType, KeyState state, std::unique_ptr<ICommand> command, unsigned int controllerIndex = 0 )
 		{
 			if constexpr ( std::is_same_v<T, Keyboard::Key> )
 			{
@@ -76,8 +76,8 @@ namespace dae::input
 
 		// TODO dae_input - Use std::vector and Binding struct?
 			// Data locality, cache misses, 1 command per button limit.
-		std::map<ControllerBinding, std::unique_ptr<Command>> m_gamepadCommands;
-		std::map<KeyboardBinding, std::unique_ptr<Command>> m_keyboardCommands;
+		std::map<ControllerBinding, std::unique_ptr<ICommand>> m_gamepadCommands;
+		std::map<KeyboardBinding, std::unique_ptr<ICommand>> m_keyboardCommands;
 
 		std::unique_ptr<Keyboard> m_keyboard;
 		std::vector<std::unique_ptr<Gamepad>> m_gamepads;

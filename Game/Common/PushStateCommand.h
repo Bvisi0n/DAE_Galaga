@@ -6,7 +6,7 @@
 
 #include "Minigin/Core/AppStateManager.h"
 #include "Minigin/Core/IGameState.h"
-#include "Minigin/Input/Command.h"
+#include "Minigin/Input/ICommand.h"
 
 // TODO bvi_common - Commands should not store a context pointer, it should be passed in as an argument to the Execute function.
 
@@ -16,7 +16,7 @@ namespace bvi::common
 	concept IsGameState = std::is_base_of_v<dae::core::IGameState, T>;
 
 	template <IsGameState StateType>
-	class PushStateCommand final : public dae::input::Command
+	class PushStateCommand final : public dae::input::ICommand
 	{
 	public:
 		explicit PushStateCommand( const void* targetContext ) noexcept
