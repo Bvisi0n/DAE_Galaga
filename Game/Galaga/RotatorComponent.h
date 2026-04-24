@@ -1,5 +1,5 @@
-#ifndef ROTATORCOMPONENT_H
-#define ROTATORCOMPONENT_H
+#ifndef BVI_ROTATORCOMPONENT_H
+#define BVI_ROTATORCOMPONENT_H
 
 #include "Minigin/Core/Component.h"
 

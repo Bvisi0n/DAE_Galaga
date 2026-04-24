@@ -1,5 +1,5 @@
-#ifndef SCORECOMPONENT_H
-#define SCORECOMPONENT_H
+#ifndef BVI_SCORECOMPONENT_H
+#define BVI_SCORECOMPONENT_H
 
 #include "Minigin/Core/GameObject.h"
 #include "Minigin/Events/ObservableComponent.h"

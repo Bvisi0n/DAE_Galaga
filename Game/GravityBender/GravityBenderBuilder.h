@@ -1,5 +1,5 @@
-#ifndef GRAVITYBENDERBUILDER_H
-#define GRAVITYBENDERBUILDER_H
+#ifndef BVI_GRAVITYBENDERBUILDER_H
+#define BVI_GRAVITYBENDERBUILDER_H
 
 #include <memory>
 #include <utility>

@@ -1,5 +1,5 @@
-#ifndef RESOURCEMANAGER_H
-#define RESOURCEMANAGER_H
+#ifndef DAE_RESOURCEMANAGER_H
+#define DAE_RESOURCEMANAGER_H
 
 #include <cstdint>
 #include <filesystem>

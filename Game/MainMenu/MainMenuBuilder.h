@@ -1,5 +1,5 @@
-#ifndef MENUBUILDER_H
-#define MENUBUILDER_H
+#ifndef BVI_MENUBUILDER_H
+#define BVI_MENUBUILDER_H
 
 #include <memory>
 

@@ -1,5 +1,5 @@
-#ifndef HEALTHCOMPONENT_H
-#define HEALTHCOMPONENT_H
+#ifndef BVI_HEALTHCOMPONENT_H
+#define BVI_HEALTHCOMPONENT_H
 
 #include "Minigin/Events/ObservableComponent.h"
 

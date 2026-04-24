@@ -1,5 +1,5 @@
-#ifndef APPSTATEMANAGER_H
-#define APPSTATEMANAGER_H
+#ifndef DAE_APPSTATEMANAGER_H
+#define DAE_APPSTATEMANAGER_H
 
 #include <memory>
 

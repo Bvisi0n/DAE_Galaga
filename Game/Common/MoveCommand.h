@@ -1,5 +1,5 @@
-#ifndef MOVECOMMAND_H
-#define MOVECOMMAND_H
+#ifndef BVI_MOVECOMMAND_H
+#define BVI_MOVECOMMAND_H
 
 #include <glm/ext/vector_float3.hpp>
 

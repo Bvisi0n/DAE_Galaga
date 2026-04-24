@@ -1,5 +1,5 @@
-#ifndef SCOPEDINPUTBINDING_H
-#define SCOPEDINPUTBINDING_H
+#ifndef DAE_SCOPEDINPUTBINDING_H
+#define DAE_SCOPEDINPUTBINDING_H
 
 #include <memory>
 #include <type_traits>

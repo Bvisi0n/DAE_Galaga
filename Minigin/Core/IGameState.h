@@ -1,5 +1,5 @@
-#ifndef IGAMESTATE_H
-#define IGAMESTATE_H
+#ifndef DAE_IGAMESTATE_H
+#define DAE_IGAMESTATE_H
 
 namespace dae::core
 {

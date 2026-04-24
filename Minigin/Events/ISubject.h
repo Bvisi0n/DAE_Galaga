@@ -1,5 +1,5 @@
-#ifndef ISUBJECT_H
-#define ISUBJECT_H
+#ifndef DAE_ISUBJECT_H
+#define DAE_ISUBJECT_H
 
 namespace dae::events
 {

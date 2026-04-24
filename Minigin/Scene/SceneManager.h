@@ -1,5 +1,5 @@
-#ifndef SCENEMANAGER_H
-#define SCENEMANAGER_H
+#ifndef DAE_SCENEMANAGER_H
+#define DAE_SCENEMANAGER_H
 
 #include <memory>
 #include <vector>

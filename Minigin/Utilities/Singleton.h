@@ -1,5 +1,5 @@
-#ifndef SINGLETON_H
-#define SINGLETON_H
+#ifndef DAE_SINGLETON_H
+#define DAE_SINGLETON_H
 
 #include <cassert>
 

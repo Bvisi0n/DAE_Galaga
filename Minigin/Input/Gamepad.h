@@ -1,5 +1,5 @@
-#ifndef GAMEPAD_H
-#define GAMEPAD_H
+#ifndef DAE_GAMEPAD_H
+#define DAE_GAMEPAD_H
 
 #include <memory>
 

@@ -1,5 +1,5 @@
-#ifndef KEYBOARD_H
-#define KEYBOARD_H
+#ifndef DAE_KEYBOARD_H
+#define DAE_KEYBOARD_H
 
 #include <memory>
 

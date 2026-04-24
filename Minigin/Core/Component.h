@@ -1,5 +1,5 @@
-#ifndef COMPONENT_H
-#define COMPONENT_H
+#ifndef DAE_COMPONENT_H
+#define DAE_COMPONENT_H
 
 #include <cstdint>
 

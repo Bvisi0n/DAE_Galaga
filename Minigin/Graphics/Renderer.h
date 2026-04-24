@@ -1,5 +1,5 @@
-#ifndef RENDERER_H
-#define RENDERER_H
+#ifndef DAE_RENDERER_H
+#define DAE_RENDERER_H
 
 #include <SDL3/SDL_pixels.h>
 #include <SDL3/SDL_render.h>

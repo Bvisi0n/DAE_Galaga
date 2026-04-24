@@ -1,5 +1,5 @@
-#ifndef GAMEEVENT_H
-#define GAMEEVENT_H
+#ifndef DAE_GAMEEVENT_H
+#define DAE_GAMEEVENT_H
 
 #include <cassert>
 #include <cstdint>

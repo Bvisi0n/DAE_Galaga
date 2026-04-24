@@ -1,5 +1,5 @@
-#ifndef MAINMENUSTATE_H
-#define MAINMENUSTATE_H
+#ifndef BVI_MAINMENUSTATE_H
+#define BVI_MAINMENUSTATE_H
 
 #include "Game/Common/PushStateCommand.h"
 #include "Game/GravityBender/GravityBenderState.h"

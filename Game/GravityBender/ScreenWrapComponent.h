@@ -1,5 +1,5 @@
-#ifndef SCREENWRAPCOMPONENT_H
-#define SCREENWRAPCOMPONENT_H
+#ifndef BVI_SCREENWRAPCOMPONENT_H
+#define BVI_SCREENWRAPCOMPONENT_H
 
 #include <glm/ext/vector_float3.hpp>
 

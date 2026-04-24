@@ -1,5 +1,5 @@
-#ifndef INPUTMANAGER_H
-#define INPUTMANAGER_H
+#ifndef DAE_INPUTMANAGER_H
+#define DAE_INPUTMANAGER_H
 
 #include <algorithm>
 #include <concepts>

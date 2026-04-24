@@ -1,5 +1,5 @@
-#ifndef TRANSFORMCOMPONENT_H
-#define TRANSFORMCOMPONENT_H
+#ifndef DAE_TRANSFORMCOMPONENT_H
+#define DAE_TRANSFORMCOMPONENT_H
 
 #include <glm/mat4x4.hpp>
 #include <glm/vec3.hpp>

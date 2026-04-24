@@ -1,5 +1,5 @@
-#ifndef IOBSERVER_H
-#define IOBSERVER_H
+#ifndef DAE_IOBSERVER_H
+#define DAE_IOBSERVER_H
 
 #include "Minigin/Events/GameEvent.h"
 

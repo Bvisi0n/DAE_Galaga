@@ -1,5 +1,5 @@
-#ifndef GAMEOBJECT_H
-#define GAMEOBJECT_H
+#ifndef DAE_GAMEOBJECT_H
+#define DAE_GAMEOBJECT_H
 
 #include <algorithm>
 #include <cassert>

@@ -1,5 +1,5 @@
-#ifndef IRENDERABLE_H
-#define IRENDERABLE_H
+#ifndef DAE_IRENDERABLE_H
+#define DAE_IRENDERABLE_H
 
 namespace dae::graphics
 {

@@ -1,5 +1,5 @@
-#ifndef COLLIDERCOMPONENT_H
-#define COLLIDERCOMPONENT_H
+#ifndef DAE_COLLIDERCOMPONENT_H
+#define DAE_COLLIDERCOMPONENT_H
 
 #include "Minigin/Core/Component.h"
 

@@ -1,5 +1,5 @@
-#ifndef FONT_H
-#define FONT_H
+#ifndef DAE_FONT_H
+#define DAE_FONT_H
 
 #include <memory>
 #include <string>

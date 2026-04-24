@@ -1,5 +1,5 @@
-#ifndef GRAVITYREGISTRY_H
-#define GRAVITYREGISTRY_H
+#ifndef BVI_GRAVITYREGISTRY_H
+#define BVI_GRAVITYREGISTRY_H
 
 #include <algorithm>
 #include <limits>

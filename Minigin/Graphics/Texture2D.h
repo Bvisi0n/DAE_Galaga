@@ -1,5 +1,5 @@
-#ifndef TEXTURE2D_H
-#define TEXTURE2D_H
+#ifndef DAE_TEXTURE2D_H
+#define DAE_TEXTURE2D_H
 
 #include <memory>
 #include <string>

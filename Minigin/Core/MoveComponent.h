@@ -1,5 +1,5 @@
-#ifndef MOVECOMPONENT_H
-#define MOVECOMPONENT_H
+#ifndef DAE_MOVECOMPONENT_H
+#define DAE_MOVECOMPONENT_H
 
 #include <glm/vec3.hpp>
 

@@ -1,5 +1,5 @@
-#ifndef TEXTCOMPONENT_H
-#define TEXTCOMPONENT_H
+#ifndef DAE_TEXTCOMPONENT_H
+#define DAE_TEXTCOMPONENT_H
 
 #include <memory>
 #include <string>

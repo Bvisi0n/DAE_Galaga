@@ -1,5 +1,5 @@
-#ifndef SDBMHASH_H
-#define SDBMHASH_H
+#ifndef DAE_SDBMHASH_H
+#define DAE_SDBMHASH_H
 
 // DAE/Prog4/observer_eventqueue.pdf: "Inspired by: Learn C++ For Game Development by Bruce Sutherland"
 

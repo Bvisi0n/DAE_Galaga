@@ -1,5 +1,5 @@
-#ifndef FPSComponent_H
-#define FPSComponent_H
+#ifndef BVI_FPSComponent_H
+#define BVI_FPSComponent_H
 
 #include "Minigin/Core/Component.h"
 

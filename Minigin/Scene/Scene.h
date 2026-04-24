@@ -1,5 +1,5 @@
-#ifndef SCENE_H
-#define SCENE_H
+#ifndef DAE_SCENE_H
+#define DAE_SCENE_H
 
 #include <memory>
 #include <vector>

@@ -1,5 +1,5 @@
-#ifndef UIVALUEOBSERVER_H
-#define UIVALUEOBSERVER_H
+#ifndef BVI_UIVALUEOBSERVER_H
+#define BVI_UIVALUEOBSERVER_H
 
 #include <functional>
 #include <string>

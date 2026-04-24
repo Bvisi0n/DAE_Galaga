@@ -1,5 +1,5 @@
-#ifndef MINIGIN_H
-#define MINIGIN_H
+#ifndef DAE_MINIGIN_H
+#define DAE_MINIGIN_H
 
 #include <chrono>
 #include <cstdint>

@@ -1,5 +1,5 @@
-#ifndef COLLISIONSYSTEM_H
-#define COLLISIONSYSTEM_H
+#ifndef DAE_COLLISIONSYSTEM_H
+#define DAE_COLLISIONSYSTEM_H
 
 #include <functional>
 #include <memory>

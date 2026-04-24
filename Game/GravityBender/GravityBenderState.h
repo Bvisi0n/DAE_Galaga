@@ -1,5 +1,5 @@
-#ifndef GRAVITYBENDERSTATE_H
-#define GRAVITYBENDERSTATE_H
+#ifndef BVI_GRAVITYBENDERSTATE_H
+#define BVI_GRAVITYBENDERSTATE_H
 
 #include "Game/GravityBender/GravityBenderBuilder.h"
 #include "Game/GravityBender/GravityRegistry.h"

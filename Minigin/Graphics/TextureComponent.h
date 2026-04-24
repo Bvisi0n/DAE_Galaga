@@ -1,5 +1,5 @@
-#ifndef TEXTURECOMPONENT_H
-#define TEXTURECOMPONENT_H
+#ifndef DAE_TEXTURECOMPONENT_H
+#define DAE_TEXTURECOMPONENT_H
 
 #include <memory>
 #include <string>

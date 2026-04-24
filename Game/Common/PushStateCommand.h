@@ -1,5 +1,5 @@
-#ifndef PUSHSTATECOMMAND_H
-#define PUSHSTATECOMMAND_H
+#ifndef BVI_PUSHSTATECOMMAND_H
+#define BVI_PUSHSTATECOMMAND_H
 
 #include <memory>
 #include <type_traits>
