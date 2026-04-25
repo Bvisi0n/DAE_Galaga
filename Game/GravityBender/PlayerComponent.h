@@ -24,10 +24,6 @@ namespace bvi::gravity_bender
 		void InitializeState() override;
 
 		void Update( const float /*deltaTime*/ ) override;
-
-	private:
-		// TODO bvi_gravity_bender - Should be using PlayerInputComponent.
-		std::vector<dae::input::ScopedInputBinding> m_bindings;
 	};
 }
 #endif

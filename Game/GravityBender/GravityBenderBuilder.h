@@ -4,13 +4,17 @@
 #include <memory>
 #include <utility>
 
+#include <glm/ext/vector_float3.hpp>
+
 #include <SDL3/SDL_pixels.h>
 #include <SDL3/SDL_rect.h>
 
 #include "Game/Common/FPSComponent.h"
+#include "Game/Common/MoveCommand.h"
 #include "Game/GravityBender/GravityBenderBlueprints.h"
 #include "Game/GravityBender/PlayerComponent.h"
 #include "Game/GravityBender/ScreenWrapComponent.h"
+#include "Game/GravityBender/SpawnGravityFieldCommand.h"
 #include "Game/GravityBender/SpawnerPortalComponent.h"
 
 #include "Minigin/Core/ColliderComponent.h"
@@ -18,6 +22,10 @@
 #include "Minigin/Core/MoveComponent.h"
 #include "Minigin/Graphics/PrimitiveRenderComponent.h"
 #include "Minigin/Graphics/TextComponent.h"
+#include "Minigin/Input/InputManager.h"
+#include "Minigin/Input/Keyboard.h"
+#include "Minigin/Input/PlayerInputComponent.h"
+#include "Minigin/Input/ScopedInputBinding.h"
 #include "Minigin/Resources/ResourceManager.h"
 #include "Minigin/Scene/Scene.h"
 
@@ -88,9 +96,24 @@ namespace bvi::gravity_bender
 			auto player{ std::make_unique<dae::core::GameObject>( 400.f, 350.f ) };
 			player->AddComponent<dae::graphics::PrimitiveRenderComponent>( dae::graphics::PrimitiveShape{ dae::graphics::CircleShape{ 10.0f, true } }, SDL_Color{ 255, 204, 0, 255 } );
 			player->AddComponent<dae::core::ColliderComponent>( 5.f, 5.f, 1 );
-			player->AddComponent<dae::core::MoveComponent>( 250.f, 2.f );
+
 			player->AddComponent<ScreenWrapComponent>( 1024.f, 576.f );
 			player->AddComponent<PlayerComponent>();
+
+			// TODO bvi_gravity_bender - Once the Command pattern is reworked to be stateless, this should be simplified.
+			auto moveComp = player->AddComponent<dae::core::MoveComponent>( 250.f, 2.f );
+			auto inputComp = player->AddComponent<dae::input::PlayerInputComponent>();
+
+			using KeyState = dae::input::InputManager::KeyState;
+			using Key = dae::input::Keyboard::Key;
+			using MoveCommand = common::MoveCommand;
+			using vec3 = glm::vec3;
+
+			inputComp->AddBinding( dae::input::ScopedInputBinding{ Key::W, KeyState::Pressed, std::make_unique<MoveCommand>( moveComp, vec3{ 0.0f, -400.0f, 0.0f } ) } );
+			inputComp->AddBinding( dae::input::ScopedInputBinding{ Key::S, KeyState::Pressed, std::make_unique<MoveCommand>( moveComp, vec3{ 0.0f, 400.0f, 0.0f } ) } );
+			inputComp->AddBinding( dae::input::ScopedInputBinding{ Key::A, KeyState::Pressed, std::make_unique<MoveCommand>( moveComp, vec3{ -400.0f, 0.0f, 0.0f } ) } );
+			inputComp->AddBinding( dae::input::ScopedInputBinding{ Key::D, KeyState::Pressed, std::make_unique<MoveCommand>( moveComp, vec3{ 400.0f, 0.0f, 0.0f } ) } );
+			inputComp->AddBinding( dae::input::ScopedInputBinding{ Key::Space, KeyState::Pressed, std::make_unique<SpawnGravityFieldCommand>( player.get() ) } );
 
 			scene.AddGameObject( std::move( player ) );
 		}

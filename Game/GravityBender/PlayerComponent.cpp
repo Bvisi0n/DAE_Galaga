@@ -30,30 +30,7 @@ namespace bvi::gravity_bender
 	}
 
 	void PlayerComponent::InitializeLinkage()
-	{
-		auto* moveComp = GetOwner()->GetComponent<dae::core::MoveComponent>();
-
-		if ( !moveComp )
-		{
-			assert( moveComp && "PlayerComponent requires a MoveComponent." );
-			return;
-		}
-
-		using KeyState = dae::input::InputManager::KeyState;
-		using Key = dae::input::Keyboard::Key;
-		using MoveCommand = common::MoveCommand;
-		using vec3 = glm::vec3;
-
-		m_bindings.emplace_back( Key::W, KeyState::Pressed, std::make_unique<MoveCommand>( moveComp, vec3{ 0.0f, -400.0f, 0.0f } ) );
-
-		m_bindings.emplace_back( Key::S, KeyState::Pressed, std::make_unique<MoveCommand>( moveComp, vec3{ 0.0f, 400.0f, 0.0f } ) );
-
-		m_bindings.emplace_back( Key::A, KeyState::Pressed, std::make_unique<MoveCommand>( moveComp, vec3{ -400.0f, 0.0f, 0.0f } ) );
-
-		m_bindings.emplace_back( Key::D, KeyState::Pressed, std::make_unique<MoveCommand>( moveComp, vec3{ 400.0f, 0.0f, 0.0f } ) );
-
-		m_bindings.emplace_back( Key::Space, KeyState::Pressed, std::make_unique<SpawnGravityFieldCommand>( GetOwner() ) );
-	}
+	{}
 
 	void PlayerComponent::InitializeState()
 	{}
