@@ -1,20 +1,19 @@
 #ifndef DAE_PLAYERINPUTCOMPONENT_H
 #define DAE_PLAYERINPUTCOMPONENT_H
 
+#include <utility>
 #include <vector>
 
 #include "Minigin/Core/Component.h"
 #include "Minigin/Core/GameObject.h"
 #include "Minigin/Input/ScopedInputBinding.h"
 
-// TODO dae_input - Incomplete & unused class.
-
 namespace dae::input
 {
-	class PlayerInputComponent final : public Component
+	class PlayerInputComponent final : public core::Component
 	{
 	public:
-		explicit PlayerInputComponent( GameObject* owner )
+		explicit PlayerInputComponent( core::GameObject* owner )
 			: Component( owner )
 		{}
 
@@ -34,8 +33,13 @@ namespace dae::input
 		void Update( const float /*deltaTime*/ ) override
 		{}
 
+		void AddBinding( ScopedInputBinding&& binding )
+		{
+			m_bindings.emplace_back( std::move( binding ) );
+		}
+
 	private:
-		std::vector<dae::input::ScopedInputBinding> m_bindings{};
+		std::vector<ScopedInputBinding> m_bindings{};
 	};
 }
 #endif

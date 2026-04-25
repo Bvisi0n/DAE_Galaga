@@ -26,27 +26,16 @@ namespace bvi::main_menu
 		void OnEnter() override
 		{
 			auto& scene = dae::scenes::SceneManager::GetInstance().CreateScene();
-			MainMenuBuilder::Build( scene );
-
-		#ifdef ENABLE_GRAVITY_BENDER
-			// TODO bvi_main_menu - Move this to builder, store it in scene.
-			auto pushStateCommand = std::make_unique<common::PushStateCommand<gravity_bender::GravityBenderState>>( this );
-			m_bindings.emplace_back( dae::input::Keyboard::Key::F, dae::input::InputManager::KeyState::Down, std::move( pushStateCommand ) );
-		#endif
+			MainMenuBuilder::Build( scene, this );
 		}
 
 		void OnExit() override
 		{
 			dae::scenes::SceneManager::GetInstance().RemoveAllScenes();
-			m_bindings.clear();
-			dae::input::InputManager::GetInstance().ClearAllBinds();
 		}
 
 		void Update( float /*deltaTime*/ ) override
 		{}
-
-	private:
-		std::vector<dae::input::ScopedInputBinding> m_bindings{};
 	};
 }
 #endif

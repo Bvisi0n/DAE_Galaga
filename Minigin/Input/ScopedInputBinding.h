@@ -15,16 +15,16 @@ namespace dae::input
 	class ScopedInputBinding final
 	{
 	public:
-		ScopedInputBinding( Keyboard::Key key, InputManager::KeyState state, std::unique_ptr<ICommand> cmd )
+		ScopedInputBinding( Keyboard::Key key, InputManager::KeyState state, std::unique_ptr<ICommand> command )
 			: m_key{ InputManager::KeyboardBinding{key, state} }
 		{
-			InputManager::GetInstance().BindCommand( key, state, std::move( cmd ) );
+			InputManager::GetInstance().BindCommand( key, state, std::move( command ) );
 		}
 
-		ScopedInputBinding( Gamepad::Button btn, InputManager::KeyState state, unsigned int controllerIndex, std::unique_ptr<ICommand> cmd )
-			: m_key{ InputManager::ControllerBinding{controllerIndex, btn, state} }
+		ScopedInputBinding( Gamepad::Button button, InputManager::KeyState state, unsigned int controllerIndex, std::unique_ptr<ICommand> command )
+			: m_key{ InputManager::ControllerBinding{controllerIndex, button, state} }
 		{
-			InputManager::GetInstance().BindCommand( btn, state, std::move( cmd ), controllerIndex );
+			InputManager::GetInstance().BindCommand( button, state, std::move( command ), controllerIndex );
 		}
 
 		~ScopedInputBinding()
@@ -54,17 +54,17 @@ namespace dae::input
 
 		void Unbind()
 		{
-			std::visit( [] ( auto&& arg )
+			std::visit( [] ( auto&& argument )
 			{
-				using T = std::decay_t<decltype( arg )>;
+				using T = std::decay_t<decltype( argument )>;
 
 				if constexpr ( std::is_same_v<T, InputManager::KeyboardBinding> )
 				{
-					InputManager::GetInstance().UnbindCommand( arg.first, arg.second );
+					InputManager::GetInstance().UnbindCommand( argument.first, argument.second );
 				}
 				else if constexpr ( std::is_same_v<T, InputManager::ControllerBinding> )
 				{
-					InputManager::GetInstance().UnbindCommand( std::get<1>( arg ), std::get<2>( arg ), std::get<0>( arg ) );
+					InputManager::GetInstance().UnbindCommand( std::get<1>( argument ), std::get<2>( argument ), std::get<0>( argument ) );
 				}
 				// If (std::monostate) do nothing;
 

@@ -5,7 +5,6 @@
 #include "Game/GravityBender/GravityRegistry.h"
 
 #include "Minigin/Core/IGameState.h"
-#include "Minigin/Input/InputManager.h"
 #include "Minigin/Scene/SceneManager.h"
 
 namespace bvi::gravity_bender
@@ -30,7 +29,6 @@ namespace bvi::gravity_bender
 		void OnExit() override
 		{
 			dae::scenes::SceneManager::GetInstance().RemoveAllScenes();
-			dae::input::InputManager::GetInstance().ClearAllBinds();
 		}
 
 		void Update( float deltaTime ) override

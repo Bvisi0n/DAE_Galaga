@@ -1,5 +1,5 @@
-#ifndef BVI_PLAYERGRAVITYCOMPONENT_H
-#define BVI_PLAYERGRAVITYCOMPONENT_H
+#ifndef BVI_PLAYERCOMPONENT_H
+#define BVI_PLAYERCOMPONENT_H
 
 #include <vector>
 
@@ -26,6 +26,7 @@ namespace bvi::gravity_bender
 		void Update( const float /*deltaTime*/ ) override;
 
 	private:
+		// TODO bvi_gravity_bender - Should be using PlayerInputComponent.
 		std::vector<dae::input::ScopedInputBinding> m_bindings;
 	};
 }

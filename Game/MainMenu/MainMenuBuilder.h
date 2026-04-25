@@ -8,6 +8,7 @@
 #include "Minigin/Core/GameObject.h"
 #include "Minigin/Graphics/TextComponent.h"
 #include "Minigin/Graphics/TextureComponent.h"
+#include "Minigin/Input/PlayerInputComponent.h"
 #include "Minigin/Resources/ResourceManager.h"
 #include "Minigin/Scene/Scene.h"
 
@@ -24,14 +25,14 @@ namespace bvi::main_menu
 	public:
 		MainMenuBuilder() = delete;
 
-		static void Build( dae::scenes::Scene& scene )
+		static void Build( dae::scenes::Scene& scene, dae::core::IGameState* stateMachine )
 		{
 			BuildBackground( scene );
 			BuildLogo( scene );
 			BuildFPSCounter( scene );
 
 		#ifdef ENABLE_GRAVITY_BENDER
-			BuildGravityBenderUI( scene );
+			BuildGravityBenderUI( scene, stateMachine );
 		#endif
 
 			scene.Initialize();
@@ -61,11 +62,18 @@ namespace bvi::main_menu
 			scene.AddGameObject( std::move( fpsCounter ) );
 		}
 
-		static void BuildGravityBenderUI( dae::scenes::Scene& scene )
+		static void BuildGravityBenderUI( dae::scenes::Scene& scene, dae::core::IGameState* stateMachine )
 		{
 			auto font{ dae::resources::ResourceManager::GetInstance().LoadFont( "Lingua.otf", 24 ) };
 			auto instructions{ std::make_unique<dae::core::GameObject>( 425.f, 375.f ) };
 			instructions->AddComponent<dae::graphics::TextComponent>( "Press F to start", font );
+
+			auto inputComp = instructions->AddComponent<dae::input::PlayerInputComponent>();
+
+			auto pushStateCommand = std::make_unique<common::PushStateCommand<gravity_bender::GravityBenderState>>( stateMachine );
+
+			inputComp->AddBinding( dae::input::ScopedInputBinding{ dae::input::Keyboard::Key::F, dae::input::InputManager::KeyState::Down, std::move( pushStateCommand ) } );
+
 			scene.AddGameObject( std::move( instructions ) );
 		}
 	};
