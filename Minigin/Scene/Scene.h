@@ -5,14 +5,18 @@
 #include <vector>
 
 #include "Minigin/Core/CollisionSystem.h"
-#include "Minigin/Core/GameObject.h"
+
+namespace dae::core
+{
+	class GameObject;
+}
 
 namespace dae::scenes
 {
 	class Scene final
 	{
 	public:
-		~Scene() = default;
+		~Scene();
 
 		Scene( const Scene& other ) = delete;
 		Scene( Scene&& other ) = delete;
@@ -33,12 +37,13 @@ namespace dae::scenes
 	private:
 		friend class SceneManager;
 
-		explicit Scene() = default;
+		explicit Scene();
 
 		void FlushPendingObjects();
 
 		std::vector <std::unique_ptr<core::GameObject>> m_objects{};
 		std::vector<std::unique_ptr<core::GameObject>> m_pendingObjects{};
+		std::vector<std::unique_ptr<core::GameObject>> m_processingBuffer{};
 		core::CollisionSystem m_collisionSystem{};
 		bool m_isInitialized{ false };
 	};

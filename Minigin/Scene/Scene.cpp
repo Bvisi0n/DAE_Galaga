@@ -12,6 +12,9 @@
 
 namespace dae::scenes
 {
+	Scene::Scene() = default;
+	Scene::~Scene() = default;
+
 	void Scene::Initialize()
 	{
 		if ( m_isInitialized )
@@ -21,7 +24,6 @@ namespace dae::scenes
 		}
 
 		FlushPendingObjects();
-
 		m_isInitialized = true;
 	}
 
@@ -49,7 +51,6 @@ namespace dae::scenes
 		}
 
 		m_collisionSystem.Update( m_objects );
-
 		CleanupGameObjects();
 	}
 
@@ -64,7 +65,6 @@ namespace dae::scenes
 	void Scene::AddGameObject( std::unique_ptr<core::GameObject> object )
 	{
 		assert( object != nullptr && "Cannot add a null GameObject to the scene." );
-
 		m_pendingObjects.emplace_back( std::move( object ) );
 	}
 
@@ -100,19 +100,18 @@ namespace dae::scenes
 		}
 
 		// Allows adding new objects during the flush without iterator invalidation issues, they will be flushed in the next frame.
-		auto newObjects = std::move( m_pendingObjects );
+
+		m_processingBuffer.swap( m_pendingObjects );
 		m_pendingObjects.clear();
+		m_objects.reserve( m_objects.size() + m_processingBuffer.size() );
 
-		const size_t newIndexStart = m_objects.size();
-
-		m_objects.reserve( m_objects.size() + newObjects.size() );
-		for ( auto& object : newObjects )
+		const size_t newIndexStart = m_objects.size(); // Has to happen before this loop
+		for ( auto& object : m_processingBuffer )
 		{
 			m_objects.emplace_back( std::move( object ) );
 		}
 
 		constexpr size_t requiredInitPasses = 2;
-
 		for ( size_t phase = 0; phase < requiredInitPasses; ++phase )
 		{
 			const size_t objectCount = m_objects.size();
@@ -121,5 +120,6 @@ namespace dae::scenes
 				m_objects[ index ]->AdvanceComponentStates();
 			}
 		}
+		m_processingBuffer.clear();
 	}
 }
