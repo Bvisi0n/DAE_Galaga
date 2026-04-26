@@ -2,11 +2,11 @@
 #include <utility>
 
 #include "Minigin/Core/AppStateManager.h"
-#include "Minigin/Core/IGameState.h"
+#include "Minigin/Core/IAppState.h"
 
 namespace dae::core
 {
-	void AppStateManager::ChangeState( std::unique_ptr<IGameState> newState )
+	void AppStateManager::ChangeState( std::unique_ptr<IAppState> newState )
 	{
 		m_nextState = std::move( newState );
 	}

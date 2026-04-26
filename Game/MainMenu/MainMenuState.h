@@ -5,14 +5,14 @@
 #include "Game/GravityBender/GravityBenderState.h"
 #include "Game/MainMenu/MainMenuBuilder.h"
 
-#include "Minigin/Core/IGameState.h"
+#include "Minigin/Core/IAppState.h"
 #include "Minigin/Input/InputManager.h"
 #include "Minigin/Input/ScopedInputBinding.h"
 #include "Minigin/Scene/SceneManager.h"
 
 namespace bvi::main_menu
 {
-	class MainMenuState final : public dae::core::IGameState
+	class MainMenuState final : public dae::core::IAppState
 	{
 	public:
 		MainMenuState() = default;

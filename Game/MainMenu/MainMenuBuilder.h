@@ -25,7 +25,7 @@ namespace bvi::main_menu
 	public:
 		MainMenuBuilder() = delete;
 
-		static void Build( dae::scenes::Scene& scene, dae::core::IGameState* stateMachine )
+		static void Build( dae::scenes::Scene& scene, dae::core::IAppState* stateMachine )
 		{
 			BuildBackground( scene );
 			BuildLogo( scene );
@@ -62,7 +62,7 @@ namespace bvi::main_menu
 			scene.AddGameObject( std::move( fpsCounter ) );
 		}
 
-		static void BuildGravityBenderUI( dae::scenes::Scene& scene, dae::core::IGameState* stateMachine )
+		static void BuildGravityBenderUI( dae::scenes::Scene& scene, dae::core::IAppState* stateMachine )
 		{
 			auto font{ dae::resources::ResourceManager::GetInstance().LoadFont( "Lingua.otf", 24 ) };
 			auto instructions{ std::make_unique<dae::core::GameObject>( 425.f, 375.f ) };

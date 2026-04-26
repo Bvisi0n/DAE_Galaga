@@ -4,12 +4,12 @@
 #include "Game/GravityBender/GravityBenderBuilder.h"
 #include "Game/GravityBender/GravityRegistry.h"
 
-#include "Minigin/Core/IGameState.h"
+#include "Minigin/Core/IAppState.h"
 #include "Minigin/Scene/SceneManager.h"
 
 namespace bvi::gravity_bender
 {
-	class GravityBenderState final : public dae::core::IGameState
+	class GravityBenderState final : public dae::core::IAppState
 	{
 	public:
 		GravityBenderState() = default;
