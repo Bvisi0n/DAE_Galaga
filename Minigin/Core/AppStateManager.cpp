@@ -6,7 +6,7 @@
 
 namespace dae::core
 {
-	void AppStateManager::PushState( std::unique_ptr<IGameState> newState )
+	void AppStateManager::ChangeState( std::unique_ptr<IGameState> newState )
 	{
 		m_nextState = std::move( newState );
 	}

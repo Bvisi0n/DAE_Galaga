@@ -147,7 +147,7 @@ namespace dae::core
 	#else
 		emscripten_set_main_loop_arg( &LoopCallback, this, 0, true );
 	#endif
-		dae::core::AppStateManager::GetInstance().PushState( nullptr );
+		dae::core::AppStateManager::GetInstance().ChangeState( nullptr );
 		dae::scenes::SceneManager::GetInstance().RemoveAllScenes();
 	}
 

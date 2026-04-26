@@ -25,7 +25,7 @@ namespace bvi::common
 
 		void Execute( const float /*deltaTime*/ ) override
 		{
-			dae::core::AppStateManager::GetInstance().PushState( std::make_unique<StateType>() );
+			dae::core::AppStateManager::GetInstance().ChangeState( std::make_unique<StateType>() );
 		}
 
 		[[nodiscard]] const void* GetTargetContext() const override

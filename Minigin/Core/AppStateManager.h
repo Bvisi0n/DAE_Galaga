@@ -11,7 +11,7 @@ namespace dae::core
 	class AppStateManager final : public utils::Singleton<AppStateManager>
 	{
 	public:
-		void PushState( std::unique_ptr<IGameState> newState );
+		void ChangeState( std::unique_ptr<IGameState> newState );
 		void ProcessStateChange();
 		void Update( float deltaTime );
 

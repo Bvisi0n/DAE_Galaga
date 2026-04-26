@@ -30,7 +30,7 @@ int main( int, char* [] )
 			.windowHeight = 576
 		} );
 
-	dae::core::AppStateManager::GetInstance().PushState( std::make_unique<bvi::main_menu::MainMenuState>() );
+	dae::core::AppStateManager::GetInstance().ChangeState( std::make_unique<bvi::main_menu::MainMenuState>() );
 
 	engine.Run();
 
