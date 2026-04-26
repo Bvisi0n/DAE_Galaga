@@ -1,13 +1,10 @@
 #ifndef BVI_MAINMENUSTATE_H
 #define BVI_MAINMENUSTATE_H
 
-#include "Game/Common/PushStateCommand.h"
 #include "Game/GravityBender/GravityBenderState.h"
-#include "Game/MainMenu/MainMenuBuilder.h"
+#include "Game/MainMenu/MainMenuAssembler.h"
 
 #include "Minigin/Core/IAppState.h"
-#include "Minigin/Input/InputManager.h"
-#include "Minigin/Input/ScopedInputBinding.h"
 #include "Minigin/Scene/SceneManager.h"
 
 namespace bvi::main_menu
@@ -25,8 +22,7 @@ namespace bvi::main_menu
 
 		void OnEnter() override
 		{
-			auto& scene = dae::scenes::SceneManager::GetInstance().CreateScene();
-			MainMenuBuilder::Build( scene, this );
+			MainMenuAssembler::Assemble( this );
 		}
 
 		void OnExit() override

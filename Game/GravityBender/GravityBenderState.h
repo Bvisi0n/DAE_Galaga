@@ -1,7 +1,7 @@
 #ifndef BVI_GRAVITYBENDERSTATE_H
 #define BVI_GRAVITYBENDERSTATE_H
 
-#include "Game/GravityBender/GravityBenderBuilder.h"
+#include "Game/GravityBender/GravityBenderAssembler.h"
 #include "Game/GravityBender/GravityRegistry.h"
 
 #include "Minigin/Core/IAppState.h"
@@ -22,8 +22,7 @@ namespace bvi::gravity_bender
 
 		void OnEnter() override
 		{
-			auto& scene = dae::scenes::SceneManager::GetInstance().CreateScene();
-			GravityBenderBuilder::Build( scene );
+			GravityBenderAssembler::Assemble( this );
 		}
 
 		void OnExit() override

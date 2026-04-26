@@ -1,5 +1,5 @@
-#ifndef BVI_GRAVITYBENDERBUILDER_H
-#define BVI_GRAVITYBENDERBUILDER_H
+#ifndef BVI_GRAVITYBENDERASSEMBLER_H
+#define BVI_GRAVITYBENDERASSEMBLER_H
 
 #include <memory>
 #include <utility>
@@ -19,6 +19,7 @@
 
 #include "Minigin/Core/ColliderComponent.h"
 #include "Minigin/Core/GameObject.h"
+#include "Minigin/Core/IAppState.h"
 #include "Minigin/Core/MoveComponent.h"
 #include "Minigin/Graphics/PrimitiveRenderComponent.h"
 #include "Minigin/Graphics/TextComponent.h"
@@ -28,27 +29,31 @@
 #include "Minigin/Input/ScopedInputBinding.h"
 #include "Minigin/Resources/ResourceManager.h"
 #include "Minigin/Scene/Scene.h"
+#include "Minigin/Scene/SceneManager.h"
 
 namespace bvi::gravity_bender
 {
-	class GravityBenderBuilder final
+	class GravityBenderAssembler final
 	{
 	public:
-		GravityBenderBuilder() = delete;
+		GravityBenderAssembler() = delete;
 
-		static void Build( dae::scenes::Scene& scene )
+		static void Assemble( dae::core::IAppState* /*stateMachine*/ )
 		{
-			BuildViewportBorder( scene );
-			BuildInstructions( scene );
-			BuildFPSCounter( scene );
-			BuildPlayer( scene );
-			BuildSpawner( scene );
+			auto& scene = dae::scenes::SceneManager::GetInstance().CreateScene();
+
+			AssembleViewportBorder( scene );
+			AssembleInstructions( scene );
+			AssembleFPSCounter( scene );
+			AssemblePlayer( scene );
+			AssembleSpawner( scene );
 			EnableCollisions( scene );
+
 			scene.Initialize();
 		}
 
 	private:
-		static void BuildViewportBorder( dae::scenes::Scene& scene )
+		static void AssembleViewportBorder( dae::scenes::Scene& scene )
 		{
 			// TODO bvi_gravity_bender - Fetch screen dimensions and use them.
 			constexpr SDL_FRect screenBounds{ 0.f, 0.f, 1024.f, 576.f };
@@ -61,7 +66,7 @@ namespace bvi::gravity_bender
 			scene.AddGameObject( std::move( borderObject ) );
 		}
 
-		static void BuildInstructions( dae::scenes::Scene& scene )
+		static void AssembleInstructions( dae::scenes::Scene& scene )
 		{
 			SDL_Color fontColor{ 255, 255, 255, 255 };
 			auto font{ dae::resources::ResourceManager::GetInstance().LoadFont( "Lingua.otf", 16 ) };
@@ -82,7 +87,7 @@ namespace bvi::gravity_bender
 			scene.AddGameObject( std::move( line ) );
 		}
 
-		static void BuildFPSCounter( dae::scenes::Scene& scene )
+		static void AssembleFPSCounter( dae::scenes::Scene& scene )
 		{
 			auto font{ dae::resources::ResourceManager::GetInstance().LoadFont( "Lingua.otf", 18 ) };
 			auto fpsCounter{ std::make_unique<dae::core::GameObject>( 10.f, 10.f ) };
@@ -91,7 +96,7 @@ namespace bvi::gravity_bender
 			scene.AddGameObject( std::move( fpsCounter ) );
 		}
 
-		static void BuildPlayer( dae::scenes::Scene& scene )
+		static void AssemblePlayer( dae::scenes::Scene& scene )
 		{
 			auto player{ std::make_unique<dae::core::GameObject>( 400.f, 350.f ) };
 			player->AddComponent<dae::graphics::PrimitiveRenderComponent>( dae::graphics::PrimitiveShape{ dae::graphics::CircleShape{ 10.0f, true } }, SDL_Color{ 255, 204, 0, 255 } );
@@ -118,7 +123,7 @@ namespace bvi::gravity_bender
 			scene.AddGameObject( std::move( player ) );
 		}
 
-		static void BuildSpawner( dae::scenes::Scene& scene )
+		static void AssembleSpawner( dae::scenes::Scene& scene )
 		{
 			auto spawner{ std::make_unique<dae::core::GameObject>() };
 			spawner->AddComponent<SpawnerPortalComponent>( UnitData{} );
