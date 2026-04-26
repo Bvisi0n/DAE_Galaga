@@ -42,6 +42,7 @@ namespace bvi::gravity_bender
 		{
 			auto& scene = dae::scenes::SceneManager::GetInstance().CreateScene();
 
+			AssembleBackground( scene );
 			AssembleViewportBorder( scene );
 			AssembleInstructions( scene );
 			AssembleFPSCounter( scene );
@@ -53,6 +54,18 @@ namespace bvi::gravity_bender
 		}
 
 	private:
+		static void AssembleBackground( dae::scenes::Scene& scene )
+		{
+			// TODO bvi_gravity_bender - Fetch screen dimensions and use them.
+			constexpr SDL_FRect screenBounds{ 0.f, 0.f, 1024.f, 576.f };
+			constexpr SDL_Color black{ 20, 10, 30, 255 };
+
+			auto backgroundObject{ std::make_unique<dae::core::GameObject>() };
+			backgroundObject->AddComponent<dae::graphics::PrimitiveRenderComponent>( dae::graphics::PrimitiveShape{ dae::graphics::RectShape{ screenBounds, true } }, black );
+
+			scene.AddGameObject( std::move( backgroundObject ) );
+		}
+
 		static void AssembleViewportBorder( dae::scenes::Scene& scene )
 		{
 			// TODO bvi_gravity_bender - Fetch screen dimensions and use them.
@@ -60,7 +73,6 @@ namespace bvi::gravity_bender
 			constexpr SDL_Color neonPurple{ 138, 43, 226, 255 };
 
 			auto borderObject{ std::make_unique<dae::core::GameObject>() };
-
 			borderObject->AddComponent<dae::graphics::PrimitiveRenderComponent>( dae::graphics::PrimitiveShape{ dae::graphics::RectShape{ screenBounds, false } }, neonPurple, 2 );
 
 			scene.AddGameObject( std::move( borderObject ) );
