@@ -1,6 +1,6 @@
+#include <glm/ext/matrix_float4x4.hpp>
 #include <glm/ext/matrix_transform.hpp>
-#include <glm/mat4x4.hpp>
-#include <glm/vec3.hpp>
+#include <glm/ext/vector_float3.hpp>
 
 #include "Minigin/Core/GameObject.h"
 #include "Minigin/Core/Transform.h"

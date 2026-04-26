@@ -3,10 +3,10 @@
 #include <utility>
 #include <vector>
 
-#include <glm/mat4x4.hpp>
+#include <glm/ext/matrix_float4x4.hpp>
 
-#include <Minigin/Core/CollisionSystem.h>
-#include <Minigin/Core/GameObject.h>
+#include "Minigin/Core/CollisionSystem.h"
+#include "Minigin/Core/GameObject.h"
 #include "Minigin/Core/Transform.h"
 #include "Minigin/Scene/Scene.h"
 

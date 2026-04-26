@@ -1,11 +1,8 @@
 #ifndef BVI_PLAYERCOMPONENT_H
 #define BVI_PLAYERCOMPONENT_H
 
-#include <vector>
-
 #include "Minigin/Core/Component.h"
 #include "Minigin/Core/GameObject.h"
-#include "Minigin/Input/ScopedInputBinding.h"
 
 namespace bvi::gravity_bender
 {

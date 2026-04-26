@@ -1,7 +1,6 @@
 #ifndef DAE_GAMEOBJECT_H
 #define DAE_GAMEOBJECT_H
 
-#include <algorithm>
 #include <cassert>
 #include <concepts>
 #include <memory>
@@ -11,11 +10,6 @@
 #include "Minigin/Core/Component.h"
 #include "Minigin/Core/Transform.h"
 #include "Minigin/Graphics/IRenderable.h"
-
-namespace dae::graphics
-{
-	class Texture2D;
-}
 
 namespace dae::core
 {
