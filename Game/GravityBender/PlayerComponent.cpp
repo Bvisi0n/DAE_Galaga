@@ -18,7 +18,7 @@ namespace bvi::gravity_bender
 	PlayerComponent::~PlayerComponent()
 	{
 		GravityRegistry::RemovePlayerNode();
-		dae::core::AppStateManager::GetInstance().ChangeState( std::make_unique<bvi::main_menu::MainMenuState>() );
+		dae::core::AppStateManager::GetInstance().ChangeState( std::make_unique<main_menu::MainMenuState>() );
 	}
 
 	void PlayerComponent::InitializeLinkage()

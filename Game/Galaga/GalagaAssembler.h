@@ -1,28 +1,31 @@
-#ifndef BVI_MAINMENUASSEMBLER_H
-#define BVI_MAINMENUASSEMBLER_H
+#ifndef BVI_GALAGAASSEMBLER_H
+#define BVI_GALAGAASSEMBLER_H
 
 #include <memory>
+#include <utility>
 
 #include "Game/Common/FPSComponent.h"
 #include "Game/Common/PushStateCommand.h"
-#include "Game/Galaga/GalagaState.h"
-#include "Game/GravityBender/GravityBenderState.h"
+#include "Game/MainMenu/MainMenuState.h"
 
 #include "Minigin/Core/GameObject.h"
+#include "Minigin/Core/IAppState.h"
 #include "Minigin/Graphics/TextComponent.h"
 #include "Minigin/Graphics/TextureComponent.h"
 #include "Minigin/Input/InputManager.h"
+#include "Minigin/Input/Keyboard.h"
 #include "Minigin/Input/PlayerInputComponent.h"
 #include "Minigin/Input/ScopedInputBinding.h"
 #include "Minigin/Resources/ResourceManager.h"
 #include "Minigin/Scene/Scene.h"
+#include "Minigin/Scene/SceneManager.h"
 
-namespace bvi::main_menu
+namespace bvi::galaga
 {
-	class MainMenuAssembler final
+	class GalagaAssembler final
 	{
 	public:
-		MainMenuAssembler() = delete;
+		GalagaAssembler() = delete;
 
 		static void Assemble( dae::core::IAppState* stateMachine )
 		{
@@ -32,11 +35,7 @@ namespace bvi::main_menu
 			AssembleLogo( scene );
 			AssembleFPSCounter( scene );
 
-			AssembleGalagaUI( scene, stateMachine );
-
-		#ifdef ENABLE_GRAVITY_BENDER
-			AssembleGravityBenderUI( scene, stateMachine );
-		#endif
+			AssembleBackToMainMenuUI( scene, stateMachine );
 
 			scene.Initialize();
 		}
@@ -65,32 +64,16 @@ namespace bvi::main_menu
 			scene.AddGameObject( std::move( fpsCounter ) );
 		}
 
-		static void AssembleGalagaUI( dae::scenes::Scene& scene, dae::core::IAppState* stateMachine )
+		static void AssembleBackToMainMenuUI( dae::scenes::Scene& scene, dae::core::IAppState* stateMachine )
 		{
 			auto font{ dae::resources::ResourceManager::GetInstance().LoadFont( "Lingua.otf", 24 ) };
-			auto instructions{ std::make_unique<dae::core::GameObject>( 400.f, 375.f ) };
-			instructions->AddComponent<dae::graphics::TextComponent>( "Press G to start Galaga", font );
+			auto instructions{ std::make_unique<dae::core::GameObject>( 425.f, 375.f ) };
+			instructions->AddComponent<dae::graphics::TextComponent>( "Press F to go back", font );
 
 			auto inputComp = instructions->AddComponent<dae::input::PlayerInputComponent>();
 
 			// TODO bvi_main_menu - Once the Command pattern is reworked to be stateless, this should be simplified.
-			auto pushStateCommand = std::make_unique<common::PushStateCommand<galaga::GalagaState>>( stateMachine );
-
-			inputComp->AddBinding( dae::input::ScopedInputBinding{ dae::input::Keyboard::Key::G, dae::input::InputManager::KeyState::Down, std::move( pushStateCommand ) } );
-
-			scene.AddGameObject( std::move( instructions ) );
-		}
-
-		static void AssembleGravityBenderUI( dae::scenes::Scene& scene, dae::core::IAppState* stateMachine )
-		{
-			auto font{ dae::resources::ResourceManager::GetInstance().LoadFont( "Lingua.otf", 24 ) };
-			auto instructions{ std::make_unique<dae::core::GameObject>( 400.f, 410.f ) };
-			instructions->AddComponent<dae::graphics::TextComponent>( "Press F to start Gravity Bender", font );
-
-			auto inputComp = instructions->AddComponent<dae::input::PlayerInputComponent>();
-
-			// TODO bvi_main_menu - Once the Command pattern is reworked to be stateless, this should be simplified.
-			auto pushStateCommand = std::make_unique<common::PushStateCommand<gravity_bender::GravityBenderState>>( stateMachine );
+			auto pushStateCommand = std::make_unique<common::PushStateCommand<main_menu::MainMenuState>>( stateMachine );
 
 			inputComp->AddBinding( dae::input::ScopedInputBinding{ dae::input::Keyboard::Key::F, dae::input::InputManager::KeyState::Down, std::move( pushStateCommand ) } );
 

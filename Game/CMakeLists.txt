@@ -15,6 +15,7 @@ set(GAME_SOURCES
 
   "Common/FPSComponent.cpp"
   
+  "Galaga/GalagaState.cpp"
   "Galaga/HealthComponent.cpp"
   "Galaga/RotatorComponent.cpp"
   "Galaga/ScoreComponent.cpp"
@@ -33,7 +34,7 @@ else()
 endif()
 
 # Generate Executable
-add_executable(${TARGET_NAME} ${TARGET_PARAM} ${GAME_SOURCES})
+add_executable(${TARGET_NAME} ${TARGET_PARAM} ${GAME_SOURCES} )
 
 # Inject the preprocessor macro
 if(BUILD_GRAVITY_BENDER)

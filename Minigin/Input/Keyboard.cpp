@@ -86,6 +86,7 @@ namespace dae::input
 				{Key::Q,        'Q'},
 				{Key::E,        'E'},
 				{Key::F,        'F'},
+				{Key::G,        'G'},
 			};
 		#else
 			// https://wiki.libsdl.org/SDL3/SDL_Scancode
@@ -99,6 +100,7 @@ namespace dae::input
 				{Key::Q,        SDL_SCANCODE_Q},
 				{Key::E,        SDL_SCANCODE_E},
 				{Key::F,        SDL_SCANCODE_F},
+				{Key::G,        SDL_SCANCODE_G},
 			};
 		#endif
 			return keyMap.at( key );
