@@ -3,6 +3,7 @@
 #include <chrono>
 #include <cstdint>
 #include <iostream>
+#include <memory>
 #include <sstream>
 #include <string>
 
@@ -28,8 +29,10 @@
 #include <SDL3/SDL_video.h>
 #include <SDL3_ttf/SDL_ttf.h>
 
+#include "Minigin/Audio/SDLSoundSystem.h"
 #include "Minigin/Core/AppStateManager.h"
 #include "Minigin/Core/Minigin.h"
+#include "Minigin/Core/ServiceLocator.h"
 #include "Minigin/Graphics/Renderer.h"
 #include "Minigin/Input/InputManager.h"
 #include "Minigin/Resources/ResourceManager.h"
@@ -111,6 +114,7 @@ namespace dae::core
 
 		graphics::Renderer::GetInstance().Init( g_window );
 		resources::ResourceManager::GetInstance().Init( config.dataPath );
+		ServiceLocator::RegisterSoundSystem( std::make_unique<audio::SDLSoundSystem>() );
 	}
 
 	Minigin::~Minigin()
