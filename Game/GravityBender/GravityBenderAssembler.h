@@ -31,6 +31,8 @@
 #include "Minigin/Scene/Scene.h"
 #include "Minigin/Scene/SceneManager.h"
 
+// TODO bvi_gravity_bender - Split into .cpp/.h
+
 namespace bvi::gravity_bender
 {
 	class GravityBenderAssembler final

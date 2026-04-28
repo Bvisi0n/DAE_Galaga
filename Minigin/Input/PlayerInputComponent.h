@@ -8,6 +8,8 @@
 #include "Minigin/Core/GameObject.h"
 #include "Minigin/Input/ScopedInputBinding.h"
 
+// TODO dae_input - Split into .cpp/.h
+
 namespace dae::input
 {
 	class PlayerInputComponent final : public core::Component
