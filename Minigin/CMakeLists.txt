@@ -5,6 +5,7 @@ add_library(Minigin STATIC
   "Core/GameObject.cpp"
   "Core/Minigin.cpp"
   "Core/MoveComponent.cpp"
+  "Core/ServiceLocator.cpp"
   "Core/Transform.cpp"
   "Events/ObservableComponent.cpp"
   "Graphics/Font.cpp"
