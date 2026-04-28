@@ -45,6 +45,10 @@ target_link_libraries(Minigin PUBLIC
   glm::glm
 )
 
+target_link_libraries(Minigin PRIVATE
+  SDL3_mixer::SDL3_mixer
+)
+
 if(WIN32 AND VLD_FOUND)
   target_link_libraries(Minigin PUBLIC ${VLD_LIBRARIES})
 endif()
