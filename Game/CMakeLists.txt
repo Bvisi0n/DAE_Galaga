@@ -28,6 +28,7 @@ if(BUILD_GRAVITY_BENDER)
     list(APPEND GAME_SOURCES
         "GravityBender/GravityRegistry.cpp"
         "GravityBender/PlayerComponent.cpp"
+        "GravityBender/ScreenWrapComponent.cpp"
         "GravityBender/SpawnerPortalComponent.cpp"
         "GravityBender/SpawnGravityFieldCommand.cpp"
     )
