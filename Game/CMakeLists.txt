@@ -26,15 +26,16 @@ set(GAME_SOURCES
 if(BUILD_GRAVITY_BENDER)
     message(STATUS "Game Module: Gravity Bender ENABLED")
     list(APPEND GAME_SOURCES
-        "GravityBender/SpawnerPortalComponent.cpp"
         "GravityBender/PlayerComponent.cpp"
+        "GravityBender/SpawnerPortalComponent.cpp"
+        "GravityBender/SpawnGravityFieldCommand.cpp"
     )
 else()
     message(STATUS "Game Module: Gravity Bender DISABLED (Strict Galaga Build)")
 endif()
 
 # Generate Executable
-add_executable(${TARGET_NAME} ${TARGET_PARAM} ${GAME_SOURCES} )
+add_executable(${TARGET_NAME} ${TARGET_PARAM} ${GAME_SOURCES})
 
 # Inject the preprocessor macro
 if(BUILD_GRAVITY_BENDER)
