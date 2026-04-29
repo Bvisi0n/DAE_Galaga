@@ -3,10 +3,12 @@
 
 #include <glm/ext/vector_float3.hpp>
 
-#include "Game/GravityBender/GravityBenderBlueprints.h"
-
 #include "Minigin/Core/Component.h"
-#include "Minigin/Core/GameObject.h"
+
+namespace dae::core
+{
+	class GameObject;
+}
 
 namespace dae::graphics
 {
