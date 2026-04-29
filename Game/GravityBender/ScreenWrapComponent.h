@@ -1,7 +1,7 @@
 #ifndef BVI_SCREENWRAPCOMPONENT_H
 #define BVI_SCREENWRAPCOMPONENT_H
 
-#include "Minigin/Core/Component.h"
+#include <Minigin/Core/Component.h>
 
 // TODO bvi_gravity_bender - Fetch viewport dimensions instead of receiving them as parameters.
 

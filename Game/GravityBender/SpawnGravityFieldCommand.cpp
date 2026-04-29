@@ -1,10 +1,10 @@
 #include <cassert>
 #include <chrono>
 
-#include "Game/GravityBender/GravityRegistry.h"
-#include "Game/GravityBender/SpawnGravityFieldCommand.h"
+#include <Minigin/Core/GameObject.h>
 
-#include "Minigin/Core/GameObject.h"
+#include <Game/GravityBender/GravityRegistry.h>
+#include <Game/GravityBender/SpawnGravityFieldCommand.h>
 
 namespace bvi::gravity_bender
 {

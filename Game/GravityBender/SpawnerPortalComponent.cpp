@@ -10,17 +10,17 @@
 
 #include <glm/ext/vector_float3.hpp>
 
-#include "Game/GravityBender/GravityBenderBlueprints.h"
-#include "Game/GravityBender/GravityReceiverComponent.h"
-#include "Game/GravityBender/ScreenWrapComponent.h"
-#include "Game/GravityBender/SpawnerPortalComponent.h"
-
 #include <Minigin/Core/ColliderComponent.h>
-#include "Minigin/Core/Component.h"
-#include "Minigin/Core/GameObject.h"
-#include "Minigin/Core/MoveComponent.h"
-#include "Minigin/Graphics/PrimitiveRenderComponent.h"
-#include "Minigin/Scene/SceneManager.h"
+#include <Minigin/Core/Component.h>
+#include <Minigin/Core/GameObject.h>
+#include <Minigin/Core/MoveComponent.h>
+#include <Minigin/Graphics/PrimitiveRenderComponent.h>
+#include <Minigin/Scene/SceneManager.h>
+
+#include <Game/GravityBender/GravityBenderBlueprints.h>
+#include <Game/GravityBender/GravityReceiverComponent.h>
+#include <Game/GravityBender/ScreenWrapComponent.h>
+#include <Game/GravityBender/SpawnerPortalComponent.h>
 
 namespace bvi::gravity_bender
 {

@@ -3,7 +3,7 @@
 
 #include <chrono>
 
-#include "Minigin/Input/ICommand.h"
+#include <Minigin/Input/ICommand.h>
 
 namespace dae::core
 {

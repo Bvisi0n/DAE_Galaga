@@ -1,10 +1,10 @@
 #include <glm/ext/vector_float3.hpp>
 
-#include "Game/GravityBender/ScreenWrapComponent.h"
+#include <Minigin/Core/Component.h>
+#include <Minigin/Core/GameObject.h>
+#include <Minigin/Core/Transform.h>
 
-#include "Minigin/Core/Component.h"
-#include "Minigin/Core/GameObject.h"
-#include "Minigin/Core/Transform.h"
+#include <Game/GravityBender/ScreenWrapComponent.h>
 
 namespace bvi::gravity_bender
 {

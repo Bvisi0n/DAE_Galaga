@@ -1,7 +1,7 @@
 #ifndef BVI_PLAYERCOMPONENT_H
 #define BVI_PLAYERCOMPONENT_H
 
-#include "Minigin/Core/Component.h"
+#include <Minigin/Core/Component.h>
 
 namespace dae::core
 {

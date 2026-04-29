@@ -3,7 +3,7 @@
 
 #include <glm/ext/vector_float3.hpp>
 
-#include "Minigin/Core/Component.h"
+#include <Minigin/Core/Component.h>
 
 namespace dae::core
 {

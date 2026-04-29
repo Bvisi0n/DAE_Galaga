@@ -1,13 +1,13 @@
 #include <limits>
 #include <memory>
 
-#include "Game/GravityBender/GravityRegistry.h"
-#include "Game/GravityBender/PlayerComponent.h"
-#include "Game/MainMenu/MainMenuState.h"
+#include <Minigin/Core/AppStateManager.h>
+#include <Minigin/Core/Component.h>
+#include <Minigin/Core/GameObject.h>
 
-#include "Minigin/Core/AppStateManager.h"
-#include "Minigin/Core/Component.h"
-#include "Minigin/Core/GameObject.h"
+#include <Game/GravityBender/GravityRegistry.h>
+#include <Game/GravityBender/PlayerComponent.h>
+#include <Game/MainMenu/MainMenuState.h>
 
 namespace bvi::gravity_bender
 {

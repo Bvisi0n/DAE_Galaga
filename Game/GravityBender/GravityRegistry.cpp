@@ -8,12 +8,11 @@
 
 #include <SDL3/SDL_pixels.h>
 
-#include "Game/GravityBender/GravityRegistry.h"
+#include <Minigin/Core/GameObject.h>
+#include <Minigin/Graphics/PrimitiveRenderComponent.h>
+#include <Minigin/Scene/SceneManager.h>
 
-#include "Minigin/Core/GameObject.h"
-#include "Minigin/Graphics/PrimitiveRenderComponent.h"
-#include "Minigin/Scene/SceneManager.h"
-
+#include <Game/GravityBender/GravityRegistry.h>
 
 namespace bvi::gravity_bender
 {
