@@ -6,9 +6,9 @@
 
 namespace dae::core
 {
-	void ServiceLocator::RegisterSoundSystem( std::unique_ptr<audio::ISoundSystem>&& system )
+	void ServiceLocator::RegisterSoundSystem( std::unique_ptr<audio::ISoundSystem>&& soundSystem )
 	{
-		m_soundSystem = system ? std::move( system ) : std::make_unique<audio::NullSoundSystem>();
+		m_soundSystem = soundSystem ? std::move( soundSystem ) : std::make_unique<audio::NullSoundSystem>();
 	}
 
 	audio::ISoundSystem& ServiceLocator::GetSoundSystem()

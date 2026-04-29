@@ -12,7 +12,9 @@ namespace dae::core
 	public:
 		ServiceLocator() = delete;
 
-		static void RegisterSoundSystem( std::unique_ptr<audio::ISoundSystem>&& system );
+		// TODO dae_core - Rule of 5?
+
+		static void RegisterSoundSystem( std::unique_ptr<audio::ISoundSystem>&& soundSystem );
 		static audio::ISoundSystem& GetSoundSystem();
 
 	private:
