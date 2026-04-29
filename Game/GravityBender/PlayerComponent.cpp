@@ -1,13 +1,13 @@
 #include <limits>
 #include <memory>
 
-#include "Game/GravityBender/GravityRegistry.h"
-#include "Game/GravityBender/PlayerComponent.h"
-#include "Game/MainMenu/MainMenuState.h"
+#include <Minigin/Core/AppStateManager.h>
+#include <Minigin/Core/Component.h>
+#include <Minigin/Core/GameObject.h>
 
-#include "Minigin/Core/AppStateManager.h"
-#include "Minigin/Core/Component.h"
-#include "Minigin/Core/GameObject.h"
+#include <Game/GravityBender/GravityRegistry.h>
+#include <Game/GravityBender/PlayerComponent.h>
+#include <Game/MainMenu/MainMenuState.h>
 
 namespace bvi::gravity_bender
 {
@@ -29,7 +29,6 @@ namespace bvi::gravity_bender
 
 	void PlayerComponent::Update( const float )
 	{
-		// TODO bvi_gravity_bender - For prototyping purposes, there are better ways to do this.
 		const auto& origin = GetOwner()->GetTransform().GetWorldPosition();
 		constexpr float radius = 100.0f;
 		constexpr float strength = 1'500'000.0f;
