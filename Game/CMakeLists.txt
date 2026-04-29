@@ -26,6 +26,7 @@ set(GAME_SOURCES
 if(BUILD_GRAVITY_BENDER)
     message(STATUS "Game Module: Gravity Bender ENABLED")
     list(APPEND GAME_SOURCES
+        "GravityBender/GravityBenderAssembler.cpp"
         "GravityBender/GravityBenderState.cpp"
         "GravityBender/GravityReceiverComponent.cpp"
         "GravityBender/GravityRegistry.cpp"
