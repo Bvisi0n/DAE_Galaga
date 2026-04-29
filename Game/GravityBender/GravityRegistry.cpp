@@ -4,7 +4,7 @@
 #include <utility>
 #include <vector>
 
-#include <glm/ext/vector_float3.hpp>
+#include <glm/detail/type_vec3.hpp>
 
 #include <SDL3/SDL_pixels.h>
 
