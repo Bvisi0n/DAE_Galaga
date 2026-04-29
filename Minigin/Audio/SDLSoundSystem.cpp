@@ -1,16 +1,22 @@
-#include <atomic>
 #include <cassert>
 #include <condition_variable>
+#include <filesystem>
+#include <limits>
 #include <memory>
 #include <mutex>
 #include <queue>
+#include <stop_token>
+#include <string>
 #include <thread>
+#include <vector>
 
-#include <SDL3/SDL.h>
+#include <SDL3/SDL_audio.h>
 #include <SDL3_mixer/SDL_mixer.h>
 
-#include "ISoundSystem.h"
-#include "Minigin/Audio/SDLSoundSystem.h"
+#include <Minigin/Audio/ISoundSystem.h>
+#include <Minigin/Audio/SDLSoundSystem.h>
+
+// SDL3_mixer documentation: https://wiki.libsdl.org/SDL3_mixer/CategorySDLMixer
 
 namespace dae::audio
 {
@@ -20,22 +26,94 @@ namespace dae::audio
 		float volume;
 	};
 
+	struct MixerDeleter
+	{
+		void operator()( MIX_Mixer* mixer ) const
+		{
+			if ( mixer )
+			{
+				MIX_DestroyMixer( mixer ); // TODO dae_audio - Exception!
+			}
+		}
+	};
+
+	struct AudioDeleter
+	{
+		void operator()( MIX_Audio* audio ) const
+		{
+			if ( audio )
+			{
+				MIX_DestroyAudio( audio );
+			}
+		}
+	};
+
+	using UniqueMixer = std::unique_ptr<MIX_Mixer, MixerDeleter>;
+	using UniqueAudio = std::unique_ptr<MIX_Audio, AudioDeleter>;
+
+	struct AudioClip
+	{
+		std::filesystem::path filepath;
+		UniqueAudio audio{ nullptr };
+
+		bool IsLoaded() const
+		{
+			return audio != nullptr;
+		}
+	};
+
 	class SDLSoundSystem::SDLSoundSystemImpl
 	{
 	public:
 		SDLSoundSystemImpl()
 		{
-			// TODO dae_audio - Initialize SDL_mixer here
+			if ( !MIX_Init() )
+			{
+				assert( false && "Failed to initialize SDL3_mixer" );
+				return;
+			}
 
-			m_workerThread = std::jthread( &SDLSoundSystemImpl::ProcessQueue, this );
+			m_mixer.reset( MIX_CreateMixerDevice( SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK, 0 ) );
+			if ( !m_mixer )
+			{
+				assert( false && "Failed to create SDL3_mixer device" );
+				return;
+			}
+
+			m_tracks.reserve( 16 );
+			for ( int i = 0; i < 16; ++i )
+			{
+				m_tracks.push_back( MIX_CreateTrack( m_mixer.get() ) );
+			}
+
+			m_workerThread = std::jthread( [ this ] ( std::stop_token st )
+										   {
+											   ProcessQueue( st );
+										   } );
 		}
 
 		~SDLSoundSystemImpl()
 		{
-			m_isAlive.store( false );
-			m_queueCondition.notify_one();
+			m_workerThread.request_stop();
+			if ( m_workerThread.joinable() )
+			{
+				m_workerThread.join();
+			}
 
-			// TODO dae_audio - Cleanup SDL_mixer here
+			if ( m_mixer )
+			{
+				for ( MIX_Track* track : m_tracks )
+				{
+					MIX_StopTrack( track, 0 );
+					MIX_SetTrackAudio( track, nullptr );
+				}
+			}
+
+			m_tracks.clear();
+			m_audioCache.clear();
+			m_mixer.reset();
+
+			MIX_Quit(); // TODO dae_audio - Exception!
 		}
 
 		void Play( sound_id id, float volume )
@@ -45,53 +123,79 @@ namespace dae::audio
 			m_queueCondition.notify_one();
 		}
 
-	private:
-		void ProcessQueue()
+		void RegisterSound( sound_id id, const std::filesystem::path& filepath )
 		{
-			while ( m_isAlive.load() )
+			if ( id >= m_audioCache.size() )
+			{
+				assert( id < std::numeric_limits<sound_id>::max() && "Sound ID exceeds maximum value" );
+				m_audioCache.resize( id + 1 );
+			}
+			m_audioCache[ id ].filepath = filepath;
+		}
+
+	private:
+		UniqueMixer m_mixer;
+		std::vector<MIX_Track*> m_tracks;
+		std::vector<AudioClip> m_audioCache;
+
+		std::queue<PlayMessage> m_queue;
+		std::mutex m_queueMutex;
+		std::condition_variable_any m_queueCondition;
+
+		std::jthread m_workerThread;
+
+		void ProcessQueue( std::stop_token stopToken )
+		{
+			while ( !stopToken.stop_requested() )
 			{
 				PlayMessage currentMessage{};
 
 				{
 					std::unique_lock<std::mutex> lock( m_queueMutex );
+					m_queueCondition.wait( lock, stopToken, [ this ] () {
+						return !m_queue.empty();
+					} );
 
-					m_queueCondition.wait( lock,
-										  [ this ] ()
-										  {
-											  return !m_queue.empty() || !m_isAlive.load();
-										  } );
+					if ( stopToken.stop_requested() && m_queue.empty() ) break;
+					if ( m_queue.empty() ) continue;
 
-					if ( !m_queue.empty() )
-					{
-						currentMessage = m_queue.front();
-						m_queue.pop();
-					}
+					currentMessage = m_queue.front();
+					m_queue.pop();
 				}
 
-				if ( currentMessage.id != 0 )
+				if ( currentMessage.id < m_audioCache.size() )
 				{
-					// TODO dae_audio - Execute SDL_mixer Play logic here
+					AudioClip& clip = m_audioCache[ currentMessage.id ];
 
-					/* From slides:
-					*
-					* auto audioclip = audioclips[id];
-					* if (!audioclip->is_loaded())
-					* audioclip->load();
-					* audioclip->set_volume(volume);
-					* audioclip->play();
-					*
-					* - Load the audioclip if not loaded
-					* - Set Volume
-					* - Play the sound */
+					if ( !clip.IsLoaded() )
+					{
+						clip.audio.reset( MIX_LoadAudio( m_mixer.get(), clip.filepath.string().c_str(), true ) );
+						if ( !clip.IsLoaded() ) continue;
+					}
+
+					MIX_Track* availableTrack = nullptr;
+					for ( MIX_Track* track : m_tracks )
+					{
+						if ( !MIX_TrackPlaying( track ) )
+						{
+							availableTrack = track;
+							break;
+						}
+					}
+
+					if ( availableTrack )
+					{
+						MIX_SetTrackAudio( availableTrack, clip.audio.get() );
+						MIX_SetTrackGain( availableTrack, currentMessage.volume );
+						MIX_PlayTrack( availableTrack, 0 );
+					}
+					else
+					{
+						// Discard request.
+					}
 				}
 			}
 		}
-
-		std::queue<PlayMessage> m_queue;
-		std::mutex m_queueMutex;
-		std::condition_variable m_queueCondition;
-		std::jthread m_workerThread;
-		std::atomic<bool> m_isAlive{ true };
 	};
 
 	SDLSoundSystem::SDLSoundSystem() : m_pimpl( std::make_unique<SDLSoundSystemImpl>() )
