@@ -9,8 +9,6 @@ namespace dae::core
 	class MoveComponent;
 }
 
-// TODO bvi_gravity_bender - Split into .cpp/.h
-
 namespace bvi::gravity_bender
 {
 	class GravityReceiverComponent final : public dae::core::Component

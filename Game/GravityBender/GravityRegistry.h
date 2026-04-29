@@ -10,8 +10,6 @@ namespace dae::core
 	class GameObject;
 }
 
-// TODO bvi_gravity_bender - Split into .cpp/.h
-
 namespace bvi::gravity_bender
 {
 	struct GravityNode
