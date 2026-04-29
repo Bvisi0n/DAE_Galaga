@@ -5,6 +5,13 @@
 
 using sound_id = uint16_t;
 
+// TODO dae_audio - Rework audio system.
+	// Move struct PlayMessage to this file, use it as argument.
+	// Add RegisterSound method.
+	// Figure out an optimized way to manage audio resources.
+	// Fix RAII wrappers/deleters, MIX_Quit(), memory leak if not used.
+	// Implement in Galaga.
+
 namespace dae::audio
 {
 	class ISoundSystem
