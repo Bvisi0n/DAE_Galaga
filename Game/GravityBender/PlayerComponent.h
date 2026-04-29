@@ -2,7 +2,11 @@
 #define BVI_PLAYERCOMPONENT_H
 
 #include "Minigin/Core/Component.h"
-#include "Minigin/Core/GameObject.h"
+
+namespace dae::core
+{
+	class GameObject;
+}
 
 namespace bvi::gravity_bender
 {
