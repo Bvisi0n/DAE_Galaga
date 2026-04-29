@@ -48,7 +48,7 @@ namespace bvi::gravity_bender
 
 	void GravityBenderAssembler::AssembleBackground( dae::scenes::Scene& scene )
 	{
-		// TODO bvi_gravity_bender - Fetch screen dimensions and use them.
+		// TODO bvi_gravity_bender - Fetch viewport dimensions and use them.
 		constexpr SDL_FRect screenBounds{ 0.f, 0.f, 1024.f, 576.f };
 		constexpr SDL_Color black{ 20, 10, 30, 255 };
 
@@ -126,7 +126,7 @@ namespace bvi::gravity_bender
 
 	void GravityBenderAssembler::AssembleViewportBorder( dae::scenes::Scene& scene )
 	{
-		// TODO bvi_gravity_bender - Fetch screen dimensions and use them.
+		// TODO bvi_gravity_bender - Fetch viewport dimensions and use them.
 		constexpr SDL_FRect screenBounds{ 0.f, 0.f, 1024.f, 576.f };
 		constexpr SDL_Color neonPurple{ 138, 43, 226, 255 };
 

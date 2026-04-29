@@ -3,7 +3,7 @@
 
 #include <Minigin/Core/Component.h>
 
-// TODO bvi_gravity_bender - Fetch viewport dimensions instead of receiving them as parameters.
+// TODO bvi_gravity_bender - Fetch viewport dimensions and use them.
 
 namespace dae::core
 {

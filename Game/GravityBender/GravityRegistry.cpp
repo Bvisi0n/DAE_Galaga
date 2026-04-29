@@ -54,20 +54,66 @@ namespace bvi::gravity_bender
 		using PrimitiveShape = dae::graphics::PrimitiveShape;
 		using CircleShape = dae::graphics::CircleShape;
 
-		auto visualRoot = std::make_unique<dae::core::GameObject>();
-		visualRoot->GetTransform().SetLocalPosition( node.position );
-		visualRoot->AddComponent<PrimitiveRenderComponent>( PrimitiveShape{ CircleShape{ 5.0f, true } }, SDL_Color{ 0, 255, 255, 255 } );
+		auto centerVisualRoot = std::make_unique<dae::core::GameObject>();
+		centerVisualRoot->GetTransform().SetLocalPosition( node.position );
+		// TODO bvi_gravity_bender - Hardcoded the radius here multiple times.
+		centerVisualRoot->AddComponent<PrimitiveRenderComponent>( PrimitiveShape{ CircleShape{ 5.0f, true } }, SDL_Color{ 0, 255, 255, 255 } );
+		auto centerVisualOuter = std::make_unique<dae::core::GameObject>();
+		centerVisualOuter->AddComponent<PrimitiveRenderComponent>( PrimitiveShape{ CircleShape{ 100.0f, false } }, SDL_Color{ 0, 255, 255, 128 } );
 
-		auto visualOuter = std::make_unique<dae::core::GameObject>();
-		// TODO bvi_gravity_bender - Hardcoded the radius here.
-		visualOuter->AddComponent<PrimitiveRenderComponent>( PrimitiveShape{ CircleShape{ 100.0f, false } }, SDL_Color{ 0, 255, 255, 128 } );
+		centerVisualOuter->SetParent( centerVisualRoot.get(), false );
+		storedNode.visualRoot = centerVisualRoot.get();
 
-		visualOuter->SetParent( visualRoot.get(), false );
-		storedNode.visualRoot = visualRoot.get();
+		// TODO bvi_gravity_bender - Make this dry.
+
+		// TODO bvi_gravity_bender - Missing some edge cases for the corners.
+
+		// TODO bvi_gravity_bender - Missing the actual gravity wells.
+
+		// TODO bvi_gravity_bender - Fetch viewport dimensions and use them. (1024x576)
+		auto northVisualRoot = std::make_unique<dae::core::GameObject>( 0.f, -576.f );
+		northVisualRoot->AddComponent<PrimitiveRenderComponent>( PrimitiveShape{ CircleShape{ 5.0f, true } }, SDL_Color{ 0, 255, 255, 255 } );
+		auto northVisualOuter = std::make_unique<dae::core::GameObject>();
+		northVisualOuter->AddComponent<PrimitiveRenderComponent>( PrimitiveShape{ CircleShape{ 100.0f, false } }, SDL_Color{ 0, 255, 255, 128 } );
+
+		northVisualRoot->SetParent( centerVisualRoot.get(), false );
+		northVisualOuter->SetParent( northVisualRoot.get(), false );
+
+		auto eastVisualRoot = std::make_unique<dae::core::GameObject>( 1024.f, 0.f );
+		eastVisualRoot->AddComponent<PrimitiveRenderComponent>( PrimitiveShape{ CircleShape{ 5.0f, true } }, SDL_Color{ 0, 255, 255, 255 } );
+		auto eastVisualOuter = std::make_unique<dae::core::GameObject>();
+		eastVisualOuter->AddComponent<PrimitiveRenderComponent>( PrimitiveShape{ CircleShape{ 100.0f, false } }, SDL_Color{ 0, 255, 255, 128 } );
+
+		eastVisualRoot->SetParent( centerVisualRoot.get(), false );
+		eastVisualOuter->SetParent( eastVisualRoot.get(), false );
+
+		auto southVisualRoot = std::make_unique<dae::core::GameObject>( 0.f, 576.f );
+		southVisualRoot->AddComponent<PrimitiveRenderComponent>( PrimitiveShape{ CircleShape{ 5.0f, true } }, SDL_Color{ 0, 255, 255, 255 } );
+		auto southVisualOuter = std::make_unique<dae::core::GameObject>();
+		southVisualOuter->AddComponent<PrimitiveRenderComponent>( PrimitiveShape{ CircleShape{ 100.0f, false } }, SDL_Color{ 0, 255, 255, 128 } );
+
+		southVisualRoot->SetParent( centerVisualRoot.get(), false );
+		southVisualOuter->SetParent( southVisualRoot.get(), false );
+
+		auto westVisualRoot = std::make_unique<dae::core::GameObject>( -1024.f, 0.f );
+		westVisualRoot->AddComponent<PrimitiveRenderComponent>( PrimitiveShape{ CircleShape{ 5.0f, true } }, SDL_Color{ 0, 255, 255, 255 } );
+		auto westVisualOuter = std::make_unique<dae::core::GameObject>();
+		westVisualOuter->AddComponent<PrimitiveRenderComponent>( PrimitiveShape{ CircleShape{ 100.0f, false } }, SDL_Color{ 0, 255, 255, 128 } );
+
+		westVisualRoot->SetParent( centerVisualRoot.get(), false );
+		westVisualOuter->SetParent( westVisualRoot.get(), false );
 
 		auto& scene = dae::scenes::SceneManager::GetInstance().GetActiveScene();
-		scene.AddGameObject( std::move( visualRoot ) );
-		scene.AddGameObject( std::move( visualOuter ) );
+		scene.AddGameObject( std::move( centerVisualRoot ) );
+		scene.AddGameObject( std::move( centerVisualOuter ) );
+		scene.AddGameObject( std::move( northVisualRoot ) );
+		scene.AddGameObject( std::move( northVisualOuter ) );
+		scene.AddGameObject( std::move( eastVisualRoot ) );
+		scene.AddGameObject( std::move( eastVisualOuter ) );
+		scene.AddGameObject( std::move( southVisualRoot ) );
+		scene.AddGameObject( std::move( southVisualOuter ) );
+		scene.AddGameObject( std::move( westVisualRoot ) );
+		scene.AddGameObject( std::move( westVisualOuter ) );
 	}
 
 	void GravityRegistry::SetPlayerNode( const GravityNode& node )
