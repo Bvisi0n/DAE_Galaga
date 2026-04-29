@@ -1,4 +1,5 @@
 add_library(Minigin STATIC
+  "Audio/LoggingSoundSystem.cpp"
   "Audio/SDLSoundSystem.cpp"
   "Core/AppStateManager.cpp"
   "Core/ColliderComponent.cpp"

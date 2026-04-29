@@ -5,7 +5,6 @@
 #include <mutex>
 #include <queue>
 #include <thread>
-#include <vector>
 
 #include <SDL3/SDL.h>
 #include <SDL3_mixer/SDL_mixer.h>
@@ -72,6 +71,18 @@ namespace dae::audio
 				if ( currentMessage.id != 0 )
 				{
 					// TODO dae_audio - Execute SDL_mixer Play logic here
+
+					/* From slides:
+					*
+					* auto audioclip = audioclips[id];
+					* if (!audioclip->is_loaded())
+					* audioclip->load();
+					* audioclip->set_volume(volume);
+					* audioclip->play();
+					*
+					* - Load the audioclip if not loaded
+					* - Set Volume
+					* - Play the sound */
 				}
 			}
 		}

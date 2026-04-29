@@ -7,18 +7,18 @@
 
 namespace dae::audio
 {
-	class SDLSoundSystem final : public ISoundSystem
+	class SDLSoundSystem : public ISoundSystem
 	{
 	public:
 		SDLSoundSystem();
-		~SDLSoundSystem() override;
+		virtual ~SDLSoundSystem() override;
 
 		SDLSoundSystem( const SDLSoundSystem& ) = delete;
-		SDLSoundSystem& operator=( const SDLSoundSystem& ) = delete;
 		SDLSoundSystem( SDLSoundSystem&& ) = default;
+		SDLSoundSystem& operator=( const SDLSoundSystem& ) = delete;
 		SDLSoundSystem& operator=( SDLSoundSystem&& ) = default;
 
-		void Play( sound_id id, float volume ) override;
+		virtual void Play( sound_id id, float volume ) override;
 
 	private:
 		class SDLSoundSystemImpl;
