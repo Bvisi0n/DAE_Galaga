@@ -13,12 +13,12 @@ if(NOT glm_FOUND)
 endif()
 
 # Add SDL3
-find_package(SDL3 3.4 CONFIG QUIET)
+find_package(SDL3 3.4.4 CONFIG QUIET)
 if(NOT SDL3_FOUND)
   if (WIN32)
     FetchContent_Declare(
       SDL3
-      URL https://www.libsdl.org/release/SDL3-devel-3.4.0-VC.zip
+      URL https://www.libsdl.org/release/SDL3-devel-3.4.4-VC.zip
       DOWNLOAD_NO_PROGRESS ON
       DOWNLOAD_DIR ${CMAKE_BINARY_DIR}/downloads
     )
@@ -29,7 +29,7 @@ if(NOT SDL3_FOUND)
     FetchContent_Declare(
       SDL3
       GIT_REPOSITORY https://github.com/libsdl-org/SDL.git
-      GIT_TAG release-3.4.0
+      GIT_TAG release-3.4.4
       GIT_SHALLOW TRUE
       GIT_PROGRESS TRUE
     )
@@ -68,6 +68,35 @@ if(NOT SDL3_ttf_FOUND)
       add_link_options(-sUSE_FREETYPE=1 -sUSE_HARFBUZZ=1)
     endif()
     FetchContent_MakeAvailable(SDL3_ttf)
+  endif()
+endif()
+
+# Add SDL3_mixer
+find_package(SDL3_mixer 3.2.0 CONFIG QUIET)
+if(NOT SDL3_mixer_FOUND)
+  if (WIN32)
+    FetchContent_Declare(
+      SDL3_mixer
+      URL https://www.libsdl.org/projects/SDL_mixer/release/SDL3_mixer-devel-3.2.0-VC.zip
+      DOWNLOAD_NO_PROGRESS ON
+      DOWNLOAD_DIR ${CMAKE_BINARY_DIR}/downloads
+    )
+    FetchContent_MakeAvailable(SDL3_mixer)
+    list(PREPEND CMAKE_PREFIX_PATH "${sdl3_mixer_SOURCE_DIR}")
+    find_package(SDL3_mixer CONFIG REQUIRED)
+  else()
+    FetchContent_Declare(
+      SDL3_mixer
+      GIT_REPOSITORY https://github.com/libsdl-org/SDL_mixer.git
+      GIT_TAG release-3.2.0
+      GIT_SHALLOW TRUE
+      GIT_PROGRESS TRUE
+    )
+    
+    if(EMSCRIPTEN)
+      set(SDL3MIXER_VENDORED OFF)
+    endif()
+    FetchContent_MakeAvailable(SDL3_mixer)
   endif()
 endif()
 

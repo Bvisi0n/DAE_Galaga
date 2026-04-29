@@ -10,6 +10,8 @@
 #include "Minigin/Input/InputManager.h"
 #include "Minigin/Input/Keyboard.h"
 
+// TODO dae_input - Split into .cpp/.h
+
 namespace dae::input
 {
 	class ScopedInputBinding final

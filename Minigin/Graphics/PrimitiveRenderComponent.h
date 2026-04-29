@@ -15,6 +15,8 @@
 #include "Minigin/Graphics/IRenderable.h"
 #include "Minigin/Graphics/Renderer.h"
 
+// TODO dae_graphics - Split into .cpp/.h
+
 namespace dae::graphics
 {
 	struct RectShape

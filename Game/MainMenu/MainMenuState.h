@@ -7,6 +7,8 @@
 #include "Minigin/Core/IAppState.h"
 #include "Minigin/Scene/SceneManager.h"
 
+// TODO bvi_main_menu - Split into .cpp/.h
+
 namespace bvi::main_menu
 {
 	class MainMenuState final : public dae::core::IAppState
