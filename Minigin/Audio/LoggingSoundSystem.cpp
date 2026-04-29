@@ -16,7 +16,6 @@ namespace dae::audio
 			m_realSoundSystem->Play( id, volume );
 		}
 
-		// TODO dae_audio - Modernize logging.
-		std::cout << "[Audio] Playing sound ID: " << id << " at volume: " << volume << '\n';
+		// TODO dae_audio - Implement logging.
 	}
 }
