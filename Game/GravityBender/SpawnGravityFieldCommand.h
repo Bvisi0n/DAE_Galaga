@@ -3,8 +3,12 @@
 
 #include <chrono>
 
-#include "Minigin/Core/GameObject.h"
 #include "Minigin/Input/ICommand.h"
+
+namespace dae::core
+{
+	class GameObject;
+}
 
 namespace bvi::gravity_bender
 {
