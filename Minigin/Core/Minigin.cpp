@@ -13,6 +13,10 @@
 #include <windows.h>
 #endif
 
+#ifdef __EMSCRIPTEN__
+#include "emscripten.h"
+#endif
+
 #if USE_STEAMWORKS && !__EMSCRIPTEN__
 #pragma warning (push)
 #pragma warning (disable:4996)
@@ -52,8 +56,6 @@ static void LogSDLVersion( const std::string& message, int major, int minor, int
 }
 
 #ifdef __EMSCRIPTEN__
-#include "emscripten.h"
-
 static void LoopCallback( void* arg )
 {
 	static_cast<dae::core::Minigin*>( arg )->RunOneFrame();
