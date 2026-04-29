@@ -3,13 +3,19 @@
 #include <chrono>
 #include <cstdint>
 #include <iostream>
+#include <memory>
 #include <sstream>
 #include <string>
+#include <utility>
 
 #if WIN32
 #define WIN32_LEAN_AND_MEAN
 #define NOMINMAX
 #include <windows.h>
+#endif
+
+#ifdef __EMSCRIPTEN__
+#include "emscripten.h"
 #endif
 
 #if USE_STEAMWORKS && !__EMSCRIPTEN__
@@ -28,12 +34,21 @@
 #include <SDL3/SDL_video.h>
 #include <SDL3_ttf/SDL_ttf.h>
 
+#if _DEBUG
+#include "Minigin/Audio/LoggingSoundSystem.h"
+#include "Minigin/Audio/SDLSoundSystem.h"
+#else
+#include "Minigin/Audio/SDLSoundSystem.h"
+#endif
+
 #include "Minigin/Core/AppStateManager.h"
 #include "Minigin/Core/Minigin.h"
+#include "Minigin/Core/ServiceLocator.h"
 #include "Minigin/Graphics/Renderer.h"
 #include "Minigin/Input/InputManager.h"
 #include "Minigin/Resources/ResourceManager.h"
 #include "Minigin/Scene/SceneManager.h"
+
 
 SDL_Window* g_window{};
 
@@ -49,8 +64,6 @@ static void LogSDLVersion( const std::string& message, int major, int minor, int
 }
 
 #ifdef __EMSCRIPTEN__
-#include "emscripten.h"
-
 static void LoopCallback( void* arg )
 {
 	static_cast<dae::core::Minigin*>( arg )->RunOneFrame();
@@ -111,6 +124,17 @@ namespace dae::core
 
 		graphics::Renderer::GetInstance().Init( g_window );
 		resources::ResourceManager::GetInstance().Init( config.dataPath );
+
+	#if _DEBUG
+		auto sdlAudio = std::make_unique<audio::SDLSoundSystem>();
+		auto loggedAudio = std::make_unique<audio::LoggingSoundSystem>( std::move( sdlAudio ) );
+		ServiceLocator::RegisterSoundSystem( std::move( loggedAudio ) );
+	#elif __EMSCRIPTEN__
+		// TODO dae_core - Implement a soundsystem for Emscripten.
+		ServiceLocator::RegisterSoundSystem( nullptr );
+	#else
+		ServiceLocator::RegisterSoundSystem( std::make_unique<audio::SDLSoundSystem>() );
+	#endif
 	}
 
 	Minigin::~Minigin()

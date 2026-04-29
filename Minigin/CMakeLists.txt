@@ -1,10 +1,13 @@
 add_library(Minigin STATIC
+  "Audio/LoggingSoundSystem.cpp"
+  "Audio/SDLSoundSystem.cpp"
   "Core/AppStateManager.cpp"
   "Core/ColliderComponent.cpp"
   "Core/CollisionSystem.cpp"
   "Core/GameObject.cpp"
   "Core/Minigin.cpp"
   "Core/MoveComponent.cpp"
+  "Core/ServiceLocator.cpp"
   "Core/Transform.cpp"
   "Events/ObservableComponent.cpp"
   "Graphics/Font.cpp"
@@ -43,6 +46,10 @@ target_link_libraries(Minigin PUBLIC
   SDL3_ttf::SDL3_ttf
   imgui
   glm::glm
+)
+
+target_link_libraries(Minigin PRIVATE
+  SDL3_mixer::SDL3_mixer
 )
 
 if(WIN32 AND VLD_FOUND)

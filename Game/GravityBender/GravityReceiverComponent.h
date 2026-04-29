@@ -12,6 +12,8 @@
 #include "Minigin/Core/Component.h"
 #include "Minigin/Core/MoveComponent.h"
 
+// TODO bvi_gravity_bender - Split into .cpp/.h
+
 namespace bvi::gravity_bender
 {
 	class GravityReceiverComponent final : public dae::core::Component

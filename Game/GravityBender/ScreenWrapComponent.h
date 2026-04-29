@@ -7,6 +7,8 @@
 #include "Minigin/Core/GameObject.h"
 #include "Minigin/Core/Transform.h"
 
+// TODO bvi_gravity_bender - Split into .cpp/.h
+
 // TODO bvi_gravity_bender - Fetch viewport dimensions instead of receiving them as parameters.
 
 namespace bvi::gravity_bender

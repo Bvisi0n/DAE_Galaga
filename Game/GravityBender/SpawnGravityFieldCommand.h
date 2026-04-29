@@ -9,6 +9,8 @@
 #include "Minigin/Core/GameObject.h"
 #include "Minigin/Input/ICommand.h"
 
+// TODO bvi_gravity_bender - Split into .cpp/.h
+
 namespace bvi::gravity_bender
 {
 	class SpawnGravityFieldCommand final : public dae::input::ICommand
