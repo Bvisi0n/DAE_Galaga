@@ -3,11 +3,12 @@
 #include <glm/ext/vector_float3.hpp>
 #include <glm/geometric.hpp>
 
-#include <Game/GravityBender/GravityReceiverComponent.h>
-#include <Game/GravityBender/GravityRegistry.h>
 #include <Minigin/Core/Component.h>
 #include <Minigin/Core/GameObject.h>
 #include <Minigin/Core/MoveComponent.h>
+
+#include <Game/GravityBender/GravityReceiverComponent.h>
+#include <Game/GravityBender/GravityRegistry.h>
 
 namespace bvi::gravity_bender
 {

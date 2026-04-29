@@ -3,19 +3,20 @@
 
 #include <memory>
 
-#include "Game/Common/FPSComponent.h"
-#include "Game/Common/PushStateCommand.h"
-#include "Game/Galaga/GalagaState.h"
-#include "Game/GravityBender/GravityBenderState.h"
+#include <Minigin/Core/GameObject.h>
+#include <Minigin/Graphics/TextComponent.h>
+#include <Minigin/Graphics/TextureComponent.h>
+#include <Minigin/Input/InputManager.h>
+#include <Minigin/Input/PlayerInputComponent.h>
+#include <Minigin/Input/ScopedInputBinding.h>
+#include <Minigin/Resources/ResourceManager.h>
+#include <Minigin/Scene/Scene.h>
+#include <Minigin/Scene/SceneManager.h>
 
-#include "Minigin/Core/GameObject.h"
-#include "Minigin/Graphics/TextComponent.h"
-#include "Minigin/Graphics/TextureComponent.h"
-#include "Minigin/Input/InputManager.h"
-#include "Minigin/Input/PlayerInputComponent.h"
-#include "Minigin/Input/ScopedInputBinding.h"
-#include "Minigin/Resources/ResourceManager.h"
-#include "Minigin/Scene/Scene.h"
+#include <Game/Common/FPSComponent.h>
+#include <Game/Common/PushStateCommand.h>
+#include <Game/Galaga/GalagaState.h>
+#include <Game/GravityBender/GravityBenderState.h>
 
 namespace bvi::main_menu
 {
