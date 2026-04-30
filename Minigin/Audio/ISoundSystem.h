@@ -3,8 +3,6 @@
 
 #include <cstdint>
 
-using sound_id = uint16_t;
-
 // TODO dae_audio - Rework audio system.
 	// Move struct PlayMessage to this file, use it as argument.
 	// Add RegisterSound method.
@@ -14,6 +12,8 @@ using sound_id = uint16_t;
 
 namespace dae::audio
 {
+	using sound_id = uint16_t;
+
 	class ISoundSystem
 	{
 	public:
