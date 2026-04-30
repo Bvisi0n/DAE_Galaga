@@ -9,7 +9,7 @@ endif()
 # Flag to control inclusion of Gravity Bender prototype
 option(BUILD_GRAVITY_BENDER "Include Gravity Bender prototype" ON)
 
-# Define Common and Galaga Sources (Always Built)
+# Add Common and Galaga files here (Always Built)
 set(GAME_SOURCES
   "Core/Main.cpp"
 
@@ -22,7 +22,7 @@ set(GAME_SOURCES
   "Galaga/UIValueObserver.cpp"
 )
 
-# Add all Gravity Bender files here
+# Add Gravity Bender files here
 if(BUILD_GRAVITY_BENDER)
     message(STATUS "Game Module: Gravity Bender ENABLED")
     list(APPEND GAME_SOURCES
@@ -42,21 +42,21 @@ endif()
 # Generate Executable
 add_executable(${TARGET_NAME} ${TARGET_PARAM} ${GAME_SOURCES})
 
-# Inject the preprocessor macro
+# Inject preprocessor macro
 if(BUILD_GRAVITY_BENDER)
     target_compile_definitions(${TARGET_NAME} PRIVATE ENABLE_GRAVITY_BENDER)
 endif()
 
 target_compile_features(${TARGET_NAME} PUBLIC cxx_std_20)
 
-# Link the engine securely to the game
+# Link engine to game
 target_link_libraries(${TARGET_NAME} PRIVATE Minigin)
 
 if(WIN32)
     target_link_libraries(${TARGET_NAME} PRIVATE xinput.lib)
 endif()
 
-# Compiler Configurations
+# Compiler Configs
 if(MSVC)
   string(REPLACE "/EHsc" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
   string(REPLACE "/EHsc" "" CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG}")
@@ -83,7 +83,7 @@ else()
   )
 endif()
 
-# Static Analysis Integration
+# Static Analysis
 option(ENABLE_CLANG_TIDY "Enable static analysis with clang-tidy" ON)
 
 if(ENABLE_CLANG_TIDY AND NOT EMSCRIPTEN)

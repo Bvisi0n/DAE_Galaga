@@ -25,12 +25,12 @@ add_library(Minigin STATIC
 
 target_compile_features(Minigin PUBLIC cxx_std_20)
 
-# Expose Minigin headers and Root to the Game target
+# Expose Minigin to Game target
 target_include_directories(Minigin PUBLIC
   "${CMAKE_CURRENT_SOURCE_DIR}/.."
 )
 
-# Propagate system includes
+# Set includes
 target_include_directories(Minigin SYSTEM PUBLIC
   ${glm_SOURCE_DIR}
   ${sdl3_SOURCE_DIR}/include
