@@ -5,6 +5,8 @@
 
 #include <Minigin/Core/Component.h>
 
+#include <Game/GravityBender/GravityBenderBlueprints.h>
+
 namespace dae::core
 {
 	class GameObject;
