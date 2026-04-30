@@ -11,7 +11,7 @@ namespace bvi::gravity_bender
 	public:
 		GravityBenderAssembler() = delete;
 
-		static void Assemble( dae::core::IAppState* /*stateMachine*/ );
+		static void Assemble( dae::core::IAppState* stateMachine );
 
 	private:
 		static void AssembleBackground( dae::scenes::Scene& scene );

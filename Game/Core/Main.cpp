@@ -12,15 +12,18 @@
 #include "Minigin/Core/AppStateManager.h"
 #include "Minigin/Core/Minigin.h"
 
-int main( int, char* [] )
+int main( int /*argc*/, char* /*argv*/[] )
 {
 #if __EMSCRIPTEN__
 	std::filesystem::path dataLocation = "";
 #else
 	std::filesystem::path dataLocation = "./Data/";
 	if ( !std::filesystem::exists( dataLocation ) )
+	{
 		dataLocation = "../Data/";
+	}
 #endif
+
 
 	dae::core::Minigin engine(
 		{

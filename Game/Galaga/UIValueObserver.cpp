@@ -20,7 +20,7 @@ namespace bvi::galaga
 	void UIValueObserver::InitializeLinkage()
 	{
 		m_text = GetOwner()->GetComponent<dae::graphics::TextComponent>();
-		if ( !m_text )
+		if ( m_text == nullptr )
 		{
 			assert( m_text && "requires a TextComponent on the same GameObject." );
 		}
@@ -34,7 +34,7 @@ namespace bvi::galaga
 
 	void UIValueObserver::OnNotify( const dae::events::GameEvent event )
 	{
-		if ( !m_text )
+		if ( m_text == nullptr )
 		{
 			assert( m_text && "requires a TextComponent on the same GameObject." );
 			return;
@@ -42,7 +42,7 @@ namespace bvi::galaga
 
 		if ( event.id == m_observedEvent.id )
 		{
-			if ( m_text && m_formatter )
+			if ( m_text != nullptr && m_formatter != nullptr )
 			{
 				int value = std::get<int>( event.args[ 0 ] );
 

@@ -26,17 +26,17 @@ namespace bvi::gravity_bender
 	void GravityReceiverComponent::InitializeState()
 	{}
 
-	void GravityReceiverComponent::Update( const float )
+	void GravityReceiverComponent::Update( const float /*deltaTime*/ )
 	{
-		if ( !m_moveComponent )
+		if ( m_moveComponent == nullptr )
 		{
 			return;
 		}
 
 		const glm::vec3 currentPos = GetOwner()->GetTransform().GetWorldPosition();
-		glm::vec3 totalGravityForce{ 0.0f, 0.0f, 0.0f };
+		glm::vec3 totalGravityForce{ 0.0F, 0.0F, 0.0F };
 
-		constexpr float epsilonSq = 2500.0f;
+		constexpr float epsilonSq = 2500.0F;
 
 		for ( const auto& node : GravityRegistry::GetActiveNodes() )
 		{
@@ -47,8 +47,8 @@ namespace bvi::gravity_bender
 			{
 				const float smoothedDistSq = distanceSq + epsilonSq;
 
-				const float invSmoothedDist = 1.0f / std::sqrt( smoothedDistSq );
-				const float invDistCube = ( 1.0f / smoothedDistSq ) * invSmoothedDist;
+				const float invSmoothedDist = 1.0F / std::sqrt( smoothedDistSq );
+				const float invDistCube = ( 1.0F / smoothedDistSq ) * invSmoothedDist;
 
 				totalGravityForce += diff * ( node.strength * invDistCube );
 			}

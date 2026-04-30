@@ -15,6 +15,6 @@ namespace bvi::galaga
 		dae::scenes::SceneManager::GetInstance().RemoveAllScenes();
 	}
 
-	void GalagaState::Update( float )
+	void GalagaState::Update( float /*deltaTime*/ )
 	{}
 }

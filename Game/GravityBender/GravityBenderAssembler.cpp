@@ -1,4 +1,7 @@
+#include <array>
 #include <memory>
+#include <string>
+#include <string_view>
 #include <utility>
 
 #include <glm/ext/vector_float3.hpp>
@@ -31,7 +34,7 @@
 
 namespace bvi::gravity_bender
 {
-	void GravityBenderAssembler::Assemble( dae::core::IAppState* )
+	void GravityBenderAssembler::Assemble( dae::core::IAppState* /*stateMachine*/ )
 	{
 		auto& scene = dae::scenes::SceneManager::GetInstance().CreateScene();
 
@@ -48,101 +51,264 @@ namespace bvi::gravity_bender
 
 	void GravityBenderAssembler::AssembleBackground( dae::scenes::Scene& scene )
 	{
-		// TODO bvi_gravity_bender - Fetch viewport dimensions and use them.
-		constexpr SDL_FRect screenBounds{ 0.f, 0.f, 1024.f, 576.f };
-		constexpr SDL_Color black{ 20, 10, 30, 255 };
+		constexpr const auto& viewportConfig = bvi::gravity_bender::config::Config.viewport;
+
+		constexpr SDL_FRect screenBounds
+		{
+			.x = 0.F,
+			.y = 0.F,
+			.w = viewportConfig.width,
+			.h = viewportConfig.height
+		};
+
+		constexpr dae::graphics::RectShape rectConfig
+		{
+			.bounds = screenBounds,
+			.isFilled = true
+		};
+
+		constexpr SDL_Color bgColor
+		{
+			.r = viewportConfig.backgroundColor.r,
+			.g = viewportConfig.backgroundColor.g,
+			.b = viewportConfig.backgroundColor.b,
+			.a = viewportConfig.backgroundColor.a
+		};
 
 		auto backgroundObject{ std::make_unique<dae::core::GameObject>() };
-		backgroundObject->AddComponent<dae::graphics::PrimitiveRenderComponent>( dae::graphics::PrimitiveShape{ dae::graphics::RectShape{ screenBounds, true } }, black );
+		backgroundObject->AddComponent<dae::graphics::PrimitiveRenderComponent>
+			( dae::graphics::PrimitiveShape{ rectConfig }, bgColor );
 
 		scene.AddGameObject( std::move( backgroundObject ) );
 	}
 
 	void GravityBenderAssembler::AssembleFPSCounter( dae::scenes::Scene& scene )
 	{
-		auto font{ dae::resources::ResourceManager::GetInstance().LoadFont( "Lingua.otf", 18 ) };
-		auto fpsCounter{ std::make_unique<dae::core::GameObject>( 10.f, 10.f ) };
-		fpsCounter->AddComponent<dae::graphics::TextComponent>( "00.0 FPS", font )->SetColor( SDL_Color{ 150, 200, 150, 255 } );
+		constexpr const auto& uiConfig = bvi::gravity_bender::config::Config.ui;
+
+		constexpr SDL_Color fpsColor
+		{
+			.r = uiConfig.fpsColor.r,
+			.g = uiConfig.fpsColor.g,
+			.b = uiConfig.fpsColor.b,
+			.a = uiConfig.fpsColor.a
+		};
+
+		using ResourceManager = dae::resources::ResourceManager;
+		auto font{ ResourceManager::GetInstance().LoadFont( "Lingua.otf", uiConfig.fpsFontSize ) };
+
+		auto fpsCounter{ std::make_unique<dae::core::GameObject>
+			( uiConfig.fpsStartX, uiConfig.fpsStartY ) };
+
+		fpsCounter->AddComponent<dae::graphics::TextComponent>( "00.0 FPS", font )->SetColor( fpsColor );
 		fpsCounter->AddComponent<common::FPSComponent>();
+
 		scene.AddGameObject( std::move( fpsCounter ) );
 	}
 
 	void GravityBenderAssembler::AssembleInstructions( dae::scenes::Scene& scene )
 	{
-		SDL_Color fontColor{ 255, 255, 255, 255 };
-		auto font{ dae::resources::ResourceManager::GetInstance().LoadFont( "Lingua.otf", 16 ) };
-		auto line{ std::make_unique<dae::core::GameObject>( 90.f, 10.f ) };
-		line->AddComponent<dae::graphics::TextComponent>( "Welcome Commander, you're just in time!", font )->SetColor( fontColor );
-		scene.AddGameObject( std::move( line ) );
+		constexpr const auto& uiConfig = bvi::gravity_bender::config::Config.ui;
 
-		line = std::make_unique<dae::core::GameObject>( 10.f, 30.f );
-		line->AddComponent<dae::graphics::TextComponent>( "Make the red rectangles crash into eachother before they overwhelm the system!", font )->SetColor( fontColor );
-		scene.AddGameObject( std::move( line ) );
+		constexpr SDL_Color textColor
+		{
+			.r = uiConfig.instructionsColor.r,
+			.g = uiConfig.instructionsColor.g,
+			.b = uiConfig.instructionsColor.b,
+			.a = uiConfig.instructionsColor.a
+		};
 
-		line = std::make_unique<dae::core::GameObject>( 10.f, 50.f );
-		line->AddComponent<dae::graphics::TextComponent>( "Use WASD to move", font )->SetColor( fontColor );
-		scene.AddGameObject( std::move( line ) );
+		using ResourceManager = dae::resources::ResourceManager;
+		auto font{ ResourceManager::GetInstance().LoadFont( "Lingua.otf", uiConfig.instructionsFontSize ) };
 
-		line = std::make_unique<dae::core::GameObject>( 10.f, 70.f );
-		line->AddComponent<dae::graphics::TextComponent>( "Use SPACE to place a temporary gravity well at your location", font )->SetColor( fontColor );
-		scene.AddGameObject( std::move( line ) );
+		struct InstructionLine
+		{
+			float xOffset;
+			std::string_view text;
+		};
+
+		constexpr std::array<InstructionLine, 4> lines
+		{
+			InstructionLine
+			{
+				.xOffset = 90.F,
+				.text = "Welcome Commander, you're just in time!"
+			},
+			InstructionLine
+			{
+				.xOffset = 10.F,
+				.text = "Make the red rectangles crash into each other before they overwhelm the system!"
+			},
+			InstructionLine
+			{
+				.xOffset = 10.F,
+				.text = "Use WASD to move"
+			},
+			InstructionLine
+			{
+				.xOffset = 10.F,
+				.text = "Use SPACE to place a temporary gravity well at your location"
+			}
+		};
+
+		float currentY = uiConfig.instructionsStartY;
+
+		for ( const auto& line : lines )
+		{
+			auto textObject{ std::make_unique<dae::core::GameObject>( line.xOffset, currentY ) };
+
+			textObject->AddComponent<dae::graphics::TextComponent>( std::string{ line.text }, font )
+				->SetColor( textColor );
+
+			scene.AddGameObject( std::move( textObject ) );
+
+			currentY += uiConfig.instructionsLineSpacing;
+		}
 	}
 
 	void GravityBenderAssembler::AssemblePlayer( dae::scenes::Scene& scene )
 	{
-		auto player{ std::make_unique<dae::core::GameObject>( 400.f, 350.f ) };
-		player->AddComponent<dae::graphics::PrimitiveRenderComponent>( dae::graphics::PrimitiveShape{ dae::graphics::CircleShape{ 10.0f, true } }, SDL_Color{ 255, 204, 0, 255 } );
-		player->AddComponent<dae::core::ColliderComponent>( 5.f, 5.f, 1 );
+		namespace config = bvi::gravity_bender::config;
+		constexpr const auto& playerConfig = config::Config.player;
 
-		player->AddComponent<ScreenWrapComponent>( 1024.f, 576.f );
+		auto player{ std::make_unique<dae::core::GameObject>( playerConfig.startX, playerConfig.startY ) };
+
+		constexpr SDL_Color playerColor
+		{
+			.r = playerConfig.color.r,
+			.g = playerConfig.color.g,
+			.b = playerConfig.color.b,
+			.a = playerConfig.color.a
+		};
+
+		constexpr dae::graphics::CircleShape shapeConfig
+		{
+			.radius = playerConfig.radius,
+			.isFilled = true
+		};
+
+		player->AddComponent<dae::graphics::PrimitiveRenderComponent>
+			( dae::graphics::PrimitiveShape{ shapeConfig }, playerColor );
+
+		player->AddComponent<dae::core::ColliderComponent>( playerConfig.colliderSize, playerConfig.colliderSize, 1 );
+		player->AddComponent<ScreenWrapComponent>( playerConfig.radius );
+
 		player->AddComponent<PlayerComponent>();
+		auto* moveComp{ player->AddComponent<dae::core::MoveComponent>( playerConfig.baseSpeed, playerConfig.speedMultiplier ) };
+		auto* inputComp{ player->AddComponent<dae::input::PlayerInputComponent>() };
 
-		// TODO bvi_gravity_bender - Once the Command pattern is reworked to be stateless, this should be simplified.
-		auto moveComp = player->AddComponent<dae::core::MoveComponent>( 250.f, 2.f );
-		auto inputComp = player->AddComponent<dae::input::PlayerInputComponent>();
-
-		using KeyState = dae::input::InputManager::KeyState;
 		using Key = dae::input::Keyboard::Key;
+		using KeyState = dae::input::InputManager::KeyState;
 		using MoveCommand = common::MoveCommand;
+		using ScopedInputBinding = dae::input::ScopedInputBinding;
 		using vec3 = glm::vec3;
 
-		inputComp->AddBinding( dae::input::ScopedInputBinding{ Key::W, KeyState::Pressed, std::make_unique<MoveCommand>( moveComp, vec3{ 0.0f, -400.0f, 0.0f } ) } );
-		inputComp->AddBinding( dae::input::ScopedInputBinding{ Key::S, KeyState::Pressed, std::make_unique<MoveCommand>( moveComp, vec3{ 0.0f, 400.0f, 0.0f } ) } );
-		inputComp->AddBinding( dae::input::ScopedInputBinding{ Key::A, KeyState::Pressed, std::make_unique<MoveCommand>( moveComp, vec3{ -400.0f, 0.0f, 0.0f } ) } );
-		inputComp->AddBinding( dae::input::ScopedInputBinding{ Key::D, KeyState::Pressed, std::make_unique<MoveCommand>( moveComp, vec3{ 400.0f, 0.0f, 0.0f } ) } );
-		inputComp->AddBinding( dae::input::ScopedInputBinding{ Key::Space, KeyState::Pressed, std::make_unique<SpawnGravityFieldCommand>( player.get() ) } );
+		// TODO bvi_gravity_bender - Once the Command pattern is reworked to be stateless, this should be simplified.
+		inputComp->AddBinding( ScopedInputBinding{ Key::W, KeyState::Pressed, std::make_unique<MoveCommand>( moveComp, vec3{ 0.F, -playerConfig.inputForce, 0.F } ) } );
+		inputComp->AddBinding( ScopedInputBinding{ Key::S, KeyState::Pressed, std::make_unique<MoveCommand>( moveComp, vec3{ 0.F,  playerConfig.inputForce, 0.F } ) } );
+		inputComp->AddBinding( ScopedInputBinding{ Key::A, KeyState::Pressed, std::make_unique<MoveCommand>( moveComp, vec3{ -playerConfig.inputForce, 0.F, 0.F } ) } );
+		inputComp->AddBinding( ScopedInputBinding{ Key::D, KeyState::Pressed, std::make_unique<MoveCommand>( moveComp, vec3{  playerConfig.inputForce, 0.F, 0.F } ) } );
+
+		inputComp->AddBinding( ScopedInputBinding{ Key::Space, KeyState::Pressed, std::make_unique<SpawnGravityFieldCommand>( player.get() ) } );
 
 		scene.AddGameObject( std::move( player ) );
 	}
 
 	void GravityBenderAssembler::AssembleSpawner( dae::scenes::Scene& scene )
 	{
+		constexpr const auto& portalConfig = bvi::gravity_bender::config::Config.portal;
+		constexpr float halfSize{ portalConfig.portalSize / 2.F };
+
+		constexpr SDL_FRect localBounds
+		{
+			.x = -halfSize,
+			.y = -halfSize,
+			.w = portalConfig.portalSize,
+			.h = portalConfig.portalSize
+		};
+
+		constexpr dae::graphics::RectShape rectConfig
+		{
+			.bounds = localBounds,
+			.isFilled = false
+		};
+
+		constexpr SDL_Color portalColor
+		{
+			.r = portalConfig.portalColor.r,
+			.g = portalConfig.portalColor.g,
+			.b = portalConfig.portalColor.b,
+			.a = portalConfig.portalColor.a
+		};
+
 		auto spawner{ std::make_unique<dae::core::GameObject>() };
-		spawner->AddComponent<SpawnerPortalComponent>( UnitData{} );
-		spawner->AddComponent<dae::graphics::PrimitiveRenderComponent>( dae::graphics::PrimitiveShape{ dae::graphics::RectShape{ SDL_FRect{ -10.f, -10.f, 20.f, 20.f }, false } }, SDL_Color{ 255, 120, 0, 255 }, 3 );
+
+		spawner->AddComponent<SpawnerPortalComponent>( portalConfig );
+
+		spawner->AddComponent<dae::graphics::PrimitiveRenderComponent>
+			(
+				dae::graphics::PrimitiveShape{ rectConfig },
+				portalColor,
+				portalConfig.portalLineThickness
+			);
 
 		scene.AddGameObject( std::move( spawner ) );
 	}
 
 	void GravityBenderAssembler::AssembleViewportBorder( dae::scenes::Scene& scene )
 	{
-		// TODO bvi_gravity_bender - Fetch viewport dimensions and use them.
-		constexpr SDL_FRect screenBounds{ 0.f, 0.f, 1024.f, 576.f };
-		constexpr SDL_Color neonPurple{ 138, 43, 226, 255 };
+		constexpr const auto& viewportConfig = bvi::gravity_bender::config::Config.viewport;
+
+		constexpr SDL_FRect screenBounds
+		{
+			.x = 0.F,
+			.y = 0.F,
+			.w = viewportConfig.width,
+			.h = viewportConfig.height
+		};
+
+		constexpr dae::graphics::RectShape rectConfig
+		{
+			.bounds = screenBounds,
+			.isFilled = false
+		};
+
+		constexpr SDL_Color borderColor
+		{
+			.r = viewportConfig.borderColor.r,
+			.g = viewportConfig.borderColor.g,
+			.b = viewportConfig.borderColor.b,
+			.a = viewportConfig.borderColor.a
+		};
 
 		auto borderObject{ std::make_unique<dae::core::GameObject>() };
-		borderObject->AddComponent<dae::graphics::PrimitiveRenderComponent>( dae::graphics::PrimitiveShape{ dae::graphics::RectShape{ screenBounds, false } }, neonPurple, 2 );
+
+		borderObject->AddComponent<dae::graphics::PrimitiveRenderComponent>
+			(
+				dae::graphics::PrimitiveShape{ rectConfig },
+				borderColor,
+				viewportConfig.borderThickness
+			);
 
 		scene.AddGameObject( std::move( borderObject ) );
 	}
 
 	void GravityBenderAssembler::EnableCollisions( dae::scenes::Scene& scene )
 	{
-		scene.GetCollisionSystem().RegisterCallback(
-	[] ( dae::core::GameObject* actorA, dae::core::GameObject* actorB )
-	{
-		actorA->MarkForDeletion();
-		actorB->MarkForDeletion();
-	} );
+		scene.GetCollisionSystem().RegisterCallback
+		(
+			[] ( dae::core::GameObject* actorA, dae::core::GameObject* actorB )
+			{
+				if ( actorA != nullptr )
+				{
+					actorA->MarkForDeletion();
+				}
+
+				if ( actorB != nullptr )
+				{
+					actorB->MarkForDeletion();
+				}
+			}
+		);
 	}
 }

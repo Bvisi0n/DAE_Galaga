@@ -5,6 +5,7 @@
 #include <Minigin/Core/Component.h>
 #include <Minigin/Core/GameObject.h>
 
+#include <Game/GravityBender/GravityBenderBlueprints.h>
 #include <Game/GravityBender/GravityRegistry.h>
 #include <Game/GravityBender/PlayerComponent.h>
 #include <Game/MainMenu/MainMenuState.h>
@@ -18,7 +19,10 @@ namespace bvi::gravity_bender
 	PlayerComponent::~PlayerComponent()
 	{
 		GravityRegistry::RemovePlayerNode();
-		dae::core::AppStateManager::GetInstance().ChangeState( std::make_unique<main_menu::MainMenuState>() );
+
+		using AppStateManager = dae::core::AppStateManager;
+		using MainMenuState = main_menu::MainMenuState;
+		AppStateManager::GetInstance().ChangeState( std::make_unique<MainMenuState>() );
 	}
 
 	void PlayerComponent::InitializeLinkage()
@@ -27,11 +31,22 @@ namespace bvi::gravity_bender
 	void PlayerComponent::InitializeState()
 	{}
 
-	void PlayerComponent::Update( const float )
+	void PlayerComponent::Update( const float /*deltaTime*/ )
 	{
+		constexpr const auto& playerConfig = bvi::gravity_bender::config::Config.player;
+
+		constexpr float radiusSquared{ playerConfig.gravityRadius * playerConfig.gravityRadius };
+
 		const auto& origin = GetOwner()->GetTransform().GetWorldPosition();
-		constexpr float radius = 100.0f;
-		constexpr float strength = 1'500'000.0f;
-		GravityRegistry::SetPlayerNode( GravityNode{ origin, strength, radius * radius, std::numeric_limits<float>::infinity() } );
+
+		const GravityNode activeNode
+		{
+			.position = origin,
+			.strength = playerConfig.gravityStrength,
+			.radiusSquared = radiusSquared,
+			.lifeTimeRemaining = std::numeric_limits<float>::infinity()
+		};
+
+		GravityRegistry::SetPlayerNode( activeNode );
 	}
 }

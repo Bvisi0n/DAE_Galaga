@@ -10,10 +10,17 @@ namespace dae::core
 
 namespace bvi::galaga
 {
+	struct RotatorConfig
+	{
+		float range{ 0.0f };
+		float speed{ 0.0f };
+		float initialAngle{ 0.0f };
+	};
+
 	class RotatorComponent final : public dae::core::Component
 	{
 	public:
-		explicit RotatorComponent( dae::core::GameObject* owner, float range, float speed );
+		explicit RotatorComponent( dae::core::GameObject* owner, const RotatorConfig config );
 		~RotatorComponent() override = default;
 
 		RotatorComponent( const RotatorComponent& other ) = delete;
@@ -27,9 +34,9 @@ namespace bvi::galaga
 		void Update( const float deltaTime ) override;
 
 	private:
-		float m_angle{ 0.0f };
-		float m_range{ 0.0f };
-		float m_rotationSpeed{ 0.0f };
+		float m_angle;
+		float m_range;
+		float m_rotationSpeed;
 	};
 }
 #endif

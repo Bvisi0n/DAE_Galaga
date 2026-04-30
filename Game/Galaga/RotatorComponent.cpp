@@ -9,8 +9,11 @@
 
 namespace bvi::galaga
 {
-	RotatorComponent::RotatorComponent( dae::core::GameObject* owner, float range, float speed )
-		: Component( owner ), m_range( range ), m_rotationSpeed( speed )
+	RotatorComponent::RotatorComponent( dae::core::GameObject* owner, const RotatorConfig config )
+		: Component( owner )
+		, m_angle( config.initialAngle )
+		, m_range( config.range )
+		, m_rotationSpeed( config.speed )
 	{}
 
 	void RotatorComponent::InitializeLinkage()
@@ -23,13 +26,13 @@ namespace bvi::galaga
 	{
 		m_angle += m_rotationSpeed * deltaTime;
 
-		const float doublePi{ std::numbers::pi_v<float> *2.0f };
+		const float doublePi{ std::numbers::pi_v<float> *2.0F };
 
 		if ( m_angle > doublePi )
 		{
 			m_angle -= doublePi;
 		}
-		else if ( m_angle < 0.f )
+		else if ( m_angle < 0.F )
 		{
 			m_angle += doublePi;
 		}

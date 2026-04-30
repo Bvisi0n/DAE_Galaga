@@ -17,7 +17,7 @@ namespace bvi::gravity_bender
 	public:
 		explicit SpawnGravityFieldCommand( const dae::core::GameObject* contextPlayer );
 
-		void Execute( const float /*deltaTime*/ ) override;
+		void Execute( const float deltaTime ) override;
 
 		[[nodiscard]] const void* GetTargetContext() const override;
 

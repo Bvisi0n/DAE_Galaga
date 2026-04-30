@@ -27,9 +27,9 @@ namespace bvi::gravity_bender
 				node.lifeTimeRemaining -= deltaTime;
 			}
 
-			if ( node.lifeTimeRemaining <= 0.0f )
+			if ( node.lifeTimeRemaining <= 0.0F )
 			{
-				if ( node.visualRoot )
+				if ( node.visualRoot != nullptr )
 				{
 					scene.RemoveGameObject( *node.visualRoot );
 				}
@@ -41,7 +41,7 @@ namespace bvi::gravity_bender
 		std::erase_if( s_nodes,
 					   [] ( const GravityNode& node )
 					   {
-						   return node.lifeTimeRemaining <= 0.0f;
+						   return node.lifeTimeRemaining <= 0.0F;
 					   } );
 	}
 
@@ -57,9 +57,9 @@ namespace bvi::gravity_bender
 		auto centerVisualRoot = std::make_unique<dae::core::GameObject>();
 		centerVisualRoot->GetTransform().SetLocalPosition( node.position );
 		// TODO bvi_gravity_bender - Hardcoded the radius here multiple times.
-		centerVisualRoot->AddComponent<PrimitiveRenderComponent>( PrimitiveShape{ CircleShape{ 5.0f, true } }, SDL_Color{ 0, 255, 255, 255 } );
+		centerVisualRoot->AddComponent<PrimitiveRenderComponent>( PrimitiveShape{ CircleShape{ 5.0F, true } }, SDL_Color{ 0, 255, 255, 255 } );
 		auto centerVisualOuter = std::make_unique<dae::core::GameObject>();
-		centerVisualOuter->AddComponent<PrimitiveRenderComponent>( PrimitiveShape{ CircleShape{ 100.0f, false } }, SDL_Color{ 0, 255, 255, 128 } );
+		centerVisualOuter->AddComponent<PrimitiveRenderComponent>( PrimitiveShape{ CircleShape{ 100.0F, false } }, SDL_Color{ 0, 255, 255, 128 } );
 
 		centerVisualOuter->SetParent( centerVisualRoot.get(), false );
 		storedNode.visualRoot = centerVisualRoot.get();
@@ -70,35 +70,35 @@ namespace bvi::gravity_bender
 
 		// TODO bvi_gravity_bender - Missing the actual gravity wells.
 
-		// TODO bvi_gravity_bender - Fetch viewport dimensions and use them. (1024x576)
-		auto northVisualRoot = std::make_unique<dae::core::GameObject>( 0.f, -576.f );
-		northVisualRoot->AddComponent<PrimitiveRenderComponent>( PrimitiveShape{ CircleShape{ 5.0f, true } }, SDL_Color{ 0, 255, 255, 255 } );
+		// TODO bvi_gravity_bender - Fetch viewport dimensions and use them.
+		auto northVisualRoot = std::make_unique<dae::core::GameObject>( 0.F, -576.F );
+		northVisualRoot->AddComponent<PrimitiveRenderComponent>( PrimitiveShape{ CircleShape{ 5.F, true } }, SDL_Color{ 0, 255, 255, 255 } );
 		auto northVisualOuter = std::make_unique<dae::core::GameObject>();
-		northVisualOuter->AddComponent<PrimitiveRenderComponent>( PrimitiveShape{ CircleShape{ 100.0f, false } }, SDL_Color{ 0, 255, 255, 128 } );
+		northVisualOuter->AddComponent<PrimitiveRenderComponent>( PrimitiveShape{ CircleShape{ 100.F, false } }, SDL_Color{ 0, 255, 255, 128 } );
 
 		northVisualRoot->SetParent( centerVisualRoot.get(), false );
 		northVisualOuter->SetParent( northVisualRoot.get(), false );
 
-		auto eastVisualRoot = std::make_unique<dae::core::GameObject>( 1024.f, 0.f );
-		eastVisualRoot->AddComponent<PrimitiveRenderComponent>( PrimitiveShape{ CircleShape{ 5.0f, true } }, SDL_Color{ 0, 255, 255, 255 } );
+		auto eastVisualRoot = std::make_unique<dae::core::GameObject>( 1024.F, 0.F );
+		eastVisualRoot->AddComponent<PrimitiveRenderComponent>( PrimitiveShape{ CircleShape{ 5.F, true } }, SDL_Color{ 0, 255, 255, 255 } );
 		auto eastVisualOuter = std::make_unique<dae::core::GameObject>();
-		eastVisualOuter->AddComponent<PrimitiveRenderComponent>( PrimitiveShape{ CircleShape{ 100.0f, false } }, SDL_Color{ 0, 255, 255, 128 } );
+		eastVisualOuter->AddComponent<PrimitiveRenderComponent>( PrimitiveShape{ CircleShape{ 100.F, false } }, SDL_Color{ 0, 255, 255, 128 } );
 
 		eastVisualRoot->SetParent( centerVisualRoot.get(), false );
 		eastVisualOuter->SetParent( eastVisualRoot.get(), false );
 
-		auto southVisualRoot = std::make_unique<dae::core::GameObject>( 0.f, 576.f );
-		southVisualRoot->AddComponent<PrimitiveRenderComponent>( PrimitiveShape{ CircleShape{ 5.0f, true } }, SDL_Color{ 0, 255, 255, 255 } );
+		auto southVisualRoot = std::make_unique<dae::core::GameObject>( 0.F, 576.F );
+		southVisualRoot->AddComponent<PrimitiveRenderComponent>( PrimitiveShape{ CircleShape{ 5.F, true } }, SDL_Color{ 0, 255, 255, 255 } );
 		auto southVisualOuter = std::make_unique<dae::core::GameObject>();
-		southVisualOuter->AddComponent<PrimitiveRenderComponent>( PrimitiveShape{ CircleShape{ 100.0f, false } }, SDL_Color{ 0, 255, 255, 128 } );
+		southVisualOuter->AddComponent<PrimitiveRenderComponent>( PrimitiveShape{ CircleShape{ 100.F, false } }, SDL_Color{ 0, 255, 255, 128 } );
 
 		southVisualRoot->SetParent( centerVisualRoot.get(), false );
 		southVisualOuter->SetParent( southVisualRoot.get(), false );
 
-		auto westVisualRoot = std::make_unique<dae::core::GameObject>( -1024.f, 0.f );
-		westVisualRoot->AddComponent<PrimitiveRenderComponent>( PrimitiveShape{ CircleShape{ 5.0f, true } }, SDL_Color{ 0, 255, 255, 255 } );
+		auto westVisualRoot = std::make_unique<dae::core::GameObject>( -1024.F, 0.F );
+		westVisualRoot->AddComponent<PrimitiveRenderComponent>( PrimitiveShape{ CircleShape{ 5.F, true } }, SDL_Color{ 0, 255, 255, 255 } );
 		auto westVisualOuter = std::make_unique<dae::core::GameObject>();
-		westVisualOuter->AddComponent<PrimitiveRenderComponent>( PrimitiveShape{ CircleShape{ 100.0f, false } }, SDL_Color{ 0, 255, 255, 128 } );
+		westVisualOuter->AddComponent<PrimitiveRenderComponent>( PrimitiveShape{ CircleShape{ 100.F, false } }, SDL_Color{ 0, 255, 255, 128 } );
 
 		westVisualRoot->SetParent( centerVisualRoot.get(), false );
 		westVisualOuter->SetParent( westVisualRoot.get(), false );
@@ -118,29 +118,29 @@ namespace bvi::gravity_bender
 
 	void GravityRegistry::SetPlayerNode( const GravityNode& node )
 	{
-		auto it = std::find_if( s_nodes.begin(), s_nodes.end(),
+		auto iterator = std::ranges::find_if( s_nodes,
 								[] ( const GravityNode& n )
 								{
 									return n.isPlayer;
 								} );
 
-		if ( it == s_nodes.end() )
+		if ( iterator == s_nodes.end() )
 		{
-			GravityNode tmp = node;
-			tmp.lifeTimeRemaining = std::numeric_limits<float>::infinity();
-			tmp.isPlayer = true;
+			GravityNode playerNode = node;
+			playerNode.lifeTimeRemaining = std::numeric_limits<float>::infinity();
+			playerNode.isPlayer = true;
 
-			AddNode( tmp );
+			AddNode( playerNode );
 		}
 		else
 		{
-			it->position = node.position;
-			it->strength = node.strength;
-			it->radiusSquared = node.radiusSquared;
+			iterator->position = node.position;
+			iterator->strength = node.strength;
+			iterator->radiusSquared = node.radiusSquared;
 
-			if ( it->visualRoot )
+			if ( iterator->visualRoot != nullptr )
 			{
-				it->visualRoot->GetTransform().SetLocalPosition( node.position );
+				iterator->visualRoot->GetTransform().SetLocalPosition( node.position );
 			}
 		}
 	}
@@ -149,20 +149,20 @@ namespace bvi::gravity_bender
 	{
 		auto& scene = dae::scenes::SceneManager::GetInstance().GetActiveScene();
 
-		auto it = std::find_if( s_nodes.begin(), s_nodes.end(),
+		auto iterator = std::ranges::find_if( s_nodes,
 								[] ( const GravityNode& n )
 								{
 									return n.isPlayer;
 								} );
 
-		if ( it != s_nodes.end() )
+		if ( iterator != s_nodes.end() )
 		{
-			if ( it->visualRoot )
+			if ( iterator->visualRoot != nullptr )
 			{
-				scene.RemoveGameObject( *( it->visualRoot ) );
+				scene.RemoveGameObject( *( iterator->visualRoot ) );
 			}
 
-			s_nodes.erase( it );
+			s_nodes.erase( iterator );
 		}
 	}
 
@@ -172,7 +172,7 @@ namespace bvi::gravity_bender
 
 		for ( const auto& node : s_nodes )
 		{
-			if ( node.visualRoot )
+			if ( node.visualRoot != nullptr )
 			{
 				scene.RemoveGameObject( *node.visualRoot );
 			}

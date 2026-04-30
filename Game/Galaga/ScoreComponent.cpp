@@ -9,7 +9,6 @@ namespace bvi::galaga
 {
 	ScoreComponent::ScoreComponent( dae::core::GameObject* owner )
 		: ObservableComponent( owner )
-		, m_score( 0 )
 	{}
 
 	void ScoreComponent::InitializeLinkage() noexcept

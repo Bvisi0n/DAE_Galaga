@@ -3,8 +3,6 @@
 
 #include <Minigin/Core/Component.h>
 
-// TODO bvi_gravity_bender - Fetch viewport dimensions and use them.
-
 namespace dae::core
 {
 	class GameObject;
@@ -15,7 +13,7 @@ namespace bvi::gravity_bender
 	class ScreenWrapComponent final : public dae::core::Component
 	{
 	public:
-		explicit ScreenWrapComponent( dae::core::GameObject* owner, const float viewportWidth, const float viewportHeight, float spriteOffset = 0.0f );
+		explicit ScreenWrapComponent( dae::core::GameObject* owner, const float spriteOffset );
 
 		~ScreenWrapComponent() override;
 
@@ -28,11 +26,9 @@ namespace bvi::gravity_bender
 
 		void InitializeState() override;
 
-		void Update( const float /*deltaTime*/ ) override;
+		void Update( const float deltaTime ) override;
 
 	private:
-		float m_viewportWidth;
-		float m_viewportHeight;
 		float m_spriteOffset;
 	};
 }

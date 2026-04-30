@@ -1,6 +1,8 @@
 #ifndef BVI_PORTALSPAWNERCOMPONENT_H
 #define BVI_PORTALSPAWNERCOMPONENT_H
 
+#include <cstdint>
+
 #include <glm/ext/vector_float3.hpp>
 
 #include <Minigin/Core/Component.h>
@@ -11,7 +13,6 @@ namespace dae::core
 {
 	class GameObject;
 }
-
 namespace dae::graphics
 {
 	class PrimitiveRenderComponent;
@@ -22,7 +23,7 @@ namespace bvi::gravity_bender
 	class SpawnerPortalComponent final : public dae::core::Component
 	{
 	public:
-		explicit SpawnerPortalComponent( dae::core::GameObject* owner, const UnitData& blueprint );
+		explicit SpawnerPortalComponent( dae::core::GameObject* owner, config::PortalBlueprint blueprint );
 		~SpawnerPortalComponent() override = default;
 
 		SpawnerPortalComponent( const SpawnerPortalComponent& ) = delete;
@@ -33,7 +34,7 @@ namespace bvi::gravity_bender
 		void InitializeLinkage() override;
 		void InitializeState() override;
 
-		void Update( const float deltaTime ) override;
+		void Update( float deltaTime ) override;
 
 	private:
 		enum class PortalState
@@ -41,20 +42,18 @@ namespace bvi::gravity_bender
 			Anticipation, Spawning, Exhausted
 		};
 
-		UnitData m_blueprint;
+		config::PortalBlueprint m_blueprint;
 		dae::graphics::PrimitiveRenderComponent* m_primitiveRenderer{ nullptr };
 
 		glm::vec3 m_direction{};
 		PortalState m_currentState{ PortalState::Anticipation };
-		float m_timer{ 0.0f };
-		int m_spawnedCount{ 0 };
-		const float m_CooldownDuration{ 15.0f };
-		const float m_anticipationDuration{ 3.0f };
+		float m_timer{ 0.F };
+
+		uint32_t m_spawnedCount{ 0 };
 
 		void EmitUnit();
 		void SetRandomDirection();
 		void SetRandomPosition();
-
 	};
 }
 #endif

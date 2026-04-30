@@ -19,7 +19,7 @@ namespace bvi::common
 	void FPSComponent::InitializeLinkage()
 	{
 		m_text = GetOwner()->GetComponent<dae::graphics::TextComponent>();
-		if ( !m_text )
+		if ( m_text == nullptr )
 		{
 			assert( m_text && "requires a TextComponent on the same GameObject." );
 		}
@@ -30,13 +30,13 @@ namespace bvi::common
 
 	void FPSComponent::Update( const float deltaTime )
 	{
-		if ( !m_text )
+		if ( m_text == nullptr )
 		{
 			assert( m_text && "requires a TextComponent on the same GameObject." );
 			return;
 		}
 
-		const float fps{ ( deltaTime > 0.f ) ? ( 1.f / deltaTime ) : 0.f };
+		const float fps{ ( deltaTime > 0.F ) ? ( 1.F / deltaTime ) : 0.F };
 
 		std::ostringstream oss;
 		oss << std::fixed << std::setprecision( 1 ) << fps << " FPS";

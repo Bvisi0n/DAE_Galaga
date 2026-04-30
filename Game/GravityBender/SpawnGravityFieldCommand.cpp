@@ -3,6 +3,7 @@
 
 #include <Minigin/Core/GameObject.h>
 
+#include <Game/GravityBender/GravityBenderBlueprints.h>
 #include <Game/GravityBender/GravityRegistry.h>
 #include <Game/GravityBender/SpawnGravityFieldCommand.h>
 
@@ -12,25 +13,33 @@ namespace bvi::gravity_bender
 		: m_playerContext{ contextPlayer }
 	{}
 
-	void SpawnGravityFieldCommand::Execute( const float )
+	void SpawnGravityFieldCommand::Execute( const float /*deltaTime*/ )
 	{
-		if ( !m_playerContext )
+		if ( m_playerContext == nullptr )
 		{
 			assert( m_playerContext && "SpawnGravityFieldCommand requires a valid player context." );
 			return;
 		}
 
-		auto currentTime = std::chrono::steady_clock::now();
-		std::chrono::duration<float> timeSinceLastSpawn = currentTime - m_lastSpawnTime;
+		constexpr const auto& gravityFieldConfig = bvi::gravity_bender::config::Config.gravityField;
 
-		constexpr float spawnCooldown = 1.0f;
-		if ( timeSinceLastSpawn.count() >= spawnCooldown )
+		const auto currentTime = std::chrono::steady_clock::now();
+		const std::chrono::duration<float> timeSinceLastSpawn = currentTime - m_lastSpawnTime;
+
+		if ( timeSinceLastSpawn.count() >= gravityFieldConfig.cooldownSeconds )
 		{
+			constexpr float radiusSquared{ gravityFieldConfig.effectRadius * gravityFieldConfig.effectRadius };
 			const auto origin = m_playerContext->GetTransform().GetWorldPosition();
 
-			constexpr float radius = 100.0f;
-			constexpr float strength = 1'500'000.0f;
-			GravityRegistry::AddNode( { origin, strength, radius * radius } );
+			const GravityNode newNode
+			{
+				.position = origin,
+				.strength = gravityFieldConfig.pullForce,
+				.radiusSquared = radiusSquared,
+				.lifeTimeRemaining = gravityFieldConfig.durationSeconds
+			};
+
+			GravityRegistry::AddNode( newNode );
 
 			m_lastSpawnTime = currentTime;
 		}
