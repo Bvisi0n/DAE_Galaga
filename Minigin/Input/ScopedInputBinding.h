@@ -2,76 +2,48 @@
 #define DAE_SCOPEDINPUTBINDING_H
 
 #include <memory>
-#include <type_traits>
-#include <utility>
 #include <variant>
 
-#include "Minigin/Input/Gamepad.h"
-#include "Minigin/Input/InputManager.h"
-#include "Minigin/Input/Keyboard.h"
-
-// TODO dae_input - Split into .cpp/.h
+#include <Minigin/Input/Gamepad.h>
+#include <Minigin/Input/InputManager.h>
+#include <Minigin/Input/Keyboard.h>
 
 namespace dae::input
 {
+	class ICommand;
+
 	class ScopedInputBinding final
 	{
 	public:
-		ScopedInputBinding( Keyboard::Key key, InputManager::KeyState state, std::unique_ptr<ICommand> command )
-			: m_key{ InputManager::KeyboardBinding{key, state} }
-		{
-			InputManager::GetInstance().BindCommand( key, state, std::move( command ) );
-		}
+		ScopedInputBinding( Keyboard::Key key, InputManager::KeyState state, std::unique_ptr<ICommand> command );
+		ScopedInputBinding( Gamepad::Button button, InputManager::KeyState state, unsigned int controllerIndex, std::unique_ptr<ICommand> command );
 
-		ScopedInputBinding( Gamepad::Button button, InputManager::KeyState state, unsigned int controllerIndex, std::unique_ptr<ICommand> command )
-			: m_key{ InputManager::ControllerBinding{controllerIndex, button, state} }
-		{
-			InputManager::GetInstance().BindCommand( button, state, std::move( command ), controllerIndex );
-		}
-
-		~ScopedInputBinding()
-		{
-			Unbind();
-		}
+		~ScopedInputBinding();
 
 		ScopedInputBinding( const ScopedInputBinding& ) = delete;
 		ScopedInputBinding& operator=( const ScopedInputBinding& ) = delete;
 
-		ScopedInputBinding( ScopedInputBinding&& other ) noexcept
-			: m_key{ std::exchange( other.m_key, std::monostate{} ) }
-		{}
-
-		ScopedInputBinding& operator=( ScopedInputBinding&& other ) noexcept
-		{
-			if ( this != &other )
-			{
-				Unbind();
-				m_key = std::exchange( other.m_key, std::monostate{} );
-			}
-			return *this;
-		}
+		ScopedInputBinding( ScopedInputBinding&& other ) noexcept;
+		ScopedInputBinding& operator=( ScopedInputBinding&& other ) noexcept;
 
 	private:
-		InputManager::BindingKey m_key{ std::monostate{} };
-
-		void Unbind()
+		struct KeyboardTrack
 		{
-			std::visit( [] ( auto&& argument )
-			{
-				using T = std::decay_t<decltype( argument )>;
+			Keyboard::Key key;
+			InputManager::KeyState state;
+		};
 
-				if constexpr ( std::is_same_v<T, InputManager::KeyboardBinding> )
-				{
-					InputManager::GetInstance().UnbindCommand( argument.first, argument.second );
-				}
-				else if constexpr ( std::is_same_v<T, InputManager::ControllerBinding> )
-				{
-					InputManager::GetInstance().UnbindCommand( std::get<1>( argument ), std::get<2>( argument ), std::get<0>( argument ) );
-				}
-				// If (std::monostate) do nothing;
+		struct GamepadTrack
+		{
+			unsigned int controllerIndex;
+			Gamepad::Button button;
+			InputManager::KeyState state;
+		};
 
-			}, m_key );
-		}
+		using BindingTrack = std::variant<std::monostate, KeyboardTrack, GamepadTrack>;
+		BindingTrack m_track{ std::monostate{} };
+
+		void Unbind();
 	};
 }
 #endif

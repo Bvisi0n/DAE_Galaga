@@ -2,17 +2,21 @@
 #define DAE_ISOUNDSYSTEM_H
 
 #include <cstdint>
+#include <filesystem>
 
 // TODO dae_audio - Rework audio system.
-	// Move struct PlayMessage to this file, use it as argument.
-	// Add RegisterSound method.
-	// Figure out an optimized way to manage audio resources.
-	// Fix RAII wrappers/deleters, MIX_Quit(), memory leak if not used.
-	// Implement in Galaga.
+// Figure out an optimized way to manage audio resources.
+// Implement in Galaga.
 
 namespace dae::audio
 {
-	using sound_id = uint16_t;
+	using SoundID = uint16_t;
+
+	struct PlayMessage
+	{
+		SoundID soundID;
+		float volume;
+	};
 
 	class ISoundSystem
 	{
@@ -25,7 +29,9 @@ namespace dae::audio
 		ISoundSystem& operator=( const ISoundSystem& ) = delete;
 		ISoundSystem& operator=( ISoundSystem&& ) = default;
 
-		virtual void Play( sound_id id, float volume ) = 0;
+		virtual void Play( const PlayMessage& message ) = 0;
+
+		virtual void RegisterSound( SoundID soundID, const std::filesystem::path& filepath ) = 0;
 	};
 
 	class NullSoundSystem final : public ISoundSystem
@@ -39,7 +45,9 @@ namespace dae::audio
 		NullSoundSystem& operator=( const NullSoundSystem& ) = delete;
 		NullSoundSystem& operator=( NullSoundSystem&& ) = default;
 
-		void Play( sound_id /*id*/, float /*volume*/ ) override
+		void Play( const PlayMessage& /*message*/ ) override
+		{}
+		void RegisterSound( SoundID /*soundID*/, const std::filesystem::path& /*filepath*/ ) override
 		{}
 	};
 }

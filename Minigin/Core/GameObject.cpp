@@ -8,8 +8,8 @@
 
 namespace dae::core
 {
-	GameObject::GameObject( const float x, const float y )
-		: m_transform{ this, x, y }
+	GameObject::GameObject( const TransformDescriptor& transformConfig )
+		: m_transform{ this, transformConfig }
 	{}
 
 	GameObject::~GameObject()
@@ -17,13 +17,13 @@ namespace dae::core
 		// TODO dae_core - Works but doesn't feel right, research is required. Who owns what, use smart pointers?
 		for ( auto* child : m_children )
 		{
-			if ( child )
+			if ( child != nullptr )
 			{
 				child->m_parent = nullptr;
 			}
 		}
 
-		if ( m_parent )
+		if ( m_parent != nullptr )
 		{
 			m_parent->RemoveChild( this );
 		}
@@ -35,7 +35,7 @@ namespace dae::core
 
 		for ( auto* child : m_children )
 		{
-			if ( child )
+			if ( child != nullptr )
 			{
 				child->MarkForDeletion();
 			}
@@ -91,7 +91,7 @@ namespace dae::core
 
 	void GameObject::Render() const
 	{
-		if ( m_renderable )
+		if ( m_renderable != nullptr )
 		{
 			m_renderable->Render();
 		}
@@ -117,14 +117,14 @@ namespace dae::core
 		}
 		//else if (!keepWorldPosition) the current LocalPosition is preserved as is
 
-		if ( m_parent )
+		if ( m_parent != nullptr )
 		{
 			m_parent->RemoveChild( this );
 		}
 
 		m_parent = parent;
 
-		if ( m_parent )
+		if ( m_parent != nullptr )
 		{
 			m_parent->AddChild( this );
 		}
@@ -152,14 +152,19 @@ namespace dae::core
 
 	bool GameObject::IsChild( GameObject* candidate ) const
 	{
-		if ( candidate == nullptr ) return false;
-
-		for ( auto child : m_children )
+		if ( candidate == nullptr )
 		{
-			if ( child == candidate ) return true;
-			if ( child->IsChild( candidate ) ) return true;
+			return false;
 		}
-		return false;
+
+		return std::ranges::any_of
+		(
+			m_children,
+			[ candidate ] ( auto* child )
+			{
+				return ( child == candidate ) || child->IsChild( candidate );
+			}
+		);
 	}
 
 	void GameObject::AddChild( GameObject* child )
@@ -168,13 +173,10 @@ namespace dae::core
 		{
 			return;
 		}
-		else
+
+		if ( std::ranges::find( m_children, child ) == m_children.end() )
 		{
-			// std::ranges::find not supported by local emscripten. (works on web...?)
-			if ( std::find( m_children.begin(), m_children.end(), child ) == m_children.end() )
-			{
-				m_children.emplace_back( child );
-			}
+			m_children.emplace_back( child );
 		}
 	}
 
@@ -184,14 +186,12 @@ namespace dae::core
 		{
 			return;
 		}
-		else
-		{
-			std::erase( m_children, child );
 
-			if ( child->GetParent() == this )
-			{
-				child->m_parent = nullptr;
-			}
+		std::erase( m_children, child );
+
+		if ( child->GetParent() == this )
+		{
+			child->m_parent = nullptr;
 		}
 	}
 

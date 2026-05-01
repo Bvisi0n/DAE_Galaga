@@ -49,9 +49,6 @@
 #include "Minigin/Resources/ResourceManager.h"
 #include "Minigin/Scene/SceneManager.h"
 
-
-SDL_Window* g_window{};
-
 static void LogSDLVersion( const std::string& message, int major, int minor, int patch )
 {
 #if WIN32
@@ -82,48 +79,50 @@ static void PrintSDLVersion()
 
 namespace dae::core
 {
-	Minigin::Minigin( const MiniginConfig& config )
-		: m_nsPerFrame( std::chrono::nanoseconds( 1'000'000'000 / std::max<uint16_t>( 1, config.targetFPS ) ) )
-		, m_maxDeltaTime( 1.0f / std::max<uint16_t>( 1, config.minProcessableFPS ) )
+	Minigin::Minigin( const MiniginDescriptor& descriptor )
+		: m_nsPerFrame( std::chrono::nanoseconds( 1'000'000'000 / std::max<uint16_t>( 1, descriptor.targetFPS ) ) )
+		, m_maxDeltaTime( 1.F / static_cast<float>( std::max<uint16_t>( 1, descriptor.minProcessableFPS ) ) )
 	{
 		PrintSDLVersion();
 
 	#if USE_STEAMWORKS && !__EMSCRIPTEN__
 		const bool steamInitialized = SteamAPI_Init();
-		if ( steamInitialized == false )
+		if ( !steamInitialized )
 		{
 			SDL_Log( "Fatal Error: Steam must be running to play this game." );
-
-			assert( steamInitialized == true && "SteamAPI_Init() failed" );
-
+			assert( steamInitialized && "SteamAPI_Init() failed" );
 			return;
 		}
 	#endif
 
+		// TODO dae_core - Confusing to manage builds here.
+			// Could I let each class be responsible for initializing the subsystems it needs?
 	#if WIN32
-		const bool sdlInitialized = SDL_InitSubSystem( SDL_INIT_VIDEO );
-	#else
+		const bool sdlInitialized = SDL_InitSubSystem( SDL_INIT_VIDEO | SDL_INIT_AUDIO );
+	#elif __EMSCRIPTEN__
 		const bool sdlInitialized = SDL_InitSubSystem( SDL_INIT_VIDEO | SDL_INIT_GAMEPAD );
+	#else
+		const bool sdlInitialized = SDL_InitSubSystem( SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_GAMEPAD );
 	#endif
 
-		if ( sdlInitialized == false )
+		if ( !sdlInitialized )
 		{
 			SDL_Log( "SDL_Init Error: %s", SDL_GetError() );
-			assert( sdlInitialized == true && "Failed to initialize SDL SubSystems" );
+			assert( sdlInitialized && "Failed to initialize SDL SubSystems" );
 			return;
 		}
 
-		g_window = SDL_CreateWindow( config.windowTitle.c_str(), config.windowWidth, config.windowHeight, SDL_WINDOW_OPENGL );
+		m_window = SDL_CreateWindow( descriptor.windowTitle.c_str(), descriptor.windowWidth, descriptor.windowHeight, SDL_WINDOW_OPENGL );
 
-		if ( g_window == nullptr )
+		if ( m_window == nullptr )
 		{
 			SDL_Log( "SDL_CreateWindow Error: %s", SDL_GetError() );
-			assert( g_window != nullptr && "Failed to create SDL Window" );
+			assert( m_window != nullptr && "Failed to create SDL Window" );
 			return;
 		}
 
-		graphics::Renderer::GetInstance().Init( g_window );
-		resources::ResourceManager::GetInstance().Init( config.dataPath );
+		graphics::Renderer::GetInstance().Init( m_window );
+		resources::ResourceManager::GetInstance().Init( descriptor.dataPath );
 
 	#if _DEBUG
 		auto sdlAudio = std::make_unique<audio::SDLSoundSystem>();
@@ -141,17 +140,24 @@ namespace dae::core
 	{
 		resources::ResourceManager::GetInstance().Destroy();
 		graphics::Renderer::GetInstance().Destroy();
-		SDL_DestroyWindow( g_window );
-		g_window = nullptr;
-		SDL_Quit();
+		ServiceLocator::RegisterSoundSystem( nullptr );
+
+		if ( m_window != nullptr )
+		{
+			SDL_DestroyWindow( m_window );
+			m_window = nullptr;
+		}
+
 	#if USE_STEAMWORKS && !__EMSCRIPTEN__
 		SteamAPI_Shutdown();
 	#endif
+
+		SDL_Quit();
 	}
 
 	void Minigin::Run()
 	{
-		if ( g_window == nullptr || !graphics::Renderer::GetInstance().IsValid() )
+		if ( m_window == nullptr || !graphics::Renderer::GetInstance().IsValid() )
 		{
 			SDL_Log( "Engine failed to initialize successfully. Aborting Run loop." );
 			return;
@@ -199,7 +205,7 @@ namespace dae::core
 		{
 			const auto waitDuration = m_nsPerFrame - executionTime;
 			// I opted for SDL_DelayPrecise, the last function in this file (line 664)
-				// https://github.com/libsdl-org/SDL/blob/main/src/timer/SDL_timer.c
+			// https://github.com/libsdl-org/SDL/blob/main/src/timer/SDL_timer.c
 			SDL_DelayPrecise( static_cast<Uint64>( waitDuration.count() ) );
 		}
 	}

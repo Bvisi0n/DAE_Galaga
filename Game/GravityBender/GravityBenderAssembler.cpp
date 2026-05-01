@@ -13,6 +13,7 @@
 #include <Minigin/Core/GameObject.h>
 #include <Minigin/Core/IAppState.h>
 #include <Minigin/Core/MoveComponent.h>
+#include <Minigin/Core/Transform.h>
 #include <Minigin/Graphics/PrimitiveRenderComponent.h>
 #include <Minigin/Graphics/TextComponent.h>
 #include <Minigin/Input/InputManager.h>
@@ -97,8 +98,12 @@ namespace bvi::gravity_bender
 		using ResourceManager = dae::resources::ResourceManager;
 		auto font{ ResourceManager::GetInstance().LoadFont( "Lingua.otf", uiConfig.fpsFontSize ) };
 
-		auto fpsCounter{ std::make_unique<dae::core::GameObject>
-			( uiConfig.fpsStartX, uiConfig.fpsStartY ) };
+		using Object = dae::core::GameObject;
+		using Descriptor = dae::core::TransformDescriptor;
+		auto fpsCounter
+		{
+			std::make_unique<Object>( Descriptor{.localPosition = { uiConfig.fpsStartX, uiConfig.fpsStartY, 0.F } } )
+		};
 
 		fpsCounter->AddComponent<dae::graphics::TextComponent>( "00.0 FPS", font )->SetColor( fpsColor );
 		fpsCounter->AddComponent<common::FPSComponent>();
@@ -155,7 +160,12 @@ namespace bvi::gravity_bender
 
 		for ( const auto& line : lines )
 		{
-			auto textObject{ std::make_unique<dae::core::GameObject>( line.xOffset, currentY ) };
+			using Object = dae::core::GameObject;
+			using Descriptor = dae::core::TransformDescriptor;
+			auto textObject
+			{
+				std::make_unique<Object>( Descriptor{.localPosition = { line.xOffset, currentY, 0.F } } )
+			};
 
 			textObject->AddComponent<dae::graphics::TextComponent>( std::string{ line.text }, font )
 				->SetColor( textColor );
@@ -171,7 +181,12 @@ namespace bvi::gravity_bender
 		namespace config = bvi::gravity_bender::config;
 		constexpr const auto& playerConfig = config::Config.player;
 
-		auto player{ std::make_unique<dae::core::GameObject>( playerConfig.startX, playerConfig.startY ) };
+		using Object = dae::core::GameObject;
+		using Descriptor = dae::core::TransformDescriptor;
+		auto player
+		{
+			std::make_unique<Object>( Descriptor{.localPosition = { playerConfig.startX, playerConfig.startY, 0.F } } )
+		};
 
 		constexpr SDL_Color playerColor
 		{
@@ -190,11 +205,36 @@ namespace bvi::gravity_bender
 		player->AddComponent<dae::graphics::PrimitiveRenderComponent>
 			( dae::graphics::PrimitiveShape{ shapeConfig }, playerColor );
 
-		player->AddComponent<dae::core::ColliderComponent>( playerConfig.colliderSize, playerConfig.colliderSize, 1 );
+		using Collider = dae::core::ColliderComponent;
+		using Size2D = dae::core::Size2D;
+		player->AddComponent<Collider>
+			(
+				Size2D
+				{
+					.width = { playerConfig.colliderSize },
+					.height = { playerConfig.colliderSize }
+				},
+				1
+			);
+
 		player->AddComponent<ScreenWrapComponent>( playerConfig.radius );
 
 		player->AddComponent<PlayerComponent>();
-		auto* moveComp{ player->AddComponent<dae::core::MoveComponent>( playerConfig.baseSpeed, playerConfig.speedMultiplier ) };
+
+		using MoveComponent = dae::core::MoveComponent;
+		using MoveDescriptor = dae::core::MoveDescriptor;
+		auto* moveComp
+		{
+			player->AddComponent<MoveComponent>
+			(
+				MoveDescriptor
+				{
+					.maxSpeed = { playerConfig.baseSpeed },
+					.drag = { playerConfig.speedMultiplier }
+				}
+			)
+		};
+
 		auto* inputComp{ player->AddComponent<dae::input::PlayerInputComponent>() };
 
 		using Key = dae::input::Keyboard::Key;

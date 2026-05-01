@@ -9,20 +9,14 @@ namespace dae::core
 {
 	class ColliderComponent;
 	class GameObject;
-	struct Rect;
-
-	struct CollisionPair
-	{
-		ColliderComponent* first;
-		ColliderComponent* second;
-	};
+	struct Rectangle;
 
 	class CollisionSystem final
 	{
 	public:
 		using CollisionCallback = std::function<void( GameObject*, GameObject* )>;
 
-		void RegisterCallback( CollisionCallback callback );
+		void RegisterCallback( const CollisionCallback& callback );
 
 		void Update( const std::vector<std::unique_ptr<GameObject>>& objects );
 
@@ -30,7 +24,7 @@ namespace dae::core
 		std::vector<CollisionCallback> m_callbacks{};
 		std::vector<ColliderComponent*> m_activeColliders{};
 
-		[[nodiscard]] bool Intersects( const Rect& a, const Rect& b ) const noexcept;
+		[[nodiscard]] static bool Intersects( const Rectangle& rectangleA, const Rectangle& rectangleB ) noexcept;
 	};
 }
 

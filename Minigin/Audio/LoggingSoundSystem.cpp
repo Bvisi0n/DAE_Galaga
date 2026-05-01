@@ -1,3 +1,4 @@
+#include <filesystem>
 #include <memory>
 #include <utility>
 
@@ -10,13 +11,23 @@ namespace dae::audio
 		: m_realSoundSystem( std::move( soundSystem ) )
 	{}
 
-	void LoggingSoundSystem::Play( sound_id id, float volume )
+	void LoggingSoundSystem::Play( const PlayMessage& message )
 	{
-		if ( m_realSoundSystem )
+		if ( m_realSoundSystem != nullptr )
 		{
-			m_realSoundSystem->Play( id, volume );
+			m_realSoundSystem->Play( message );
 		}
 
-		// TODO dae_audio - Implement logging.
+		// TODO dae_audio - Implement imgui logging.
+	}
+
+	void LoggingSoundSystem::RegisterSound( SoundID soundID, const std::filesystem::path& filepath )
+	{
+		if ( m_realSoundSystem != nullptr )
+		{
+			m_realSoundSystem->RegisterSound( soundID, filepath );
+		}
+
+		// TODO dae_audio - Implement imgui logging.
 	}
 }

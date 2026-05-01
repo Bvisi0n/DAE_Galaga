@@ -3,27 +3,30 @@
 #include <string>
 #include <utility>
 
+#include <glm/ext/vector_float2.hpp>
+
 #include <SDL3/SDL_pixels.h>
 #include <SDL3/SDL_render.h>
 #include <SDL3/SDL_surface.h>
 #include <SDL3_ttf/SDL_ttf.h>
 
-#include "Minigin/Core/Component.h"
-#include "Minigin/Core/GameObject.h"
-#include "Minigin/Core/Transform.h"
-
-#include "Minigin/Graphics/Font.h"
-#include "Minigin/Graphics/Renderer.h"
-#include "Minigin/Graphics/TextComponent.h"
-#include "Minigin/Graphics/Texture2D.h"
+#include <Minigin/Core/Component.h>
+#include <Minigin/Core/GameObject.h>
+#include <Minigin/Core/Transform.h>
+#include <Minigin/Graphics/Font.h>
+#include <Minigin/Graphics/Renderer.h>
+#include <Minigin/Graphics/TextComponent.h>
+#include <Minigin/Graphics/Texture2D.h>
 
 namespace dae::graphics
 {
 	TextComponent::TextComponent( core::GameObject* owner, const std::string& text, std::shared_ptr<Font> font, const SDL_Color& color )
 		: Component( owner )
-		, m_text( text ), m_font( std::move( font ) ), m_texture( nullptr ), m_color( color ), m_needsUpdate( true )
+		, m_text( text )
+		, m_font( std::move( font ) )
+		, m_color( color )
 	{
-		assert( text.length() > 0 && "TextComponent requires non-empty text." );
+		assert( !text.empty() && "TextComponent requires non-empty text." );
 	}
 
 	void TextComponent::InitializeLinkage()
@@ -71,7 +74,7 @@ namespace dae::graphics
 		if ( m_texture != nullptr && GetOwner() != nullptr )
 		{
 			const auto& position = GetOwner()->GetTransform().GetWorldPosition();
-			Renderer::GetInstance().RenderTexture( *m_texture, position.x, position.y );
+			Renderer::GetInstance().RenderTexture( *m_texture, glm::vec2{ position.x, position.y } );
 		}
 	}
 
@@ -87,6 +90,8 @@ namespace dae::graphics
 
 	void TextComponent::SetText( const std::string& text )
 	{
+		assert( !text.empty() && "TextComponent requires non-empty text." );
+
 		if ( m_text != text )
 		{
 			m_text = text;

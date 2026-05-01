@@ -23,7 +23,7 @@ namespace dae::core
 	class GameObject final
 	{
 	public:
-		explicit GameObject( const float x = 0.f, const float y = 0.f );
+		explicit GameObject( const TransformDescriptor& transformConfig = {} );
 		~GameObject();
 
 		GameObject( const GameObject& other ) = delete;

@@ -7,10 +7,10 @@
 #include <vld.h> // Required
 #endif
 
-#include "Game/MainMenu/MainMenuState.h"
+#include <Game/MainMenu/MainMenuState.h>
 
-#include "Minigin/Core/AppStateManager.h"
-#include "Minigin/Core/Minigin.h"
+#include <Minigin/Core/AppStateManager.h>
+#include <Minigin/Core/Minigin.h>
 
 int main( int /*argc*/, char* /*argv*/[] )
 {

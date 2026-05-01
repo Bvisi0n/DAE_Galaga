@@ -133,10 +133,28 @@ namespace bvi::gravity_bender
 		unit->AddComponent<dae::graphics::PrimitiveRenderComponent>
 			( dae::graphics::PrimitiveShape{ rectConfig }, enemyColor );
 
-		unit->AddComponent<dae::core::MoveComponent>
-			( m_blueprint.unitSpeed )->SetVelocity( m_direction );
+		using MoveComponent = dae::core::MoveComponent;
+		using MoveDescriptor = dae::core::MoveDescriptor;
+		unit->AddComponent<MoveComponent>
+			(
+				MoveDescriptor
+				{
+					.maxSpeed = { m_blueprint.unitSpeed }
+				}
+			)->SetVelocity( m_direction );
 
-		unit->AddComponent<dae::core::ColliderComponent>( 5.F, 5.F, 1 );
+		using ColliderComponent = dae::core::ColliderComponent;
+		using Size2D = dae::core::Size2D;
+		unit->AddComponent<ColliderComponent>
+			(
+				Size2D
+				{
+					.width = { m_blueprint.unitSize },
+					.height = { m_blueprint.unitSize }
+				},
+				1
+			);
+
 		unit->AddComponent<ScreenWrapComponent>( halfSize );
 		unit->AddComponent<GravityReceiverComponent>();
 

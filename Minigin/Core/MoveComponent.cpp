@@ -1,21 +1,21 @@
 #include <algorithm>
 #include <cmath>
 
+#include <glm/ext/vector_float3.hpp>
 #include <glm/geometric.hpp>
-#include <glm/vec3.hpp>
 
-#include "Minigin/Core/Component.h"
-#include "Minigin/Core/GameObject.h"
-#include "Minigin/Core/MoveComponent.h"
-#include "Minigin/Core/Transform.h"
+#include <Minigin/Core/Component.h>
+#include <Minigin/Core/GameObject.h>
+#include <Minigin/Core/MoveComponent.h>
+#include <Minigin/Core/Transform.h>
 
 namespace dae::core
 {
-	MoveComponent::MoveComponent( GameObject* owner, const float maxSpeed, const float drag )
+	MoveComponent::MoveComponent( GameObject* owner, const MoveDescriptor& descriptor )
 		: Component( owner )
 	{
-		SetDragCoefficient( drag );
-		SetMaxSpeed( maxSpeed );
+		SetDragCoefficient( descriptor.drag );
+		SetMaxSpeed( descriptor.maxSpeed );
 	}
 
 	void MoveComponent::InitializeLinkage()
@@ -27,13 +27,13 @@ namespace dae::core
 	void MoveComponent::Update( const float deltaTime )
 	{
 		m_velocity += m_accumulatedForces * deltaTime;
-		m_accumulatedForces = { 0.0f, 0.0f, 0.0f };
+		m_accumulatedForces = { 0.F, 0.F, 0.F };
 
-		const float dragMultiplier = std::max( 0.0f, 1.0f - ( m_dragCoefficient * deltaTime ) );
+		const float dragMultiplier = std::max( 0.F, 1.F - ( m_dragCoefficient * deltaTime ) );
 		m_velocity *= dragMultiplier;
 
 		const float currentSpeedSq = glm::dot( m_velocity, m_velocity );
-		constexpr float epsilon = 0.0001f;
+		constexpr float epsilon = 0.0001F;
 
 		if ( currentSpeedSq > epsilon )
 		{
@@ -49,7 +49,7 @@ namespace dae::core
 		}
 		else
 		{
-			m_velocity = { 0.0f, 0.0f, 0.0f };
+			m_velocity = { 0.F, 0.F, 0.F };
 		}
 	}
 
@@ -60,7 +60,7 @@ namespace dae::core
 
 	void MoveComponent::SetDragCoefficient( const float drag )
 	{
-		m_dragCoefficient = std::max( 0.0f, drag );
+		m_dragCoefficient = std::max( 0.F, drag );
 	}
 
 	float MoveComponent::GetDragCoefficient() const noexcept

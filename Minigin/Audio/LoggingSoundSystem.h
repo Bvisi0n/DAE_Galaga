@@ -1,9 +1,10 @@
 #ifndef DAE_LOGGINGSOUNDSYSTEM_H
 #define DAE_LOGGINGSOUNDSYSTEM_H
 
+#include <filesystem>
 #include <memory>
 
-#include "Minigin/Audio/ISoundSystem.h"
+#include <Minigin/Audio/ISoundSystem.h>
 
 namespace dae::audio
 {
@@ -11,14 +12,15 @@ namespace dae::audio
 	{
 	public:
 		explicit LoggingSoundSystem( std::unique_ptr<ISoundSystem>&& soundSystem );
-		~LoggingSoundSystem() = default;
+		~LoggingSoundSystem() override = default;
 
 		LoggingSoundSystem( const LoggingSoundSystem& ) = delete;
 		LoggingSoundSystem( LoggingSoundSystem&& ) = default;
 		LoggingSoundSystem& operator=( const LoggingSoundSystem& ) = delete;
 		LoggingSoundSystem& operator=( LoggingSoundSystem&& ) = default;
 
-		void Play( const sound_id id, const float volume ) override;
+		void Play( const PlayMessage& message ) override;
+		void RegisterSound( SoundID soundID, const std::filesystem::path& filepath ) override;
 
 	private:
 		std::unique_ptr<ISoundSystem> m_realSoundSystem;

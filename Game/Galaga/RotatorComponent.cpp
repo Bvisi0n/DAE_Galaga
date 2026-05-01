@@ -9,11 +9,11 @@
 
 namespace bvi::galaga
 {
-	RotatorComponent::RotatorComponent( dae::core::GameObject* owner, const RotatorConfig config )
+	RotatorComponent::RotatorComponent( dae::core::GameObject* owner, const RotatorDescriptor descriptor )
 		: Component( owner )
-		, m_angle( config.initialAngle )
-		, m_range( config.range )
-		, m_rotationSpeed( config.speed )
+		, m_angle( descriptor.initialAngle )
+		, m_range( descriptor.range )
+		, m_rotationSpeed( descriptor.speed )
 	{}
 
 	void RotatorComponent::InitializeLinkage()

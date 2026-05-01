@@ -4,9 +4,9 @@
 
 namespace dae::core
 {
-	ColliderComponent::ColliderComponent( GameObject* owner, float width, float height, int layer )
+	ColliderComponent::ColliderComponent( GameObject* owner, Size2D size, int layer )
 		: Component( owner )
-		, m_localBounds{ 0, 0, width, height }
+		, m_localBounds{ .x = 0.F, .y = 0.F, .width = size.width, .height = size.height }
 		, m_layer( layer )
 	{}
 
@@ -19,10 +19,17 @@ namespace dae::core
 	void ColliderComponent::Update( const float /*deltaTime*/ )
 	{}
 
-	Rect ColliderComponent::GetWorldBounds() const
+	Rectangle ColliderComponent::GetWorldBounds() const
 	{
-		const auto& pos = GetOwner()->GetTransform().GetWorldPosition();
-		return Rect{ pos.x, pos.y, m_localBounds.width, m_localBounds.height };
+		const auto& position = GetOwner()->GetTransform().GetWorldPosition();
+
+		return Rectangle
+		{
+			.x = position.x,
+			.y = position.y,
+			.width = m_localBounds.width,
+			.height = m_localBounds.height
+		};
 	}
 
 	int ColliderComponent::GetLayer() const noexcept

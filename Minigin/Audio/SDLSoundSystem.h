@@ -1,24 +1,26 @@
 #ifndef DAE_SDLSOUNDSYSTEM_H
 #define DAE_SDLSOUNDSYSTEM_H
 
+#include <filesystem>
 #include <memory>
 
-#include "Minigin/Audio/ISoundSystem.h"
+#include <Minigin/Audio/ISoundSystem.h>
 
 namespace dae::audio
 {
-	class SDLSoundSystem : public ISoundSystem
+	class SDLSoundSystem final : public ISoundSystem
 	{
 	public:
 		SDLSoundSystem();
-		virtual ~SDLSoundSystem() override;
+		~SDLSoundSystem() override;
 
 		SDLSoundSystem( const SDLSoundSystem& ) = delete;
 		SDLSoundSystem( SDLSoundSystem&& ) = default;
 		SDLSoundSystem& operator=( const SDLSoundSystem& ) = delete;
 		SDLSoundSystem& operator=( SDLSoundSystem&& ) = default;
 
-		virtual void Play( sound_id id, float volume ) override;
+		void Play( const PlayMessage& message ) override;
+		void RegisterSound( SoundID soundID, const std::filesystem::path& filepath ) override;
 
 	private:
 		class SDLSoundSystemImpl;

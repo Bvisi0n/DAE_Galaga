@@ -75,19 +75,6 @@ else()
 	)
 endif()
 
-option(ENABLE_CLANG_TIDY "Enable static analysis with clang-tidy" ON)
-
-if(ENABLE_CLANG_TIDY AND NOT EMSCRIPTEN)
-	find_program(CLANG_TIDY_EXE NAMES "clang-tidy" "clang-tidy.exe")
-	if(CLANG_TIDY_EXE)
-		set_target_properties(${TARGET_NAME} PROPERTIES
-			CXX_CLANG_TIDY "${CLANG_TIDY_EXE};--config-file=${CMAKE_SOURCE_DIR}/.clang-tidy"
-		)
-	else()
-		message(STATUS "Static Analysis: clang-tidy not found.")
-	endif()
-endif()
-
 if(EMSCRIPTEN)
 	set(EMSCRIPTEN_COMPILE_FLAGS "${EMSCRIPTEN_LINK_FLAGS} -g")
 	set(EMSCRIPTEN_LINK_FLAGS "${EMSCRIPTEN_LINK_FLAGS} -sUSE_FREETYPE=1 -sUSE_HARFBUZZ=1 -g -sALLOW_MEMORY_GROWTH --preload-file \"${CMAKE_SOURCE_DIR}/Data@/\"")

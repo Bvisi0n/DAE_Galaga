@@ -10,7 +10,7 @@ namespace dae::core
 
 namespace bvi::galaga
 {
-	struct RotatorConfig
+	struct RotatorDescriptor
 	{
 		float range{ 0.0f };
 		float speed{ 0.0f };
@@ -20,7 +20,7 @@ namespace bvi::galaga
 	class RotatorComponent final : public dae::core::Component
 	{
 	public:
-		explicit RotatorComponent( dae::core::GameObject* owner, const RotatorConfig config );
+		explicit RotatorComponent( dae::core::GameObject* owner, const RotatorDescriptor descriptor );
 		~RotatorComponent() override = default;
 
 		RotatorComponent( const RotatorComponent& other ) = delete;

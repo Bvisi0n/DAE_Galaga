@@ -7,6 +7,7 @@
 #include <Minigin/Core/GameObject.h>
 #include <Minigin/Core/MoveComponent.h>
 
+#include <Game/GravityBender/GravityBenderBlueprints.h>
 #include <Game/GravityBender/GravityReceiverComponent.h>
 #include <Game/GravityBender/GravityRegistry.h>
 
@@ -36,11 +37,26 @@ namespace bvi::gravity_bender
 		const glm::vec3 currentPos = GetOwner()->GetTransform().GetWorldPosition();
 		glm::vec3 totalGravityForce{ 0.0F, 0.0F, 0.0F };
 
+		const auto& viewport = config::Config.viewport;
+		const float halfWidth = viewport.width / 2.F;
+		const float halfHeight = viewport.height / 2.F;
+
 		constexpr float epsilonSq = 2500.0F;
 
 		for ( const auto& node : GravityRegistry::GetActiveNodes() )
 		{
-			const glm::vec3 diff = node.position - currentPos;
+			glm::vec3 diff = node.position - currentPos;
+
+			if ( std::abs( diff.x ) > halfWidth )
+			{
+				diff.x -= std::copysign( viewport.width, diff.x );
+			}
+
+			if ( std::abs( diff.y ) > halfHeight )
+			{
+				diff.y -= std::copysign( viewport.height, diff.y );
+			}
+
 			const float distanceSq = glm::dot( diff, diff );
 
 			if ( distanceSq < node.radiusSquared )

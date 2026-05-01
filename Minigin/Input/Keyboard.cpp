@@ -1,4 +1,5 @@
 #include <memory>
+#include <span>
 #include <unordered_map>
 #include <vector>
 
@@ -16,9 +17,6 @@ namespace dae::input
 	class Keyboard::KeyboardImpl
 	{
 	public:
-		KeyboardImpl() = default;
-		~KeyboardImpl() = default;
-
 		void Update()
 		{
 			m_previousState = m_currentState;
@@ -27,12 +25,17 @@ namespace dae::input
 			BYTE state[ 256 ];
 			if ( GetKeyboardState( state ) )
 			{
-				m_currentState.assign( state, state + 256 );
+				const std::span<const BYTE> stateSpan{ state };
+				m_currentState.assign( stateSpan.begin(), stateSpan.end() );
 			}
 		#else
 			int numKeys{};
 			const bool* state = SDL_GetKeyboardState( &numKeys );
-			m_currentState.assign( state, state + numKeys );
+			if ( state != nullptr && numKeys > 0 )
+			{
+				const std::span<const bool> stateSpan{ state, static_cast<size_t>( numKeys ) };
+				m_currentState.assign( stateSpan.begin(), stateSpan.end() );
+			}
 		#endif
 
 			if ( m_previousState.empty() )
@@ -41,38 +44,38 @@ namespace dae::input
 			}
 		}
 
-		bool IsPressed( const Key key ) const
+		[[nodiscard]] bool IsPressed( const Key key ) const
 		{
-			int platformKey = GetPlatformKey( key );
+			const int platformKey = GetPlatformKey( key );
 		#if WIN32
-			return m_currentState[ platformKey ] & 0x80;
+			return ( m_currentState[ platformKey ] & 0x80 ) != 0;
 		#else
-			return m_currentState[ platformKey ];
+			return m_currentState[ platformKey ] != 0;
 		#endif
 		}
 
-		bool IsDown( const Key key ) const
+		[[nodiscard]] bool IsDown( const Key key ) const
 		{
 			return IsPressed( key ) && !WasPressed( key );
 		}
 
-		bool IsUp( const Key key ) const
+		[[nodiscard]] bool IsUp( const Key key ) const
 		{
 			return !IsPressed( key ) && WasPressed( key );
 		}
 
 	private:
-		bool WasPressed( const Key key ) const
+		[[nodiscard]] bool WasPressed( const Key key ) const
 		{
-			int platformKey = GetPlatformKey( key );
+			const int platformKey = GetPlatformKey( key );
 		#if WIN32
-			return m_previousState[ platformKey ] & 0x80;
+			return ( m_previousState[ platformKey ] & 0x80 ) != 0;
 		#else
-			return m_previousState[ platformKey ];
+			return m_previousState[ platformKey ] != 0;
 		#endif
 		}
 
-		int GetPlatformKey( const Key key ) const
+		[[nodiscard]] static int GetPlatformKey( const Key key )
 		{
 		#if WIN32
 			// https://learn.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
@@ -114,7 +117,7 @@ namespace dae::input
 		: m_pimpl( std::make_unique<KeyboardImpl>() )
 	{}
 
-	// Don't remove destructor, needs to be here for definition of KeyboardImpl.
+	// Required for std::unique_ptr to an incomplete type (Pimpl idiom).
 	Keyboard::~Keyboard() = default;
 
 	void Keyboard::Update()

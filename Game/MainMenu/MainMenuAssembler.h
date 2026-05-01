@@ -54,7 +54,10 @@ namespace bvi::main_menu
 
 		static void AssembleLogo( dae::scenes::Scene& scene )
 		{
-			auto logo{ std::make_unique<dae::core::GameObject>( 358.f, 180.f ) };
+			using Object = dae::core::GameObject;
+			using Descriptor = dae::core::TransformDescriptor;
+			auto logo{ std::make_unique<Object>( Descriptor{.localPosition = { 358.F, 180.F, 0.F } } ) };
+
 			logo->AddComponent<dae::graphics::TextureComponent>()->SetTexture( "logo.png" );
 			scene.AddGameObject( std::move( logo ) );
 		}
@@ -62,7 +65,14 @@ namespace bvi::main_menu
 		static void AssembleFPSCounter( dae::scenes::Scene& scene )
 		{
 			auto font{ dae::resources::ResourceManager::GetInstance().LoadFont( "Lingua.otf", 24 ) };
-			auto fpsCounter{ std::make_unique<dae::core::GameObject>( 20.f, 20.f ) };
+
+			using Object = dae::core::GameObject;
+			using Descriptor = dae::core::TransformDescriptor;
+			auto fpsCounter
+			{
+				std::make_unique<Object>( Descriptor{.localPosition = { 20.F, 20.F, 0.F } } )
+			};
+
 			fpsCounter->AddComponent<dae::graphics::TextComponent>( "00.0 FPS", font );
 			fpsCounter->AddComponent<common::FPSComponent>();
 			scene.AddGameObject( std::move( fpsCounter ) );
@@ -71,7 +81,14 @@ namespace bvi::main_menu
 		static void AssembleGalagaUI( dae::scenes::Scene& scene, dae::core::IAppState* stateMachine )
 		{
 			auto font{ dae::resources::ResourceManager::GetInstance().LoadFont( "Lingua.otf", 24 ) };
-			auto instructions{ std::make_unique<dae::core::GameObject>( 400.f, 375.f ) };
+
+			using Object = dae::core::GameObject;
+			using Descriptor = dae::core::TransformDescriptor;
+			auto instructions
+			{
+				std::make_unique<Object>( Descriptor{.localPosition = { 400.F, 375.F, 0.F } } )
+			};
+
 			instructions->AddComponent<dae::graphics::TextComponent>( "Press G to start Galaga", font );
 
 			auto inputComp = instructions->AddComponent<dae::input::PlayerInputComponent>();
@@ -87,7 +104,14 @@ namespace bvi::main_menu
 		static void AssembleGravityBenderUI( dae::scenes::Scene& scene, dae::core::IAppState* stateMachine )
 		{
 			auto font{ dae::resources::ResourceManager::GetInstance().LoadFont( "Lingua.otf", 24 ) };
-			auto instructions{ std::make_unique<dae::core::GameObject>( 400.f, 410.f ) };
+
+			using Object = dae::core::GameObject;
+			using Descriptor = dae::core::TransformDescriptor;
+			auto instructions
+			{
+				std::make_unique<Object>( Descriptor{.localPosition = { 400.F, 410.F, 0.F } } )
+			};
+
 			instructions->AddComponent<dae::graphics::TextComponent>( "Press F to start Gravity Bender", font );
 
 			auto inputComp = instructions->AddComponent<dae::input::PlayerInputComponent>();

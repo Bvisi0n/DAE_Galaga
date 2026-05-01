@@ -28,7 +28,7 @@ namespace dae::scenes
 		void Render() const;
 
 		void AddGameObject( std::unique_ptr<core::GameObject> object );
-		void RemoveGameObject( core::GameObject& object );
+		static void RemoveGameObject( core::GameObject& object ); // TODO dae_core - should statics be outside the class?
 		void CleanupGameObjects();
 		void RemoveAllGameObjects();
 

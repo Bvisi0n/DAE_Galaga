@@ -8,22 +8,27 @@ namespace dae::core
 {
 	class GameObject;
 
-	// TODO dae_core - Use a struct to bundle ctor parameters together.
+	struct TransformDescriptor
+	{
+		glm::vec3 localPosition{ 0.F, 0.F, 0.F };
+		glm::vec3 localScale{ 1.F, 1.F, 1.F };
+		float localRotation{ 0.F };
+	};
 
 	class Transform final
 	{
 	public:
-		Transform( GameObject* owner, float xPos, float yPos, float xScale = 1.f, float yScale = 1.f );
+		explicit Transform( GameObject* owner, const TransformDescriptor& descriptor = {} );
 
 		void SetLocalPosition( const glm::vec3& pos );
-		void SetLocalPosition( float x, float y, float z = 0.f );
+		void SetLocalPosition( float xPos, float yPos, float zPos = 0.F );
 		[[nodiscard]] const glm::vec3& GetLocalPosition() const;
 
 		void SetLocalRotation( float angleInRadians );
 		[[nodiscard]] float GetLocalRotation() const;
 
 		void SetLocalScale( const glm::vec3& scale );
-		void SetLocalScale( float x, float y, float z = 1.f );
+		void SetLocalScale( float xScale, float yScale, float zScale = 1.F );
 		[[nodiscard]] const glm::vec3& GetLocalScale() const;
 
 		[[nodiscard]] const glm::mat4& GetWorldMatrix() const;

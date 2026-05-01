@@ -8,7 +8,7 @@
 
 namespace dae::core
 {
-	void CollisionSystem::RegisterCallback( CollisionCallback callback )
+	void CollisionSystem::RegisterCallback( const CollisionCallback& callback )
 	{
 		m_callbacks.push_back( callback );
 	}
@@ -17,39 +17,48 @@ namespace dae::core
 	{
 		m_activeColliders.clear();
 
-		for ( const auto& obj : objects )
+		for ( const auto& object : objects )
 		{
 			// TODO dae_core - This is an expensive operation, ColliderComponent should register themselves instead of being polled every frame.
-			if ( auto* col = obj->GetComponent<ColliderComponent>() )
+			if ( auto* collider = object->GetComponent<ColliderComponent>() )
 			{
-				m_activeColliders.push_back( col );
+				m_activeColliders.push_back( collider );
 			}
 		}
 
 		const size_t count = m_activeColliders.size();
 
-		for ( size_t i = 0; i < count; ++i )
+		for ( size_t indexA = 0; indexA < count; ++indexA )
 		{
-			auto* colA = m_activeColliders[ i ];
-			const auto boundsA = colA->GetWorldBounds();
+			auto* colliderA = m_activeColliders[ indexA ];
+			const auto boundsA = colliderA->GetWorldBounds();
 
-			for ( size_t j = i + 1; j < count; ++j )
+			for ( size_t indexB = indexA + 1; indexB < count; ++indexB )
 			{
-				auto* colB = m_activeColliders[ j ];
+				auto* colliderB = m_activeColliders[ indexB ];
 
-				if ( Intersects( boundsA, colB->GetWorldBounds() ) )
+				if ( Intersects( boundsA, colliderB->GetWorldBounds() ) )
 				{
-					for ( auto& cb : m_callbacks )
+					for ( auto& callback : m_callbacks )
 					{
-						cb( colA->GetOwner(), colB->GetOwner() );
+						callback( colliderA->GetOwner(), colliderB->GetOwner() );
 					}
 				}
 			}
 		}
 	}
 
-	bool CollisionSystem::Intersects( const Rect& a, const Rect& b ) const noexcept
+	bool CollisionSystem::Intersects( const Rectangle& rectangleA, const Rectangle& rectangleB ) noexcept
 	{
-		return ( a.x < b.x + b.width && a.x + a.width > b.x && a.y < b.y + b.height && a.y + a.height > b.y );
+		return
+			(
+				rectangleA.x < rectangleB.x + rectangleB.width
+				&&
+				rectangleA.x + rectangleA.width > rectangleB.x
+				&&
+				rectangleA.y < rectangleB.y + rectangleB.height
+				&&
+				rectangleA.y + rectangleA.height > rectangleB.y
+			);
 	}
 }

@@ -12,6 +12,12 @@ namespace dae::core
 
 namespace bvi::gravity_bender
 {
+	enum class GravityNodeType
+	{
+		Field,
+		Player
+	};
+
 	struct GravityNode
 	{
 		glm::vec3 position;
@@ -19,7 +25,7 @@ namespace bvi::gravity_bender
 		float radiusSquared;
 		float lifeTimeRemaining{ 3.0f };
 		dae::core::GameObject* visualRoot{ nullptr };
-		bool isPlayer{ false };
+		GravityNodeType type{ GravityNodeType::Field };
 	};
 
 	class GravityRegistry final

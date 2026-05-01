@@ -21,17 +21,16 @@ namespace dae::events
 
 	void ObservableComponent::DetachObserver( IObserver* observer )
 	{
-		// std::ranges::find not supported by local emscripten. (works on web...?)
-		auto it = std::find( m_observers.begin(), m_observers.end(), observer );
-		if ( it != m_observers.end() )
+		auto iterator = std::ranges::find( m_observers, observer );
+		if ( iterator != m_observers.end() )
 		{
 			if ( m_isNotifying )
 			{
-				*it = nullptr;
+				*iterator = nullptr;
 			}
 			else
 			{
-				m_observers.erase( it );
+				m_observers.erase( iterator );
 			}
 		}
 	}

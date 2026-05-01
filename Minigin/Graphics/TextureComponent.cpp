@@ -1,20 +1,19 @@
 #include <string>
 
-#include "Minigin/Core/Component.h"
-#include "Minigin/Core/GameObject.h"
-#include "Minigin/Core/Transform.h"
+#include <glm/ext/vector_float2.hpp>
 
-#include "Minigin/Graphics/Renderer.h"
-#include "Minigin/Graphics/Texture2D.h"
-#include "Minigin/Graphics/TextureComponent.h"
-
-#include "Minigin/Resources/ResourceManager.h"
+#include <Minigin/Core/Component.h>
+#include <Minigin/Core/GameObject.h>
+#include <Minigin/Core/Transform.h>
+#include <Minigin/Graphics/Renderer.h>
+#include <Minigin/Graphics/Texture2D.h>
+#include <Minigin/Graphics/TextureComponent.h>
+#include <Minigin/Resources/ResourceManager.h>
 
 namespace dae::graphics
 {
 	TextureComponent::TextureComponent( core::GameObject* owner, const std::string& filename )
 		: core::Component( owner )
-		, m_filename{}
 		, m_texture( nullptr )
 	{
 		SetTexture( filename );
@@ -37,11 +36,14 @@ namespace dae::graphics
 			const auto& position = transform.GetWorldPosition();
 			const auto& scale = transform.GetLocalScale();
 
-			auto textureSize = m_texture->GetSize();
-			float finalWidth = textureSize.x * scale.x;
-			float finalHeight = textureSize.y * scale.y;
+			const auto textureSize = m_texture->GetSize();
 
-			Renderer::GetInstance().RenderTexture( *m_texture, position.x, position.y, finalWidth, finalHeight );
+			const glm::vec2 finalSize{
+				static_cast<float>( textureSize.x ) * scale.x,
+				static_cast<float>( textureSize.y ) * scale.y
+			};
+
+			Renderer::GetInstance().RenderTexture( *m_texture, glm::vec2{ position }, finalSize );
 		}
 	}
 

@@ -4,21 +4,22 @@
 #include <memory>
 #include <utility>
 
-#include "Game/Common/FPSComponent.h"
-#include "Game/Common/PushStateCommand.h"
-#include "Game/MainMenu/MainMenuState.h"
+#include <Game/Common/FPSComponent.h>
+#include <Game/Common/PushStateCommand.h>
+#include <Game/MainMenu/MainMenuState.h>
 
-#include "Minigin/Core/GameObject.h"
-#include "Minigin/Core/IAppState.h"
-#include "Minigin/Graphics/TextComponent.h"
-#include "Minigin/Graphics/TextureComponent.h"
-#include "Minigin/Input/InputManager.h"
-#include "Minigin/Input/Keyboard.h"
-#include "Minigin/Input/PlayerInputComponent.h"
-#include "Minigin/Input/ScopedInputBinding.h"
-#include "Minigin/Resources/ResourceManager.h"
-#include "Minigin/Scene/Scene.h"
-#include "Minigin/Scene/SceneManager.h"
+#include <Minigin/Core/GameObject.h>
+#include <Minigin/Core/IAppState.h>
+#include <Minigin/Core/Transform.h>
+#include <Minigin/Graphics/TextComponent.h>
+#include <Minigin/Graphics/TextureComponent.h>
+#include <Minigin/Input/InputManager.h>
+#include <Minigin/Input/Keyboard.h>
+#include <Minigin/Input/PlayerInputComponent.h>
+#include <Minigin/Input/ScopedInputBinding.h>
+#include <Minigin/Resources/ResourceManager.h>
+#include <Minigin/Scene/Scene.h>
+#include <Minigin/Scene/SceneManager.h>
 
 namespace bvi::galaga
 {
@@ -50,7 +51,10 @@ namespace bvi::galaga
 
 		static void AssembleLogo( dae::scenes::Scene& scene )
 		{
-			auto logo{ std::make_unique<dae::core::GameObject>( 358.f, 180.f ) };
+			using Object = dae::core::GameObject;
+			using Descriptor = dae::core::TransformDescriptor;
+			auto logo{ std::make_unique<Object>( Descriptor{.localPosition = { 358.F, 180.F, 0.F } } ) };
+
 			logo->AddComponent<dae::graphics::TextureComponent>()->SetTexture( "logo.png" );
 			scene.AddGameObject( std::move( logo ) );
 		}
@@ -58,7 +62,14 @@ namespace bvi::galaga
 		static void AssembleFPSCounter( dae::scenes::Scene& scene )
 		{
 			auto font{ dae::resources::ResourceManager::GetInstance().LoadFont( "Lingua.otf", 24 ) };
-			auto fpsCounter{ std::make_unique<dae::core::GameObject>( 20.f, 20.f ) };
+
+			using Object = dae::core::GameObject;
+			using Descriptor = dae::core::TransformDescriptor;
+			auto fpsCounter
+			{
+				std::make_unique<Object>( Descriptor{.localPosition = { 20.F, 20.F, 0.F } } )
+			};
+
 			fpsCounter->AddComponent<dae::graphics::TextComponent>( "00.0 FPS", font );
 			fpsCounter->AddComponent<common::FPSComponent>();
 			scene.AddGameObject( std::move( fpsCounter ) );
@@ -67,7 +78,14 @@ namespace bvi::galaga
 		static void AssembleBackToMainMenuUI( dae::scenes::Scene& scene, dae::core::IAppState* stateMachine )
 		{
 			auto font{ dae::resources::ResourceManager::GetInstance().LoadFont( "Lingua.otf", 24 ) };
-			auto instructions{ std::make_unique<dae::core::GameObject>( 425.f, 375.f ) };
+
+			using Object = dae::core::GameObject;
+			using Descriptor = dae::core::TransformDescriptor;
+			auto instructions
+			{
+				std::make_unique<Object>( Descriptor{.localPosition = { 425.f, 375.f, 0.F } } )
+			};
+
 			instructions->AddComponent<dae::graphics::TextComponent>( "Press F to go back", font );
 
 			auto inputComp = instructions->AddComponent<dae::input::PlayerInputComponent>();

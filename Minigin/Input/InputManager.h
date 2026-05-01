@@ -3,17 +3,16 @@
 
 #include <algorithm>
 #include <concepts>
-#include <map>
 #include <memory>
 #include <type_traits>
-#include <utility>
-#include <variant>
 #include <vector>
 
-#include "Minigin/Input/Gamepad.h"
-#include "Minigin/Input/ICommand.h"
-#include "Minigin/Input/Keyboard.h"
-#include "Minigin/Utilities/Singleton.h"
+#include <Minigin/Input/Gamepad.h>
+#include <Minigin/Input/ICommand.h>
+#include <Minigin/Input/Keyboard.h>
+#include <Minigin/Utilities/Singleton.h>
+
+union SDL_Event;
 
 namespace dae::input
 {
@@ -28,12 +27,13 @@ namespace dae::input
 			Down, Up, Pressed
 		};
 
-		using KeyboardBinding = std::pair<Keyboard::Key, KeyState>;
-		using ControllerBinding = std::tuple<unsigned int, Gamepad::Button, KeyState>;
-		using BindingKey = std::variant<std::monostate, KeyboardBinding, ControllerBinding>;
-
 		InputManager() noexcept;
 		~InputManager() = default;
+
+		InputManager( const InputManager& ) = delete;
+		InputManager( InputManager&& ) = delete;
+		InputManager& operator=( const InputManager& ) = delete;
+		InputManager& operator=( InputManager&& ) = delete;
 
 		[[nodiscard]] bool ProcessInput( const float deltaTime );
 
@@ -42,11 +42,45 @@ namespace dae::input
 		{
 			if constexpr ( std::is_same_v<T, Keyboard::Key> )
 			{
-				m_keyboardCommands[ {inputType, state} ] = std::move( command );
+				auto it = std::find_if
+				(
+					m_keyboardCommands.begin(),
+					m_keyboardCommands.end(),
+					[ inputType, state ] ( const KeyboardCommandBinding& b )
+					{
+						return b.key == inputType && b.state == state;
+					}
+				);
+
+				if ( it != m_keyboardCommands.end() )
+				{
+					it->command = std::move( command );
+				}
+				else
+				{
+					m_keyboardCommands.push_back( { inputType, state, std::move( command ) } );
+				}
 			}
 			else if constexpr ( std::is_same_v<T, Gamepad::Button> )
 			{
-				m_gamepadCommands[ {controllerIndex, inputType, state} ] = std::move( command );
+				auto it = std::find_if
+				(
+					m_gamepadCommands.begin(),
+					m_gamepadCommands.end(),
+					[ controllerIndex, inputType, state ] ( const GamepadCommandBinding& b )
+					{
+						return b.controllerIndex == controllerIndex && b.button == inputType && b.state == state;
+					}
+				);
+
+				if ( it != m_gamepadCommands.end() )
+				{
+					it->command = std::move( command );
+				}
+				else
+				{
+					m_gamepadCommands.push_back( { controllerIndex, inputType, state, std::move( command ) } );
+				}
 			}
 		}
 
@@ -55,11 +89,25 @@ namespace dae::input
 		{
 			if constexpr ( std::is_same_v<T, Keyboard::Key> )
 			{
-				m_keyboardCommands.erase( { inputType, state } );
+				std::erase_if
+				(
+					m_keyboardCommands,
+					[ inputType, state ] ( const KeyboardCommandBinding& b )
+					{
+						return b.key == inputType && b.state == state;
+					}
+				);
 			}
 			else if constexpr ( std::is_same_v<T, Gamepad::Button> )
 			{
-				m_gamepadCommands.erase( { controllerIndex, inputType, state } );
+				std::erase_if
+				(
+					m_gamepadCommands,
+					[ controllerIndex, inputType, state ] ( const GamepadCommandBinding& b )
+					{
+						return b.controllerIndex == controllerIndex && b.button == inputType && b.state == state;
+					}
+				);
 			}
 		}
 
@@ -68,19 +116,35 @@ namespace dae::input
 		[[nodiscard]] bool IsControllerConnected( unsigned int controllerIndex ) const;
 
 	private:
-		struct ControllerKey
+		struct KeyboardCommandBinding
+		{
+			Keyboard::Key key;
+			KeyState state;
+			std::unique_ptr<ICommand> command;
+		};
+
+		struct GamepadCommandBinding
 		{
 			unsigned int controllerIndex;
 			Gamepad::Button button;
+			KeyState state;
+			std::unique_ptr<ICommand> command;
 		};
 
-		// TODO dae_input - Use std::vector and Binding struct?
-			// Data locality, cache misses, 1 command per button limit.
-		std::map<ControllerBinding, std::unique_ptr<ICommand>> m_gamepadCommands;
-		std::map<KeyboardBinding, std::unique_ptr<ICommand>> m_keyboardCommands;
+		std::vector<GamepadCommandBinding> m_gamepadCommands;
+		std::vector<KeyboardCommandBinding> m_keyboardCommands;
 
 		std::unique_ptr<Keyboard> m_keyboard;
 		std::vector<std::unique_ptr<Gamepad>> m_gamepads;
+
+		[[nodiscard]] bool ProcessSDLEvents();
+		void UpdateHardwareStates();
+		void ExecuteKeyboardCommands( const float deltaTime );
+		void ExecuteGamepadCommands( const float deltaTime );
+
+	#ifndef WIN32
+		void RouteSDLHardwareEvent( const SDL_Event& event );
+	#endif
 	};
 }
 #endif

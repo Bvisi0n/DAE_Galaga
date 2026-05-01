@@ -20,8 +20,11 @@ namespace bvi::gravity_bender::config
 		float durationSeconds{ 3.F };
 		float cooldownSeconds{ 1.F };
 
-		float effectRadius{ 250.F };
+		float effectRadius{ 100.F };
 		float pullForce{ 1'500'000.F };
+
+		float coreSize{ 5.F };
+		CoreColor color{ .r = 0, .g = 255, .b = 255, .a = 255 };
 	};
 
 	struct PlayerBlueprint

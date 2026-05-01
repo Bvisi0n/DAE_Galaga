@@ -10,9 +10,6 @@ namespace dae::input
 	public:
 		enum class Button : unsigned short
 		{
-			// These values represent XInput button bitmasks, don't change without thinking.
-			// Add ButtonMapping logic if you do. (like for the SDL implementation)
-			// https://learn.microsoft.com/en-us/windows/win32/api/xinput/ns-xinput-xinput_gamepad
 			DPadUp = 0x0001,
 			DPadDown = 0x0002,
 			DPadLeft = 0x0004,
@@ -37,8 +34,12 @@ namespace dae::input
 		[[nodiscard]] bool IsDown( Button button ) const;
 		[[nodiscard]] bool IsUp( Button button ) const;
 		[[nodiscard]] bool IsPressed( Button button ) const;
-
 		[[nodiscard]] bool IsConnected() const;
+
+		bool Open( unsigned int joystickID );
+		void Close();
+		[[nodiscard]] bool HasJoystickID( unsigned int joystickID ) const;
+		void RegisterButtonEvent( unsigned char button, bool isDown );
 
 	private:
 		class GamepadImpl;

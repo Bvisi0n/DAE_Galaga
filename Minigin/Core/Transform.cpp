@@ -7,14 +7,14 @@
 
 namespace dae::core
 {
-	Transform::Transform( GameObject* owner, float xPos, float yPos, float xScale, float yScale )
-		: m_owner( owner )
-		, m_localMatrix( 1.f )
-		, m_worldMatrix( 1.f )
-		, m_worldPosition( xPos, yPos, 0.f )
-		, m_localPosition( xPos, yPos, 0.f )
-		, m_localScale( xScale, yScale, 1.f )
-		, m_localRotation( 0.f )
+	Transform::Transform( GameObject* owner, const TransformDescriptor& descriptor )
+		: m_owner{ owner }
+		, m_localMatrix{ 1.F }
+		, m_worldMatrix{ 1.F }
+		, m_worldPosition{ descriptor.localPosition }
+		, m_localPosition{ descriptor.localPosition }
+		, m_localScale{ descriptor.localScale }
+		, m_localRotation{ descriptor.localRotation }
 	{}
 
 	void Transform::SetLocalPosition( const glm::vec3& pos )
@@ -23,9 +23,9 @@ namespace dae::core
 		SetDirty();
 	}
 
-	void Transform::SetLocalPosition( float x, float y, float z )
+	void Transform::SetLocalPosition( float xPos, float yPos, float zPos )
 	{
-		SetLocalPosition( glm::vec3{ x, y, z } );
+		SetLocalPosition( glm::vec3{ xPos, yPos, zPos } );
 	}
 
 	const glm::vec3& Transform::GetLocalPosition() const
@@ -50,9 +50,9 @@ namespace dae::core
 		SetDirty();
 	}
 
-	void Transform::SetLocalScale( float x, float y, float z )
+	void Transform::SetLocalScale( float xScale, float yScale, float zScale )
 	{
-		SetLocalScale( glm::vec3{ x, y, z } );
+		SetLocalScale( glm::vec3{ xScale, yScale, zScale } );
 	}
 
 	const glm::vec3& Transform::GetLocalScale() const
@@ -88,22 +88,22 @@ namespace dae::core
 		{
 			return;
 		}
-		else
+
+		m_isDirty = true;
+		for ( const auto& child : m_owner->GetChildren() )
 		{
-			m_isDirty = true;
-			for ( const auto& child : m_owner->GetChildren() )
-			{
-				child->GetTransform().SetDirty();
-			}
+			child->GetTransform().SetDirty();
 		}
 	}
 
 	void Transform::UpdateLocalMatrix()
 	{
-		if ( !m_isDirty ) return;
+		if ( !m_isDirty )
+		{
+			return;
+		}
 
-		// Don't change the order! (TRS)
-		m_localMatrix = glm::translate( glm::mat4( 1.0f ), m_localPosition );
+		m_localMatrix = glm::translate( glm::mat4( 1.F ), m_localPosition );
 		m_localMatrix = glm::rotate( m_localMatrix, m_localRotation, { 0, 0, 1 } );
 		m_localMatrix = glm::scale( m_localMatrix, m_localScale );
 

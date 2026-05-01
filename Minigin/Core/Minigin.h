@@ -6,14 +6,12 @@
 #include <filesystem>
 #include <string>
 
+struct SDL_Window;
+
 namespace dae::core
 {
-	struct MiniginConfig
+	struct MiniginDescriptor
 	{
-		// C.1: Organize related data into structures (structs or classes)
-		// I.23: Keep the number of function arguments low.
-		// I.24: Avoid adjacent parameters that can be invoked by the same arguments in either order with different meaning.
-
 		std::filesystem::path dataPath{ "./Data/" };
 		std::string windowTitle{ "Minigin Engine" };
 		uint16_t windowWidth{ 1280 };
@@ -25,7 +23,7 @@ namespace dae::core
 	class Minigin final
 	{
 	public:
-		explicit Minigin( const MiniginConfig& config );
+		explicit Minigin( const MiniginDescriptor& descriptor );
 		~Minigin();
 
 		Minigin( const Minigin& other ) = delete;
@@ -37,6 +35,7 @@ namespace dae::core
 		void RunOneFrame();
 
 	private:
+		SDL_Window* m_window{};
 		std::chrono::steady_clock::time_point m_lastTime{};
 		const std::chrono::nanoseconds m_nsPerFrame;
 		const float m_maxDeltaTime;

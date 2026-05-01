@@ -3,15 +3,21 @@
 
 #include <glm/vec3.hpp>
 
-#include "Minigin/Core/Component.h"
-#include "Minigin/Core/GameObject.h"
+#include <Minigin/Core/Component.h>
+#include <Minigin/Core/GameObject.h>
 
 namespace dae::core
 {
+	struct MoveDescriptor
+	{
+		float maxSpeed{ 200.f };
+		float drag{ 0.0f };
+	};
+
 	class MoveComponent final : public Component
 	{
 	public:
-		explicit MoveComponent( GameObject* owner, const float maxSpeed = 200.f, const float drag = 0.0f );
+		explicit MoveComponent( GameObject* owner, const MoveDescriptor& descriptor = {} );
 		~MoveComponent() override = default;
 
 		MoveComponent( const MoveComponent& ) = delete;

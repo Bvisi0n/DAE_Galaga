@@ -44,9 +44,9 @@ namespace dae::scenes
 
 		for ( auto& object : m_objects )
 		{
-			if ( !object->IsPendingDeletion() && !object->GetParent() )
+			if ( !object->IsPendingDeletion() && object->GetParent() == nullptr )
 			{
-				object->GetTransform().UpdateWorldMatrix( glm::mat4( 1.0f ) );
+				object->GetTransform().UpdateWorldMatrix( glm::mat4( 1.F ) );
 			}
 		}
 

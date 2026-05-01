@@ -7,12 +7,16 @@ namespace dae::core
 {
 	class GameObject;
 
-	struct Rect
+	struct Rectangle
 	{
-		// ES.10: Declare one name (only) per declaration
-
 		float x;
 		float y;
+		float width;
+		float height;
+	};
+
+	struct Size2D
+	{
 		float width;
 		float height;
 	};
@@ -20,7 +24,7 @@ namespace dae::core
 	class ColliderComponent final : public Component
 	{
 	public:
-		explicit ColliderComponent( GameObject* owner, float width, float height, int layer );
+		explicit ColliderComponent( GameObject* owner, Size2D size, int layer );
 		~ColliderComponent() override = default;
 
 		ColliderComponent( const ColliderComponent& other ) = delete;
@@ -32,12 +36,12 @@ namespace dae::core
 		void InitializeState() override;
 		void Update( const float deltaTime ) override;
 
-		[[nodiscard]] Rect GetWorldBounds() const;
+		[[nodiscard]] Rectangle GetWorldBounds() const;
 		[[nodiscard]] int GetLayer() const noexcept;
 
 	private:
-		Rect m_localBounds;
-		int m_layer; // TODO dae_core - Optimize layers.
+		Rectangle m_localBounds;
+		int m_layer;
 	};
 }
 

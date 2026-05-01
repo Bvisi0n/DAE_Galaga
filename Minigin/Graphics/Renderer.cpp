@@ -1,17 +1,20 @@
 #include <cassert>
 
-#include <backends/imgui_impl_sdl3.h>
-#include <backends/imgui_impl_sdlrenderer3.h>
-#include <imgui.h>
+#include <glm/ext/vector_float2.hpp>
 
 #include <SDL3/SDL_hints.h>
 #include <SDL3/SDL_pixels.h>
 #include <SDL3/SDL_rect.h>
 #include <SDL3/SDL_render.h>
+#include <SDL3/SDL_video.h>
 
-#include "Minigin/Graphics/Renderer.h"
-#include "Minigin/Graphics/Texture2D.h"
-#include "Minigin/Scene/SceneManager.h"
+#include <backends/imgui_impl_sdl3.h>
+#include <backends/imgui_impl_sdlrenderer3.h>
+#include <imgui.h>
+
+#include <Minigin/Graphics/Renderer.h>
+#include <Minigin/Graphics/Texture2D.h>
+#include <Minigin/Scene/SceneManager.h>
 
 namespace dae::graphics
 {
@@ -30,16 +33,14 @@ namespace dae::graphics
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
 
-		ImGuiIO& io = ImGui::GetIO();
-		(void) io;
+		ImGuiIO& imGuiIO = ImGui::GetIO();
+		(void) imGuiIO;
 
-		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
-		io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
+		imGuiIO.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+		imGuiIO.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
 
 	#if __EMSCRIPTEN__
-		// For an Emscripten build we are disabling file-system access.
-		// Use LoadIniSettingsFromMemory() to load settings from your own storage.
-		io.IniFilename = nullptr;
+		imGuiIO.IniFilename = nullptr;
 	#endif
 
 		ImGui_ImplSDL3_InitForSDLRenderer( window, m_renderer );
@@ -82,22 +83,22 @@ namespace dae::graphics
 		return m_renderer != nullptr;
 	}
 
-	void Renderer::RenderTexture( const Texture2D& texture, const float x, const float y ) const
+	void Renderer::RenderTexture( const Texture2D& texture, const glm::vec2& position ) const
 	{
 		SDL_FRect destination{};
-		destination.x = x;
-		destination.y = y;
+		destination.x = position.x;
+		destination.y = position.y;
 		SDL_GetTextureSize( texture.GetSDLTexture(), &destination.w, &destination.h );
 		SDL_RenderTexture( GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &destination );
 	}
 
-	void Renderer::RenderTexture( const Texture2D& texture, const float x, const float y, const float width, const float height ) const
+	void Renderer::RenderTexture( const Texture2D& texture, const glm::vec2& position, const glm::vec2& size ) const
 	{
 		SDL_FRect destination{};
-		destination.x = x;
-		destination.y = y;
-		destination.w = width;
-		destination.h = height;
+		destination.x = position.x;
+		destination.y = position.y;
+		destination.w = size.x;
+		destination.h = size.y;
 		SDL_RenderTexture( GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &destination );
 	}
 

@@ -16,23 +16,18 @@
 #include <Minigin/Audio/ISoundSystem.h>
 #include <Minigin/Audio/SDLSoundSystem.h>
 
-// SDL3_mixer documentation: https://wiki.libsdl.org/SDL3_mixer/CategorySDLMixer
+// https://wiki.libsdl.org/SDL3_mixer/CategorySDLMixer
+// https://lazyfoo.net/tutorials/SDL3/15-sound-effects-and-music/index.php
 
 namespace dae::audio
 {
-	struct PlayMessage
-	{
-		sound_id id;
-		float volume;
-	};
-
 	struct MixerDeleter
 	{
 		void operator()( MIX_Mixer* mixer ) const
 		{
-			if ( mixer )
+			if ( mixer != nullptr )
 			{
-				MIX_DestroyMixer( mixer ); // TODO dae_audio - Exception!
+				MIX_DestroyMixer( mixer );
 			}
 		}
 	};
@@ -41,7 +36,7 @@ namespace dae::audio
 	{
 		void operator()( MIX_Audio* audio ) const
 		{
-			if ( audio )
+			if ( audio != nullptr )
 			{
 				MIX_DestroyAudio( audio );
 			}
@@ -56,7 +51,7 @@ namespace dae::audio
 		std::filesystem::path filepath;
 		UniqueAudio audio{ nullptr };
 
-		bool IsLoaded() const
+		[[nodiscard]] bool IsLoaded() const
 		{
 			return audio != nullptr;
 		}
@@ -73,8 +68,8 @@ namespace dae::audio
 				return;
 			}
 
-			m_mixer.reset( MIX_CreateMixerDevice( SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK, 0 ) );
-			if ( !m_mixer )
+			m_mixer.reset( MIX_CreateMixerDevice( SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK, nullptr ) );
+			if ( m_mixer == nullptr )
 			{
 				assert( false && "Failed to create SDL3_mixer device" );
 				return;
@@ -86,10 +81,14 @@ namespace dae::audio
 				m_tracks.push_back( MIX_CreateTrack( m_mixer.get() ) );
 			}
 
-			m_workerThread = std::jthread( [ this ] ( std::stop_token st )
-										   {
-											   ProcessQueue( st );
-										   } );
+			m_workerThread =
+				std::jthread
+				(
+					[ this ] ( const std::stop_token& stopToken )
+					{
+						ProcessQueue( stopToken );
+					}
+				);
 		}
 
 		~SDLSoundSystemImpl()
@@ -100,12 +99,16 @@ namespace dae::audio
 				m_workerThread.join();
 			}
 
-			if ( m_mixer )
+			if ( m_mixer != nullptr )
 			{
 				for ( MIX_Track* track : m_tracks )
 				{
-					MIX_StopTrack( track, 0 );
-					MIX_SetTrackAudio( track, nullptr );
+					if ( track != nullptr )
+					{
+						MIX_StopTrack( track, 0 );
+						MIX_SetTrackAudio( track, nullptr );
+						MIX_DestroyTrack( track );
+					}
 				}
 			}
 
@@ -113,24 +116,29 @@ namespace dae::audio
 			m_audioCache.clear();
 			m_mixer.reset();
 
-			MIX_Quit(); // TODO dae_audio - Exception!
+			MIX_Quit();
 		}
 
-		void Play( sound_id id, float volume )
+		SDLSoundSystemImpl( const SDLSoundSystemImpl& ) = delete;
+		SDLSoundSystemImpl( SDLSoundSystemImpl&& ) = delete;
+		SDLSoundSystemImpl& operator=( const SDLSoundSystemImpl& ) = delete;
+		SDLSoundSystemImpl& operator=( SDLSoundSystemImpl&& ) = delete;
+
+		void Play( const PlayMessage& message )
 		{
 			std::lock_guard<std::mutex> lock( m_queueMutex );
-			m_queue.push( { id, volume } );
+			m_queue.push( message );
 			m_queueCondition.notify_one();
 		}
 
-		void RegisterSound( sound_id id, const std::filesystem::path& filepath )
+		void RegisterSound( SoundID soundID, const std::filesystem::path& filepath )
 		{
-			if ( id >= m_audioCache.size() )
+			if ( soundID >= m_audioCache.size() )
 			{
-				assert( id < std::numeric_limits<sound_id>::max() && "Sound ID exceeds maximum value" );
-				m_audioCache.resize( id + 1 );
+				assert( soundID < std::numeric_limits<SoundID>::max() && "Sound ID exceeds maximum value" );
+				m_audioCache.resize( static_cast<size_t>( soundID ) + 1 );
 			}
-			m_audioCache[ id ].filepath = filepath;
+			m_audioCache[ soundID ].filepath = filepath;
 		}
 
 	private:
@@ -144,7 +152,7 @@ namespace dae::audio
 
 		std::jthread m_workerThread;
 
-		void ProcessQueue( std::stop_token stopToken )
+		void ProcessQueue( const std::stop_token& stopToken )
 		{
 			while ( !stopToken.stop_requested() )
 			{
@@ -156,44 +164,58 @@ namespace dae::audio
 						return !m_queue.empty();
 					} );
 
-					if ( stopToken.stop_requested() && m_queue.empty() ) break;
-					if ( m_queue.empty() ) continue;
+					if ( stopToken.stop_requested() && m_queue.empty() )
+					{
+						break;
+					}
+
+					if ( m_queue.empty() )
+					{
+						continue;
+					}
 
 					currentMessage = m_queue.front();
 					m_queue.pop();
 				}
 
-				if ( currentMessage.id < m_audioCache.size() )
+				ProcessPlayMessage( currentMessage );
+			}
+		}
+
+		void ProcessPlayMessage( const PlayMessage& message )
+		{
+			if ( message.soundID >= m_audioCache.size() )
+			{
+				return;
+			}
+
+			AudioClip& clip = m_audioCache[ message.soundID ];
+
+			if ( !clip.IsLoaded() )
+			{
+				clip.audio.reset( MIX_LoadAudio( m_mixer.get(), clip.filepath.string().c_str(), true ) );
+
+				if ( !clip.IsLoaded() )
 				{
-					AudioClip& clip = m_audioCache[ currentMessage.id ];
-
-					if ( !clip.IsLoaded() )
-					{
-						clip.audio.reset( MIX_LoadAudio( m_mixer.get(), clip.filepath.string().c_str(), true ) );
-						if ( !clip.IsLoaded() ) continue;
-					}
-
-					MIX_Track* availableTrack = nullptr;
-					for ( MIX_Track* track : m_tracks )
-					{
-						if ( !MIX_TrackPlaying( track ) )
-						{
-							availableTrack = track;
-							break;
-						}
-					}
-
-					if ( availableTrack )
-					{
-						MIX_SetTrackAudio( availableTrack, clip.audio.get() );
-						MIX_SetTrackGain( availableTrack, currentMessage.volume );
-						MIX_PlayTrack( availableTrack, 0 );
-					}
-					else
-					{
-						// Discard request.
-					}
+					return;
 				}
+			}
+
+			MIX_Track* availableTrack = nullptr;
+			for ( MIX_Track* track : m_tracks )
+			{
+				if ( track != nullptr && !MIX_TrackPlaying( track ) )
+				{
+					availableTrack = track;
+					break;
+				}
+			}
+
+			if ( availableTrack != nullptr )
+			{
+				MIX_SetTrackAudio( availableTrack, clip.audio.get() );
+				MIX_SetTrackGain( availableTrack, message.volume );
+				MIX_PlayTrack( availableTrack, 0 );
 			}
 		}
 	};
@@ -203,8 +225,13 @@ namespace dae::audio
 
 	SDLSoundSystem::~SDLSoundSystem() = default;
 
-	void SDLSoundSystem::Play( sound_id id, float volume )
+	void SDLSoundSystem::Play( const PlayMessage& message )
 	{
-		m_pimpl->Play( id, volume );
+		m_pimpl->Play( message );
+	}
+
+	void SDLSoundSystem::RegisterSound( SoundID soundID, const std::filesystem::path& filepath )
+	{
+		m_pimpl->RegisterSound( soundID, filepath );
 	}
 }
