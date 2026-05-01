@@ -112,7 +112,7 @@ namespace dae::core
 			return;
 		}
 
-		m_window = SDL_CreateWindow( descriptor.windowTitle.c_str(), descriptor.windowWidth, descriptor.windowHeight, SDL_WINDOW_OPENGL );
+		m_window.reset( SDL_CreateWindow( descriptor.windowTitle.c_str(), descriptor.windowWidth, descriptor.windowHeight, SDL_WINDOW_OPENGL ) );
 
 		if ( m_window == nullptr )
 		{
@@ -121,7 +121,7 @@ namespace dae::core
 			return;
 		}
 
-		graphics::Renderer::GetInstance().Init( m_window );
+		graphics::Renderer::GetInstance().Init( m_window.get() );
 		resources::ResourceManager::GetInstance().Init( descriptor.dataPath );
 
 	#if _DEBUG
@@ -141,12 +141,6 @@ namespace dae::core
 		resources::ResourceManager::GetInstance().Destroy();
 		graphics::Renderer::GetInstance().Destroy();
 		ServiceLocator::RegisterSoundSystem( nullptr );
-
-		if ( m_window != nullptr )
-		{
-			SDL_DestroyWindow( m_window );
-			m_window = nullptr;
-		}
 
 	#if USE_STEAMWORKS && !__EMSCRIPTEN__
 		SteamAPI_Shutdown();

@@ -4,12 +4,26 @@
 #include <chrono>
 #include <cstdint>
 #include <filesystem>
+#include <memory>
 #include <string>
 
-struct SDL_Window;
+#include <SDL3/SDL.h>
 
 namespace dae::core
 {
+	struct SDLWindowDestroyer
+	{
+		void operator()( SDL_Window* window ) const noexcept
+		{
+			if ( window )
+			{
+				SDL_DestroyWindow( window );
+			}
+		}
+	};
+
+	using UniqueWindow = std::unique_ptr<SDL_Window, SDLWindowDestroyer>;
+
 	struct MiniginDescriptor
 	{
 		std::filesystem::path dataPath{ "./Data/" };
@@ -35,7 +49,7 @@ namespace dae::core
 		void RunOneFrame();
 
 	private:
-		SDL_Window* m_window{};
+		UniqueWindow m_window;
 		std::chrono::steady_clock::time_point m_lastTime{};
 		const std::chrono::nanoseconds m_nsPerFrame;
 		const float m_maxDeltaTime;
