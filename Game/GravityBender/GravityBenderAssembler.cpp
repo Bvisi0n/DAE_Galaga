@@ -211,8 +211,8 @@ namespace bvi::gravity_bender
 			(
 				Size2D
 				{
-					.width = { playerConfig.colliderSize },
-					.height = { playerConfig.colliderSize }
+					.width = playerConfig.colliderSize,
+					.height = playerConfig.colliderSize
 				},
 				1
 			);
@@ -229,8 +229,8 @@ namespace bvi::gravity_bender
 			(
 				MoveDescriptor
 				{
-					.maxSpeed = { playerConfig.baseSpeed },
-					.drag = { playerConfig.speedMultiplier }
+					.maxSpeed = playerConfig.baseSpeed,
+					.drag = playerConfig.speedMultiplier
 				}
 			)
 		};

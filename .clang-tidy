@@ -1,5 +1,6 @@
 Checks: >
   -*,
+  clang-diagnostic-braced-scalar-init,
   cppcoreguidelines-*,
   modernize-*,
   performance-*,
