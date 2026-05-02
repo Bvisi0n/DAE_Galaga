@@ -33,7 +33,6 @@ namespace bvi::galaga
 			auto& scene = dae::scenes::SceneManager::GetInstance().CreateScene();
 
 			AssembleBackground( scene );
-			AssembleLogo( scene );
 			AssembleFPSCounter( scene );
 
 			AssembleBackToMainMenuUI( scene, stateMachine );
@@ -49,25 +48,15 @@ namespace bvi::galaga
 			scene.AddGameObject( std::move( background ) );
 		}
 
-		static void AssembleLogo( dae::scenes::Scene& scene )
-		{
-			using Object = dae::core::GameObject;
-			using Descriptor = dae::core::TransformDescriptor;
-			auto logo{ std::make_unique<Object>( Descriptor{.localPosition = { 358.F, 180.F, 0.F } } ) };
-
-			logo->AddComponent<dae::graphics::TextureComponent>()->SetTexture( "logo.png" );
-			scene.AddGameObject( std::move( logo ) );
-		}
-
 		static void AssembleFPSCounter( dae::scenes::Scene& scene )
 		{
-			auto font{ dae::resources::ResourceManager::GetInstance().LoadFont( "Lingua.otf", 24 ) };
+			auto font{ dae::resources::ResourceManager::GetInstance().LoadFont( "Lingua.otf", 12 ) };
 
 			using Object = dae::core::GameObject;
 			using Descriptor = dae::core::TransformDescriptor;
 			auto fpsCounter
 			{
-				std::make_unique<Object>( Descriptor{.localPosition = { 20.F, 20.F, 0.F } } )
+				std::make_unique<Object>( Descriptor{.localPosition = { 5.F, 5.F, 0.F } } )
 			};
 
 			fpsCounter->AddComponent<dae::graphics::TextComponent>( "00.0 FPS", font );
@@ -77,13 +66,13 @@ namespace bvi::galaga
 
 		static void AssembleBackToMainMenuUI( dae::scenes::Scene& scene, dae::core::IAppState* stateMachine )
 		{
-			auto font{ dae::resources::ResourceManager::GetInstance().LoadFont( "Lingua.otf", 24 ) };
+			auto font{ dae::resources::ResourceManager::GetInstance().LoadFont( "Lingua.otf", 12 ) };
 
 			using Object = dae::core::GameObject;
 			using Descriptor = dae::core::TransformDescriptor;
 			auto instructions
 			{
-				std::make_unique<Object>( Descriptor{.localPosition = { 425.f, 375.f, 0.F } } )
+				std::make_unique<Object>( Descriptor{.localPosition = { 25.f, 50.f, 0.F } } )
 			};
 
 			instructions->AddComponent<dae::graphics::TextComponent>( "Press F to go back", font );

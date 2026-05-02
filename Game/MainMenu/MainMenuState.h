@@ -1,11 +1,14 @@
 #ifndef BVI_MAINMENUSTATE_H
 #define BVI_MAINMENUSTATE_H
 
-#include "Game/GravityBender/GravityBenderState.h"
-#include "Game/MainMenu/MainMenuAssembler.h"
+#include <glm/ext/vector_int2.hpp>
 
-#include "Minigin/Core/IAppState.h"
-#include "Minigin/Scene/SceneManager.h"
+#include <Minigin/Core/IAppState.h>
+#include <Minigin/Graphics/Renderer.h>
+#include <Minigin/Scene/SceneManager.h>
+
+#include <Game/GravityBender/GravityBenderState.h>
+#include <Game/MainMenu/MainMenuAssembler.h>
 
 // TODO bvi_main_menu - Split into .cpp/.h
 
@@ -24,6 +27,10 @@ namespace bvi::main_menu
 
 		void OnEnter() override
 		{
+			constexpr glm::ivec2 resolution{ 1024, 576 };
+			using Renderer = dae::graphics::Renderer;
+			Renderer::GetInstance().SetLogicalResolution( resolution, Renderer::PresentationMode::Letterbox );
+
 			MainMenuAssembler::Assemble( this );
 		}
 

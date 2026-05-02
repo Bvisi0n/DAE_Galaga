@@ -1,3 +1,6 @@
+#include <glm/ext/vector_int2.hpp>
+
+#include <Minigin/Graphics/Renderer.h>
 #include <Minigin/Scene/SceneManager.h>
 
 #include <Game/GravityBender/GravityBenderAssembler.h>
@@ -11,6 +14,10 @@ namespace bvi::gravity_bender
 
 	void GravityBenderState::OnEnter()
 	{
+		constexpr glm::ivec2 resolution{ 1024, 576 };
+		using Renderer = dae::graphics::Renderer;
+		Renderer::GetInstance().SetLogicalResolution( resolution, Renderer::PresentationMode::Letterbox );
+
 		GravityBenderAssembler::Assemble( this );
 	}
 

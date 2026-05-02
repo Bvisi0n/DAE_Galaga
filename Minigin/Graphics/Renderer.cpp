@@ -83,6 +83,43 @@ namespace dae::graphics
 		return m_renderer != nullptr;
 	}
 
+	SDL_Renderer* Renderer::GetSDLRenderer() const
+	{
+		return m_renderer;
+	}
+
+	void Renderer::SetLogicalResolution( const glm::ivec2& resolution, PresentationMode mode )
+	{
+		if ( m_logicalResolution == resolution && m_currentMode == mode )
+		{
+			return;
+		}
+
+		m_logicalResolution = resolution;
+		m_currentMode = mode;
+
+		SDL_RendererLogicalPresentation sdlMode{ SDL_LOGICAL_PRESENTATION_LETTERBOX };
+		switch ( mode )
+		{
+			case PresentationMode::Letterbox:
+				sdlMode = SDL_LOGICAL_PRESENTATION_LETTERBOX;
+				break;
+			case PresentationMode::Overscan:
+				sdlMode = SDL_LOGICAL_PRESENTATION_OVERSCAN;
+				break;
+			case PresentationMode::IntegerScale:
+				sdlMode = SDL_LOGICAL_PRESENTATION_INTEGER_SCALE;
+				break;
+		}
+
+		SDL_SetRenderLogicalPresentation( m_renderer, resolution.x, resolution.y, sdlMode );
+	}
+
+	glm::ivec2 Renderer::GetLogicalResolution() const noexcept
+	{
+		return m_logicalResolution;
+	}
+
 	void Renderer::RenderTexture( const Texture2D& texture, const glm::vec2& position ) const
 	{
 		SDL_FRect destination{};
@@ -105,11 +142,6 @@ namespace dae::graphics
 	void Renderer::SetBackgroundColor( const SDL_Color& color ) noexcept
 	{
 		m_clearColor = color;
-	}
-
-	SDL_Renderer* Renderer::GetSDLRenderer() const
-	{
-		return m_renderer;
 	}
 
 	const SDL_Color& Renderer::GetBackgroundColor() const
