@@ -185,9 +185,7 @@ namespace dae::core
 		const float clampedDeltaTime = std::min( deltaTime, m_maxDeltaTime );
 		m_lastTime = frameStartTime;
 
-		AppStateManager::GetInstance().ProcessStateChange();
 		AppStateManager::GetInstance().Update( clampedDeltaTime );
-
 		m_quit = !input::InputManager::GetInstance().ProcessInput( clampedDeltaTime );
 		scenes::SceneManager::GetInstance().Update( clampedDeltaTime );
 		graphics::Renderer::GetInstance().Render();

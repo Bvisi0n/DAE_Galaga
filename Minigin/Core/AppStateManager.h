@@ -12,12 +12,13 @@ namespace dae::core
 	{
 	public:
 		void ChangeState( std::unique_ptr<IAppState> newState );
-		void ProcessStateChange();
 		void Update( float deltaTime );
 
 	private:
 		std::unique_ptr<IAppState> m_currentState{ nullptr };
 		std::unique_ptr<IAppState> m_nextState{ nullptr };
+
+		void ProcessStateChange();
 	};
 }
 #endif

@@ -11,6 +11,15 @@ namespace dae::core
 		m_nextState = std::move( newState );
 	}
 
+	void AppStateManager::Update( float deltaTime )
+	{
+		ProcessStateChange();
+		if ( m_currentState != nullptr )
+		{
+			m_currentState->Update( deltaTime );
+		}
+	}
+
 	void AppStateManager::ProcessStateChange()
 	{
 		if ( m_nextState != nullptr )
@@ -22,14 +31,6 @@ namespace dae::core
 
 			m_currentState = std::move( m_nextState );
 			m_currentState->OnEnter();
-		}
-	}
-
-	void AppStateManager::Update( float deltaTime )
-	{
-		if ( m_currentState != nullptr )
-		{
-			m_currentState->Update( deltaTime );
 		}
 	}
 }
