@@ -139,7 +139,7 @@ namespace bvi::gravity_bender
 			(
 				MoveDescriptor
 				{
-					.maxSpeed = { m_blueprint.unitSpeed }
+					.maxSpeed = m_blueprint.unitSpeed
 				}
 			)->SetVelocity( m_direction );
 
@@ -149,8 +149,8 @@ namespace bvi::gravity_bender
 			(
 				Size2D
 				{
-					.width = { m_blueprint.unitSize },
-					.height = { m_blueprint.unitSize }
+					.width = m_blueprint.unitSize,
+					.height = m_blueprint.unitSize
 				},
 				1
 			);
