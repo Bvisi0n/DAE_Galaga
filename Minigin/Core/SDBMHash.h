@@ -4,6 +4,7 @@
 #include <string_view>
 
 // DAE/Prog4/observer_eventqueue.pdf: "Inspired by: Learn C++ For Game Development by Bruce Sutherland"
+// http://www.cse.yorku.ca/~oz/hash.html
 
 namespace dae::core
 {
