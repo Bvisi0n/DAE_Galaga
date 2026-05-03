@@ -4,15 +4,28 @@
 #include <Minigin/Audio/ISoundSystem.h>
 #include <Minigin/Core/ServiceLocator.h>
 
-namespace dae::core
+namespace dae::core::service_locator
 {
-	void ServiceLocator::RegisterSoundSystem( std::unique_ptr<audio::ISoundSystem>&& soundSystem )
+	namespace
 	{
-		s_soundSystem = soundSystem ? std::move( soundSystem ) : std::make_unique<audio::NullSoundSystem>();
+		std::unique_ptr<audio::ISoundSystem>& GetInternalSoundSystem()
+		{
+			static std::unique_ptr<audio::ISoundSystem> instance
+			{
+				std::make_unique<audio::NullSoundSystem>()
+			};
+
+			return instance;
+		}
 	}
 
-	audio::ISoundSystem& ServiceLocator::GetSoundSystem()
+	void RegisterSoundSystem( std::unique_ptr<audio::ISoundSystem>&& soundSystem )
 	{
-		return *s_soundSystem;
+		GetInternalSoundSystem() = soundSystem ? std::move( soundSystem ) : std::make_unique<audio::NullSoundSystem>();
+	}
+
+	audio::ISoundSystem& GetSoundSystem()
+	{
+		return *GetInternalSoundSystem();
 	}
 }

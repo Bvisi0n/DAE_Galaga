@@ -125,7 +125,7 @@ namespace dae::core
 	#if _DEBUG
 		auto sdlAudio = std::make_unique<audio::SDLSoundSystem>();
 		auto loggedAudio = std::make_unique<audio::LoggingSoundSystem>( std::move( sdlAudio ) );
-		ServiceLocator::RegisterSoundSystem( std::move( loggedAudio ) );
+		service_locator::RegisterSoundSystem( std::move( loggedAudio ) );
 	#elif __EMSCRIPTEN__
 		// TODO dae_core - Implement a soundsystem for Emscripten.
 		ServiceLocator::RegisterSoundSystem( nullptr );
@@ -138,7 +138,7 @@ namespace dae::core
 	{
 		resources::ResourceManager::GetInstance().Destroy();
 		graphics::Renderer::GetInstance().Destroy();
-		ServiceLocator::RegisterSoundSystem( nullptr );
+		service_locator::RegisterSoundSystem( nullptr );
 
 	#if USE_STEAMWORKS && !__EMSCRIPTEN__
 		SteamAPI_Shutdown();

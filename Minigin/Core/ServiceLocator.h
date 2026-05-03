@@ -5,20 +5,13 @@
 
 #include <Minigin/Audio/ISoundSystem.h>
 
-namespace dae::core
+// https://gameprogrammingpatterns.com/service-locator.html
+// C.4: Make a function a member only if it needs direct access to the representation of a class
+// SF.20: Use namespaces to express logical structure
+
+namespace dae::core::service_locator
 {
-	class ServiceLocator final
-	{
-	public:
-		ServiceLocator() = delete;
-
-		// TODO dae_core - Rule of 5?
-
-		static void RegisterSoundSystem( std::unique_ptr<audio::ISoundSystem>&& soundSystem );
-		static audio::ISoundSystem& GetSoundSystem();
-
-	private:
-		inline static std::unique_ptr<audio::ISoundSystem> s_soundSystem = std::make_unique<audio::NullSoundSystem>();
-	};
+	void RegisterSoundSystem( std::unique_ptr<audio::ISoundSystem>&& soundSystem );
+	[[nodiscard]] audio::ISoundSystem& GetSoundSystem();
 }
 #endif
