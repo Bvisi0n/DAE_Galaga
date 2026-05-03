@@ -128,9 +128,9 @@ namespace dae::core
 		service_locator::RegisterSoundSystem( std::move( loggedAudio ) );
 	#elif __EMSCRIPTEN__
 		// TODO dae_core - Implement a soundsystem for Emscripten.
-		ServiceLocator::RegisterSoundSystem( nullptr );
+		service_locator::RegisterSoundSystem( nullptr );
 	#else
-		ServiceLocator::RegisterSoundSystem( std::make_unique<audio::SDLSoundSystem>() );
+		service_locator::RegisterSoundSystem( std::make_unique<audio::SDLSoundSystem>() );
 	#endif
 	}
 
