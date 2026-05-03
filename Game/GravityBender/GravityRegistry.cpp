@@ -33,7 +33,7 @@ namespace bvi::gravity_bender
 			{
 				if ( node.visualRoot != nullptr )
 				{
-					dae::scenes::Scene::RemoveGameObject( *node.visualRoot );
+					dae::scenes::RemoveGameObject( *node.visualRoot );
 				}
 
 				node.visualRoot = nullptr;
@@ -164,7 +164,7 @@ namespace bvi::gravity_bender
 		{
 			if ( iterator->visualRoot != nullptr )
 			{
-				dae::scenes::Scene::RemoveGameObject( *( iterator->visualRoot ) );
+				dae::scenes::RemoveGameObject( *( iterator->visualRoot ) );
 			}
 
 			s_nodes.erase( iterator );
@@ -177,7 +177,7 @@ namespace bvi::gravity_bender
 		{
 			if ( node.visualRoot != nullptr )
 			{
-				dae::scenes::Scene::RemoveGameObject( *node.visualRoot );
+				dae::scenes::RemoveGameObject( *node.visualRoot );
 			}
 		}
 

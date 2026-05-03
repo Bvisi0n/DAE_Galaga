@@ -12,6 +12,11 @@
 
 namespace dae::scenes
 {
+	void RemoveGameObject( core::GameObject& object )
+	{
+		object.MarkForDeletion();
+	}
+
 	Scene::Scene() = default;
 	Scene::~Scene() = default;
 
@@ -66,11 +71,6 @@ namespace dae::scenes
 	{
 		assert( object != nullptr && "Cannot add a null GameObject to the scene." );
 		m_pendingObjects.emplace_back( std::move( object ) );
-	}
-
-	void Scene::RemoveGameObject( core::GameObject& object )
-	{
-		object.MarkForDeletion();
 	}
 
 	void Scene::CleanupGameObjects()

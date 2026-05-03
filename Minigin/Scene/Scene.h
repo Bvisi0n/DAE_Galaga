@@ -6,6 +6,8 @@
 
 #include <Minigin/Core/CollisionSystem.h>
 
+// C.4: Make a function a member only if it needs direct access to the representation of a class
+
 namespace dae::core
 {
 	class GameObject;
@@ -14,6 +16,8 @@ namespace dae::core
 namespace dae::scenes
 {
 	class SceneManager;
+
+	void RemoveGameObject( core::GameObject& object );
 
 	class Scene final
 	{
@@ -30,7 +34,6 @@ namespace dae::scenes
 		void Render() const;
 
 		void AddGameObject( std::unique_ptr<core::GameObject> object );
-		static void RemoveGameObject( core::GameObject& object );
 		void CleanupGameObjects();
 		void RemoveAllGameObjects();
 
