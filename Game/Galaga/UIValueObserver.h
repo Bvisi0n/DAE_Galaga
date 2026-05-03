@@ -4,9 +4,9 @@
 #include <functional>
 #include <string>
 
-#include "Minigin/Core/Component.h"
-#include "Minigin/Events/GameEvent.h"
-#include "Minigin/Events/IObserver.h"
+#include <Minigin/Core/Component.h>
+#include <Minigin/Events/GameEvent.h>
+#include <Minigin/Events/IObserver.h>
 
 namespace dae::core
 {
@@ -36,9 +36,9 @@ namespace bvi::galaga
 		void InitializeLinkage() override;
 		void InitializeState() override;
 
-		void Update( const float deltaTime ) override;
+		void Update( float deltaTime ) override;
 
-		void OnNotify( const dae::events::GameEvent event ) override;
+		void OnNotify( dae::events::GameEvent event ) override;
 
 	private:
 		Formatter m_formatter;

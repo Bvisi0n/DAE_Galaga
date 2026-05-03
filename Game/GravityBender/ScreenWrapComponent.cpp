@@ -24,7 +24,7 @@ namespace bvi::gravity_bender
 
 	void ScreenWrapComponent::Update( const float /*deltaTime*/ )
 	{
-		constexpr const auto& viewportConfig = bvi::gravity_bender::config::Config.viewport;
+		constexpr const auto& viewportConfig = bvi::gravity_bender::config::c_GlobalConfig.viewport;
 
 		auto& transform = GetOwner()->GetTransform();
 		glm::vec3 currentPos = transform.GetLocalPosition();

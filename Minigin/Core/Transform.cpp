@@ -2,8 +2,8 @@
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/ext/vector_float3.hpp>
 
-#include "Minigin/Core/GameObject.h"
-#include "Minigin/Core/Transform.h"
+#include <Minigin/Core/GameObject.h>
+#include <Minigin/Core/Transform.h>
 
 namespace dae::core
 {

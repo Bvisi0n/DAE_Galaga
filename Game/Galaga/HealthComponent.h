@@ -1,7 +1,7 @@
 #ifndef BVI_HEALTHCOMPONENT_H
 #define BVI_HEALTHCOMPONENT_H
 
-#include "Minigin/Events/ObservableComponent.h"
+#include <Minigin/Events/ObservableComponent.h>
 
 namespace dae::core
 {
@@ -24,7 +24,7 @@ namespace bvi::galaga
 		void InitializeLinkage() override;
 		void InitializeState() override;
 
-		void Update( const float deltaTime ) noexcept override;
+		void Update( float deltaTime ) noexcept override;
 
 		[[nodiscard]] int GetLives() const;
 

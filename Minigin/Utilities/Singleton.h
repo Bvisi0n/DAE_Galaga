@@ -9,32 +9,34 @@ namespace dae::utils
 	class Singleton
 	{
 	public:
-		Singleton( const Singleton& other ) = delete;
-		Singleton( Singleton&& other ) = delete;
-		Singleton& operator=( const Singleton& other ) = delete;
-		Singleton& operator=( Singleton&& other ) = delete;
-
 		[[nodiscard]] static T& GetInstance()
 		{
 			static T instance{};
 		#ifdef _DEBUG
-			assert( !m_isDestroyed && "Accessing Singleton after destruction!" );
+			assert( !s_isDestroyed && "Accessing Singleton after destruction!" );
 		#endif
 			return instance;
 		}
 
-	protected:
+	private:
+		friend T;
+
 		Singleton() = default;
-		virtual ~Singleton()
+
+		~Singleton()
 		{
 		#ifdef _DEBUG
-			m_isDestroyed = true;
+			s_isDestroyed = true;
 		#endif
 		}
 
-	private:
+		Singleton( const Singleton& other ) = delete; // NOLINT(modernize-use-equals-delete)
+		Singleton( Singleton&& other ) = delete; // NOLINT(modernize-use-equals-delete)
+		Singleton& operator=( const Singleton& other ) = delete; // NOLINT(modernize-use-equals-delete)
+		Singleton& operator=( Singleton&& other ) = delete; // NOLINT(modernize-use-equals-delete)
+
 	#ifdef _DEBUG
-		inline static bool m_isDestroyed{ false };
+		inline static bool s_isDestroyed{ false };
 	#endif
 	};
 }

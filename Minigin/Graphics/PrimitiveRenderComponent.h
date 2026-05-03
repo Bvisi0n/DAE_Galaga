@@ -2,6 +2,7 @@
 #define DAE_PRIMITIVERENDERCOMPONENT_H
 
 #include <algorithm>
+#include <array>
 #include <type_traits>
 #include <utility>
 #include <variant>
@@ -10,12 +11,10 @@
 #include <SDL3/SDL_rect.h>
 #include <SDL3/SDL_render.h>
 
+#include <Minigin/Core/Component.h>
 #include <Minigin/Core/GameObject.h>
-#include "Minigin/Core/Component.h"
-#include "Minigin/Graphics/IRenderable.h"
-#include "Minigin/Graphics/Renderer.h"
-
-// TODO dae_graphics - Split into .cpp/.h
+#include <Minigin/Graphics/IRenderable.h>
+#include <Minigin/Graphics/Renderer.h>
 
 namespace dae::graphics
 {
@@ -42,9 +41,9 @@ namespace dae::graphics
 	class PrimitiveRenderComponent final : public core::Component, public IRenderable
 	{
 	public:
-		explicit PrimitiveRenderComponent( core::GameObject* owner, PrimitiveShape shape, SDL_Color color, int thickness = 1 )
+		explicit PrimitiveRenderComponent( core::GameObject* owner, PrimitiveShape shape, SDL_FColor color, int thickness = 1 )
 			: Component( owner )
-			, m_shape( std::move( shape ) )
+			, m_shape( shape )
 			, m_color{ color }
 			, m_thickness{ std::max( 1, thickness ) }
 		{}
@@ -67,11 +66,17 @@ namespace dae::graphics
 
 		void Render() const override
 		{
-			if ( !m_enabled ) return;
+			if ( !m_enabled )
+			{
+				return;
+			}
 			SDL_Renderer* renderer{ Renderer::GetInstance().GetSDLRenderer() };
-			if ( !renderer ) return;
+			if ( renderer == nullptr )
+			{
+				return;
+			}
 
-			SDL_SetRenderDrawColor( renderer, m_color.r, m_color.g, m_color.b, m_color.a );
+			SDL_SetRenderDrawColorFloat( renderer, m_color.r, m_color.g, m_color.b, m_color.a );
 
 			const auto worldPos = GetOwner()->GetTransform().GetWorldPosition();
 			const float posX = worldPos.x;
@@ -120,85 +125,98 @@ namespace dae::graphics
 
 	private:
 		PrimitiveShape m_shape;
-		SDL_Color m_color;
+		SDL_FColor m_color;
 		int m_thickness;
 		bool m_enabled{ true };
 
-		void RenderRect( SDL_Renderer* renderer, const RectShape& rect, float x, float y ) const
+		void RenderRect( SDL_Renderer* renderer, const RectShape& rect, float posX, float posY ) const
 		{
-			SDL_FRect drawRect{ x + rect.bounds.x, y + rect.bounds.y, rect.bounds.w, rect.bounds.h };
+			SDL_FRect drawRect{ posX + rect.bounds.x, posY + rect.bounds.y, rect.bounds.w, rect.bounds.h };
 			if ( rect.isFilled )
 			{
 				SDL_RenderFillRect( renderer, &drawRect );
 			}
 			else
 			{
-				for ( int i = 0; i < m_thickness; ++i )
+				for ( int index = 0; index < m_thickness; ++index )
 				{
-					const float offset = static_cast<float>( i );
-					SDL_FRect thickRect{ drawRect.x + offset, drawRect.y + offset, drawRect.w - offset * 2.f, drawRect.h - offset * 2.f };
+					const auto offset = static_cast<float>( index );
+					SDL_FRect thickRect{ drawRect.x + offset, drawRect.y + offset, drawRect.w - ( offset * 2.F ), drawRect.h - ( offset * 2.F ) };
 					SDL_RenderRect( renderer, &thickRect );
 				}
 			}
 		}
 
-		void RenderCircle( SDL_Renderer* renderer, const CircleShape& circle, float x, float y ) const
+		static void RenderCircle( SDL_Renderer* renderer, const CircleShape& circle, float posX, float posY )
 		{
-			float cx = circle.radius;
-			float cy = 0;
-			float err = 0;
+			float circleX = circle.radius;
+			float circleY = 0.F;
+			float errorValue = 0.F;
 
-			while ( cx >= cy )
+			while ( circleX >= circleY )
 			{
 				if ( circle.isFilled )
 				{
-					SDL_RenderLine( renderer, x - cx, y + cy, x + cx, y + cy );
-					SDL_RenderLine( renderer, x - cy, y + cx, x + cy, y + cx );
-					SDL_RenderLine( renderer, x - cx, y - cy, x + cx, y - cy );
-					SDL_RenderLine( renderer, x - cy, y - cx, x + cy, y - cx );
+					SDL_RenderLine( renderer, posX - circleX, posY + circleY, posX + circleX, posY + circleY );
+					SDL_RenderLine( renderer, posX - circleY, posY + circleX, posX + circleY, posY + circleX );
+					SDL_RenderLine( renderer, posX - circleX, posY - circleY, posX + circleX, posY - circleY );
+					SDL_RenderLine( renderer, posX - circleY, posY - circleX, posX + circleY, posY - circleX );
 				}
 				else
 				{
-					SDL_RenderPoint( renderer, x + cx, y + cy );
-					SDL_RenderPoint( renderer, x + cy, y + cx );
-					SDL_RenderPoint( renderer, x - cy, y + cx );
-					SDL_RenderPoint( renderer, x - cx, y + cy );
-					SDL_RenderPoint( renderer, x - cx, y - cy );
-					SDL_RenderPoint( renderer, x - cy, y - cx );
-					SDL_RenderPoint( renderer, x + cy, y - cx );
-					SDL_RenderPoint( renderer, x + cx, y - cy );
+					SDL_RenderPoint( renderer, posX + circleX, posY + circleY );
+					SDL_RenderPoint( renderer, posX + circleY, posY + circleX );
+					SDL_RenderPoint( renderer, posX - circleY, posY + circleX );
+					SDL_RenderPoint( renderer, posX - circleX, posY + circleY );
+					SDL_RenderPoint( renderer, posX - circleX, posY - circleY );
+					SDL_RenderPoint( renderer, posX - circleY, posY - circleX );
+					SDL_RenderPoint( renderer, posX + circleY, posY - circleX );
+					SDL_RenderPoint( renderer, posX + circleX, posY - circleY );
 				}
 
-				if ( err <= 0 )
+				if ( errorValue <= 0.F )
 				{
-					cy += 1;
-					err += 2 * cy + 1;
+					circleY += 1.F;
+					errorValue += ( 2.F * circleY ) + 1.F;
 				}
 
-				if ( err > 0 )
+				if ( errorValue > 0.F )
 				{
-					cx -= 1;
-					err -= 2 * cx + 1;
+					circleX -= 1.F;
+					errorValue -= ( 2.F * circleX ) + 1.F;
 				}
 			}
 		}
 
-		void RenderTriangle( SDL_Renderer* renderer, const TriangleShape& tri, float x, float y ) const
+		void RenderTriangle( SDL_Renderer* renderer, const TriangleShape& triangle, float posX, float posY ) const
 		{
-			if ( tri.isFilled )
+			if ( triangle.isFilled )
 			{
-				SDL_Vertex vertices[ 3 ] = {
-					{ {x + tri.p1.x, y + tri.p1.y}, {m_color.r / 255.f, m_color.g / 255.f, m_color.b / 255.f, m_color.a / 255.f}, {0,0} },
-					{ {x + tri.p2.x, y + tri.p2.y}, {m_color.r / 255.f, m_color.g / 255.f, m_color.b / 255.f, m_color.a / 255.f}, {0,0} },
-					{ {x + tri.p3.x, y + tri.p3.y}, {m_color.r / 255.f, m_color.g / 255.f, m_color.b / 255.f, m_color.a / 255.f}, {0,0} }
-				};
-				SDL_RenderGeometry( renderer, nullptr, vertices, 3, nullptr, 0 );
+				const std::array<SDL_Vertex, 3> vertices
+				{ {
+					{
+						.position = { posX + triangle.p1.x, posY + triangle.p1.y },
+						.color = m_color,
+						.tex_coord = { 0.F, 0.F }
+					},
+					{
+						.position = { posX + triangle.p2.x, posY + triangle.p2.y },
+						.color = m_color,
+						.tex_coord = { 0.F, 0.F }
+					},
+					{
+						.position = { posX + triangle.p3.x, posY + triangle.p3.y },
+						.color = m_color,
+						.tex_coord = { 0.F, 0.F }
+					}
+				} };
+				SDL_RenderGeometry( renderer, nullptr, vertices.data(), 3, nullptr, 0 );
 			}
 			else
 			{
-				SDL_RenderLine( renderer, x + tri.p1.x, y + tri.p1.y, x + tri.p2.x, y + tri.p2.y );
-				SDL_RenderLine( renderer, x + tri.p2.x, y + tri.p2.y, x + tri.p3.x, y + tri.p3.y );
-				SDL_RenderLine( renderer, x + tri.p3.x, y + tri.p3.y, x + tri.p1.x, y + tri.p1.y );
+				SDL_RenderLine( renderer, posX + triangle.p1.x, posY + triangle.p1.y, posX + triangle.p2.x, posY + triangle.p2.y );
+				SDL_RenderLine( renderer, posX + triangle.p2.x, posY + triangle.p2.y, posX + triangle.p3.x, posY + triangle.p3.y );
+				SDL_RenderLine( renderer, posX + triangle.p3.x, posY + triangle.p3.y, posX + triangle.p1.x, posY + triangle.p1.y );
 			}
 		}
 	};

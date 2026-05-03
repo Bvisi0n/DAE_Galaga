@@ -33,7 +33,7 @@ namespace bvi::gravity_bender
 
 	void PlayerComponent::Update( const float /*deltaTime*/ )
 	{
-		constexpr const auto& playerConfig = bvi::gravity_bender::config::Config.player;
+		constexpr const auto& playerConfig = bvi::gravity_bender::config::c_GlobalConfig.player;
 
 		constexpr float radiusSquared{ playerConfig.gravityRadius * playerConfig.gravityRadius };
 

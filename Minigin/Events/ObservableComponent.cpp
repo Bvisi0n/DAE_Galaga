@@ -1,9 +1,9 @@
 #include <algorithm>
 #include <vector>
 
-#include "Minigin/Events/GameEvent.h"
-#include "Minigin/Events/IObserver.h"
-#include "Minigin/Events/ObservableComponent.h"
+#include <Minigin/Events/GameEvent.h>
+#include <Minigin/Events/IObserver.h>
+#include <Minigin/Events/ObservableComponent.h>
 
 namespace dae::events
 {

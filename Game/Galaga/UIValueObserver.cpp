@@ -2,12 +2,12 @@
 #include <utility>
 #include <variant>
 
-#include "Game/Galaga/UIValueObserver.h"
+#include <Minigin/Core/Component.h>
+#include <Minigin/Core/GameObject.h>
+#include <Minigin/Events/GameEvent.h>
+#include <Minigin/Graphics/TextComponent.h>
 
-#include "Minigin/Core/Component.h"
-#include "Minigin/Core/GameObject.h"
-#include "Minigin/Events/GameEvent.h"
-#include "Minigin/Graphics/TextComponent.h"
+#include <Game/Galaga/UIValueObserver.h>
 
 namespace bvi::galaga
 {

@@ -4,7 +4,7 @@
 
 #include <SDL3_ttf/SDL_ttf.h>
 
-#include "Minigin/Graphics/Font.h"
+#include <Minigin/Graphics/Font.h>
 
 namespace dae::graphics
 {

@@ -1,24 +1,13 @@
 #ifndef DAE_GAMEEVENT_H
 #define DAE_GAMEEVENT_H
 
+#include <array>
 #include <cassert>
 #include <cstdint>
 #include <utility>
 #include <variant>
 
 // Inspired by DAE/Prog4/observer_eventqueue.pdf
-
-// Example usage:
-//  GameEvent event(make_sdbm_hash("PlayerTakesDamage"));
-//  event.PushArg(damageAmount);
-// 
-//  if(event.id == make_sdbm_hash("PlayerTakesDamage"))
-//  {
-//      float damageTaken = std::get<float>(event.args[0]);
-//      handle event
-//  }
-// 
-// Consider std::visit as alternative but more research is needed, probably with lambda's...
 
 namespace dae::events
 {
@@ -34,29 +23,27 @@ namespace dae::events
 
 	struct GameEvent
 	{
-		const EventId id;
-
-		// Should pack nicely within 64 Bytes if less or equal to 4
-		static constexpr uint8_t MAX_ARGS{ 4 };
-
+		EventId id;
+		static constexpr uint8_t c_MaxArgs{ 4 };
 		uint8_t argumentCount{ 0 };
-		EventArg args[ MAX_ARGS ]{};
+		std::array<EventArg, c_MaxArgs> args{};
 
-		explicit GameEvent( EventId _id ) noexcept
-			: id{ _id }
+		explicit GameEvent( EventId eventId ) noexcept
+			: id{ eventId }
 		{}
 
 		template <typename T>
 		void PushArg( T&& argument )
 		{
-			if ( argumentCount >= MAX_ARGS )
+			if ( argumentCount >= c_MaxArgs )
 			{
 				assert( false && "GameEvent: Maximum arguments exceeded." );
 				return;
 			}
 
-			args[ argumentCount++ ] = std::forward<T>( argument );
+			args.at( argumentCount++ ) = std::forward<T>( argument );
 		}
 	};
 }
+
 #endif

@@ -37,7 +37,7 @@ namespace bvi::gravity_bender
 		void Update( float deltaTime ) override;
 
 	private:
-		enum class PortalState
+		enum class PortalState : std::uint8_t
 		{
 			Anticipation, Spawning, Exhausted
 		};

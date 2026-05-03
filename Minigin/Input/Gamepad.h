@@ -29,6 +29,12 @@ namespace dae::input
 		explicit Gamepad( unsigned int controllerIndex );
 		~Gamepad();
 
+		Gamepad( const Gamepad& ) = delete;
+		Gamepad& operator=( const Gamepad& ) = delete;
+
+		Gamepad( Gamepad&& ) noexcept;
+		Gamepad& operator=( Gamepad&& ) noexcept;
+
 		void Update();
 
 		[[nodiscard]] bool IsDown( Button button ) const;

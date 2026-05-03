@@ -1,10 +1,10 @@
 #include <memory>
 #include <vector>
 
-#include "Minigin/Core/ColliderComponent.h"
-#include "Minigin/Core/CollisionSystem.h"
-#include "Minigin/Core/Component.h"
-#include "Minigin/Core/GameObject.h"
+#include <Minigin/Core/ColliderComponent.h>
+#include <Minigin/Core/CollisionSystem.h>
+#include <Minigin/Core/Component.h>
+#include <Minigin/Core/GameObject.h>
 
 namespace dae::core
 {

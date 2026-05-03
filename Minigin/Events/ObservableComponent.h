@@ -3,8 +3,8 @@
 
 #include <vector>
 
-#include "Minigin/Core/Component.h"
-#include "Minigin/Events/ISubject.h"
+#include <Minigin/Core/Component.h>
+#include <Minigin/Events/ISubject.h>
 
 namespace dae::core
 {
@@ -22,16 +22,16 @@ namespace dae::events
 		explicit ObservableComponent( core::GameObject* owner ) noexcept
 			: Component( owner )
 		{};
-		virtual ~ObservableComponent() = default;
+		~ObservableComponent() override = default;
 
 		ObservableComponent( const ObservableComponent& ) = delete;
 		ObservableComponent( ObservableComponent&& ) = delete;
 		ObservableComponent& operator=( const ObservableComponent& ) = delete;
 		ObservableComponent& operator=( ObservableComponent&& ) = delete;
 
-		virtual void InitializeLinkage() override = 0;
-		virtual void InitializeState() override = 0;
-		virtual void Update( const float deltaTime ) override = 0;
+		void InitializeLinkage() override = 0;
+		void InitializeState() override = 0;
+		void Update( float deltaTime ) override = 0;
 
 		void AttachObserver( IObserver* observer ) override;
 		void DetachObserver( IObserver* observer ) override;

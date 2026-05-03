@@ -4,11 +4,11 @@
 #include <sstream>
 #include <string>
 
-#include "Game/Common/FPSComponent.h"
+#include <Minigin/Core/Component.h>
+#include <Minigin/Core/GameObject.h>
+#include <Minigin/Graphics/TextComponent.h>
 
-#include "Minigin/Core/Component.h"
-#include "Minigin/Core/GameObject.h"
-#include "Minigin/Graphics/TextComponent.h"
+#include <Game/Common/FPSComponent.h>
 
 namespace bvi::common
 {

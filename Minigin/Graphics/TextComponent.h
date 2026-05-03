@@ -6,8 +6,8 @@
 
 #include <SDL3/SDL_pixels.h>
 
-#include "Minigin/Core/Component.h"
-#include "Minigin/Graphics/IRenderable.h"
+#include <Minigin/Core/Component.h>
+#include <Minigin/Graphics/IRenderable.h>
 
 namespace dae::core
 {
@@ -22,7 +22,7 @@ namespace dae::graphics
 	class TextComponent final : public core::Component, public IRenderable
 	{
 	public:
-		explicit TextComponent( core::GameObject* owner, const std::string& text, std::shared_ptr<Font> font, const SDL_Color& color = { 255, 255, 255, 255 } );
+		explicit TextComponent( core::GameObject* owner, const std::string& text, std::shared_ptr<Font> font, const SDL_FColor& color = { 1.F, 1.F, 1.F, 1.F } );
 		~TextComponent() override = default;
 
 		TextComponent( const TextComponent& ) = delete;
@@ -33,17 +33,17 @@ namespace dae::graphics
 		void InitializeLinkage() override;
 		void InitializeState() override;
 
-		void Update( const float deltaTime ) override;
+		void Update( float deltaTime ) override;
 		void Render() const override;
 
-		void SetColor( const SDL_Color& color );
+		void SetColor( const SDL_FColor& color );
 		void SetText( const std::string& text );
 
 	private:
 		std::string m_text;
 		std::shared_ptr<Font> m_font{ nullptr };
 		std::shared_ptr<Texture2D> m_texture{ nullptr };
-		SDL_Color m_color{ 255, 255, 255, 255 };
+		SDL_FColor m_color{ 1.F, 1.F, 1.F, 1.F };
 		bool m_needsUpdate{ true };
 	};
 }

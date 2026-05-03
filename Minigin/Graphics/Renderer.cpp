@@ -1,6 +1,7 @@
 #include <cassert>
 
 #include <glm/ext/vector_float2.hpp>
+#include <glm/ext/vector_int2.hpp>
 
 #include <SDL3/SDL_hints.h>
 #include <SDL3/SDL_pixels.h>

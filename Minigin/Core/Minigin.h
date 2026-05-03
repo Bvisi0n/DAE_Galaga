@@ -15,7 +15,7 @@ namespace dae::core
 	{
 		void operator()( SDL_Window* window ) const noexcept
 		{
-			if ( window )
+			if ( window != nullptr )
 			{
 				SDL_DestroyWindow( window );
 			}
@@ -50,7 +50,7 @@ namespace dae::core
 
 	private:
 		UniqueWindow m_window;
-		std::chrono::steady_clock::time_point m_lastTime{};
+		std::chrono::steady_clock::time_point m_lastTime;
 		const std::chrono::nanoseconds m_nsPerFrame;
 		const float m_maxDeltaTime;
 		bool m_quit{};

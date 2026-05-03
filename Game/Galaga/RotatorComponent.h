@@ -1,7 +1,7 @@
 #ifndef BVI_ROTATORCOMPONENT_H
 #define BVI_ROTATORCOMPONENT_H
 
-#include "Minigin/Core/Component.h"
+#include <Minigin/Core/Component.h>
 
 namespace dae::core
 {
@@ -12,15 +12,15 @@ namespace bvi::galaga
 {
 	struct RotatorDescriptor
 	{
-		float range{ 0.0f };
-		float speed{ 0.0f };
-		float initialAngle{ 0.0f };
+		float range{ 0.F };
+		float speed{ 0.F };
+		float initialAngle{ 0.F };
 	};
 
 	class RotatorComponent final : public dae::core::Component
 	{
 	public:
-		explicit RotatorComponent( dae::core::GameObject* owner, const RotatorDescriptor descriptor );
+		explicit RotatorComponent( dae::core::GameObject* owner, RotatorDescriptor descriptor );
 		~RotatorComponent() override = default;
 
 		RotatorComponent( const RotatorComponent& other ) = delete;
@@ -31,7 +31,7 @@ namespace bvi::galaga
 		void InitializeLinkage() override;
 		void InitializeState() override;
 
-		void Update( const float deltaTime ) override;
+		void Update( float deltaTime ) override;
 
 	private:
 		float m_angle;

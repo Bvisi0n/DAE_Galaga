@@ -8,7 +8,7 @@
 #include <string>
 #include <utility>
 
-#include "Minigin/Utilities/Singleton.h"
+#include <Minigin/Utilities/Singleton.h>
 
 namespace dae::graphics
 {
@@ -21,6 +21,11 @@ namespace dae::resources
 	class ResourceManager final : public utils::Singleton<ResourceManager>
 	{
 	public:
+		ResourceManager( const ResourceManager& ) = delete;
+		ResourceManager( ResourceManager&& ) = delete;
+		ResourceManager& operator=( const ResourceManager& ) = delete;
+		ResourceManager& operator=( ResourceManager&& ) = delete;
+
 		void Init( const std::filesystem::path& dataPath );
 		void Destroy();
 
@@ -35,7 +40,8 @@ namespace dae::resources
 		std::map<std::pair<std::string, uint8_t>, std::shared_ptr<graphics::Font>> m_loadedFonts;
 
 		ResourceManager() = default;
-		virtual ~ResourceManager() = default;
+		~ResourceManager() = default;
+
 		void UnloadUnusedResources();
 	};
 }

@@ -117,7 +117,7 @@ namespace bvi::gravity_bender
 			.isFilled = true
 		};
 
-		const SDL_Color enemyColor
+		const SDL_FColor enemyColor
 		{
 			.r = m_blueprint.unitColor.r,
 			.g = m_blueprint.unitColor.g,
@@ -177,8 +177,8 @@ namespace bvi::gravity_bender
 		namespace config = bvi::gravity_bender::config;
 
 		constexpr float margin = 50.F;
-		const float viewportWidth = config::Config.viewport.width;
-		const float viewportHeight = config::Config.viewport.height;
+		const float viewportWidth = config::c_GlobalConfig.viewport.width;
+		const float viewportHeight = config::c_GlobalConfig.viewport.height;
 
 		static std::random_device randomDevice;
 		static std::mt19937 generator( randomDevice() );

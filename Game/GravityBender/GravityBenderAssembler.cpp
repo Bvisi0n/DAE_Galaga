@@ -52,7 +52,7 @@ namespace bvi::gravity_bender
 
 	void GravityBenderAssembler::AssembleBackground( dae::scenes::Scene& scene )
 	{
-		constexpr const auto& viewportConfig = bvi::gravity_bender::config::Config.viewport;
+		constexpr const auto& viewportConfig = bvi::gravity_bender::config::c_GlobalConfig.viewport;
 
 		constexpr SDL_FRect screenBounds
 		{
@@ -68,7 +68,7 @@ namespace bvi::gravity_bender
 			.isFilled = true
 		};
 
-		constexpr SDL_Color bgColor
+		constexpr SDL_FColor bgColor
 		{
 			.r = viewportConfig.backgroundColor.r,
 			.g = viewportConfig.backgroundColor.g,
@@ -85,9 +85,9 @@ namespace bvi::gravity_bender
 
 	void GravityBenderAssembler::AssembleFPSCounter( dae::scenes::Scene& scene )
 	{
-		constexpr const auto& uiConfig = bvi::gravity_bender::config::Config.ui;
+		constexpr const auto& uiConfig = bvi::gravity_bender::config::c_GlobalConfig.ui;
 
-		constexpr SDL_Color fpsColor
+		constexpr SDL_FColor fpsColor
 		{
 			.r = uiConfig.fpsColor.r,
 			.g = uiConfig.fpsColor.g,
@@ -113,9 +113,9 @@ namespace bvi::gravity_bender
 
 	void GravityBenderAssembler::AssembleInstructions( dae::scenes::Scene& scene )
 	{
-		constexpr const auto& uiConfig = bvi::gravity_bender::config::Config.ui;
+		constexpr const auto& uiConfig = bvi::gravity_bender::config::c_GlobalConfig.ui;
 
-		constexpr SDL_Color textColor
+		constexpr SDL_FColor textColor
 		{
 			.r = uiConfig.instructionsColor.r,
 			.g = uiConfig.instructionsColor.g,
@@ -179,7 +179,7 @@ namespace bvi::gravity_bender
 	void GravityBenderAssembler::AssemblePlayer( dae::scenes::Scene& scene )
 	{
 		namespace config = bvi::gravity_bender::config;
-		constexpr const auto& playerConfig = config::Config.player;
+		constexpr const auto& playerConfig = config::c_GlobalConfig.player;
 
 		using Object = dae::core::GameObject;
 		using Descriptor = dae::core::TransformDescriptor;
@@ -188,7 +188,7 @@ namespace bvi::gravity_bender
 			std::make_unique<Object>( Descriptor{.localPosition = { playerConfig.startX, playerConfig.startY, 0.F } } )
 		};
 
-		constexpr SDL_Color playerColor
+		constexpr SDL_FColor playerColor
 		{
 			.r = playerConfig.color.r,
 			.g = playerConfig.color.g,
@@ -256,7 +256,7 @@ namespace bvi::gravity_bender
 
 	void GravityBenderAssembler::AssembleSpawner( dae::scenes::Scene& scene )
 	{
-		constexpr const auto& portalConfig = bvi::gravity_bender::config::Config.portal;
+		constexpr const auto& portalConfig = bvi::gravity_bender::config::c_GlobalConfig.portal;
 		constexpr float halfSize{ portalConfig.portalSize / 2.F };
 
 		constexpr SDL_FRect localBounds
@@ -273,7 +273,7 @@ namespace bvi::gravity_bender
 			.isFilled = false
 		};
 
-		constexpr SDL_Color portalColor
+		constexpr SDL_FColor portalColor
 		{
 			.r = portalConfig.portalColor.r,
 			.g = portalConfig.portalColor.g,
@@ -297,7 +297,7 @@ namespace bvi::gravity_bender
 
 	void GravityBenderAssembler::AssembleViewportBorder( dae::scenes::Scene& scene )
 	{
-		constexpr const auto& viewportConfig = bvi::gravity_bender::config::Config.viewport;
+		constexpr const auto& viewportConfig = bvi::gravity_bender::config::c_GlobalConfig.viewport;
 
 		constexpr SDL_FRect screenBounds
 		{
@@ -313,7 +313,7 @@ namespace bvi::gravity_bender
 			.isFilled = false
 		};
 
-		constexpr SDL_Color borderColor
+		constexpr SDL_FColor borderColor
 		{
 			.r = viewportConfig.borderColor.r,
 			.g = viewportConfig.borderColor.g,

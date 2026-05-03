@@ -4,15 +4,14 @@
 #include <cstdint>
 
 // Inspired by Type Object.
-
 namespace bvi::gravity_bender::config
 {
 	struct CoreColor
 	{
-		uint8_t r{ 255 };
-		uint8_t g{ 255 };
-		uint8_t b{ 255 };
-		uint8_t a{ 255 };
+		float r{ 1.F };
+		float g{ 1.F };
+		float b{ 1.F };
+		float a{ 1.F };
 	};
 
 	struct GravityFieldBlueprint
@@ -24,7 +23,7 @@ namespace bvi::gravity_bender::config
 		float pullForce{ 1'500'000.F };
 
 		float coreSize{ 5.F };
-		CoreColor color{ .r = 0, .g = 255, .b = 255, .a = 255 };
+		CoreColor color{ .r = 0.F, .g = 1.F, .b = 1.F, .a = 1.F };
 	};
 
 	struct PlayerBlueprint
@@ -41,14 +40,14 @@ namespace bvi::gravity_bender::config
 		float gravityRadius{ 100.F };
 		float gravityStrength{ 1'500'000.F };
 
-		CoreColor color{ .r = 255, .g = 204, .b = 0, .a = 255 };
+		CoreColor color{ .r = 1.F, .g = 204.F / 255.F, .b = 0.F, .a = 1.F };
 	};
 
 	struct PortalBlueprint
 	{
 		float portalSize{ 20.F };
 		uint32_t portalLineThickness{ 3 };
-		CoreColor portalColor{ .r = 255, .g = 120, .b = 0, .a = 255 };
+		CoreColor portalColor{ .r = 1.F, .g = 120.F / 255.F, .b = 0.F, .a = 1.F };
 
 		float spawnDelay{ 0.15F };
 		float cooldownSeconds{ 15.F };
@@ -57,7 +56,7 @@ namespace bvi::gravity_bender::config
 
 		float unitSpeed{ 200.F };
 		float unitSize{ 5.F };
-		CoreColor unitColor{ .r = 255, .g = 50, .b = 50, .a = 255 };
+		CoreColor unitColor{ .r = 1.F, .g = 50.F / 255.F, .b = 50.F / 255.F, .a = 1.F };
 	};
 
 	struct UIConfig
@@ -65,12 +64,12 @@ namespace bvi::gravity_bender::config
 		float fpsStartX{ 10.F };
 		float fpsStartY{ 10.F };
 		uint8_t fpsFontSize{ 18 };
-		CoreColor fpsColor{ .r = 150, .g = 200, .b = 150, .a = 255 };
+		CoreColor fpsColor{ .r = 150.F / 255.F, .g = 200.F / 255.F, .b = 150.F / 255.F, .a = 1.F };
 
 		float instructionsStartY{ 10.F };
 		float instructionsLineSpacing{ 20.F };
 		uint8_t instructionsFontSize{ 16 };
-		CoreColor instructionsColor{ .r = 255, .g = 255, .b = 255, .a = 255 };
+		CoreColor instructionsColor{ .r = 1.F, .g = 1.F, .b = 1.F, .a = 1.F };
 	};
 
 	struct ViewportConfig
@@ -79,9 +78,9 @@ namespace bvi::gravity_bender::config
 		float height{ 576.F };
 
 		uint32_t borderThickness{ 2 };
-		CoreColor borderColor{ .r = 138, .g = 43, .b = 226, .a = 255 };
+		CoreColor borderColor{ .r = 138.F / 255.F, .g = 43.F / 255.F, .b = 226.F / 255.F, .a = 1.F };
 
-		CoreColor backgroundColor{ .r = 20, .g = 10, .b = 30, .a = 255 };
+		CoreColor backgroundColor{ .r = 20.F / 255.F, .g = 10.F / 255.F, .b = 30.F / 255.F, .a = 1.F };
 	};
 
 	inline constexpr struct GlobalConfig
@@ -91,6 +90,6 @@ namespace bvi::gravity_bender::config
 		PortalBlueprint portal{};
 		ViewportConfig viewport{};
 		UIConfig ui{};
-	} Config;
+	} c_GlobalConfig;
 }
 #endif

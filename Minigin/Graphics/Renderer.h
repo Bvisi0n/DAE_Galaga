@@ -1,6 +1,8 @@
 #ifndef DAE_RENDERER_H
 #define DAE_RENDERER_H
 
+#include <cstdint>
+
 #include <glm/vec2.hpp>
 
 #include <SDL3/SDL_pixels.h>
@@ -16,12 +18,17 @@ namespace dae::graphics
 	class Renderer final : public utils::Singleton<Renderer>
 	{
 	public:
-		enum class PresentationMode
+		enum class PresentationMode : std::uint8_t
 		{
 			Letterbox,
 			Overscan,
 			IntegerScale
 		};
+
+		Renderer( const Renderer& ) = delete;
+		Renderer( Renderer&& ) = delete;
+		Renderer& operator=( const Renderer& ) = delete;
+		Renderer& operator=( Renderer&& ) = delete;
 
 		void Init( SDL_Window* window );
 		void Render() const;
@@ -48,7 +55,7 @@ namespace dae::graphics
 
 		friend class utils::Singleton<Renderer>;
 		Renderer() = default;
-		virtual ~Renderer() = default;
+		~Renderer() = default;
 	};
 }
 #endif

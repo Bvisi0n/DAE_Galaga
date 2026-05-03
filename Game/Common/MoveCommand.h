@@ -3,8 +3,8 @@
 
 #include <glm/ext/vector_float3.hpp>
 
-#include "Minigin/Core/MoveComponent.h"
-#include "Minigin/Input/ICommand.h"
+#include <Minigin/Core/MoveComponent.h>
+#include <Minigin/Input/ICommand.h>
 
 // TODO bvi_common - Split into .cpp/.h
 
@@ -22,7 +22,7 @@ namespace bvi::common
 
 		void Execute( const float /*deltaTime*/ ) override
 		{
-			if ( m_moveComponent )
+			if ( m_moveComponent != nullptr )
 			{
 				m_moveComponent->AddForce( m_thrustVector );
 			}
@@ -35,7 +35,7 @@ namespace bvi::common
 
 	private:
 		dae::core::MoveComponent* m_moveComponent{ nullptr };
-		glm::vec3 m_thrustVector{ 0.0f, 0.0f, 0.0f };
+		glm::vec3 m_thrustVector{ 0.F, 0.F, 0.F };
 	};
 }
 #endif

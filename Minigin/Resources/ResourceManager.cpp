@@ -8,9 +8,9 @@
 
 #include <SDL3_ttf/SDL_ttf.h>
 
-#include "Minigin/Graphics/Font.h"
-#include "Minigin/Graphics/Texture2D.h"
-#include "Minigin/Resources/ResourceManager.h"
+#include <Minigin/Graphics/Font.h>
+#include <Minigin/Graphics/Texture2D.h>
+#include <Minigin/Resources/ResourceManager.h>
 
 namespace dae::resources
 {

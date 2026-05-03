@@ -1,7 +1,7 @@
 #ifndef BVI_FPSComponent_H
 #define BVI_FPSComponent_H
 
-#include "Minigin/Core/Component.h"
+#include <Minigin/Core/Component.h>
 
 namespace dae::core
 {
@@ -30,7 +30,7 @@ namespace bvi::common
 		void InitializeLinkage() override;
 		void InitializeState() override;
 
-		void Update( const float deltaTime ) override;
+		void Update( float deltaTime ) override;
 
 	private:
 		dae::graphics::TextComponent* m_text{ nullptr };

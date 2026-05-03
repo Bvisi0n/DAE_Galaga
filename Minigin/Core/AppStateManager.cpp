@@ -1,8 +1,8 @@
 #include <memory>
 #include <utility>
 
-#include "Minigin/Core/AppStateManager.h"
-#include "Minigin/Core/IAppState.h"
+#include <Minigin/Core/AppStateManager.h>
+#include <Minigin/Core/IAppState.h>
 
 namespace dae::core
 {

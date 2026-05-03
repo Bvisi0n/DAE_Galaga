@@ -62,21 +62,21 @@ namespace bvi::gravity_bender
 		const float radius = std::sqrt( node.radiusSquared );
 		float coreRadius = 0.F;
 
-		const auto& blueprintColor = config::Config.gravityField.color;
+		const auto& blueprintColor = config::c_GlobalConfig.gravityField.color;
 
 		switch ( node.type )
 		{
 			case GravityNodeType::Player:
-				coreRadius = config::Config.player.colliderSize;
+				coreRadius = config::c_GlobalConfig.player.colliderSize;
 				break;
 			case GravityNodeType::Field:
 			default:
-				coreRadius = config::Config.gravityField.coreSize;
+				coreRadius = config::c_GlobalConfig.gravityField.coreSize;
 				break;
 		}
 
-		const SDL_Color coreColor{ blueprintColor.r, blueprintColor.g, blueprintColor.b, blueprintColor.a };
-		const SDL_Color rangeColor{ blueprintColor.r, blueprintColor.g, blueprintColor.b, 128 };
+		const SDL_FColor coreColor{ blueprintColor.r, blueprintColor.g, blueprintColor.b, blueprintColor.a };
+		const SDL_FColor rangeColor{ blueprintColor.r, blueprintColor.g, blueprintColor.b, 128 };
 
 		auto centerVisualRoot = std::make_unique<dae::core::GameObject>();
 		centerVisualRoot->GetTransform().SetLocalPosition( node.position );
@@ -93,8 +93,8 @@ namespace bvi::gravity_bender
 		scene.AddGameObject( std::move( centerVisualRoot ) );
 		scene.AddGameObject( std::move( centerVisualOuter ) );
 
-		const float width = config::Config.viewport.width;
-		const float height = config::Config.viewport.height;
+		const float width = config::c_GlobalConfig.viewport.width;
+		const float height = config::c_GlobalConfig.viewport.height;
 		const std::array<glm::vec3, 8> offsets = { {
 			{0.F, -height, 0.F}, {width, 0.F, 0.F}, {0.F, height, 0.F}, {-width, 0.F, 0.F},
 			{width, -height, 0.F}, {width, height, 0.F}, {-width, height, 0.F}, {-width, -height, 0.F}

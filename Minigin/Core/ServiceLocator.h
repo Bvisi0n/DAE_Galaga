@@ -3,7 +3,7 @@
 
 #include <memory>
 
-#include "Minigin/Audio/ISoundSystem.h"
+#include <Minigin/Audio/ISoundSystem.h>
 
 namespace dae::core
 {
@@ -18,7 +18,7 @@ namespace dae::core
 		static audio::ISoundSystem& GetSoundSystem();
 
 	private:
-		inline static std::unique_ptr<audio::ISoundSystem> m_soundSystem = std::make_unique<audio::NullSoundSystem>();
+		inline static std::unique_ptr<audio::ISoundSystem> s_soundSystem = std::make_unique<audio::NullSoundSystem>();
 	};
 }
 #endif

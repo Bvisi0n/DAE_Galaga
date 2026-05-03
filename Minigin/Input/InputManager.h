@@ -22,7 +22,7 @@ namespace dae::input
 	class InputManager final : public utils::Singleton<InputManager>
 	{
 	public:
-		enum class KeyState
+		enum class KeyState : std::uint8_t
 		{
 			Down, Up, Pressed
 		};
@@ -35,26 +35,26 @@ namespace dae::input
 		InputManager& operator=( const InputManager& ) = delete;
 		InputManager& operator=( InputManager&& ) = delete;
 
-		[[nodiscard]] bool ProcessInput( const float deltaTime );
+		[[nodiscard]] bool ProcessInput( float deltaTime );
 
 		template <IsInputType T>
 		void BindCommand( T inputType, KeyState state, std::unique_ptr<ICommand> command, unsigned int controllerIndex = 0 )
 		{
 			if constexpr ( std::is_same_v<T, Keyboard::Key> )
 			{
-				auto it = std::find_if
+				auto iterator = std::find_if
 				(
 					m_keyboardCommands.begin(),
 					m_keyboardCommands.end(),
-					[ inputType, state ] ( const KeyboardCommandBinding& b )
+					[ inputType, state ] ( const KeyboardCommandBinding& binding )
 					{
-						return b.key == inputType && b.state == state;
+						return binding.key == inputType && binding.state == state;
 					}
 				);
 
-				if ( it != m_keyboardCommands.end() )
+				if ( iterator != m_keyboardCommands.end() )
 				{
-					it->command = std::move( command );
+					iterator->command = std::move( command );
 				}
 				else
 				{
@@ -63,19 +63,19 @@ namespace dae::input
 			}
 			else if constexpr ( std::is_same_v<T, Gamepad::Button> )
 			{
-				auto it = std::find_if
+				auto iterator = std::find_if
 				(
 					m_gamepadCommands.begin(),
 					m_gamepadCommands.end(),
-					[ controllerIndex, inputType, state ] ( const GamepadCommandBinding& b )
+					[ controllerIndex, inputType, state ] ( const GamepadCommandBinding& binding )
 					{
-						return b.controllerIndex == controllerIndex && b.button == inputType && b.state == state;
+						return binding.controllerIndex == controllerIndex && binding.button == inputType && binding.state == state;
 					}
 				);
 
-				if ( it != m_gamepadCommands.end() )
+				if ( iterator != m_gamepadCommands.end() )
 				{
-					it->command = std::move( command );
+					iterator->command = std::move( command );
 				}
 				else
 				{
@@ -92,9 +92,9 @@ namespace dae::input
 				std::erase_if
 				(
 					m_keyboardCommands,
-					[ inputType, state ] ( const KeyboardCommandBinding& b )
+					[ inputType, state ] ( const KeyboardCommandBinding& binding )
 					{
-						return b.key == inputType && b.state == state;
+						return binding.key == inputType && binding.state == state;
 					}
 				);
 			}
@@ -103,9 +103,9 @@ namespace dae::input
 				std::erase_if
 				(
 					m_gamepadCommands,
-					[ controllerIndex, inputType, state ] ( const GamepadCommandBinding& b )
+					[ controllerIndex, inputType, state ] ( const GamepadCommandBinding& binding )
 					{
-						return b.controllerIndex == controllerIndex && b.button == inputType && b.state == state;
+						return binding.controllerIndex == controllerIndex && binding.button == inputType && binding.state == state;
 					}
 				);
 			}
@@ -139,8 +139,8 @@ namespace dae::input
 
 		[[nodiscard]] bool ProcessSDLEvents();
 		void UpdateHardwareStates();
-		void ExecuteKeyboardCommands( const float deltaTime );
-		void ExecuteGamepadCommands( const float deltaTime );
+		void ExecuteKeyboardCommands( float deltaTime );
+		void ExecuteGamepadCommands( float deltaTime );
 
 	#ifndef WIN32
 		void RouteSDLHardwareEvent( const SDL_Event& event );

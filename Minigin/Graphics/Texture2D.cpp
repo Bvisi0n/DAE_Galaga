@@ -2,13 +2,13 @@
 #include <memory>
 #include <string>
 
-#include <glm/vec2.hpp>
+#include <glm/ext/vector_float2.hpp>
 
 #include <SDL3/SDL_render.h>
 #include <SDL3/SDL_surface.h>
 
-#include "Minigin/Graphics/Renderer.h"
-#include "Minigin/Graphics/Texture2D.h"
+#include <Minigin/Graphics/Renderer.h>
+#include <Minigin/Graphics/Texture2D.h>
 
 namespace dae::graphics
 {

@@ -7,9 +7,9 @@
 #include <utility>
 #include <vector>
 
-#include "Minigin/Core/Component.h"
-#include "Minigin/Core/Transform.h"
-#include "Minigin/Graphics/IRenderable.h"
+#include <Minigin/Core/Component.h>
+#include <Minigin/Core/Transform.h>
+#include <Minigin/Graphics/IRenderable.h>
 
 namespace dae::core
 {
@@ -35,7 +35,7 @@ namespace dae::core
 		[[nodiscard]] bool IsPendingDeletion() const noexcept;
 
 		void AdvanceComponentStates() noexcept;
-		void Update( const float deltaTime );
+		void Update( float deltaTime );
 		void Render() const;
 
 		template <IsComponent T, typename... Args>
@@ -47,13 +47,11 @@ namespace dae::core
 				assert( !HasComponent<T>() && "GameObject already has a component of this type." );
 				return GetComponent<T>();
 			}
-			else
-			{
-				auto component = std::make_unique<T>( this, std::forward<Args>( args )... );
-				T* ptr = component.get();
-				m_components.push_back( std::move( component ) );
-				return ptr;
-			}
+
+			auto component = std::make_unique<T>( this, std::forward<Args>( args )... );
+			T* ptr = component.get();
+			m_components.push_back( std::move( component ) );
+			return ptr;
 		}
 
 		template <IsRenderable T, typename... Args>
@@ -64,15 +62,13 @@ namespace dae::core
 				assert( !m_renderable && "GameObject can only have one IRenderable." );
 				return nullptr;
 			}
-			else
-			{
-				auto component = std::make_unique<T>( this, std::forward<Args>( args )... );
-				T* ptr = component.get();
 
-				m_renderable = ptr;
-				m_components.push_back( std::move( component ) );
-				return ptr;
-			}
+			auto component = std::make_unique<T>( this, std::forward<Args>( args )... );
+			T* ptr = component.get();
+
+			m_renderable = ptr;
+			m_components.push_back( std::move( component ) );
+			return ptr;
 		}
 
 		template <IsComponent T>
@@ -103,19 +99,15 @@ namespace dae::core
 			{
 				return nullptr;
 			}
-			else
-			{
-				T* castedRenderable = dynamic_cast<T*>( m_renderable );
 
-				if ( castedRenderable && !castedRenderable->IsPendingDeletion() )
-				{
-					return castedRenderable;
-				}
-				else
-				{
-					return nullptr;
-				}
+			T* castedRenderable = dynamic_cast<T*>( m_renderable );
+
+			if ( castedRenderable && !castedRenderable->IsPendingDeletion() )
+			{
+				return castedRenderable;
 			}
+
+			return nullptr;
 		}
 
 		template <IsComponent T>

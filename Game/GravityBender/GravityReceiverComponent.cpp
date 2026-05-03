@@ -37,7 +37,7 @@ namespace bvi::gravity_bender
 		const glm::vec3 currentPos = GetOwner()->GetTransform().GetWorldPosition();
 		glm::vec3 totalGravityForce{ 0.0F, 0.0F, 0.0F };
 
-		const auto& viewport = config::Config.viewport;
+		const auto& viewport = config::c_GlobalConfig.viewport;
 		const float halfWidth = viewport.width / 2.F;
 		const float halfHeight = viewport.height / 2.F;
 

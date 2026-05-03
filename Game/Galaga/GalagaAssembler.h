@@ -72,12 +72,12 @@ namespace bvi::galaga
 			using Descriptor = dae::core::TransformDescriptor;
 			auto instructions
 			{
-				std::make_unique<Object>( Descriptor{.localPosition = { 25.f, 50.f, 0.F } } )
+				std::make_unique<Object>( Descriptor{.localPosition = { 25.F, 50.F, 0.F } } )
 			};
 
 			instructions->AddComponent<dae::graphics::TextComponent>( "Press F to go back", font );
 
-			auto inputComp = instructions->AddComponent<dae::input::PlayerInputComponent>();
+			auto* inputComp = instructions->AddComponent<dae::input::PlayerInputComponent>();
 
 			// TODO bvi_main_menu - Once the Command pattern is reworked to be stateless, this should be simplified.
 			auto pushStateCommand = std::make_unique<common::PushStateCommand<main_menu::MainMenuState>>( stateMachine );

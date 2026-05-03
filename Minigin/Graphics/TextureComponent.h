@@ -4,9 +4,9 @@
 #include <memory>
 #include <string>
 
-#include "Minigin/Core/Component.h"
-#include "Minigin/Core/GameObject.h"
-#include "Minigin/Graphics/IRenderable.h"
+#include <Minigin/Core/Component.h>
+#include <Minigin/Core/GameObject.h>
+#include <Minigin/Graphics/IRenderable.h>
 
 namespace dae::graphics
 {
@@ -28,13 +28,13 @@ namespace dae::graphics
 		void InitializeLinkage() override;
 		void InitializeState() override;
 
-		void Update( const float deltaTime ) override;
+		void Update( float deltaTime ) override;
 		void Render() const override;
 
 		void SetTexture( const std::string& filename );
 
 	private:
-		std::string m_filename{};
+		std::string m_filename;
 		std::shared_ptr<Texture2D> m_texture{ nullptr };
 	};
 }

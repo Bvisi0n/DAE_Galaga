@@ -3,8 +3,8 @@
 
 #include <memory>
 
-#include "Minigin/Core/IAppState.h"
-#include "Minigin/Utilities/Singleton.h"
+#include <Minigin/Core/IAppState.h>
+#include <Minigin/Utilities/Singleton.h>
 
 namespace dae::core
 {

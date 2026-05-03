@@ -1,8 +1,8 @@
 #ifndef BVI_SCORECOMPONENT_H
 #define BVI_SCORECOMPONENT_H
 
-#include "Minigin/Core/GameObject.h"
-#include "Minigin/Events/ObservableComponent.h"
+#include <Minigin/Core/GameObject.h>
+#include <Minigin/Events/ObservableComponent.h>
 
 namespace bvi::galaga
 {
@@ -20,9 +20,9 @@ namespace bvi::galaga
 		void InitializeLinkage() noexcept override;
 		void InitializeState() noexcept override;
 
-		void Update( const float deltaTime ) noexcept override;
+		void Update( float deltaTime ) noexcept override;
 
-		void AddScore( const int score );
+		void AddScore( int score );
 		[[nodiscard]] int GetScore() const;
 
 	private:

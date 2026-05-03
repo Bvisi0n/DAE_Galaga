@@ -4,7 +4,7 @@
 #include <memory>
 #include <vector>
 
-#include "Minigin/Core/CollisionSystem.h"
+#include <Minigin/Core/CollisionSystem.h>
 
 namespace dae::core
 {
@@ -13,6 +13,8 @@ namespace dae::core
 
 namespace dae::scenes
 {
+	class SceneManager;
+
 	class Scene final
 	{
 	public:
@@ -24,11 +26,11 @@ namespace dae::scenes
 		Scene& operator=( Scene&& other ) = delete;
 
 		void Initialize();
-		void Update( const float deltaTime );
+		void Update( float deltaTime );
 		void Render() const;
 
 		void AddGameObject( std::unique_ptr<core::GameObject> object );
-		static void RemoveGameObject( core::GameObject& object ); // TODO dae_core - should statics be outside the class?
+		static void RemoveGameObject( core::GameObject& object );
 		void CleanupGameObjects();
 		void RemoveAllGameObjects();
 
@@ -41,10 +43,10 @@ namespace dae::scenes
 
 		void FlushPendingObjects();
 
-		std::vector <std::unique_ptr<core::GameObject>> m_objects{};
-		std::vector<std::unique_ptr<core::GameObject>> m_pendingObjects{};
-		std::vector<std::unique_ptr<core::GameObject>> m_processingBuffer{};
-		core::CollisionSystem m_collisionSystem{};
+		std::vector <std::unique_ptr<core::GameObject>> m_objects;
+		std::vector<std::unique_ptr<core::GameObject>> m_pendingObjects;
+		std::vector<std::unique_ptr<core::GameObject>> m_processingBuffer;
+		core::CollisionSystem m_collisionSystem;
 		bool m_isInitialized{ false };
 	};
 }

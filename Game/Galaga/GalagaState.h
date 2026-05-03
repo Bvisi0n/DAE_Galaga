@@ -1,7 +1,7 @@
 #ifndef BVI_GALAGASTATE_H
 #define BVI_GALAGASTATE_H
 
-#include "Minigin/Core/IAppState.h"
+#include <Minigin/Core/IAppState.h>
 
 namespace bvi::galaga
 {

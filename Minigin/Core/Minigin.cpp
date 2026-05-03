@@ -35,19 +35,17 @@
 #include <SDL3_ttf/SDL_ttf.h>
 
 #if _DEBUG
-#include "Minigin/Audio/LoggingSoundSystem.h"
-#include "Minigin/Audio/SDLSoundSystem.h"
-#else
-#include "Minigin/Audio/SDLSoundSystem.h"
+#include <Minigin/Audio/LoggingSoundSystem.h>
 #endif
 
-#include "Minigin/Core/AppStateManager.h"
-#include "Minigin/Core/Minigin.h"
-#include "Minigin/Core/ServiceLocator.h"
-#include "Minigin/Graphics/Renderer.h"
-#include "Minigin/Input/InputManager.h"
-#include "Minigin/Resources/ResourceManager.h"
-#include "Minigin/Scene/SceneManager.h"
+#include <Minigin/Audio/SDLSoundSystem.h>
+#include <Minigin/Core/AppStateManager.h>
+#include <Minigin/Core/Minigin.h>
+#include <Minigin/Core/ServiceLocator.h>
+#include <Minigin/Graphics/Renderer.h>
+#include <Minigin/Input/InputManager.h>
+#include <Minigin/Resources/ResourceManager.h>
+#include <Minigin/Scene/SceneManager.h>
 
 static void LogSDLVersion( const std::string& message, int major, int minor, int patch )
 {

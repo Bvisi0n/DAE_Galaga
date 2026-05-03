@@ -10,9 +10,15 @@ namespace dae::input
 	class ICommand
 	{
 	public:
+		ICommand() = default;
 		virtual ~ICommand() = default;
 
-		virtual void Execute( const float deltaTime ) = 0;
+		ICommand( const ICommand& ) = delete;
+		ICommand( ICommand&& ) = delete;
+		ICommand& operator=( const ICommand& ) = delete;
+		ICommand& operator=( ICommand&& ) = delete;
+
+		virtual void Execute( float deltaTime ) = 0;
 
 		[[nodiscard]] virtual const void* GetTargetContext() const = 0;
 	};

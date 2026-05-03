@@ -1,4 +1,5 @@
 #include <cassert>
+#include <cstdint>
 #include <memory>
 #include <string>
 #include <utility>
@@ -20,7 +21,7 @@
 
 namespace dae::graphics
 {
-	TextComponent::TextComponent( core::GameObject* owner, const std::string& text, std::shared_ptr<Font> font, const SDL_Color& color )
+	TextComponent::TextComponent( core::GameObject* owner, const std::string& text, std::shared_ptr<Font> font, const SDL_FColor& color )
 		: Component( owner )
 		, m_text( text )
 		, m_font( std::move( font ) )
@@ -47,7 +48,15 @@ namespace dae::graphics
 			return;
 		}
 
-		SDL_Surface* surface = TTF_RenderText_Blended( m_font->GetFont(), m_text.c_str(), static_cast<int>( m_text.length() ), m_color );
+		const SDL_Color ttfColor
+		{
+			static_cast<std::uint8_t>( m_color.r * 255.F ),
+			static_cast<std::uint8_t>( m_color.g * 255.F ),
+			static_cast<std::uint8_t>( m_color.b * 255.F ),
+			static_cast<std::uint8_t>( m_color.a * 255.F )
+		};
+
+		SDL_Surface* surface = TTF_RenderText_Blended( m_font->GetFont(), m_text.c_str(), m_text.length(), ttfColor );
 
 		if ( surface == nullptr )
 		{
@@ -79,7 +88,7 @@ namespace dae::graphics
 	}
 
 
-	void TextComponent::SetColor( const SDL_Color& color )
+	void TextComponent::SetColor( const SDL_FColor& color )
 	{
 		if ( m_color.r != color.r || m_color.g != color.g || m_color.b != color.b || m_color.a != color.a )
 		{

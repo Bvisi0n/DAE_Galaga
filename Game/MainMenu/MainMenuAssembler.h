@@ -91,7 +91,7 @@ namespace bvi::main_menu
 
 			instructions->AddComponent<dae::graphics::TextComponent>( "Press G to start Galaga", font );
 
-			auto inputComp = instructions->AddComponent<dae::input::PlayerInputComponent>();
+			auto* inputComp = instructions->AddComponent<dae::input::PlayerInputComponent>();
 
 			// TODO bvi_main_menu - Once the Command pattern is reworked to be stateless, this should be simplified.
 			auto pushStateCommand = std::make_unique<common::PushStateCommand<galaga::GalagaState>>( stateMachine );
@@ -114,7 +114,7 @@ namespace bvi::main_menu
 
 			instructions->AddComponent<dae::graphics::TextComponent>( "Press F to start Gravity Bender", font );
 
-			auto inputComp = instructions->AddComponent<dae::input::PlayerInputComponent>();
+			auto* inputComp = instructions->AddComponent<dae::input::PlayerInputComponent>();
 
 			// TODO bvi_main_menu - Once the Command pattern is reworked to be stateless, this should be simplified.
 			auto pushStateCommand = std::make_unique<common::PushStateCommand<gravity_bender::GravityBenderState>>( stateMachine );

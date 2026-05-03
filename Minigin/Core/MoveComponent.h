@@ -10,8 +10,8 @@ namespace dae::core
 {
 	struct MoveDescriptor
 	{
-		float maxSpeed{ 200.f };
-		float drag{ 0.0f };
+		float maxSpeed{ 200.F };
+		float drag{ 0.F };
 	};
 
 	class MoveComponent final : public Component
@@ -28,22 +28,22 @@ namespace dae::core
 		void InitializeLinkage() override;
 		void InitializeState() override;
 
-		void Update( const float deltaTime ) override;
+		void Update( float deltaTime ) override;
 		void AddForce( const glm::vec3& force );
 
-		void SetDragCoefficient( const float drag );
+		void SetDragCoefficient( float drag );
 		[[nodiscard]] float GetDragCoefficient() const noexcept;
 
-		void SetMaxSpeed( const float speed );
+		void SetMaxSpeed( float speed );
 
 		void SetVelocity( const glm::vec3& velocity );
 		[[nodiscard]] const glm::vec3& GetVelocity() const;
 
 	private:
-		glm::vec3 m_accumulatedForces{ 0.0f, 0.0f, 0.0f };
-		glm::vec3 m_velocity{ 0.0f, 0.0f, 0.0f };
-		float m_dragCoefficient{ 0.0f };
-		float m_maxSpeedSq{ 20000.0f };
+		glm::vec3 m_accumulatedForces{ 0.F, 0.F, 0.F };
+		glm::vec3 m_velocity{ 0.F, 0.F, 0.F };
+		float m_dragCoefficient{ 0.F };
+		float m_maxSpeedSq{ 20000.F };
 	};
 }
 #endif

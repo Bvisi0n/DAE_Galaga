@@ -25,7 +25,7 @@ namespace bvi::gravity_bender
 		void InitializeLinkage() override;
 		void InitializeState() override;
 
-		void Update( const float deltaTime ) override;
+		void Update( float deltaTime ) override;
 
 	private:
 		dae::core::MoveComponent* m_moveComponent{ nullptr };

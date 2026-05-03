@@ -17,13 +17,13 @@ namespace bvi::gravity_bender
 	public:
 		explicit SpawnGravityFieldCommand( const dae::core::GameObject* contextPlayer );
 
-		void Execute( const float deltaTime ) override;
+		void Execute( float deltaTime ) override;
 
 		[[nodiscard]] const void* GetTargetContext() const override;
 
 	private:
 		const dae::core::GameObject* m_playerContext;
-		std::chrono::steady_clock::time_point m_lastSpawnTime{};
+		std::chrono::steady_clock::time_point m_lastSpawnTime;
 	};
 }
 #endif

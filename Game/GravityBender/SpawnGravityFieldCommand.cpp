@@ -21,7 +21,7 @@ namespace bvi::gravity_bender
 			return;
 		}
 
-		constexpr const auto& gravityFieldConfig = bvi::gravity_bender::config::Config.gravityField;
+		constexpr const auto& gravityFieldConfig = bvi::gravity_bender::config::c_GlobalConfig.gravityField;
 
 		const auto currentTime = std::chrono::steady_clock::now();
 		const std::chrono::duration<float> timeSinceLastSpawn = currentTime - m_lastSpawnTime;

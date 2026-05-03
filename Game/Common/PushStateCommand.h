@@ -4,9 +4,9 @@
 #include <memory>
 #include <type_traits>
 
-#include "Minigin/Core/AppStateManager.h"
-#include "Minigin/Core/IAppState.h"
-#include "Minigin/Input/ICommand.h"
+#include <Minigin/Core/AppStateManager.h>
+#include <Minigin/Core/IAppState.h>
+#include <Minigin/Input/ICommand.h>
 
 // TODO bvi_common - Split into .cpp/.h
 

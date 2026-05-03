@@ -1,6 +1,7 @@
 #ifndef BVI_GRAVITYREGISTRY_H
 #define BVI_GRAVITYREGISTRY_H
 
+#include <cstdint>
 #include <vector>
 
 #include <glm/ext/vector_float3.hpp>
@@ -12,7 +13,7 @@ namespace dae::core
 
 namespace bvi::gravity_bender
 {
-	enum class GravityNodeType
+	enum class GravityNodeType : std::uint8_t
 	{
 		Field,
 		Player
@@ -23,7 +24,7 @@ namespace bvi::gravity_bender
 		glm::vec3 position;
 		float strength;
 		float radiusSquared;
-		float lifeTimeRemaining{ 3.0f };
+		float lifeTimeRemaining{ 3.F };
 		dae::core::GameObject* visualRoot{ nullptr };
 		GravityNodeType type{ GravityNodeType::Field };
 	};

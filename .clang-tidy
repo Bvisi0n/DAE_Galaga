@@ -14,8 +14,48 @@ Checks: >
   -modernize-use-trailing-return-type,
   -readability-magic-numbers,
   -cppcoreguidelines-avoid-magic-numbers
+
 WarningsAsErrors: '*'
-HeaderFilterRegex: '^(Game|Minigin)/.*'
+
+HeaderFilterRegex: '.*(Game|Minigin)/.*'
+
 CheckOptions:
-  - key:   performance-move-const-arg.CheckTriviallyCopyableMove
-    value: 1
+  performance-move-const-arg.CheckTriviallyCopyableMove: 1
+  
+  # --- Interface Consistency ---
+  readability-inconsistent-declaration-parameter-name.Strict: true
+
+  # --- Types & Namespaces ---
+  readability-identifier-naming.NamespaceCase: lower_case
+  readability-identifier-naming.ClassCase: CamelCase
+  readability-identifier-naming.StructCase: CamelCase
+  readability-identifier-naming.EnumCase: CamelCase
+  readability-identifier-naming.TemplateParameterCase: CamelCase
+  readability-identifier-naming.TemplateParameterPrefix: ''
+
+  # --- Functions ---
+  readability-identifier-naming.FunctionCase: CamelCase
+
+  # --- Member Variables ---
+  readability-identifier-naming.PrivateMemberCase: camelBack
+  readability-identifier-naming.PrivateMemberPrefix: m_
+  readability-identifier-naming.ProtectedMemberCase: camelBack
+  readability-identifier-naming.ProtectedMemberPrefix: m_
+  readability-identifier-naming.PublicMemberCase: camelBack
+  readability-identifier-naming.PublicMemberPrefix: ''
+
+  # --- Static & Global Variables ---
+  readability-identifier-naming.ClassMemberCase: camelBack
+  readability-identifier-naming.ClassMemberPrefix: s_
+  readability-identifier-naming.GlobalVariableCase: camelBack
+  readability-identifier-naming.GlobalVariablePrefix: g_
+  readability-identifier-naming.GlobalConstantCase: CamelCase
+  readability-identifier-naming.GlobalConstantPrefix: c_
+
+  # --- Local Variables & Parameters ---
+  readability-identifier-naming.ParameterCase: camelBack
+  readability-identifier-naming.ParameterPrefix: ''
+  readability-identifier-naming.ConstantParameterCase: camelBack
+  readability-identifier-naming.ConstantParameterPrefix: ''
+  readability-identifier-naming.VariableCase: camelBack
+  readability-identifier-naming.VariablePrefix: ''

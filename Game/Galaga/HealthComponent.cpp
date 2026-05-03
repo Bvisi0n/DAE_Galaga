@@ -1,9 +1,9 @@
-#include "Game/Galaga/HealthComponent.h"
+#include <Minigin/Core/Component.h>
+#include <Minigin/Core/SDBMHash.h>
+#include <Minigin/Events/GameEvent.h>
+#include <Minigin/Events/ObservableComponent.h>
 
-#include "Minigin/Core/Component.h"
-#include "Minigin/Core/SDBMHash.h"
-#include "Minigin/Events/GameEvent.h"
-#include "Minigin/Events/ObservableComponent.h"
+#include <Game/Galaga/HealthComponent.h>
 
 namespace bvi::galaga
 {
@@ -39,7 +39,7 @@ namespace bvi::galaga
 
 	void HealthComponent::NotifyPlayerDied()
 	{
-		dae::events::GameEvent event{ dae::core::make_sdbm_hash( "PlayerDied" ) };
+		dae::events::GameEvent event{ dae::core::MakeSdbmHash( "PlayerDied" ) };
 		event.PushArg( m_lives );
 		NotifyObservers( event );
 	}

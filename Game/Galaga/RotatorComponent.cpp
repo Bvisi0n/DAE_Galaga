@@ -1,11 +1,11 @@
 #include <cmath>
 #include <numbers>
 
-#include "Game/Galaga/RotatorComponent.h"
+#include <Game/Galaga/RotatorComponent.h>
 
-#include "Minigin/Core/Component.h"
-#include "Minigin/Core/GameObject.h"
-#include "Minigin/Core/Transform.h"
+#include <Minigin/Core/Component.h>
+#include <Minigin/Core/GameObject.h>
+#include <Minigin/Core/Transform.h>
 
 namespace bvi::galaga
 {

@@ -9,7 +9,7 @@ namespace dae::input
 	class Keyboard final
 	{
 	public:
-		enum class Key
+		enum class Key : std::uint8_t
 		{
 			W, A, S, D,
 			Space, Q, E, F, G
@@ -18,10 +18,16 @@ namespace dae::input
 		Keyboard();
 		~Keyboard();
 
+		Keyboard( const Keyboard& ) = delete;
+		Keyboard& operator=( const Keyboard& ) = delete;
+
+		Keyboard( Keyboard&& ) noexcept;
+		Keyboard& operator=( Keyboard&& ) noexcept;
+
 		void Update();
-		[[nodiscard]] bool IsDown( const Key key ) const;
-		[[nodiscard]] bool IsUp( const Key key ) const;
-		[[nodiscard]] bool IsPressed( const Key key ) const;
+		[[nodiscard]] bool IsDown( Key key ) const;
+		[[nodiscard]] bool IsUp( Key key ) const;
+		[[nodiscard]] bool IsPressed( Key key ) const;
 
 	private:
 		class KeyboardImpl;

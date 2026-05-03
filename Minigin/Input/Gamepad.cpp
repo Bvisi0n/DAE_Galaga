@@ -210,6 +210,9 @@ namespace dae::input
 
 	Gamepad::~Gamepad() = default;
 
+	Gamepad::Gamepad( Gamepad&& ) noexcept = default;
+	Gamepad& Gamepad::operator=( Gamepad&& ) noexcept = default;
+
 	void Gamepad::Update()
 	{
 		m_pimpl->Update();

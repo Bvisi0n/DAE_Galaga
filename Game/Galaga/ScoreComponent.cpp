@@ -1,9 +1,9 @@
-#include "Game/Galaga/ScoreComponent.h"
+#include <Minigin/Core/GameObject.h>
+#include <Minigin/Core/SDBMHash.h>
+#include <Minigin/Events/GameEvent.h>
+#include <Minigin/Events/ObservableComponent.h>
 
-#include "Minigin/Core/GameObject.h"
-#include "Minigin/Core/SDBMHash.h"
-#include "Minigin/Events/GameEvent.h"
-#include "Minigin/Events/ObservableComponent.h"
+#include <Game/Galaga/ScoreComponent.h>
 
 namespace bvi::galaga
 {
@@ -35,7 +35,7 @@ namespace bvi::galaga
 
 	void ScoreComponent::NotifyScoreChanged()
 	{
-		dae::events::GameEvent event{ dae::core::make_sdbm_hash( "ScoreChanged" ) };
+		dae::events::GameEvent event{ dae::core::MakeSdbmHash( "ScoreChanged" ) };
 		event.PushArg( m_score );
 		NotifyObservers( event );
 	}

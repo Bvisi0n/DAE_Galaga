@@ -4,9 +4,9 @@
 #include <utility>
 #include <vector>
 
-#include "Minigin/Core/Component.h"
-#include "Minigin/Core/GameObject.h"
-#include "Minigin/Input/ScopedInputBinding.h"
+#include <Minigin/Core/Component.h>
+#include <Minigin/Core/GameObject.h>
+#include <Minigin/Input/ScopedInputBinding.h>
 
 // TODO dae_input - Split into .cpp/.h
 
@@ -41,7 +41,7 @@ namespace dae::input
 		}
 
 	private:
-		std::vector<ScopedInputBinding> m_bindings{};
+		std::vector<ScopedInputBinding> m_bindings;
 	};
 }
 #endif

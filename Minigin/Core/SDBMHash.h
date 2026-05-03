@@ -1,37 +1,20 @@
 #ifndef DAE_SDBMHASH_H
 #define DAE_SDBMHASH_H
 
+#include <string_view>
+
 // DAE/Prog4/observer_eventqueue.pdf: "Inspired by: Learn C++ For Game Development by Bruce Sutherland"
 
 namespace dae::core
 {
-	template <int length> struct sdbm_hash
+	consteval unsigned int MakeSdbmHash( std::string_view text ) noexcept
 	{
-		consteval static unsigned int _calculate( const char* const text, unsigned int& value )
+		unsigned int hash = 0;
+		for ( const char character : text )
 		{
-			const unsigned int character = sdbm_hash<length - 1>::_calculate( text, value );
-			value = character + ( value << 6 ) + ( value << 16 ) - value;
-			return text[ length - 1 ];
+			hash = static_cast<unsigned int>( character ) + ( hash << 6 ) + ( hash << 16 ) - hash;
 		}
-		consteval static unsigned int calculate( const char* const text )
-		{
-			unsigned int value = 0;
-			const auto character = _calculate( text, value );
-			return character + ( value << 6 ) + ( value << 16 ) - value;
-		}
-	};
-
-	template <> struct sdbm_hash<1>
-	{
-		consteval static int _calculate( const char* const text, unsigned int& )
-		{
-			return text[ 0 ];
-		}
-	};
-
-	template <size_t N> consteval unsigned int make_sdbm_hash( const char( &text )[ N ] )
-	{
-		return sdbm_hash<N - 1>::calculate( text );
+		return hash;
 	}
 }
 #endif

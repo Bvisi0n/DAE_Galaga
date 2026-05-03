@@ -10,7 +10,7 @@
 #include <SDL3/SDL.h>
 #endif
 
-#include "Minigin/Input/Keyboard.h"
+#include <Minigin/Input/Keyboard.h>
 
 namespace dae::input
 {
@@ -117,8 +117,10 @@ namespace dae::input
 		: m_pimpl( std::make_unique<KeyboardImpl>() )
 	{}
 
-	// Required for std::unique_ptr to an incomplete type (Pimpl idiom).
 	Keyboard::~Keyboard() = default;
+
+	Keyboard::Keyboard( Keyboard&& ) noexcept = default;
+	Keyboard& Keyboard::operator=( Keyboard&& ) noexcept = default;
 
 	void Keyboard::Update()
 	{

@@ -1,10 +1,10 @@
 #include <algorithm>
 #include <vector>
 
-#include "Minigin/Core/Component.h"
-#include "Minigin/Core/GameObject.h"
-#include "Minigin/Core/Transform.h"
-#include "Minigin/Graphics/IRenderable.h"
+#include <Minigin/Core/Component.h>
+#include <Minigin/Core/GameObject.h>
+#include <Minigin/Core/Transform.h>
+#include <Minigin/Graphics/IRenderable.h>
 
 namespace dae::core
 {

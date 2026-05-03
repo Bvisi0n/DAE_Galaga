@@ -1,7 +1,7 @@
 #ifndef DAE_IOBSERVER_H
 #define DAE_IOBSERVER_H
 
-#include "Minigin/Events/GameEvent.h"
+#include <Minigin/Events/GameEvent.h>
 
 namespace dae::events
 {
@@ -19,7 +19,7 @@ namespace dae::events
 		IObserver& operator=( const IObserver& ) = delete;
 		IObserver& operator=( IObserver&& ) = delete;
 
-		virtual void OnNotify( const GameEvent event ) = 0;
+		virtual void OnNotify( GameEvent event ) = 0;
 	};
 }
 #endif

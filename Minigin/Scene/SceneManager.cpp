@@ -1,5 +1,5 @@
-#include "Minigin/Scene/Scene.h"
-#include "Minigin/Scene/SceneManager.h"
+#include <Minigin/Scene/Scene.h>
+#include <Minigin/Scene/SceneManager.h>
 
 namespace dae::scenes
 {

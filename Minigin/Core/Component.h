@@ -45,7 +45,7 @@ namespace dae::core
 			return m_state;
 		}
 
-		virtual void Update( const float deltaTime ) = 0;
+		virtual void Update( float deltaTime ) = 0;
 
 		void MarkForDeletion() noexcept
 		{
