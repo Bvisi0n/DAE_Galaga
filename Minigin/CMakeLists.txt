@@ -10,6 +10,7 @@ set(ENGINE_SOURCES
 	"Core/Transform.cpp"
 	"Events/ObservableComponent.cpp"
 	"Graphics/Font.cpp"
+	"Graphics/PrimitiveRenderComponent.cpp"
 	"Graphics/Renderer.cpp"
 	"Graphics/TextComponent.cpp"
 	"Graphics/TextureComponent.cpp"
