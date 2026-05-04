@@ -15,7 +15,7 @@
 
 #include <Game/Common/FPSComponent.h>
 #include <Game/Common/PushStateCommand.h>
-#include <Game/Galaga/GalagaState.h>
+#include <Game/Galaga/GalagaMenuState.h>
 #include <Game/GravityBender/GravityBenderState.h>
 
 // TODO bvi_main_menu - Split into .cpp/.h
@@ -93,7 +93,7 @@ namespace bvi::main_menu
 
 			auto* inputComp = instructions->AddComponent<dae::input::PlayerInputComponent>();
 
-			auto pushStateCommand = std::make_unique<common::PushStateCommand<galaga::GalagaState>>( stateMachine );
+			auto pushStateCommand = std::make_unique<common::PushStateCommand<galaga::GalagaMenuState>>( stateMachine );
 
 			inputComp->AddBinding( dae::input::ScopedInputBinding{ dae::input::Keyboard::Key::G, dae::input::InputManager::KeyState::Down, std::move( pushStateCommand ) } );
 

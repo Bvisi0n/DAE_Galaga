@@ -25,10 +25,10 @@
 
 namespace bvi::galaga
 {
-	class GalagaAssembler final
+	class GalagaMenuAssembler final
 	{
 	public:
-		GalagaAssembler() = delete;
+		GalagaMenuAssembler() = delete;
 
 		static void Assemble( dae::core::IAppState* stateMachine )
 		{
