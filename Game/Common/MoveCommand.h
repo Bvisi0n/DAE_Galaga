@@ -3,33 +3,22 @@
 
 #include <glm/ext/vector_float3.hpp>
 
-#include <Minigin/Core/MoveComponent.h>
 #include <Minigin/Input/ICommand.h>
 
-// TODO bvi_common - Split into .cpp/.h
+namespace dae::core
+{
+	class MoveComponent;
+}
 
 namespace bvi::common
 {
 	class MoveCommand final : public dae::input::ICommand
 	{
 	public:
-		MoveCommand( dae::core::MoveComponent* moveComponent, const glm::vec3& thrustVector )
-			: m_moveComponent{ moveComponent }
-			, m_thrustVector{ thrustVector }
-		{}
+		MoveCommand( dae::core::MoveComponent* moveComponent, const glm::vec3& thrustVector );
 
-		void Execute( const float /*deltaTime*/ ) override
-		{
-			if ( m_moveComponent != nullptr )
-			{
-				m_moveComponent->AddForce( m_thrustVector );
-			}
-		}
-
-		[[nodiscard]] const void* GetTargetContext() const override
-		{
-			return m_moveComponent;
-		}
+		void Execute( float /*deltaTime*/ ) override;
+		[[nodiscard]] const void* GetTargetContext() const override;
 
 	private:
 		dae::core::MoveComponent* m_moveComponent{ nullptr };

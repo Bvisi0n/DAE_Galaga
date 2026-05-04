@@ -12,6 +12,7 @@ set(GAME_SOURCES
 	"Core/Main.cpp"
 
 	"Common/FPSComponent.cpp"
+	"Common/MoveCommand.cpp"
 
 	"Galaga/GalagaMenuAssembler.cpp"
 	"Galaga/GalagaMenuState.cpp"
