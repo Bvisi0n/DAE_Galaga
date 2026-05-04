@@ -13,6 +13,7 @@ set(GAME_SOURCES
 
 	"Common/FPSComponent.cpp"
 
+	"Galaga/GalagaMenuAssembler.cpp"
 	"Galaga/GalagaMenuState.cpp"
 	"Galaga/HealthComponent.cpp"
 	"Galaga/RotatorComponent.cpp"
