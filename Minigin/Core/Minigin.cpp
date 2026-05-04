@@ -136,6 +136,8 @@ namespace dae::core
 
 	Minigin::~Minigin()
 	{
+		dae::core::AppStateManager::GetInstance().ChangeState( nullptr );
+		dae::scenes::SceneManager::GetInstance().RemoveAllScenes();
 		resources::ResourceManager::GetInstance().Destroy();
 		graphics::Renderer::GetInstance().Destroy();
 		service_locator::RegisterSoundSystem( nullptr );
@@ -169,8 +171,6 @@ namespace dae::core
 	#else
 		emscripten_set_main_loop_arg( &LoopCallback, this, 0, true );
 	#endif
-		dae::core::AppStateManager::GetInstance().ChangeState( nullptr );
-		dae::scenes::SceneManager::GetInstance().RemoveAllScenes();
 	}
 
 	void Minigin::RunOneFrame()
