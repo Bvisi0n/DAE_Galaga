@@ -7,8 +7,6 @@ namespace dae::scenes
 	{
 		m_scenes.emplace_back( new Scene() );
 
-		// TODO dae_scenes - Improve this active scene code.
-			// Currently game states only have one scene so this is fine for now.
 		if ( m_scenes.size() == 1 )
 		{
 			m_activeSceneIndex = 0;

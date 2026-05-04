@@ -9,6 +9,8 @@
 
 // Inspired by DAE/Prog4/observer_eventqueue.pdf
 
+// TODO dae_input - Split into .cpp/.h
+
 namespace dae::events
 {
 	struct Vector2D

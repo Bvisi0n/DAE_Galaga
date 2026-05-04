@@ -243,7 +243,6 @@ namespace bvi::gravity_bender
 		using ScopedInputBinding = dae::input::ScopedInputBinding;
 		using vec3 = glm::vec3;
 
-		// TODO bvi_gravity_bender - Once the Command pattern is reworked to be stateless, this should be simplified.
 		inputComp->AddBinding( ScopedInputBinding{ Key::W, KeyState::Pressed, std::make_unique<MoveCommand>( moveComp, vec3{ 0.F, -playerConfig.inputForce, 0.F } ) } );
 		inputComp->AddBinding( ScopedInputBinding{ Key::S, KeyState::Pressed, std::make_unique<MoveCommand>( moveComp, vec3{ 0.F,  playerConfig.inputForce, 0.F } ) } );
 		inputComp->AddBinding( ScopedInputBinding{ Key::A, KeyState::Pressed, std::make_unique<MoveCommand>( moveComp, vec3{ -playerConfig.inputForce, 0.F, 0.F } ) } );

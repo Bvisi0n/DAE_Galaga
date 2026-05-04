@@ -1,9 +1,11 @@
 #ifndef DAE_ICOMMAND_H
 #define DAE_ICOMMAND_H
 
-// TODO dae_input - Commands should not store a context pointer, it should be passed in as an argument to the Execute function.
-	// https://gameprogrammingpatterns.com/command.html
-	// https://refactoring.guru/design-patterns/command
+// TODO dae_input - Rework Commands
+	// Commands should not store a context pointer, it should be passed in as an argument to the Execute function.
+
+// https://gameprogrammingpatterns.com/command.html
+// https://refactoring.guru/design-patterns/command
 
 namespace dae::input
 {

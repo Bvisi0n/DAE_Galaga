@@ -21,6 +21,8 @@
 #include <Minigin/Scene/Scene.h>
 #include <Minigin/Scene/SceneManager.h>
 
+// TODO dae_input - Split into .cpp/.h
+
 namespace bvi::galaga
 {
 	class GalagaAssembler final
@@ -79,7 +81,6 @@ namespace bvi::galaga
 
 			auto* inputComp = instructions->AddComponent<dae::input::PlayerInputComponent>();
 
-			// TODO bvi_main_menu - Once the Command pattern is reworked to be stateless, this should be simplified.
 			auto pushStateCommand = std::make_unique<common::PushStateCommand<main_menu::MainMenuState>>( stateMachine );
 
 			inputComp->AddBinding( dae::input::ScopedInputBinding{ dae::input::Keyboard::Key::F, dae::input::InputManager::KeyState::Down, std::move( pushStateCommand ) } );

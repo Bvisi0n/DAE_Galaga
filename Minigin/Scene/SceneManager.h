@@ -31,6 +31,7 @@ namespace dae::scenes
 	private:
 		friend class utils::Singleton<SceneManager>;
 
+		// TODO dae_scenes - Using a vector to store a single scene.
 		std::vector<std::unique_ptr<Scene>> m_scenes;
 		size_t m_activeSceneIndex{ 0 };
 

@@ -8,8 +8,6 @@
 
 // TODO bvi_common - Split into .cpp/.h
 
-// TODO bvi_common - Commands should not store a context pointer, it should be passed in as an argument to the Execute function.
-
 namespace bvi::common
 {
 	class MoveCommand final : public dae::input::ICommand

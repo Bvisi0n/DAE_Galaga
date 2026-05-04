@@ -19,6 +19,12 @@
 // https://wiki.libsdl.org/SDL3_mixer/CategorySDLMixer
 // https://lazyfoo.net/tutorials/SDL3/15-sound-effects-and-music/index.php
 
+// TODO dae_audio - Rework SDLSoundSystem 
+	// Must use event-queue to offload work to seperate thread.
+	// Audio thread shouldn't block main thread trying to play a sound.
+	// Track must be freed after use.
+	// Cannot use ResourceManager, implementation is platform specific.
+
 namespace dae::audio
 {
 	struct MixerDeleter

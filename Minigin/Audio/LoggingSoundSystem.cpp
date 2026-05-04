@@ -5,6 +5,8 @@
 #include <Minigin/Audio/ISoundSystem.h>
 #include <Minigin/Audio/LoggingSoundSystem.h>
 
+// TODO dae_audio - Implement imgui logging.
+
 namespace dae::audio
 {
 	LoggingSoundSystem::LoggingSoundSystem( std::unique_ptr<ISoundSystem>&& soundSystem )
@@ -17,8 +19,6 @@ namespace dae::audio
 		{
 			m_realSoundSystem->Play( message );
 		}
-
-		// TODO dae_audio - Implement imgui logging.
 	}
 
 	void LoggingSoundSystem::RegisterSound( SoundID soundID, const std::filesystem::path& filepath )
@@ -27,7 +27,5 @@ namespace dae::audio
 		{
 			m_realSoundSystem->RegisterSound( soundID, filepath );
 		}
-
-		// TODO dae_audio - Implement imgui logging.
 	}
 }

@@ -4,10 +4,6 @@
 #include <cstdint>
 #include <filesystem>
 
-// TODO dae_audio - Rework audio system.
-	// Figure out an optimized way to manage audio resources.
-	// Implement in Galaga.
-
 namespace dae::audio
 {
 	using SoundID = uint16_t;
