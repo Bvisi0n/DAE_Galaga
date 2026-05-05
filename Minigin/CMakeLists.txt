@@ -18,6 +18,7 @@ set(ENGINE_SOURCES
 	"Input/Gamepad.cpp"
 	"Input/InputManager.cpp"
 	"Input/Keyboard.cpp"
+	"Input/PlayerInputComponent.cpp"
 	"Input/ScopedInputBinding.cpp"
 	"Resources/ResourceManager.cpp"
 	"Scene/Scene.cpp"
