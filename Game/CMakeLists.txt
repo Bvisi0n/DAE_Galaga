@@ -20,6 +20,8 @@ set(GAME_SOURCES
 	"Galaga/RotatorComponent.cpp"
 	"Galaga/ScoreComponent.cpp"
 	"Galaga/UIValueObserver.cpp"
+
+	"MainMenu/MainMenuState.cpp"
 )
 
 if(BUILD_GRAVITY_BENDER)
