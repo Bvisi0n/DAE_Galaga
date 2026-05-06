@@ -21,6 +21,7 @@ set(GAME_SOURCES
 	"Galaga/ScoreComponent.cpp"
 	"Galaga/UIValueObserver.cpp"
 
+	"MainMenu/MainMenuAssembler.cpp"
 	"MainMenu/MainMenuState.cpp"
 )
 
@@ -37,7 +38,7 @@ if(BUILD_GRAVITY_BENDER)
 	)
 endif()
 
-add_executable(${TARGET_NAME} ${TARGET_PARAM} ${GAME_SOURCES})
+add_executable(${TARGET_NAME} ${TARGET_PARAM} ${GAME_SOURCES} )
 
 if(BUILD_GRAVITY_BENDER)
 	target_compile_definitions(${TARGET_NAME} PRIVATE ENABLE_GRAVITY_BENDER)
