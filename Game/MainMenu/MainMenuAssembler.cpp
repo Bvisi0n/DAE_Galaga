@@ -46,16 +46,6 @@ namespace bvi::main_menu
 		scene.AddGameObject( std::move( background ) );
 	}
 
-	void MainMenuAssembler::AssembleLogo( dae::scenes::Scene& scene )
-	{
-		using Object = dae::core::GameObject;
-		using Descriptor = dae::core::TransformDescriptor;
-		auto logo{ std::make_unique<Object>( Descriptor{.localPosition = { 358.F, 180.F, 0.F } } ) };
-
-		logo->AddComponent<dae::graphics::TextureComponent>()->SetTexture( "logo.png" );
-		scene.AddGameObject( std::move( logo ) );
-	}
-
 	void MainMenuAssembler::AssembleFPSCounter( dae::scenes::Scene& scene )
 	{
 		auto font{ dae::resources::ResourceManager::GetInstance().LoadFont( "Lingua.otf", 24 ) };
@@ -114,5 +104,15 @@ namespace bvi::main_menu
 		inputComp->AddBinding( dae::input::ScopedInputBinding{ dae::input::Keyboard::Key::F, dae::input::InputManager::KeyState::Down, std::move( pushStateCommand ) } );
 
 		scene.AddGameObject( std::move( instructions ) );
+	}
+
+	void MainMenuAssembler::AssembleLogo( dae::scenes::Scene& scene )
+	{
+		using Object = dae::core::GameObject;
+		using Descriptor = dae::core::TransformDescriptor;
+		auto logo{ std::make_unique<Object>( Descriptor{.localPosition = { 358.F, 180.F, 0.F } } ) };
+
+		logo->AddComponent<dae::graphics::TextureComponent>()->SetTexture( "logo.png" );
+		scene.AddGameObject( std::move( logo ) );
 	}
 }

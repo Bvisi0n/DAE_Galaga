@@ -19,10 +19,10 @@ namespace bvi::main_menu
 
 	private:
 		static void AssembleBackground( dae::scenes::Scene& scene );
-		static void AssembleLogo( dae::scenes::Scene& scene );
 		static void AssembleFPSCounter( dae::scenes::Scene& scene );
 		static void AssembleGalagaUI( dae::scenes::Scene& scene, dae::core::IAppState* stateMachine );
 		static void AssembleGravityBenderUI( dae::scenes::Scene& scene, dae::core::IAppState* stateMachine );
+		static void AssembleLogo( dae::scenes::Scene& scene );
 	};
 }
 #endif

@@ -40,22 +40,6 @@ namespace bvi::galaga
 		scene.AddGameObject( std::move( background ) );
 	}
 
-	void galaga::GalagaMenuAssembler::AssembleFPSCounter( dae::scenes::Scene& scene )
-	{
-		auto font{ dae::resources::ResourceManager::GetInstance().LoadFont( "Lingua.otf", 12 ) };
-
-		using Object = dae::core::GameObject;
-		using Descriptor = dae::core::TransformDescriptor;
-		auto fpsCounter
-		{
-			std::make_unique<Object>( Descriptor{.localPosition = { 5.F, 5.F, 0.F } } )
-		};
-
-		fpsCounter->AddComponent<dae::graphics::TextComponent>( "00.0 FPS", font );
-		fpsCounter->AddComponent<common::FPSComponent>();
-		scene.AddGameObject( std::move( fpsCounter ) );
-	}
-
 	void galaga::GalagaMenuAssembler::AssembleBackToMainMenuUI( dae::scenes::Scene& scene, dae::core::IAppState* stateMachine )
 	{
 		auto font{ dae::resources::ResourceManager::GetInstance().LoadFont( "Lingua.otf", 12 ) };
@@ -76,5 +60,21 @@ namespace bvi::galaga
 		inputComp->AddBinding( dae::input::ScopedInputBinding{ dae::input::Keyboard::Key::F, dae::input::InputManager::KeyState::Down, std::move( pushStateCommand ) } );
 
 		scene.AddGameObject( std::move( instructions ) );
+	}
+
+	void galaga::GalagaMenuAssembler::AssembleFPSCounter( dae::scenes::Scene& scene )
+	{
+		auto font{ dae::resources::ResourceManager::GetInstance().LoadFont( "Lingua.otf", 12 ) };
+
+		using Object = dae::core::GameObject;
+		using Descriptor = dae::core::TransformDescriptor;
+		auto fpsCounter
+		{
+			std::make_unique<Object>( Descriptor{.localPosition = { 5.F, 5.F, 0.F } } )
+		};
+
+		fpsCounter->AddComponent<dae::graphics::TextComponent>( "00.0 FPS", font );
+		fpsCounter->AddComponent<common::FPSComponent>();
+		scene.AddGameObject( std::move( fpsCounter ) );
 	}
 }

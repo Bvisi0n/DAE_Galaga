@@ -15,8 +15,8 @@ namespace bvi::galaga
 
 	private:
 		static void AssembleBackground( dae::scenes::Scene& scene );
-		static void AssembleFPSCounter( dae::scenes::Scene& scene );
 		static void AssembleBackToMainMenuUI( dae::scenes::Scene& scene, dae::core::IAppState* stateMachine );
+		static void AssembleFPSCounter( dae::scenes::Scene& scene );
 	};
 }
 #endif
