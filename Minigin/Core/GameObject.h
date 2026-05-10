@@ -1,6 +1,7 @@
 #ifndef DAE_GAMEOBJECT_H
 #define DAE_GAMEOBJECT_H
 
+#include <algorithm>
 #include <cassert>
 #include <concepts>
 #include <memory>
@@ -49,9 +50,9 @@ namespace dae::core
 			}
 
 			auto component = std::make_unique<T>( this, std::forward<Args>( args )... );
-			T* ptr = component.get();
+			T* componentPointer = component.get();
 			m_components.push_back( std::move( component ) );
-			return ptr;
+			return componentPointer;
 		}
 
 		template <IsRenderable T, typename... Args>
@@ -64,11 +65,11 @@ namespace dae::core
 			}
 
 			auto component = std::make_unique<T>( this, std::forward<Args>( args )... );
-			T* ptr = component.get();
+			T* componentPointer = component.get();
 
-			m_renderable = ptr;
+			m_renderable = componentPointer;
 			m_components.push_back( std::move( component ) );
-			return ptr;
+			return componentPointer;
 		}
 
 		template <IsComponent T>
@@ -81,12 +82,12 @@ namespace dae::core
 			requires ( !IsRenderable<T> )
 		[[nodiscard]] T* GetComponent() const
 		{
-			for ( const auto& comp : m_components )
+			for ( const auto& component : m_components )
 			{
-				T* ptr = dynamic_cast<T*>( comp.get() );
-				if ( ptr && !ptr->IsPendingDeletion() )
+				T* castedComponent = dynamic_cast<T*>( component.get() );
+				if ( castedComponent && !castedComponent->IsPendingDeletion() )
 				{
-					return ptr;
+					return castedComponent;
 				}
 			}
 			return nullptr;
@@ -100,11 +101,11 @@ namespace dae::core
 				return nullptr;
 			}
 
-			T* castedRenderable = dynamic_cast<T*>( m_renderable );
+			T* component = dynamic_cast<T*>( m_renderable );
 
-			if ( castedRenderable && !castedRenderable->IsPendingDeletion() )
+			if ( component && !component->IsPendingDeletion() )
 			{
-				return castedRenderable;
+				return component;
 			}
 
 			return nullptr;
@@ -114,11 +115,11 @@ namespace dae::core
 			requires ( !IsRenderable<T> )
 		void RemoveComponent()
 		{
-			for ( auto& comp : m_components )
+			for ( auto& component : m_components )
 			{
-				if ( dynamic_cast<T*>( comp.get() ) )
+				if ( dynamic_cast<T*>( component.get() ) )
 				{
-					comp->MarkForDeletion();
+					component->MarkForDeletion();
 					return;
 				}
 			}
@@ -129,9 +130,9 @@ namespace dae::core
 		{
 			if ( m_renderable )
 			{
-				if ( auto casted = dynamic_cast<T*>( m_renderable ) )
+				if ( auto component = dynamic_cast<T*>( m_renderable ) )
 				{
-					casted->MarkForDeletion();
+					component->MarkForDeletion();
 					m_renderable = nullptr;
 				}
 			}
