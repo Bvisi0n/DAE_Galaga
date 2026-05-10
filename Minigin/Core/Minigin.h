@@ -7,7 +7,9 @@
 #include <memory>
 #include <string>
 
-#include <SDL3/SDL.h>
+#include <SDL3/SDL_video.h>
+
+// TODO dae_cmake - Properly encapsulate external dependencies so that they don't show up as projects in solution explorer.
 
 namespace dae::core
 {
