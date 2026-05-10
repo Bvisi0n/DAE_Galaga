@@ -85,7 +85,7 @@ namespace dae::core
 			for ( const auto& component : m_components )
 			{
 				T* castedComponent = dynamic_cast<T*>( component.get() );
-				if ( castedComponent && !castedComponent->IsPendingDeletion() )
+				if ( castedComponent != nullptr && !castedComponent->IsPendingDeletion() )
 				{
 					return castedComponent;
 				}
@@ -103,7 +103,7 @@ namespace dae::core
 
 			T* component = dynamic_cast<T*>( m_renderable );
 
-			if ( component && !component->IsPendingDeletion() )
+			if ( component != nullptr && !component->IsPendingDeletion() )
 			{
 				return component;
 			}
@@ -117,7 +117,7 @@ namespace dae::core
 		{
 			for ( auto& component : m_components )
 			{
-				if ( dynamic_cast<T*>( component.get() ) )
+				if ( dynamic_cast<T*>( component.get() ) != nullptr )
 				{
 					component->MarkForDeletion();
 					return;
@@ -130,7 +130,7 @@ namespace dae::core
 		{
 			if ( m_renderable )
 			{
-				if ( auto component = dynamic_cast<T*>( m_renderable ) )
+				if ( auto component = dynamic_cast<T*>( m_renderable ) != nullptr )
 				{
 					component->MarkForDeletion();
 					m_renderable = nullptr;
