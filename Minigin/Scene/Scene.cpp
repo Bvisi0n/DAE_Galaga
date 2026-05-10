@@ -14,6 +14,13 @@ namespace dae::scenes
 {
 	void RemoveGameObject( core::GameObject& object )
 	{
+		if ( object.IsPendingDeletion() )
+		{
+			assert( !object.IsPendingDeletion() && "GameObject is already marked for deletion." );
+			return;
+			// TODO dae_scenes - Why does this trigger on rare occasions?
+		}
+
 		object.MarkForDeletion();
 	}
 
