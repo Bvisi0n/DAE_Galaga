@@ -4,10 +4,11 @@
 #include <glm/vec3.hpp>
 
 #include <Minigin/Core/Component.h>
-#include <Minigin/Core/GameObject.h>
 
 namespace dae::core
 {
+	class GameObject;
+
 	struct MoveDescriptor
 	{
 		float maxSpeed{ 200.F };
