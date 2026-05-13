@@ -70,7 +70,7 @@ namespace bvi::main_menu
 		using Descriptor = dae::core::TransformDescriptor;
 		auto instructions
 		{
-			std::make_unique<Object>( Descriptor{.localPosition = { 400.F, 375.F, 0.F } } )
+			std::make_unique<Object>( Descriptor{.localPosition = { 385.F, 390.F, 0.F } } )
 		};
 
 		instructions->AddComponent<dae::graphics::TextComponent>( "Press G to start Galaga", font );
@@ -92,7 +92,7 @@ namespace bvi::main_menu
 		using Descriptor = dae::core::TransformDescriptor;
 		auto instructions
 		{
-			std::make_unique<Object>( Descriptor{.localPosition = { 400.F, 410.F, 0.F } } )
+			std::make_unique<Object>( Descriptor{.localPosition = { 345.F, 345.F, 0.F } } )
 		};
 
 		instructions->AddComponent<dae::graphics::TextComponent>( "Press F to start Gravity Bender", font );
