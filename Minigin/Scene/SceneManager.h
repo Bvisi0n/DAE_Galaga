@@ -4,11 +4,12 @@
 #include <memory>
 #include <vector>
 
-#include <Minigin/Scene/Scene.h>
 #include <Minigin/Utilities/Singleton.h>
 
 namespace dae::scenes
 {
+	class Scene;
+
 	class SceneManager final : public utils::Singleton<SceneManager>
 	{
 	public:
@@ -17,7 +18,7 @@ namespace dae::scenes
 		SceneManager& operator=( const SceneManager& ) = delete;
 		SceneManager& operator=( SceneManager&& ) = delete;
 
-		~SceneManager() = default;
+		~SceneManager();
 
 		Scene& CreateScene();
 		void RemoveAllScenes();
@@ -35,7 +36,7 @@ namespace dae::scenes
 		std::vector<std::unique_ptr<Scene>> m_scenes;
 		size_t m_activeSceneIndex{ 0 };
 
-		SceneManager() = default;
+		SceneManager();
 	};
 }
 #endif

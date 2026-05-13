@@ -3,6 +3,9 @@
 
 namespace dae::scenes
 {
+	SceneManager::SceneManager() = default;
+	SceneManager::~SceneManager() = default;
+
 	Scene& SceneManager::CreateScene()
 	{
 		m_scenes.emplace_back( new Scene() );

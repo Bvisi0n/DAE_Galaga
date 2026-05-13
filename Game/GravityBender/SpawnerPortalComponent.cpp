@@ -15,6 +15,7 @@
 #include <Minigin/Core/GameObject.h>
 #include <Minigin/Core/MoveComponent.h>
 #include <Minigin/Graphics/PrimitiveRenderComponent.h>
+#include <Minigin/Scene/Scene.h>
 #include <Minigin/Scene/SceneManager.h>
 
 #include <Game/GravityBender/GravityBenderBlueprints.h>
