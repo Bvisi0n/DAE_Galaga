@@ -1,3 +1,4 @@
+#include <cassert>
 #include <memory>
 #include <utility>
 
@@ -6,9 +7,19 @@
 
 namespace dae::core
 {
-	void AppStateManager::ChangeState( std::unique_ptr<IAppState> newState )
+	AppStateManager::AppStateManager() = default;
+	AppStateManager::~AppStateManager() = default;
+
+	void AppStateManager::ChangeState( std::unique_ptr<IAppState>&& newState )
 	{
+		assert( newState != nullptr && "newState payload cannot be null! Use ClearState() for teardown." );
 		m_nextState = std::move( newState );
+	}
+
+	void AppStateManager::ClearState()
+	{
+		m_nextState.reset();
+		m_currentState.reset();
 	}
 
 	void AppStateManager::Update( float deltaTime )

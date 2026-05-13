@@ -136,7 +136,7 @@ namespace dae::core
 
 	Minigin::~Minigin()
 	{
-		dae::core::AppStateManager::GetInstance().ChangeState( nullptr );
+		dae::core::AppStateManager::GetInstance().ClearState();
 		dae::scenes::SceneManager::GetInstance().RemoveAllScenes();
 		resources::ResourceManager::GetInstance().Destroy();
 		graphics::Renderer::GetInstance().Destroy();
