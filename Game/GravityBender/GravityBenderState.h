@@ -3,6 +3,12 @@
 
 #include <Minigin/Core/IAppState.h>
 
+// TODO bvi_gravity_bender - Redesign the spawner’s visual output to better communicate danger.
+// TODO bvi_gravity_bender - Add a short-duration direction indicator for the spawner.
+// TODO bvi_gravity_bender - Allow gravity wells to absorb units.
+// TODO bvi_gravity_bender - Introduce an economy.
+// TODO bvi_gravity_bender - Increase difficulty.
+
 namespace bvi::gravity_bender
 {
 	class GravityBenderState final : public dae::core::IAppState
