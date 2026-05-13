@@ -13,12 +13,12 @@ namespace dae::scenes
 	class SceneManager final : public utils::Singleton<SceneManager>
 	{
 	public:
+		~SceneManager();
+
 		SceneManager( const SceneManager& ) = delete;
 		SceneManager( SceneManager&& ) = delete;
 		SceneManager& operator=( const SceneManager& ) = delete;
 		SceneManager& operator=( SceneManager&& ) = delete;
-
-		~SceneManager();
 
 		Scene& CreateScene();
 		void RemoveAllScenes();
