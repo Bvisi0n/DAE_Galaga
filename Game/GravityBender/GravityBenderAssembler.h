@@ -1,8 +1,15 @@
 #ifndef BVI_GRAVITYBENDERASSEMBLER_H
 #define BVI_GRAVITYBENDERASSEMBLER_H
 
-#include <Minigin/Core/IAppState.h>
-#include <Minigin/Scene/Scene.h>
+namespace dae::core
+{
+	class IAppState;
+}
+
+namespace dae::scenes
+{
+	class Scene;
+}
 
 namespace bvi::gravity_bender
 {
