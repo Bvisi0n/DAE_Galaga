@@ -57,6 +57,7 @@ namespace bvi::gravity_bender
 				{
 					m_currentState = PortalState::Anticipation;
 					m_timer = 0.F;
+					m_blueprint.cooldownSeconds *= 0.9F;
 
 					if ( m_primitiveRenderer != nullptr )
 					{
