@@ -5,9 +5,16 @@
 
 // TODO bvi_gravity_bender - Redesign the spawner’s visual output to better communicate danger.
 // TODO bvi_gravity_bender - Add a short-duration direction indicator for the spawner.
-// TODO bvi_gravity_bender - Allow gravity wells to absorb units.
-// TODO bvi_gravity_bender - Introduce an economy.
-// TODO bvi_gravity_bender - Increase difficulty.
+
+// TODO bvi_gravity_bender - Remove collisions between units.
+// TODO bvi_gravity_bender - Units can only die by being absored by gravity wells.
+
+// TODO bvi_gravity_bender - Remove range indicator on player.
+// TODO bvi_gravity_bender - Increase the range of player.
+
+// TODO bvi_gravity_bender - Reduce cooldown duration of Spawner by 1% everytime it triggers a cooldown.
+
+// TODO bvi_gravity_bender - Start off with an example of gravity well catching some units. (If time allows)
 
 namespace bvi::gravity_bender
 {
