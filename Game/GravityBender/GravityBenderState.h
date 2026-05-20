@@ -3,7 +3,6 @@
 
 #include <Minigin/Core/IAppState.h>
 
-// TODO bvi_gravity_bender - Redesign the spawner’s visual output to better communicate danger.
 // TODO bvi_gravity_bender - Add a short-duration direction indicator for the spawner.
 
 // TODO bvi_gravity_bender - Remove collisions between units.

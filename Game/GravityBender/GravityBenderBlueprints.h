@@ -47,7 +47,7 @@ namespace bvi::gravity_bender::config
 	{
 		float portalSize{ 20.F };
 		uint32_t portalLineThickness{ 3 };
-		CoreColor portalColor{ .r = 1.F, .g = 120.F / 255.F, .b = 0.F, .a = 1.F };
+		CoreColor portalColor{ .r = 1.F, .g = 50.F / 255.F, .b = 50.F / 255.F, .a = 1.F };
 
 		float spawnDelay{ 0.15F };
 		float cooldownSeconds{ 15.F };
@@ -56,7 +56,7 @@ namespace bvi::gravity_bender::config
 
 		float unitSpeed{ 200.F };
 		float unitSize{ 5.F };
-		CoreColor unitColor{ .r = 1.F, .g = 50.F / 255.F, .b = 50.F / 255.F, .a = 1.F };
+		CoreColor unitColor{ .r = 1.F, .g = 0.F, .b = 0.F, .a = 1.F };
 	};
 
 	struct UIConfig
