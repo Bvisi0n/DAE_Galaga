@@ -83,8 +83,6 @@ namespace bvi::gravity_bender
 		centerVisualRoot->AddComponent<PrimitiveRenderComponent>( PrimitiveShape{ CircleShape{ coreRadius, true } }, coreColor );
 
 		auto centerVisualOuter = std::make_unique<dae::core::GameObject>();
-		// Trust compiler to optimize this out if it's a player node instead of wrapping in if statement.
-		// It's just a prototype & only on startup anyway.
 		centerVisualOuter->AddComponent<PrimitiveRenderComponent>( PrimitiveShape{ CircleShape{ radius, false } }, rangeColor );
 		centerVisualOuter->SetParent( centerVisualRoot.get(), false );
 
@@ -118,7 +116,10 @@ namespace bvi::gravity_bender
 			cloneRoot->SetParent( pCenterRoot, false );
 
 			scene.AddGameObject( std::move( cloneRoot ) );
-			scene.AddGameObject( std::move( cloneOuter ) );
+			if ( node.type == GravityNodeType::Field )
+			{
+				scene.AddGameObject( std::move( cloneOuter ) );
+			}
 		}
 	}
 
