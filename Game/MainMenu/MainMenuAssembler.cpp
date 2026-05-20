@@ -17,8 +17,11 @@
 #include <Game/Common/FPSComponent.h>
 #include <Game/Common/PushStateCommand.h>
 #include <Game/Galaga/GalagaMenuState.h>
-#include <Game/GravityBender/GravityBenderState.h>
 #include <Game/MainMenu/MainMenuAssembler.h>
+
+#ifdef ENABLE_GRAVITY_BENDER
+#include <Game/GravityBender/GravityBenderState.h>
+#endif
 
 namespace bvi::main_menu
 {
@@ -84,6 +87,7 @@ namespace bvi::main_menu
 		scene.AddGameObject( std::move( instructions ) );
 	}
 
+#ifdef ENABLE_GRAVITY_BENDER
 	void MainMenuAssembler::AssembleGravityBenderUI( dae::scenes::Scene& scene, dae::core::IAppState* stateMachine )
 	{
 		auto font{ dae::resources::ResourceManager::GetInstance().LoadFont( "Lingua.otf", 24 ) };
@@ -105,6 +109,7 @@ namespace bvi::main_menu
 
 		scene.AddGameObject( std::move( instructions ) );
 	}
+#endif
 
 	void MainMenuAssembler::AssembleLogo( dae::scenes::Scene& scene )
 	{
