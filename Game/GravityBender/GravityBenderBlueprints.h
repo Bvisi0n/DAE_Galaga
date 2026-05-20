@@ -37,7 +37,7 @@ namespace bvi::gravity_bender::config
 		float speedMultiplier{ 2.F };
 		float inputForce{ 400.F };
 
-		float gravityRadius{ 100.F };
+		float gravityRadius{ 150.F };
 		float gravityStrength{ 1'500'000.F };
 
 		CoreColor color{ .r = 1.F, .g = 204.F / 255.F, .b = 0.F, .a = 1.F };

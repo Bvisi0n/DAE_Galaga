@@ -9,8 +9,6 @@
 // TODO bvi_gravity_bender - Remove collisions between units.
 // TODO bvi_gravity_bender - Units can only die by being absored by gravity wells.
 
-// TODO bvi_gravity_bender - Increase the range of player.
-
 // TODO bvi_gravity_bender - Reduce cooldown duration of Spawner by 1% everytime it triggers a cooldown.
 
 // TODO bvi_gravity_bender - Start off with an example of gravity well catching some units. (If time allows)
