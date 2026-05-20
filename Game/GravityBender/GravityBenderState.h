@@ -3,8 +3,6 @@
 
 #include <Minigin/Core/IAppState.h>
 
-// TODO bvi_gravity_bender - Add a short-duration direction indicator for the spawner.
-
 // TODO bvi_gravity_bender - Remove collisions between units.
 // TODO bvi_gravity_bender - Units can only die by being absored by gravity wells.
 

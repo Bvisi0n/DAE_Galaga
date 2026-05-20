@@ -6,6 +6,7 @@
 #include <utility>
 
 #include <glm/ext/vector_float3.hpp>
+#include <glm/geometric.hpp>
 
 #include <SDL3/SDL_pixels.h>
 #include <SDL3/SDL_rect.h>
@@ -43,6 +44,7 @@ namespace bvi::gravity_bender
 	{
 		SetRandomDirection();
 		SetRandomPosition();
+		SpawnIndicator();
 	}
 
 	void SpawnerPortalComponent::Update( float deltaTime )
@@ -63,6 +65,7 @@ namespace bvi::gravity_bender
 					{
 						m_primitiveRenderer->SetEnabled( true );
 					}
+					SpawnIndicator();
 				}
 				break;
 			}
@@ -72,6 +75,7 @@ namespace bvi::gravity_bender
 				{
 					m_currentState = PortalState::Spawning;
 					m_timer = 0.F;
+					DestroyIndicator();
 				}
 				break;
 			}
@@ -188,5 +192,49 @@ namespace bvi::gravity_bender
 		std::uniform_real_distribution<float> yDistribution( margin, viewportHeight - margin );
 
 		GetOwner()->GetTransform().SetLocalPosition( glm::vec3{ xDistribution( generator ), yDistribution( generator ), 0.F } );
+	}
+
+	void SpawnerPortalComponent::SpawnIndicator()
+	{
+		if ( m_indicator != nullptr )
+		{
+			return;
+		}
+
+		auto& scene{ dae::scenes::SceneManager::GetInstance().GetActiveScene() };
+		auto indicator{ std::make_unique<dae::core::GameObject>() };
+
+		const dae::graphics::CircleShape circleConfig
+		{
+			.radius = 5.0F,
+			.isFilled = true
+		};
+
+		const SDL_FColor orange{ 1.0F, 0.65F, 0.0F, 1.0F };
+		indicator->AddComponent<dae::graphics::PrimitiveRenderComponent>
+			(
+				dae::graphics::PrimitiveShape{ circleConfig },
+				orange
+			);
+
+		const float speed = glm::length( m_direction );
+		const glm::vec3 normalizedDir = ( speed > 0.001F ) ? ( m_direction / speed ) : glm::vec3{ 0.F, 1.F, 0.F };
+
+		constexpr float visualPadding = 15.0F;
+		const float totalOffset = ( m_blueprint.unitSize / 2.0F ) + visualPadding;
+		indicator->GetTransform().SetLocalPosition( normalizedDir * totalOffset );
+
+		m_indicator = indicator.get();
+		indicator->SetParent( GetOwner(), false );
+		scene.AddGameObject( std::move( indicator ) );
+	}
+
+	void SpawnerPortalComponent::DestroyIndicator()
+	{
+		if ( m_indicator != nullptr )
+		{
+			m_indicator->MarkForDeletion();
+			m_indicator = nullptr;
+		}
 	}
 }
