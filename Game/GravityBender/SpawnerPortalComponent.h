@@ -44,12 +44,10 @@ namespace bvi::gravity_bender
 
 		config::PortalBlueprint m_blueprint;
 		dae::graphics::PrimitiveRenderComponent* m_primitiveRenderer{ nullptr };
-
 		glm::vec3 m_direction{};
-		PortalState m_currentState{ PortalState::Anticipation };
 		float m_timer{ 0.F };
-
 		uint32_t m_spawnedCount{ 0 };
+		PortalState m_currentState{ PortalState::Anticipation };
 
 		void EmitUnit();
 		void SetRandomDirection();
