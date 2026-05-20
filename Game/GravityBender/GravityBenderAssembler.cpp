@@ -202,8 +202,34 @@ namespace bvi::gravity_bender
 			.isFilled = true
 		};
 
-		player->AddComponent<dae::graphics::PrimitiveRenderComponent>
-			( dae::graphics::PrimitiveShape{ shapeConfig }, playerColor );
+		using PrimitiveRenderComponent = dae::graphics::PrimitiveRenderComponent;
+		using PrimitiveShape = dae::graphics::PrimitiveShape;
+		player->AddComponent<PrimitiveRenderComponent>( PrimitiveShape{ shapeConfig }, playerColor );
+
+		constexpr const auto& viewportConfig = config::c_GlobalConfig.viewport;
+		const float width = viewportConfig.width;
+		const float height = viewportConfig.height;
+		const std::array<glm::vec3, 8> offsets =
+		{ {
+			{0.F, -height, 0.F},
+			{width, 0.F, 0.F},
+			{0.F, height, 0.F},
+			{-width, 0.F, 0.F},
+			{width, -height, 0.F},
+			{width, height, 0.F},
+			{-width, height, 0.F},
+			{-width, -height, 0.F}
+		} };
+
+		for ( const auto& offset : offsets )
+		{
+			auto cloneRoot = std::make_unique<dae::core::GameObject>();
+			cloneRoot->GetTransform().SetLocalPosition( offset );
+			cloneRoot->AddComponent<PrimitiveRenderComponent>( PrimitiveShape{ shapeConfig }, playerColor );
+
+			cloneRoot->SetParent( player.get(), false );
+			scene.AddGameObject( std::move( cloneRoot ) );
+		}
 
 		using Collider = dae::core::ColliderComponent;
 		using Size2D = dae::core::Size2D;

@@ -98,9 +98,16 @@ namespace bvi::gravity_bender
 
 		const float width = config::c_GlobalConfig.viewport.width;
 		const float height = config::c_GlobalConfig.viewport.height;
-		const std::array<glm::vec3, 8> offsets = { {
-			{0.F, -height, 0.F}, {width, 0.F, 0.F}, {0.F, height, 0.F}, {-width, 0.F, 0.F},
-			{width, -height, 0.F}, {width, height, 0.F}, {-width, height, 0.F}, {-width, -height, 0.F}
+		const std::array<glm::vec3, 8> offsets =
+		{ {
+			{0.F, -height, 0.F},
+			{width, 0.F, 0.F},
+			{0.F, height, 0.F},
+			{-width, 0.F, 0.F},
+			{width, -height, 0.F},
+			{width, height, 0.F},
+			{-width, height, 0.F},
+			{-width, -height, 0.F}
 		} };
 
 		for ( const auto& offset : offsets )
