@@ -24,6 +24,7 @@ namespace dae::core
 		std::vector<CollisionCallback> m_callbacks;
 		std::vector<ColliderComponent*> m_activeColliders;
 
+		void ProcessCollisionPair( ColliderComponent* colliderA, const Rectangle& boundsA, ColliderComponent* colliderB );
 		[[nodiscard]] static bool Intersects( const Rectangle& rectangleA, const Rectangle& rectangleB ) noexcept;
 	};
 }

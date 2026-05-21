@@ -10,6 +10,8 @@
 
 #include <SDL3/SDL_pixels.h>
 
+#include <Minigin/Core/ColliderComponent.h>
+#include <Minigin/Core/CollisionSystem.h>
 #include <Minigin/Core/GameObject.h>
 #include <Minigin/Graphics/PrimitiveRenderComponent.h>
 #include <Minigin/Scene/Scene.h>
@@ -67,7 +69,7 @@ namespace bvi::gravity_bender
 		switch ( node.type )
 		{
 			case GravityNodeType::Player:
-				coreRadius = config::c_GlobalConfig.player.colliderSize;
+				coreRadius = config::c_GlobalConfig.player.radius / 2;
 				break;
 			case GravityNodeType::Field:
 			default:
@@ -81,6 +83,21 @@ namespace bvi::gravity_bender
 		auto centerVisualRoot = std::make_unique<dae::core::GameObject>();
 		centerVisualRoot->GetTransform().SetLocalPosition( node.position );
 		centerVisualRoot->AddComponent<PrimitiveRenderComponent>( PrimitiveShape{ CircleShape{ coreRadius, true } }, coreColor );
+
+		if ( node.type == GravityNodeType::Field )
+		{
+			using ColliderComponent = dae::core::ColliderComponent;
+			using Size2D = dae::core::Size2D;
+			centerVisualRoot->AddComponent<ColliderComponent>
+				(
+					Size2D
+					{
+						.width = coreRadius,
+						.height = coreRadius
+					},
+					1
+				)->SetCollisionTag( dae::core::CollisionTag::GravityWell );
+		}
 
 		auto centerVisualOuter = std::make_unique<dae::core::GameObject>();
 		centerVisualOuter->AddComponent<PrimitiveRenderComponent>( PrimitiveShape{ CircleShape{ radius, false } }, rangeColor );

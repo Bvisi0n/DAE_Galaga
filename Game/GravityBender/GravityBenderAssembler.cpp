@@ -45,7 +45,7 @@ namespace bvi::gravity_bender
 		AssembleFPSCounter( scene );
 		AssemblePlayer( scene );
 		AssembleSpawner( scene );
-		EnableCollisions( scene );
+		//EnableCollisions( scene );
 
 		scene.Initialize();
 	}
@@ -132,17 +132,22 @@ namespace bvi::gravity_bender
 			std::string_view text;
 		};
 
-		constexpr std::array<InstructionLine, 4> lines
+		constexpr std::array<InstructionLine, 5> lines
 		{
 			InstructionLine
 			{
 				.xOffset = 90.F,
-				.text = "Welcome Commander, you're just in time!"
+				.text = "Commander, it appears we are trapped in some infinitely looping space anomaly!"
 			},
 			InstructionLine
 			{
 				.xOffset = 10.F,
-				.text = "Make the red rectangles crash into each other before they overwhelm the system!"
+				.text = "We absolutely cannot afford a collision with the debris spawning from the wormholes!"
+			},
+			InstructionLine
+			{
+				.xOffset = 0.F,
+				.text = " "
 			},
 			InstructionLine
 			{
@@ -152,7 +157,7 @@ namespace bvi::gravity_bender
 			InstructionLine
 			{
 				.xOffset = 10.F,
-				.text = "Use SPACE to place a temporary gravity well at your location"
+				.text = "Use SPACE to place a temporary black hole at your location"
 			}
 		};
 
@@ -237,11 +242,11 @@ namespace bvi::gravity_bender
 			(
 				Size2D
 				{
-					.width = playerConfig.colliderSize,
-					.height = playerConfig.colliderSize
+					.width = playerConfig.radius,
+					.height = playerConfig.radius
 				},
 				1
-			);
+			)->SetCollisionTag( dae::core::CollisionTag::Player );
 
 		player->AddComponent<ScreenWrapComponent>( playerConfig.radius );
 

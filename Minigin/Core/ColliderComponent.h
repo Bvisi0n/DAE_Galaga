@@ -1,11 +1,23 @@
 #ifndef DAE_COLLIDERCOMPONENT_H
 #define DAE_COLLIDERCOMPONENT_H
 
+#include <cstdint>
+
 #include <Minigin/Core/Component.h>
+
+// TODO dae_core - Use SDMHash for CollisionTag instead to pull game specific code out of engine.
 
 namespace dae::core
 {
 	class GameObject;
+
+	enum class CollisionTag : std::uint8_t
+	{
+		Default = 0,
+		Player = 1,
+		Unit = 2,
+		GravityWell = 3
+	};
 
 	struct Rectangle
 	{
@@ -39,9 +51,13 @@ namespace dae::core
 		[[nodiscard]] Rectangle GetWorldBounds() const;
 		[[nodiscard]] int GetLayer() const noexcept;
 
+		void SetCollisionTag( CollisionTag tag ) noexcept;
+		[[nodiscard]] CollisionTag GetCollisionTag() const noexcept;
+
 	private:
 		Rectangle m_localBounds;
 		int m_layer;
+		CollisionTag m_tag{ CollisionTag::Default };
 	};
 }
 

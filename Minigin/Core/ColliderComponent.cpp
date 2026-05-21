@@ -36,4 +36,14 @@ namespace dae::core
 	{
 		return m_layer;
 	}
+
+	void ColliderComponent::SetCollisionTag( CollisionTag tag ) noexcept
+	{
+		m_tag = tag;
+	}
+
+	CollisionTag ColliderComponent::GetCollisionTag() const noexcept
+	{
+		return m_tag;
+	}
 }

@@ -159,7 +159,7 @@ namespace bvi::gravity_bender
 					.height = m_blueprint.unitSize
 				},
 				1
-			);
+			)->SetCollisionTag( dae::core::CollisionTag::Unit );
 
 		unit->AddComponent<ScreenWrapComponent>( halfSize );
 		unit->AddComponent<GravityReceiverComponent>();

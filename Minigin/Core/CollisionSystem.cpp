@@ -31,19 +31,56 @@ namespace dae::core
 		for ( size_t indexA = 0; indexA < count; ++indexA )
 		{
 			auto* colliderA = m_activeColliders[ indexA ];
+
+			if ( colliderA->GetOwner()->IsPendingDeletion() )
+			{
+				continue;
+			}
+
 			const auto boundsA = colliderA->GetWorldBounds();
 
 			for ( size_t indexB = indexA + 1; indexB < count; ++indexB )
 			{
-				auto* colliderB = m_activeColliders[ indexB ];
+				ProcessCollisionPair( colliderA, boundsA, m_activeColliders[ indexB ] );
+			}
+		}
+	}
 
-				if ( Intersects( boundsA, colliderB->GetWorldBounds() ) )
-				{
-					for ( auto& callback : m_callbacks )
-					{
-						callback( colliderA->GetOwner(), colliderB->GetOwner() );
-					}
-				}
+	void CollisionSystem::ProcessCollisionPair( ColliderComponent* colliderA, const Rectangle& boundsA, ColliderComponent* colliderB )
+	{
+		if ( colliderB->GetOwner()->IsPendingDeletion() )
+		{
+			return;
+		}
+
+		const auto tagA = colliderA->GetCollisionTag();
+		const auto tagB = colliderB->GetCollisionTag();
+
+		if ( tagA == CollisionTag::Unit && tagB == CollisionTag::Unit )
+		{
+			return;
+		}
+
+		// TODO dae_core - Game code in the engine! Temporary solution.
+
+		if ( Intersects( boundsA, colliderB->GetWorldBounds() ) )
+		{
+			const bool unitBMustDie = ( tagA == CollisionTag::GravityWell && tagB == CollisionTag::Unit ) || ( tagA == CollisionTag::Unit && tagB == CollisionTag::Player );
+
+			const bool unitAMustDie = ( tagB == CollisionTag::GravityWell && tagA == CollisionTag::Unit ) || ( tagB == CollisionTag::Unit && tagA == CollisionTag::Player );
+
+			if ( unitBMustDie )
+			{
+				colliderB->GetOwner()->MarkForDeletion();
+			}
+			else if ( unitAMustDie )
+			{
+				colliderA->GetOwner()->MarkForDeletion();
+			}
+
+			for ( auto& callback : m_callbacks )
+			{
+				callback( colliderA->GetOwner(), colliderB->GetOwner() );
 			}
 		}
 	}

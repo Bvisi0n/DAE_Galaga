@@ -16,13 +16,13 @@ namespace bvi::gravity_bender::config
 
 	struct GravityFieldBlueprint
 	{
-		float durationSeconds{ 3.F };
-		float cooldownSeconds{ 1.F };
+		float durationSeconds{ 6.F };
+		float cooldownSeconds{ 2.F };
 
 		float effectRadius{ 100.F };
-		float pullForce{ 1'500'000.F };
+		float pullForce{ 2'500'000.F };
 
-		float coreSize{ 5.F };
+		float coreSize{ 10.F };
 		CoreColor color{ .r = 0.F, .g = 1.F, .b = 1.F, .a = 1.F };
 	};
 
@@ -30,8 +30,7 @@ namespace bvi::gravity_bender::config
 	{
 		float startX{ 400.F };
 		float startY{ 350.F };
-		float radius{ 10.F };
-		float colliderSize{ 5.F };
+		float radius{ 12.F };
 
 		float baseSpeed{ 250.F };
 		float speedMultiplier{ 2.F };

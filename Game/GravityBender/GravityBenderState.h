@@ -3,11 +3,6 @@
 
 #include <Minigin/Core/IAppState.h>
 
-// TODO bvi_gravity_bender - Remove collisions between units.
-// TODO bvi_gravity_bender - Units can only die by being absored by gravity wells.
-
-// TODO bvi_gravity_bender - Start off with an example of gravity well catching some units. (If time allows)
-
 namespace bvi::gravity_bender
 {
 	class GravityBenderState final : public dae::core::IAppState
